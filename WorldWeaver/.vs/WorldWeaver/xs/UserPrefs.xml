@@ -3,30 +3,7 @@
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
-          <Node name="WorldWeaver" expanded="True">
-            <Node name="WorldWeaver" expanded="True">
-              <Node name="Admin" expanded="True">
-                <Node name="GameSources" expanded="True">
-                  <Node name="DarkWorld" expanded="True" />
-                </Node>
-              </Node>
-              <Node name="Cache" expanded="True" />
-              <Node name="Classes" expanded="True" />
-              <Node name="Config" expanded="True">
-                <Node name="Commands" expanded="True" />
-                <Node name="ElementProcRules" expanded="True" />
-              </Node>
-              <Node name="DataManagement" expanded="True">
-                <Node name="Game" expanded="True" />
-                <Node name="GameLogic" expanded="True" />
-              </Node>
-              <Node name="Parsers" expanded="True">
-                <Node name="Elements" expanded="True" />
-                <Node name="GameParser.cs" selected="True" />
-              </Node>
-              <Node name="Tools" expanded="True" />
-            </Node>
-          </Node>
+          <Node name="WorldWeaver" expanded="True" />
         </State>
       </Pad>
     </Pads>
