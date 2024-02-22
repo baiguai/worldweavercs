@@ -1,0 +1,12 @@
+﻿{
+    "commands" : [
+        {
+            "pattern" : "\\b(exit|quit)\\b",
+            "method" : "DoExit"
+        },
+        {
+            "pattern" : "\\b(help)\\b",
+            "method" : "DoHelp"
+        }
+    ]
+}

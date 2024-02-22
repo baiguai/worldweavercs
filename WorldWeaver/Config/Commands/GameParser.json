@@ -1,0 +1,16 @@
+﻿{
+    "commands" : [
+        {
+            "pattern" : "\\b(list games)\\b",
+            "method" : "DoListGames"
+        },
+        {
+            "pattern" : "\\b(play *)\\b",
+            "method" : "DoPlayGame"
+        },
+        {
+            "pattern" : "\\b(set player name *)\\b",
+            "method" : "DoSetPlayerName"
+        }
+    ]
+}

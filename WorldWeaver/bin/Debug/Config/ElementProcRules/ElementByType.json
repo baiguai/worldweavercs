@@ -1,0 +1,129 @@
+﻿{
+    "elements" : [
+        {
+            "types" : [
+                "action",
+                "enter_action",
+                "exit_action"
+            ],
+            "elements" : [
+                "logicset",
+                "input",
+                "action",
+                "message"
+            ]
+        },
+        {
+            "types" : [
+                "game"
+            ],
+            "elements" : [
+                "enter_action",
+                "set_field",
+                "input",
+                "enter_message"
+            ]
+        },
+        {
+            "types" : [
+                "input"
+            ],
+            "elements" : [
+                "logic",
+                "message",
+                "action"
+            ]
+        },
+        {
+            "types" : [
+                "logic"
+            ],
+            "elements" : [
+                "logic"
+            ]
+        },
+        {
+            "types" : [
+                "logicset"
+            ],
+            "elements" : [
+                "logic",
+                "operand",
+                "logicset",
+                "action",
+                "message"
+            ]
+        },
+        {
+            "types" : [
+                "message",
+                "enter_message",
+                "exit_message"
+            ],
+            "elements" : [
+                "action",
+                "message"
+            ]
+        },
+        {
+            "types" : [
+                "object"
+            ],
+            "elements" : [
+                "enter_logic",
+                "enter_action",
+                "enter_message",
+                "exit_logic",
+                "exit_action",
+                "exit_message"
+            ]
+        },
+        {
+            "types" : [
+                "player"
+            ],
+            "elements" : [
+                "enter_message"
+            ]
+        },
+        {
+            "types" : [
+                "room"
+            ],
+            "elements" : [
+                "enter_logic",
+                "enter_action",
+                "enter_message",
+                "input",
+                "exit_logic",
+                "exit_action",
+                "exit_message"
+            ]
+        },
+        {
+            "types" : [
+                "set_attribute"
+            ],
+            "elements" : [
+                "message"
+            ]
+        },
+        {
+            "types" : [
+                "set_field"
+            ],
+            "elements" : [
+                "enter_message",
+                "message"
+            ]
+        },
+        {
+            "types" : [
+                "set_field_matched"
+            ],
+            "elements" : [
+                "message"
+            ]
+        }
+    ]
+}

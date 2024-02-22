@@ -1,0 +1,12 @@
+﻿{
+    "commands" : [
+        {
+            "pattern" : "\\b(_buildgame|_bg)\\b",
+            "method" : "DoBuildGame"
+        },
+        {
+            "pattern" : "\\b(_help|_h)\\b",
+            "method" : "DoAdminHelp"
+        }
+    ]
+}

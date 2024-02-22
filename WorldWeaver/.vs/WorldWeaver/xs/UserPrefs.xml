@@ -1,0 +1,44 @@
+﻿<Properties StartupConfiguration="{A3B8FA8E-74CC-45DE-B68E-5EAC42D02E59}|Default">
+  <MonoDevelop.Ide.Workbench>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="WorldWeaver" expanded="True">
+            <Node name="WorldWeaver" expanded="True">
+              <Node name="Admin" expanded="True">
+                <Node name="GameSources" expanded="True">
+                  <Node name="DarkWorld" expanded="True" />
+                </Node>
+              </Node>
+              <Node name="Cache" expanded="True" />
+              <Node name="Classes" expanded="True" />
+              <Node name="Config" expanded="True">
+                <Node name="Commands" expanded="True" />
+                <Node name="ElementProcRules" expanded="True" />
+              </Node>
+              <Node name="DataManagement" expanded="True">
+                <Node name="Game" expanded="True" />
+                <Node name="GameLogic" expanded="True" />
+              </Node>
+              <Node name="Parsers" expanded="True">
+                <Node name="Elements" expanded="True" />
+                <Node name="GameParser.cs" selected="True" />
+              </Node>
+              <Node name="Tools" expanded="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.ItemProperties.WorldWeaver PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore>
+      <Breakpoint file="/media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/Parsers/Elements/SetField.cs" relfile="Parsers/Elements/SetField.cs" line="9" column="10" />
+      <Breakpoint file="/media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/Parsers/GameParser.cs" relfile="Parsers/GameParser.cs" line="29" column="18" />
+    </BreakpointStore>
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>

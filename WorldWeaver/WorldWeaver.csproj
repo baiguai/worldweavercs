@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\SQLite.3.13.0\build\net45\SQLite.props" Condition="Exists('..\packages\SQLite.3.13.0\build\net45\SQLite.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProjectGuid>{A3B8FA8E-74CC-45DE-B68E-5EAC42D02E59}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>WorldWeaver</RootNamespace>
+    <AssemblyName>WorldWeaver</AssemblyName>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ExternalConsole>true</ExternalConsole>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ExternalConsole>true</ExternalConsole>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Data.Sqlite" />
+    <Reference Include="System.Data" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Parsers\GlobalParser.cs" />
+    <Compile Include="DataManagement\ConfigDb.cs" />
+    <Compile Include="DataManagement\Game\BuildGame.cs" />
+    <Compile Include="Tools\IoExtensions.cs" />
+    <Compile Include="Parsers\AdminParser.cs" />
+    <Compile Include="Tools\CommandFunctions.cs" />
+    <Compile Include="Classes\Output.cs" />
+    <Compile Include="Classes\Element.cs" />
+    <Compile Include="Tools\FormatExtensions.cs" />
+    <Compile Include="Parsers\GameParser.cs" />
+    <Compile Include="DataManagement\Game\PlayGame.cs" />
+    <Compile Include="DataManagement\GameLogic\Game.cs" />
+    <Compile Include="Tools\ProcFunctions.cs" />
+    <Compile Include="Parsers\GameManager.cs" />
+    <Compile Include="Tools\DbExtensions.cs" />
+    <Compile Include="DataManagement\GameLogic\Element.cs" />
+    <Compile Include="Classes\DbParameter.cs" />
+    <Compile Include="Parsers\Elements\Element.cs" />
+    <Compile Include="Parsers\Elements\Helpers.cs" />
+    <Compile Include="Parsers\Elements\Input.cs" />
+    <Compile Include="Parsers\Elements\SetField.cs" />
+    <Compile Include="Tools\InputExtensions.cs" />
+    <Compile Include="Parsers\Elements\Message.cs" />
+    <Compile Include="Cache\GameCache.cs" />
+    <Compile Include="Cache\PlayerCache.cs" />
+    <Compile Include="Cache\RoomCache.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <None Include="app.config" />
+    <None Include="GameSources\DarkWorld\game.nrmn" />
+    <None Include="Games\readme.md" />
+    <None Include="Help\Admin\Main.json" />
+    <None Include="Help\General\Main.json" />
+    <None Include="GameSources\DarkWorld\npcs\dragon.nrmn" />
+    <None Include="Config\ElementProcRules\ElementByType.json" />
+    <None Include="ReadMe.txt" />
+    <None Include="Admin\GameSources\DarkWorld\Locations\Home\local_pub.nrmn" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Parsers\" />
+    <Folder Include="Data\" />
+    <Folder Include="DataManagement\" />
+    <Folder Include="Games\" />
+    <Folder Include="DataManagement\Game\" />
+    <Folder Include="Tools\" />
+    <Folder Include="Help\" />
+    <Folder Include="Help\General\" />
+    <Folder Include="Help\Admin\" />
+    <Folder Include="Classes\" />
+    <Folder Include="DataManagement\GameLogic\" />
+    <Folder Include="Config\" />
+    <Folder Include="Config\Commands\" />
+    <Folder Include="Config\ElementProcRules\" />
+    <Folder Include="Parsers\Elements\" />
+    <Folder Include="Admin\GameSources\DarkWorld\Locations\" />
+    <Folder Include="Admin\GameSources\DarkWorld\Locations\Home\" />
+    <Folder Include="Cache\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ContentWithTargetPath Include="Games\**">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <TargetPath>%(RecursiveDir)\Games\%(Filename)%(Extension)</TargetPath>
+    </ContentWithTargetPath>
+    <ContentWithTargetPath Include="Config\ElementProcRules\ElementByType.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <TargetPath>%(RecursiveDir)\Config\ElementProcRules\%(Filename)%(Extension)</TargetPath>
+    </ContentWithTargetPath>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ContentWithTargetPath Include="Config\Commands\**">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <TargetPath>%(RecursiveDir)\Config\Commands\%(Filename)%(Extension)</TargetPath>
+    </ContentWithTargetPath>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ContentWithTargetPath Include="Data\**">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <TargetPath>%(RecursiveDir)\Data\%(Filename)%(Extension)</TargetPath>
+    </ContentWithTargetPath>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ContentWithTargetPath Include="Help\**">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <TargetPath>%(RecursiveDir)\Help\%(Filename)%(Extension)</TargetPath>
+    </ContentWithTargetPath>
+  </ItemGroup>
+  <ItemGroup>
+    <ContentWithTargetPath Include="Help\Admin\**">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <TargetPath>%(RecursiveDir)\Help\Admin\%(Filename)%(Extension)</TargetPath>
+    </ContentWithTargetPath>
+  </ItemGroup>
+  <ItemGroup>
+    <ContentWithTargetPath Include="Help\General\**">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <TargetPath>%(RecursiveDir)\Help\General\%(Filename)%(Extension)</TargetPath>
+    </ContentWithTargetPath>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ContentWithTargetPath Include="Admin\GameSources\DarkWorld\**">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <TargetPath>%(RecursiveDir)\GameSources\DarkWorld\%(Filename)%(Extension)</TargetPath>
+    </ContentWithTargetPath>
+  </ItemGroup>
+  <ItemGroup>
+    <ContentWithTargetPath Include="Admin\GameSources\DarkWorld\Locations\**">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <TargetPath>%(RecursiveDir)\GameSources\DarkWorld\Locations\%(Filename)%(Extension)</TargetPath>
+    </ContentWithTargetPath>
+  </ItemGroup>
+  <ItemGroup>
+    <ContentWithTargetPath Include="Admin\GameSources\DarkWorld\Locations\Home\**">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <TargetPath>%(RecursiveDir)\GameSources\DarkWorld\Locations\Home\%(Filename)%(Extension)</TargetPath>
+    </ContentWithTargetPath>
+  </ItemGroup>
+  <ItemGroup>
+    <ContentWithTargetPath Include="Admin\GameSources\DarkWorld\Npcs\**">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <TargetPath>%(RecursiveDir)\GameSources\DarkWorld\Npcs\%(Filename)%(Extension)</TargetPath>
+    </ContentWithTargetPath>
+  </ItemGroup>
+
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+</Project>

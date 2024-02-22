@@ -1,0 +1,11 @@
+﻿{
+    "topics" : [
+        {
+            "pattern" : "\\b(help|\\?)\\b",
+            "title" : "WorldWeaver Help",
+            "string" : "
+Welcome to the WorldWeaver help system.
+"
+        }
+    ]
+}
