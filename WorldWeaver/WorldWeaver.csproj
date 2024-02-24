@@ -67,6 +67,7 @@
     <Compile Include="Cache\GameCache.cs" />
     <Compile Include="Cache\PlayerCache.cs" />
     <Compile Include="Cache\RoomCache.cs" />
+    <Compile Include="Tools\InitFunctions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -79,6 +80,7 @@
     <None Include="Config\ElementProcRules\ElementByType.json" />
     <None Include="ReadMe.txt" />
     <None Include="Admin\GameSources\DarkWorld\Locations\Home\local_pub.nrmn" />
+    <None Include="Config\Init.json" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Parsers\" />
@@ -109,6 +111,13 @@
     <ContentWithTargetPath Include="Config\ElementProcRules\ElementByType.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <TargetPath>%(RecursiveDir)\Config\ElementProcRules\%(Filename)%(Extension)</TargetPath>
+    </ContentWithTargetPath>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ContentWithTargetPath Include="Config\Init.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <TargetPath>%(RecursiveDir)\Config\Init.json</TargetPath>
     </ContentWithTargetPath>
   </ItemGroup>
 

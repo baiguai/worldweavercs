@@ -11,14 +11,21 @@ namespace WorldWeaver
 
         public static void Main(string[] args)
         {
-            Listener();
+            Listener(Tools.InitFunctions.GetInitMessage());
         }
 
-        private static void Listener()
+        private static void Listener(string initMsg)
         {
             Output output;
 
-            Console.Write(">> ");
+            if (initMsg.Equals(""))
+            {
+                Console.Write(">> ");
+            }
+            else
+            {
+                Console.Write(initMsg);
+            }
             string input = Console.ReadLine();
 
             output = globalParser.ParseInput(input);
@@ -47,7 +54,7 @@ namespace WorldWeaver
                 Console.WriteLine("");
             }
 
-            Listener();
+            Listener("");
         }
     }
 }

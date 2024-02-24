@@ -72,6 +72,7 @@ CREATE TABLE IF NOT EXISTS element (
                             NOT NULL,
     name         TEXT (300),
     parent_key   TEXT (300) NOT NULL,
+    location     TEXT (300),
     syntax       TEXT (300),
     logic        BLOB,
     output       BLOB,
@@ -189,6 +190,12 @@ CREATE INDEX IF NOT EXISTS ix_element_parent_key ON element (
     parent_key
 );
 
+-- Index: ix_element_parent_key
+DROP INDEX IF EXISTS ix_element_location;
+
+CREATE INDEX IF NOT EXISTS ix_element_location ON element (
+    location
+);
 
 -- Index: ix_element_syntax
 DROP INDEX IF EXISTS ix_element_syntax;
@@ -355,6 +362,10 @@ PRAGMA foreign_keys = on;
                         element.parent_key = line.Replace("parent=", "").SqlSafe();
                         break;
 
+                    case string s when line.ToLower().StartsWith("location=", StringComparison.OrdinalIgnoreCase):
+                        element.location = line.Replace("location=", "").SqlSafe();
+                        break;
+
                     case string s when line.ToLower().StartsWith("syntax=", StringComparison.OrdinalIgnoreCase):
                         element.syntax = line.Replace("syntax=", "").SqlSafe();
                         break;
@@ -484,6 +495,10 @@ PRAGMA foreign_keys = on;
                             element.parent_key = pairArr[1].Trim();
                             break;
 
+                        case "location":
+                            element.location = pairArr[1].Trim();
+                            break;
+
                         case "syntax":
                             element.syntax = pairArr[1].Trim();
                             break;
@@ -596,6 +611,7 @@ INSERT INTO element (
     element_key,
     name,
     parent_key,
+    location,
     syntax,
     logic,
     output,
@@ -615,6 +631,7 @@ VALUES";
 '{e.element_key}',
 '{e.name}',
 '{e.parent_key}',
+'{e.location}',
 '{e.syntax}',
 '{e.logic}',
 '{e.output}',

@@ -1,0 +1,19 @@
+﻿{
+    "message" : [
+        {
+            "output" : "Welcome to the WorldWeaver text-based game engine.
+To list the available games use:
+
+list games
+
+To start a new game use:
+
+play <Game name (Case sensitive)>
+
+To resume a game use:
+
+resume <Game name (Case sensitive)>
+"
+        }
+    ]
+}

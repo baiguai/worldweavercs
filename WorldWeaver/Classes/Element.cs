@@ -10,6 +10,7 @@ namespace WorldWeaver.Classes
         public string element_key { get; set; }
         public string name { get; set; }
         public string parent_key { get; set; }
+        public string location { get; set; }
         public string syntax { get; set; }
         public string logic { get; set; }
         public string output { get; set; }

@@ -9,6 +9,10 @@
             "method" : "DoPlayGame"
         },
         {
+            "pattern" : "\\b(resume *)\\b",
+            "method" : "DoResumeGame"
+        },
+        {
             "pattern" : "\\b(set player name *)\\b",
             "method" : "DoSetPlayerName"
         }

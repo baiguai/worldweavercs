@@ -28,7 +28,9 @@ namespace WorldWeaver.Parsers
                 if (!output.MatchMade && method.Equals("DoPlayGame"))
                 {
                     output = DoPlayGame(output);
-                    if (!output.MatchMade) // In this case a false means we can move on
+                    var logic = new DataManagement.GameLogic.Element();
+                    var player = logic.GetElementsByType(gameDb, "player");
+                    if (!output.MatchMade && player[0].name.Equals("")) // In this case a false means we can move on
                     {
                         output.OutputText = $@"
 To specify your player name use:
@@ -37,6 +39,17 @@ set player name <<NAME>>
                         output.MatchMade = true;
                         return output;
                     }
+                    else
+                    {
+                        var mgr = new Parsers.GameManager();
+                        output = mgr.ProcessGameInput(gameKey, gameDb, output, playerInput);
+                        return output;
+                    }
+                }
+
+                if (!output.MatchMade && method.Equals("DoResumeGame"))
+                {
+                    DoResumeGame(output);
                 }
 
                 if (!output.MatchMade && method.Equals("DoListGames"))
@@ -71,10 +84,50 @@ set player name <<NAME>>
 
         public Classes.Output DoPlayGame(Classes.Output output)
         {
+            var gameFile = playerInput.Replace("play ", "");
             if (gameDb.Equals(""))
             {
-                gameDb = $"{playerInput.Replace("play ", "").Trim()}.db";
+                gameDb = $"{gameFile}_playing.db";
+                File.Copy($"Games/{gameFile}.db", $"Games/{gameDb}");
             }
+
+            output = InitiateGame(output);
+
+            return output;
+        }
+
+        public Classes.Output DoResumeGame(Classes.Output output)
+        {
+            var gameFile = playerInput.Replace("resume ", "");
+            if (gameDb.Equals(""))
+            {
+                gameDb = $"{gameFile}_playing.db";
+            }
+
+            DataManagement.GameLogic.Element elemLogic = new DataManagement.GameLogic.Element();
+            DataManagement.GameLogic.Game gameLogic = new DataManagement.GameLogic.Game();
+            var gameElem = elemLogic.GetElementsByType(gameDb, "game")[0];
+
+            Cache.GameCache.Game = gameElem;
+
+            foreach (var gameChild in gameElem.children)
+            {
+                if (gameChild.element_type.Equals("player"))
+                {
+                    Cache.PlayerCache.Player = gameChild;
+                    break;
+                }
+            }
+
+
+
+            output = InitiateGame(output);
+
+            return output;
+        }
+
+        public Classes.Output InitiateGame(Classes.Output output)
+        {
             var gameObj = new DataManagement.Game.PlayGame();
             var gameManager = new GameManager();
 
@@ -130,7 +183,7 @@ set player name <<NAME>>
         {
             foreach (string file in Directory.GetFiles("Games"))
             {
-                if (Path.GetExtension(file).Equals(".db"))
+                if (Path.GetExtension(file).Equals(".db") && !file.Contains("_playing"))
                 {
                     if (!output.Equals(""))
                     {

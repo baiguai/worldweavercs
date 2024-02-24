@@ -1,24 +1,12 @@
 ﻿{key=darkworld, name=Dark World, type=game, parent=root
-    {key=game_start_location, type=attribute
-        output=local_pub
-        tags={@
-            game
-            start_location
-        }
-    }
-    
     {key=player_enemy, name=Enemy, type=attribute
         output=player_enemy
     }
     
-    {key=player, name=New Player, type=player
+    {key=player, name=, type=player, location=local_pub
         {key=player_life, name=Life, type=attribute
             output=[rand:8|18]
             tags=life
-        }
-        {key=player_location, name=Location, type=attribute
-            output=[game@game_start_location]
-            tags=location
         }
     }
     

@@ -21,7 +21,8 @@ namespace WorldWeaver.DataManagement.Game
 
             if (elemLogic.SetElementField(gameDb, "player", "name", name))
             {
-                output.OutputText = $"Player name set to {name}";
+                Cache.PlayerCache.Player.name = name;
+                output.OutputText = $"Player name set to {name}. To begin the game use:{Environment.NewLine}play {gameDb.Replace(".db", "")}";
                 output.MatchMade = true;
             }
             else

@@ -1,9 +1,28 @@
 ﻿<Properties StartupConfiguration="{A3B8FA8E-74CC-45DE-B68E-5EAC42D02E59}|Default">
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench ActiveDocument="Program.cs">
+    <Files>
+      <File FileName="Tools/InitFunctions.cs" Line="25" Column="1" />
+      <File FileName="Config/Init.json" Line="16" Column="2" />
+      <File FileName="Config/Commands/AdminParser.json" Line="1" Column="1" />
+      <File FileName="Tools/CommandFunctions.cs" Line="19" Column="17" />
+      <File FileName="Program.cs" Line="18" Column="1" />
+    </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
-          <Node name="WorldWeaver" expanded="True" />
+          <Node name="WorldWeaver" expanded="True">
+            <Node name="WorldWeaver" expanded="True">
+              <Node name="Config" expanded="True">
+                <Node name="Commands" expanded="True" />
+              </Node>
+              <Node name="DataManagement" expanded="True">
+                <Node name="GameLogic" expanded="True" />
+              </Node>
+              <Node name="Parsers" expanded="True" />
+              <Node name="Tools" expanded="True" />
+              <Node name="Program.cs" selected="True" />
+            </Node>
+          </Node>
         </State>
       </Pad>
     </Pads>
@@ -13,8 +32,8 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
-      <Breakpoint file="/media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/Parsers/Elements/SetField.cs" relfile="Parsers/Elements/SetField.cs" line="9" column="10" />
-      <Breakpoint file="/media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/Parsers/GameParser.cs" relfile="Parsers/GameParser.cs" line="29" column="18" />
+      <Breakpoint file="/media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/Program.cs" relfile="Program.cs" line="18" column="10" />
+      <Breakpoint file="/media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/Tools/InitFunctions.cs" relfile="Tools/InitFunctions.cs" line="10" column="10" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />

@@ -31,8 +31,10 @@ namespace WorldWeaver.Parsers
             {
                 if (!Cache.PlayerCache.Player.name.Equals(""))
                 {
-                    // parse the room
-                    output.OutputText = "TODO: Parse the initial room.";
+                    var logic = new DataManagement.GameLogic.Element();
+                    var player = logic.GetElementsByType(gameDb, "player");
+
+                    output.OutputText = "testing.";
                     output.MatchMade = true;
                 }
             }
