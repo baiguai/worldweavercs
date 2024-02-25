@@ -32,13 +32,12 @@ namespace WorldWeaver.Parsers
                 if (!Cache.PlayerCache.Player.name.Equals(""))
                 {
                     var logic = new DataManagement.GameLogic.Element();
-                    var player = logic.GetElementsByType(gameDb, "player");
+                    var player = logic.GetElementByKey(gameDb, "player");
 
-                    output.OutputText = "testing.";
-                    output.MatchMade = true;
+                    output = elemParser.ParseElement(output, gameDb, logic.GetElementByKey(gameDb, player.location),userInput);
                 }
             }
-
+                
             return output;
         }
     }

@@ -38,3 +38,4 @@
 /media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/obj/x86/Debug/WorldWeaver.exe
 /media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/obj/x86/Debug/WorldWeaver.pdb
 /media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/bin/Debug//Config/Init.json
+/media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/bin/Debug//GameSources/DarkWorld/player.nrmn

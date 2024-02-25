@@ -10,6 +10,7 @@
                 "logicset",
                 "input",
                 "action",
+                "move",
                 "message"
             ]
         },
@@ -62,6 +63,15 @@
             ],
             "elements" : [
                 "action",
+                "message"
+            ]
+        },
+        {
+            "types" : [
+                "move"
+            ],
+            "elements" : [
+                "logicset",
                 "message"
             ]
         },

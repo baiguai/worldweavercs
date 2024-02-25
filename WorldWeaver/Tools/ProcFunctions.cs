@@ -21,7 +21,7 @@ namespace WorldWeaver.Tools
                 {
                     foreach (var types in tp["types"].Values())
                     {
-                    output = (List<string>)tp["elements"].Values();
+                        output = (List<string>)tp["elements"].Values();
                     }
                 }
             }

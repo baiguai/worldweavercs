@@ -27,6 +27,11 @@ namespace WorldWeaver.Parsers.Elements
                                 return output;
                             }
                             break;
+
+                        case "move":
+                            var move = new Parsers.Elements.Move();
+                            output = move.ParseMove(gameDb, child);
+                            break;
                     }
 
                     output = ParseElement(output, gameDb, child, userInput);
