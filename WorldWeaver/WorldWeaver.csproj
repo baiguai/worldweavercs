@@ -68,6 +68,8 @@
     <Compile Include="Cache\PlayerCache.cs" />
     <Compile Include="Cache\RoomCache.cs" />
     <Compile Include="Tools\InitFunctions.cs" />
+    <Compile Include="Parsers\Elements\Move.cs" />
+    <Compile Include="DataManagement\GameLogic\Move.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -81,6 +83,7 @@
     <None Include="ReadMe.txt" />
     <None Include="Admin\GameSources\DarkWorld\Locations\Home\local_pub.nrmn" />
     <None Include="Config\Init.json" />
+    <None Include="Admin\GameSources\DarkWorld\player.nrmn" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Parsers\" />

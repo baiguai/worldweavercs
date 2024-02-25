@@ -300,6 +300,13 @@ PRAGMA foreign_keys = on;
 
                 if (line.StartsWith("{", StringComparison.OrdinalIgnoreCase))
                 {
+                    var singleLine = line.EndsWith("}", StringComparison.OrdinalIgnoreCase);
+
+                    if (singleLine)
+                    {
+                        line = line.Substring(0, line.Length - 1);
+                    }
+
                     if (element == null)
                     {
                         element = new Element
@@ -315,6 +322,17 @@ PRAGMA foreign_keys = on;
                             {
                                 element.parent_key = parentKey;
                             }
+                        }
+
+                        if (singleLine)
+                        {
+                            if (element.element_key == null)
+                            {
+                                element.element_key = Guid.NewGuid().ToString();
+                            }
+
+                            success = LoadElement(connectionString, element);
+                            element = null;
                         }
 
                         continue;

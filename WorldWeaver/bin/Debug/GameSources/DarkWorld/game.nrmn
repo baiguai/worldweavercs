@@ -1,14 +1,4 @@
 ﻿{key=darkworld, name=Dark World, type=game, parent=root
-    {key=player_enemy, name=Enemy, type=attribute
-        output=player_enemy
-    }
-    
-    {key=player, name=, type=player, location=local_pub
-        {key=player_life, name=Life, type=attribute
-            output=[rand:8|18]
-            tags=life
-        }
-    }
     
     {type=enter_message
         output={@
@@ -16,5 +6,9 @@ Something dark is happening throughout the continent of Aetherus.
 
 Welcome to DarkWorld.
         }
+    }
+    
+    {type=enter_action
+        {type=move, location=local_pub, tags=player }
     }
 }
