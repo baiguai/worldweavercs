@@ -19,10 +19,10 @@
                 "game"
             ],
             "elements" : [
-                "enter_action",
                 "set_field",
-                "input",
-                "enter_message"
+                "enter_message",
+                "enter_action",
+                "input"
             ]
         },
         {

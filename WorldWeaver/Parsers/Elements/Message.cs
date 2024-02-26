@@ -3,11 +3,9 @@ namespace WorldWeaver.Parsers.Elements
 {
     public class Message
     {
-        public Classes.Output ParseMessage(string gameDb, Classes.Element msgElement)
+        public Classes.Output ParseMessage(Classes.Output output, string gameDb, Classes.Element msgElement)
         {
-            var output = new Classes.Output();
-
-            output.OutputText = msgElement.output;
+            output.OutputText += Environment.NewLine + msgElement.output;
             output.MatchMade = true;
 
             return output;

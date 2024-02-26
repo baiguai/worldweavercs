@@ -220,9 +220,11 @@ PRAGMA foreign_keys = on;
                 using (SqliteCommand command = new SqliteCommand(createDbQuery, connection))
                 {
                     command.ExecuteNonQuery();
+                    command.Dispose();
                 }
 
                 connection.Close();
+                connection.Dispose();
             }
 
             success = true;

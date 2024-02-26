@@ -34,7 +34,14 @@ namespace WorldWeaver.Parsers
                     var logic = new DataManagement.GameLogic.Element();
                     var player = logic.GetElementByKey(gameDb, "player");
 
-                    output = elemParser.ParseElement(output, gameDb, logic.GetElementByKey(gameDb, player.location),userInput);
+                    if (player.location.Equals(""))
+                    {
+                        output = elemParser.ParseElement(output, gameDb, logic.GetElementByKey(gameDb, gameKey), userInput);
+                    }
+                    else
+                    {
+                        output = elemParser.ParseElement(output, gameDb, logic.GetElementByKey(gameDb, player.location), userInput);
+                    }
                 }
             }
                 

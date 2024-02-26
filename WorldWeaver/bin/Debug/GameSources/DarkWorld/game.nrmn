@@ -1,4 +1,4 @@
-﻿{key=darkworld, name=Dark World, type=game, parent=root
+﻿{key=game, name=Dark World, type=game, parent=root
     
     {type=enter_message
         output={@

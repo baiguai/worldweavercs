@@ -11,6 +11,7 @@ namespace WorldWeaver
 
         public static void Main(string[] args)
         {
+            Console.SetWindowSize(Console.LargestWindowWidth, Console.LargestWindowHeight);
             Listener(Tools.InitFunctions.GetInitMessage());
         }
 

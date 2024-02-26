@@ -3,14 +3,11 @@ namespace WorldWeaver.Parsers.Elements
 {
     public class Move
     {
-        public Classes.Output ParseMove(string gameDb, Classes.Element moveElement)
+        public Classes.Output ParseMove(Classes.Output output, string gameDb, Classes.Element moveElement, string userInput)
         {
-            var output = new Classes.Output();
             var moveDb = new DataManagement.GameLogic.Move();
-            var procSteps = Tools.ProcFunctions.GetProcessStepsByType(moveElement.element_type);
 
-            output.OutputText = moveElement.output;
-            output.MatchMade = true;
+            output = moveDb.MoveElement(output, gameDb, moveElement.location, moveElement.tags, userInput);
 
             return output;
         }

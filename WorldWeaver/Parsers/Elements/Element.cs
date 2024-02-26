@@ -12,25 +12,36 @@ namespace WorldWeaver.Parsers.Elements
             { 
                 foreach (var child in currentElement.children)
                 {
-                    if (output.MatchMade)
+                    if (!child.element_type.Equals(proc))
                     {
-                        return output;
+                        continue;
                     }
 
                     switch (child.element_type)
                     {
                         case "input":
+                            if (output.MatchMade)
+                            {
+                                return output;
+                            }
+
                             var input = new Parsers.Elements.Input();
-                            output = input.ParseInput(gameDb, currentElement, child, userInput);
+                            output = input.ParseInput(output, gameDb, currentElement, child, userInput);
                             if (output.MatchMade)
                             {
                                 return output;
                             }
                             break;
 
+                        case "message":
+                        case "enter_message":
+                            var msg = new Parsers.Elements.Message();
+                            output = msg.ParseMessage(output, gameDb, child);
+                            break;
+
                         case "move":
                             var move = new Parsers.Elements.Move();
-                            output = move.ParseMove(gameDb, child);
+                            output = move.ParseMove(output, gameDb, child, userInput);
                             break;
                     }
 
