@@ -1,16 +1,8 @@
 ﻿<Properties StartupConfiguration="{A3B8FA8E-74CC-45DE-B68E-5EAC42D02E59}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Parsers/Elements/Move.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Parsers/Elements/Element.cs">
     <Files>
-      <File FileName="Parsers/GameManager.cs" Line="40" Column="17" />
-      <File FileName="Admin/GameSources/DarkWorld/game.nrmn" Line="12" Column="53" />
-      <File FileName="Config/ElementProcRules/ElementByType.json" Line="13" Column="24" />
-      <File FileName="DataManagement/Game/BuildGame.cs" Line="327" Column="39" />
-      <File FileName="Parsers/Elements/Element.cs" Line="33" Column="68" />
-      <File FileName="Parsers/Elements/Move.cs" Line="10" Column="97" />
-      <File FileName="Parsers/Elements/Message.cs" Line="6" Column="1" />
-      <File FileName="DataManagement/GameLogic/Element.cs" Line="274" Column="6" />
-      <File FileName="DataManagement/GameLogic/Move.cs" Line="1" Column="1" />
-      <File FileName="Tools/ProcFunctions.cs" Line="32" Column="57" />
+      <File FileName="Parsers/Elements/Element.cs" Line="38" Column="1" />
+      <File FileName="Parsers/GameManager.cs" Line="39" Column="47" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -19,15 +11,24 @@
             <Node name="WorldWeaver" expanded="True">
               <Node name="Admin" expanded="True">
                 <Node name="GameSources" expanded="True">
-                  <Node name="DarkWorld" expanded="True" />
+                  <Node name="DarkWorld" expanded="True">
+                    <Node name="Locations" expanded="True">
+                      <Node name="Home" expanded="True" />
+                    </Node>
+                  </Node>
                 </Node>
               </Node>
+              <Node name="Cache" expanded="True" />
+              <Node name="Config" expanded="True">
+                <Node name="ElementProcRules" expanded="True" />
+              </Node>
               <Node name="DataManagement" expanded="True">
+                <Node name="Game" expanded="True" />
                 <Node name="GameLogic" expanded="True" />
               </Node>
               <Node name="Parsers" expanded="True">
                 <Node name="Elements" expanded="True">
-                  <Node name="Move.cs" selected="True" />
+                  <Node name="Element.cs" selected="True" />
                 </Node>
               </Node>
               <Node name="Tools" expanded="True" />
@@ -42,7 +43,7 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
-      <Breakpoint file="/media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/Parsers/GameManager.cs" relfile="Parsers/GameManager.cs" line="31" column="14" />
+      <Breakpoint file="/media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/Parsers/Elements/Element.cs" relfile="Parsers/Elements/Element.cs" line="38" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />

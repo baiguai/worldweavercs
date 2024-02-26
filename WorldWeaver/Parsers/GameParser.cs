@@ -30,36 +30,25 @@ namespace WorldWeaver.Parsers
                     output = DoPlayGame(output);
                     var logic = new DataManagement.GameLogic.Element();
                     var player = logic.GetElementsByType(gameDb, "player");
-                    if (!output.MatchMade && player[0].name.Equals("")) // In this case a false means we can move on
-                    {
-                        output.OutputText = $@"
-To specify your player name use:
-set player name <<NAME>>
-                        ";
-                        output.MatchMade = true;
-                        return output;
-                    }
-                    else
-                    {
-                        var mgr = new Parsers.GameManager();
-                        output = mgr.ProcessGameInput(gameKey, gameDb, output, playerInput);
-                        return output;
-                    }
+
+                    var mgr = new Parsers.GameManager();
+                    output = mgr.ProcessGameInput(gameKey, gameDb, output, playerInput);
+                    return output;
                 }
 
                 if (!output.MatchMade && method.Equals("DoResumeGame"))
                 {
-                    DoResumeGame(output);
+                    output = DoResumeGame(output);
                 }
 
                 if (!output.MatchMade && method.Equals("DoListGames"))
                 {
-                    DoListGames(output);
+                    output = DoListGames(output);
                 }
 
                 if (!output.MatchMade && method.Equals("DoSetPlayerName"))
                 {
-                    DoSetPlayerName(output);
+                    output = DoSetPlayerName(output);
                 }
             }
             else
@@ -76,6 +65,7 @@ set player name <<NAME>>
         private Classes.Output DoSetPlayerName(Output output)
         {
             var gameObj = new DataManagement.Game.PlayGame();
+            Cache.GameCache.Game = null;
 
             output = gameObj.SetPlayerName(output, gameDb, playerInput.Replace("set player name ", "set_player_name ").GetInputParams());
 
@@ -88,7 +78,7 @@ set player name <<NAME>>
             if (gameDb.Equals(""))
             {
                 gameDb = $"{gameFile}_playing.db";
-                File.Copy($"Games/{gameFile}.db", $"Games/{gameDb}");
+                File.Copy($"Games/{gameFile}.db", $"Games/{gameDb}", true);
             }
 
             output = InitiateGame(output);
@@ -119,8 +109,6 @@ set player name <<NAME>>
                 }
             }
 
-
-
             output = InitiateGame(output);
 
             return output;
@@ -145,6 +133,19 @@ set player name <<NAME>>
             // Primary game processor
             if (!output.MatchMade)
             {
+                var logic = new DataManagement.GameLogic.Element();
+                var player = logic.GetElementsByType(gameDb, "player");
+
+                if (player[0].name.Equals(""))
+                {
+                    output.OutputText = $@"
+To specify your player name use:
+set player name <<NAME>>
+                        ";
+                    output.MatchMade = true;
+                    return output;
+                }
+
                 output = gameManager.ProcessGameInput(gameKey, gameDb, output, playerInput);
             }
 
@@ -179,7 +180,7 @@ set player name <<NAME>>
             return output;
         }
 
-        public void DoListGames(Classes.Output output)
+        public Classes.Output DoListGames(Classes.Output output)
         {
             foreach (string file in Directory.GetFiles("Games"))
             {
@@ -195,6 +196,8 @@ set player name <<NAME>>
             }
 
             output.MatchMade = true;
+
+            return output;
         }
     }
 }

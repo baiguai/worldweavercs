@@ -16,6 +16,7 @@ SELECT
     element_key,
     name,
     parent_key,
+    location,
     syntax,
     logic,
     output,
@@ -39,6 +40,48 @@ ORDER BY
             });
 
             var output = GetElements(selectQuery, gameDb, parms);
+            return output;
+        }
+
+        internal bool SetElementLocation(string gameDb, string key, string location)
+        {
+            var output = false;
+
+            var gameFile = $"Games/{gameDb}";
+
+            if (!File.Exists(gameFile))
+            {
+                return output;
+            }
+
+            string connectionString = $"Data Source={gameFile};Version=3;";
+
+            var updateQuery = $@"
+UPDATE
+    element
+SET
+    location = @newlocation
+WHERE
+    element_key = @elementkey
+;
+            ";
+
+            using (SqliteConnection connection = new SqliteConnection(connectionString))
+            {
+                connection.Open();
+
+                using (SqliteCommand command = new SqliteCommand(updateQuery, connection))
+                {
+                    command.Parameters.AddWithValue("@elementkey", key);
+                    command.Parameters.AddWithValue("@newlocation", location);
+
+                    command.ExecuteNonQuery();
+                }
+
+                connection.Close();
+                output = true;
+            }
+
             return output;
         }
 
@@ -89,6 +132,7 @@ SELECT
     element_key,
     name,
     parent_key,
+    location,
     syntax,
     logic,
     output,
@@ -211,6 +255,7 @@ ORDER BY
                             e.element_key = reader.GetString(reader.GetOrdinal("element_key"));
                             if (reader["name"] != DBNull.Value) { e.name = reader.GetString(reader.GetOrdinal("name")); }
                             e.parent_key = reader.GetString(reader.GetOrdinal("parent_key"));
+                            e.location = reader.GetString(reader.GetOrdinal("location"));
                             if (reader["syntax"] != DBNull.Value) { e.syntax = reader.GetString(reader.GetOrdinal("syntax")); }
                             if (reader["logic"] != DBNull.Value) { e.logic = reader.GetString(reader.GetOrdinal("logic")); }
                             if (reader["output"] != DBNull.Value) { e.output = reader.GetString(reader.GetOrdinal("output")); }

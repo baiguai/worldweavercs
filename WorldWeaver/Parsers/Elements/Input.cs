@@ -5,9 +5,8 @@ namespace WorldWeaver.Parsers.Elements
 {
     public class Input
     {
-        public Classes.Output ParseInput(string gameDb, Classes.Element parentElement, Classes.Element currentElement, string userInput)
+        public Classes.Output ParseInput(Classes.Output output, string gameDb, Classes.Element parentElement, Classes.Element currentElement, string userInput)
         {
-            var output = new Classes.Output();
             output.MatchMade = false;
 
             Regex rgx = new Regex(currentElement.syntax, RegexOptions.IgnoreCase);
@@ -30,7 +29,7 @@ namespace WorldWeaver.Parsers.Elements
                     var msgElem = Helpers.GetChildByType(currentElement, "enter_message");
                     var msg = new Message();
 
-                    output = msg.ParseMessage(gameDb, msgElem);
+                    output = msg.ParseMessage(output, gameDb, msgElem);
                     output.MatchMade = true;
                 }
             }
