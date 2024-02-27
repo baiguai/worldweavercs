@@ -31,6 +31,11 @@ namespace WorldWeaver.Parsers
                     var logic = new DataManagement.GameLogic.Element();
                     var player = logic.GetElementsByType(gameDb, "player");
 
+                    if (output.MatchMade)
+                    {
+                        return output;
+                    }
+
                     var mgr = new Parsers.GameManager();
                     output = mgr.ProcessGameInput(gameKey, gameDb, output, playerInput);
                     return output;
@@ -128,7 +133,7 @@ namespace WorldWeaver.Parsers
                 output.MatchMade = true;
                 return output;
             }
-            gameKey = output.OutputText;
+            gameKey = output.Value;
 
             // Primary game processor
             if (!output.MatchMade)

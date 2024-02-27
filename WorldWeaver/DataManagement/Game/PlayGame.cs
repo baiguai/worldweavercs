@@ -9,7 +9,7 @@ namespace WorldWeaver.DataManagement.Game
 
             var gameKey = gameLogic.GetKey(gameDb);
 
-            output.OutputText = gameKey;
+            output.Value = gameKey;
             output.MatchMade = gameKey.Equals(""); // Set it to return the output if none found
 
             return output;

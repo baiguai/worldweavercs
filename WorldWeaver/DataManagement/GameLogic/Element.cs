@@ -116,10 +116,6 @@ WHERE
 
 
             var output = GetElement(selectQuery, gameDb, parms);
-            foreach (var el in GetElementChildren(gameDb, output.element_key))
-            {
-                output.children.Add(el);
-            }
 
             return output;
         }
@@ -157,10 +153,6 @@ ORDER BY
 
 
             var output = GetElements(selectQuery, gameDb, parms);
-            foreach (var el in output)
-            {
-                el.children = GetElementChildren(gameDb, el.element_key);
-            }
 
             return output;
         }
