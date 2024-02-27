@@ -25,7 +25,12 @@ namespace WorldWeaver.Parsers
                     }
                 }
 
-                output = elemParser.ParseElement(output, gameDb, gameElem, userInput);
+                var procItems = Tools.ProcFunctions.GetProcessStepsByType(gameElem.element_type);
+
+                foreach (var proc in procItems)
+                {
+                    output = elemParser.ParseElement(output, gameDb, gameElem, userInput, proc);
+                }
             }
             else
             {
@@ -36,11 +41,23 @@ namespace WorldWeaver.Parsers
 
                     if (player.location.Equals(""))
                     {
-                        output = elemParser.ParseElement(output, gameDb, logic.GetElementByKey(gameDb, gameKey), userInput);
+                        var gameElem = logic.GetElementByKey(gameDb, gameKey);
+                        var procItems = Tools.ProcFunctions.GetProcessStepsByType(gameElem.element_type);
+
+                        foreach (var proc in procItems)
+                        {
+                            output = elemParser.ParseElement(output, gameDb, gameElem, userInput, proc);
+                        }
                     }
                     else
                     {
-                        output = elemParser.ParseElement(output, gameDb, logic.GetElementByKey(gameDb, player.location), userInput);
+                        var locElem = logic.GetElementByKey(gameDb, player.location);
+                        var procItems = Tools.ProcFunctions.GetProcessStepsByType(locElem.element_type);
+
+                        foreach (var proc in procItems)
+                        {
+                            output = elemParser.ParseElement(output, gameDb, locElem, userInput, proc);
+                        }
                     }
                 }
             }

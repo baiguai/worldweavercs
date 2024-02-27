@@ -70,6 +70,7 @@
     <Compile Include="Tools\InitFunctions.cs" />
     <Compile Include="Parsers\Elements\Move.cs" />
     <Compile Include="DataManagement\GameLogic\Move.cs" />
+    <Compile Include="Parsers\Elements\Action.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
