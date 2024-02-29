@@ -105,6 +105,11 @@ namespace WorldWeaver.Parsers
 
             Cache.GameCache.Game = gameElem;
 
+            if (gameElem != null)
+            {
+                playingGame = true;
+            }
+
             foreach (var gameChild in gameElem.children)
             {
                 if (gameChild.element_type.Equals("player"))

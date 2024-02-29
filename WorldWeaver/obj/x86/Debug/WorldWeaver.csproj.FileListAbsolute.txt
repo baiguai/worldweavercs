@@ -10,7 +10,6 @@
 /home/baiguai/Projects/WorldWeaver/WorldWeaver/bin/Debug/Newtonsoft.Json.dll
 /home/baiguai/Projects/WorldWeaver/WorldWeaver/bin/Debug/Newtonsoft.Json.xml
 /home/baiguai/Projects/WorldWeaver/WorldWeaver/obj/x86/Debug/WorldWeaver.csproj.CopyComplete
-/media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/bin/Debug//Games/darkworld.db.old
 /media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/bin/Debug//Games/readme.md
 /media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/bin/Debug//Config/ElementProcRules/ElementByType.json
 /media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/bin/Debug//Config/Commands/AdminParser.json
@@ -39,3 +38,5 @@
 /media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/obj/x86/Debug/WorldWeaver.pdb
 /media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/bin/Debug//Config/Init.json
 /media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/bin/Debug//GameSources/DarkWorld/player.nrmn
+/media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/bin/Debug//Games/DarkWorld.db
+/media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/bin/Debug//Games/DarkWorld_playing.db

@@ -2,9 +2,7 @@
     "elements" : [
         {
             "types" : [
-                "action",
-                "enter_action",
-                "exit_action"
+                "action"
             ],
             "elements" : [
                 "logicset",
@@ -20,8 +18,8 @@
             ],
             "elements" : [
                 "set_field",
-                "enter_message",
-                "enter_action",
+                "message",
+                "action",
                 "input"
             ]
         },
@@ -57,9 +55,7 @@
         },
         {
             "types" : [
-                "message",
-                "enter_message",
-                "exit_message"
+                "message"
             ],
             "elements" : [
                 "action",
@@ -80,12 +76,9 @@
                 "object"
             ],
             "elements" : [
-                "enter_logic",
-                "enter_action",
-                "enter_message",
-                "exit_logic",
-                "exit_action",
-                "exit_message"
+                "logic",
+                "action",
+                "message"
             ]
         },
         {
@@ -93,7 +86,7 @@
                 "player"
             ],
             "elements" : [
-                "enter_message"
+                "message"
             ]
         },
         {
@@ -101,13 +94,9 @@
                 "room"
             ],
             "elements" : [
-                "enter_logic",
-                "enter_action",
-                "enter_message",
-                "input",
-                "exit_logic",
-                "exit_action",
-                "exit_message"
+                "action",
+                "message",
+                "input"
             ]
         },
         {
@@ -123,7 +112,6 @@
                 "set_field"
             ],
             "elements" : [
-                "enter_message",
                 "message"
             ]
         },

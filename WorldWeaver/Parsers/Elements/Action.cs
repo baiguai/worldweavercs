@@ -14,7 +14,7 @@ namespace WorldWeaver.Parsers.Elements
             {
                 foreach (var proc in procItems)
                 {
-                    output = elem.ParseElement(output, gameDb, child, userInput, proc);
+                    output = elem.ParseElement(output, gameDb, currentElement, userInput, proc);
                 }
                 if (output.MatchMade)
                 {
