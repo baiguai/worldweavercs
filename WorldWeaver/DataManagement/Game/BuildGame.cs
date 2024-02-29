@@ -77,6 +77,8 @@ CREATE TABLE IF NOT EXISTS element (
     logic        BLOB,
     output       BLOB,
     tags         BLOB,
+    repeat_type  TEXT (200),
+    repeat_index NUMERIC DEFAULT (0),
     active       TEXT (100) DEFAULT ('1'),
     sort         NUMERIC    NOT NULL,
     create_date  TEXT (10)  NOT NULL,

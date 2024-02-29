@@ -26,10 +26,22 @@ namespace WorldWeaver.Parsers
                 }
 
                 var procItems = Tools.ProcFunctions.GetProcessStepsByType(gameElem.element_type);
-
                 foreach (var proc in procItems)
                 {
                     output = elemParser.ParseElement(output, gameDb, gameElem, userInput, proc);
+                }
+
+                procItems = Tools.ProcFunctions.GetProcessStepsByType(Cache.PlayerCache.Player.element_type);
+                foreach (var proc in procItems)
+                {
+                    output = elemParser.ParseElement(output, gameDb, Cache.PlayerCache.Player, userInput, proc);
+                }
+
+                var locElem = elemLogic.GetElementByKey(gameDb, Cache.PlayerCache.Player.location);
+                procItems = Tools.ProcFunctions.GetProcessStepsByType(locElem.element_type);
+                foreach (var proc in procItems)
+                {
+                    output = elemParser.ParseElement(output, gameDb, locElem, userInput, proc);
                 }
             }
             else

@@ -1,7 +1,21 @@
 ﻿{key=local_pub, name=Local Pub, type=room, parent=root
-    {type=enter_message
-        output={@
+    {type=messageset
+        {type=message
+            output={@
 You are sitting in your local pub.
+            }
+        }
+    }
+    
+    {key=local_pub_look, type=message
+        output={@
+You look around the local pub...
+        }
+    }
+    
+    
+    {type=input, syntax=\\b(look|l)\\b
+        {type=action, logic=local_pub_look
         }
     }
 }

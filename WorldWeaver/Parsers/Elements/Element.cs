@@ -31,21 +31,27 @@ namespace WorldWeaver.Parsers.Elements
                         }
                         break;
 
-                    case "enter_message":
-                        output = msg.ParseMessage(output, gameDb, child);
-                        break;
-
                     case "message":
                         output = msg.ParseMessage(output, gameDb, child);
                         break;
 
-                    case "enter_action":
-                        var action = new Parsers.Elements.Action();
-                        output = action.ParseAction(output, gameDb, child, userInput);
-                        break;
-
                     case "action":
-                        output = ParseElement(output, gameDb, child, userInput, proc);
+                        var action = new Parsers.Elements.Action();
+                        if (child.logic.Equals(""))
+                        {
+                            output = action.ParseAction(output, gameDb, child, userInput);
+                        }
+                        else
+                        {
+                            var el = new DataManagement.GameLogic.Element();
+                            var target = el.GetElementByKey(gameDb, child.logic);
+                            var procItems = Tools.ProcFunctions.GetProcessStepsByType(target.element_type);
+
+                            foreach (var actionProc in procItems)
+                            {
+                                output = ParseElement(output, gameDb, target, userInput, actionProc);
+                            }
+                        }
                         break;
 
                     case "move":

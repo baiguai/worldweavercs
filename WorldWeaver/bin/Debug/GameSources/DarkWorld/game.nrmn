@@ -1,14 +1,16 @@
 ﻿{key=game, name=Dark World, type=game, parent=root
     
-    {type=enter_message
+    {type=message
         output={@
 Something dark is happening throughout the continent of Aetherus.
 
 Welcome to DarkWorld.
+
+
         }
     }
     
-    {type=enter_action
+    {type=action
         {type=move, location=local_pub, tags=player }
     }
 }
