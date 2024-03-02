@@ -1,8 +1,13 @@
 ﻿{key=local_pub, name=Local Pub, type=room, parent=root
-    {type=messageset
+    {type=message, repeat=repeat
         {type=message
             output={@
 You are sitting in your local pub.
+            }
+        }
+        {type=message
+            output={@
+You are still sitting in the pub.
             }
         }
     }

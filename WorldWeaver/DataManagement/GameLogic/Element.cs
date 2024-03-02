@@ -21,12 +21,15 @@ SELECT
     logic,
     output,
     tags,
+    repeat_type,
+    repeat_index,
     active,
     sort
 FROM
     element
-WHERE
-    element_type = @type
+WHERE 1=1
+    AND element_type = @type
+    AND active = '1'
 ORDER BY
     sort
 ;
@@ -61,8 +64,9 @@ UPDATE
     element
 SET
     location = @newlocation
-WHERE
-    element_key = @elementkey
+WHERE 1=1
+    AND element_key = @elementkey
+    AND active = '1'
 ;
             ";
 
@@ -98,12 +102,15 @@ SELECT
     logic,
     output,
     tags,
+    repeat_type,
+    repeat_index,
     active,
     sort
 FROM
     element
-WHERE
-    element_key = @elementkey
+WHERE 1=1
+    AND element_key = @elementkey
+    AND active = '1'
 ;
             ";
 
@@ -133,12 +140,15 @@ SELECT
     logic,
     output,
     tags,
+    repeat_type,
+    repeat_index,
     active,
     sort
 FROM
     element
-WHERE
-    parent_key = @parentkey
+WHERE 1=1
+    AND parent_key = @parentkey
+    AND active = '1'
 ORDER BY
     sort
 ;
@@ -197,6 +207,8 @@ ORDER BY
                             if (reader["logic"] != DBNull.Value) { e.logic = reader.GetString(reader.GetOrdinal("logic")); }
                             if (reader["output"] != DBNull.Value) { e.output = reader.GetString(reader.GetOrdinal("output")); }
                             if (reader["tags"] != DBNull.Value) { e.tags = reader.GetString(reader.GetOrdinal("tags")); }
+                            e.repeat = reader.GetString(reader.GetOrdinal("repeat_type"));
+                            e.repeat_index = reader.GetInt32(reader.GetOrdinal("repeat_index"));
                             e.active = reader.GetString(reader.GetOrdinal("active"));
                             e.sort = reader.GetInt32(reader.GetOrdinal("sort"));
                             e.children = GetElementChildren(gameDb, reader.GetString(reader.GetOrdinal("element_key")));
@@ -252,6 +264,8 @@ ORDER BY
                             if (reader["logic"] != DBNull.Value) { e.logic = reader.GetString(reader.GetOrdinal("logic")); }
                             if (reader["output"] != DBNull.Value) { e.output = reader.GetString(reader.GetOrdinal("output")); }
                             if (reader["tags"] != DBNull.Value) { e.tags = reader.GetString(reader.GetOrdinal("tags")); }
+                            e.repeat = reader.GetString(reader.GetOrdinal("repeat_type"));
+                            e.repeat_index = reader.GetInt32(reader.GetOrdinal("repeat_index"));
                             e.active = reader.GetString(reader.GetOrdinal("active"));
                             e.sort = reader.GetInt32(reader.GetOrdinal("sort"));
                             e.children = GetElementChildren(gameDb, reader.GetString(reader.GetOrdinal("element_key")));
@@ -285,8 +299,9 @@ UPDATE
     element
 SET
     {field} = @newvalue
-WHERE
-    element_key = @elementkey
+WHERE 1=1
+    AND element_key = @elementkey
+    AND active = '1'
 ;
             ";
 
@@ -304,6 +319,72 @@ WHERE
 
                 connection.Close();
                 output = true;
+            }
+
+            return output;
+        }
+
+        public int GetRepeatIndex(string gameDb, string element_key)
+        {
+            var selectQuery = $@"
+SELECT
+    repeat_index
+FROM
+    element
+WHERE 1=1
+    AND element_key = @elementkey
+    AND active = '1'
+;
+            ";
+
+            var parms = new List<DbParameter>();
+            parms.Add(new DbParameter()
+            {
+                param_name = "@elementkey",
+                param_value = element_key
+            });
+
+
+            var output = GetInt(selectQuery, gameDb, parms);
+
+            return output;
+        }
+
+        private int GetInt(string selectQuery, string gameDb, List<DbParameter> parms)
+        {
+            var output = 0;
+
+            var gameFile = $"Games/{gameDb}";
+
+            if (!File.Exists(gameFile))
+            {
+                return output;
+            }
+
+            string connectionString = $"Data Source={gameFile};Version=3;";
+
+            using (SqliteConnection connection = new SqliteConnection(connectionString))
+            {
+                connection.Open();
+
+                using (SqliteCommand command = new SqliteCommand(selectQuery, connection))
+                {
+                    foreach (var parm in parms)
+                    {
+                        command.Parameters.AddWithValue(parm.param_name, parm.param_value);
+                    }
+
+                    using (SqliteDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            output = reader.GetInt32(0);
+                            break;
+                        }
+                    }
+                }
+
+                connection.Close();
             }
 
             return output;
