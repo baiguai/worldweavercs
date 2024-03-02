@@ -77,8 +77,8 @@ CREATE TABLE IF NOT EXISTS element (
     logic        BLOB,
     output       BLOB,
     tags         BLOB,
-    repeat_type  TEXT (200),
-    repeat_index NUMERIC DEFAULT (0),
+    repeat_type  TEXT (200) DEFAULT ('repeat'),
+    repeat_index NUMERIC DEFAULT (-1),
     active       TEXT (100) DEFAULT ('1'),
     sort         NUMERIC    NOT NULL,
     create_date  TEXT (10)  NOT NULL,
@@ -397,6 +397,11 @@ PRAGMA foreign_keys = on;
                         element.logic = ParseLogicField(element.logic);
                         break;
 
+                    case string s when line.ToLower().StartsWith("repeat=", StringComparison.OrdinalIgnoreCase):
+                        ix = GetFieldValue(element, lines, "repeat_type", ix);
+                        element.repeat = line.Replace("repeat=", "").SqlSafe();
+                        break;
+
                     case string s when line.ToLower().StartsWith("output=", StringComparison.OrdinalIgnoreCase):
                         ix = GetFieldValue(element, lines, "output", ix);
                         element.output = ParseOutputField(element.output);
@@ -523,6 +528,10 @@ PRAGMA foreign_keys = on;
 
                         case "syntax":
                             element.syntax = pairArr[1].Trim();
+                            break;
+
+                        case "repeat":
+                            element.repeat = pairArr[1].Trim();
                             break;
 
                         case "logic":

@@ -13,9 +13,11 @@ namespace WorldWeaver.Classes
         public string location { get; set; }
         public string syntax { get; set; }
         public string logic { get; set; }
+        public string repeat { get; set; } = "repeat";
+        public int repeat_index { get; set; } = 0;
         public string output { get; set; }
         public string tags { get; set; }
-        public string active { get; set; }
+        public string active { get; set; } = "1";
         public List<Element> children { get; set; }
         public int sort { get; set; } = 1;
         public string create_date { get; set; } = DateTime.Now.FormatDate();
