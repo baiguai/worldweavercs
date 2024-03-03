@@ -9,11 +9,11 @@ namespace WorldWeaver.Parsers.Elements
         {
             output.MatchMade = false;
 
-            Regex rgx = new Regex(currentElement.syntax, RegexOptions.IgnoreCase);
+            Regex rgx = new Regex(currentElement.Syntax, RegexOptions.IgnoreCase);
 
             if (rgx.IsMatch(userInput))
             {
-                switch (parentElement.element_type)
+                switch (parentElement.ElementType)
                 {
                     case "set_field":
                         var set_field = new SetField();

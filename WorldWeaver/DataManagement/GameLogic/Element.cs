@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using Mono.Data.Sqlite;
+using Microsoft.Data.Sqlite;
 using WorldWeaver.Classes;
 
 namespace WorldWeaver.DataManagement.GameLogic
@@ -38,8 +38,8 @@ ORDER BY
             var parms = new List<DbParameter>();
             parms.Add(new DbParameter()
             {
-                param_name = "@type",
-                param_value = type
+                ParamName = "@type",
+                ParamValue = type
             });
 
             var output = GetElements(selectQuery, gameDb, parms);
@@ -57,7 +57,7 @@ ORDER BY
                 return output;
             }
 
-            string connectionString = $"Data Source={gameFile};Version=3;";
+            string connectionString = $"Data Source={gameFile};Cache=Shared;";
 
             var updateQuery = $@"
 UPDATE
@@ -117,8 +117,8 @@ WHERE 1=1
             var parms = new List<DbParameter>();
             parms.Add(new DbParameter()
             {
-                param_name = "@elementkey",
-                param_value = element_key
+                ParamName = "@elementkey",
+                ParamValue = element_key
             });
 
 
@@ -157,8 +157,8 @@ ORDER BY
             var parms = new List<DbParameter>();
             parms.Add(new DbParameter()
             { 
-                param_name = "@parentkey",
-                param_value = parent_key
+                ParamName = "@parentkey",
+                ParamValue = parent_key
             });
 
 
@@ -179,7 +179,7 @@ ORDER BY
                 return output;
             }
 
-            string connectionString = $"Data Source={gameFile};Version=3;";
+            string connectionString = $"Data Source={gameFile};Cache=Shared;";
 
             using (SqliteConnection connection = new SqliteConnection(connectionString))
             {
@@ -189,7 +189,7 @@ ORDER BY
                 {
                     foreach (var parm in parms)
                     {
-                        command.Parameters.AddWithValue(parm.param_name, parm.param_value);
+                        command.Parameters.AddWithValue(parm.ParamName, parm.ParamValue);
                     }
 
                     using (SqliteDataReader reader = command.ExecuteReader())
@@ -198,20 +198,20 @@ ORDER BY
                         {
                             var e = new Classes.Element();
 
-                            e.element_type = reader.GetString(reader.GetOrdinal("element_type"));
-                            e.element_key = reader.GetString(reader.GetOrdinal("element_key"));
-                            if (reader["name"] != DBNull.Value) { e.name = reader.GetString(reader.GetOrdinal("name")); }
-                            e.parent_key = reader.GetString(reader.GetOrdinal("parent_key"));
-                            e.location = reader.GetString(reader.GetOrdinal("location"));
-                            if (reader["syntax"] != DBNull.Value) { e.syntax = reader.GetString(reader.GetOrdinal("syntax")); }
-                            if (reader["logic"] != DBNull.Value) { e.logic = reader.GetString(reader.GetOrdinal("logic")); }
-                            if (reader["output"] != DBNull.Value) { e.output = reader.GetString(reader.GetOrdinal("output")); }
-                            if (reader["tags"] != DBNull.Value) { e.tags = reader.GetString(reader.GetOrdinal("tags")); }
-                            e.repeat = reader.GetString(reader.GetOrdinal("repeat_type"));
-                            e.repeat_index = reader.GetInt32(reader.GetOrdinal("repeat_index"));
-                            e.active = reader.GetString(reader.GetOrdinal("active"));
-                            e.sort = reader.GetInt32(reader.GetOrdinal("sort"));
-                            e.children = GetElementChildren(gameDb, reader.GetString(reader.GetOrdinal("element_key")));
+                            e.ElementType = reader.GetString(reader.GetOrdinal("element_type"));
+                            e.ElementKey = reader.GetString(reader.GetOrdinal("element_key"));
+                            if (reader["name"] != DBNull.Value) { e.Name = reader.GetString(reader.GetOrdinal("name")); }
+                            e.ParentKey = reader.GetString(reader.GetOrdinal("parent_key"));
+                            e.Location = reader.GetString(reader.GetOrdinal("location"));
+                            if (reader["syntax"] != DBNull.Value) { e.Syntax = reader.GetString(reader.GetOrdinal("syntax")); }
+                            if (reader["logic"] != DBNull.Value) { e.Logic = reader.GetString(reader.GetOrdinal("logic")); }
+                            if (reader["output"] != DBNull.Value) { e.Output = reader.GetString(reader.GetOrdinal("output")); }
+                            if (reader["tags"] != DBNull.Value) { e.Tags = reader.GetString(reader.GetOrdinal("tags")); }
+                            e.Repeat = reader.GetString(reader.GetOrdinal("repeat_type"));
+                            e.RepeatIndex = reader.GetInt32(reader.GetOrdinal("repeat_index"));
+                            e.Active = reader.GetString(reader.GetOrdinal("active"));
+                            e.Sort = reader.GetInt32(reader.GetOrdinal("sort"));
+                            e.Children = GetElementChildren(gameDb, reader.GetString(reader.GetOrdinal("element_key")));
 
                             output = e;
                             break;
@@ -236,7 +236,7 @@ ORDER BY
                 return output;
             }
 
-            string connectionString = $"Data Source={gameFile};Version=3;";
+            string connectionString = $"Data Source={gameFile};Cache=Shared;";
 
             using (SqliteConnection connection = new SqliteConnection(connectionString))
             {
@@ -246,7 +246,7 @@ ORDER BY
                 {
                     foreach (var parm in parms)
                     {
-                        command.Parameters.AddWithValue(parm.param_name, parm.param_value);
+                        command.Parameters.AddWithValue(parm.ParamName, parm.ParamValue);
                     }
 
                     using (SqliteDataReader reader = command.ExecuteReader())
@@ -255,20 +255,20 @@ ORDER BY
                         {
                             var e = new Classes.Element();
 
-                            e.element_type = reader.GetString(reader.GetOrdinal("element_type"));
-                            e.element_key = reader.GetString(reader.GetOrdinal("element_key"));
-                            if (reader["name"] != DBNull.Value) { e.name = reader.GetString(reader.GetOrdinal("name")); }
-                            e.parent_key = reader.GetString(reader.GetOrdinal("parent_key"));
-                            e.location = reader.GetString(reader.GetOrdinal("location"));
-                            if (reader["syntax"] != DBNull.Value) { e.syntax = reader.GetString(reader.GetOrdinal("syntax")); }
-                            if (reader["logic"] != DBNull.Value) { e.logic = reader.GetString(reader.GetOrdinal("logic")); }
-                            if (reader["output"] != DBNull.Value) { e.output = reader.GetString(reader.GetOrdinal("output")); }
-                            if (reader["tags"] != DBNull.Value) { e.tags = reader.GetString(reader.GetOrdinal("tags")); }
-                            e.repeat = reader.GetString(reader.GetOrdinal("repeat_type"));
-                            e.repeat_index = reader.GetInt32(reader.GetOrdinal("repeat_index"));
-                            e.active = reader.GetString(reader.GetOrdinal("active"));
-                            e.sort = reader.GetInt32(reader.GetOrdinal("sort"));
-                            e.children = GetElementChildren(gameDb, reader.GetString(reader.GetOrdinal("element_key")));
+                            e.ElementType = reader.GetString(reader.GetOrdinal("element_type"));
+                            e.ElementKey = reader.GetString(reader.GetOrdinal("element_key"));
+                            if (reader["name"] != DBNull.Value) { e.Name = reader.GetString(reader.GetOrdinal("name")); }
+                            e.ParentKey = reader.GetString(reader.GetOrdinal("parent_key"));
+                            e.Location = reader.GetString(reader.GetOrdinal("location"));
+                            if (reader["syntax"] != DBNull.Value) { e.Syntax = reader.GetString(reader.GetOrdinal("syntax")); }
+                            if (reader["logic"] != DBNull.Value) { e.Logic = reader.GetString(reader.GetOrdinal("logic")); }
+                            if (reader["output"] != DBNull.Value) { e.Output = reader.GetString(reader.GetOrdinal("output")); }
+                            if (reader["tags"] != DBNull.Value) { e.Tags = reader.GetString(reader.GetOrdinal("tags")); }
+                            e.Repeat = reader.GetString(reader.GetOrdinal("repeat_type"));
+                            e.RepeatIndex = reader.GetInt32(reader.GetOrdinal("repeat_index"));
+                            e.Active = reader.GetString(reader.GetOrdinal("active"));
+                            e.Sort = reader.GetInt32(reader.GetOrdinal("sort"));
+                            e.Children = GetElementChildren(gameDb, reader.GetString(reader.GetOrdinal("element_key")));
 
                             output.Add(e);
                         }
@@ -292,7 +292,7 @@ ORDER BY
                 return output;
             }
 
-            string connectionString = $"Data Source={gameFile};Version=3;";
+            string connectionString = $"Data Source={gameFile};Cache=Shared;";
 
             var updateQuery = $@"
 UPDATE
@@ -340,8 +340,8 @@ WHERE 1=1
             var parms = new List<DbParameter>();
             parms.Add(new DbParameter()
             {
-                param_name = "@elementkey",
-                param_value = element_key
+                ParamName = "@elementkey",
+                ParamValue = element_key
             });
 
 
@@ -361,7 +361,7 @@ WHERE 1=1
                 return output;
             }
 
-            string connectionString = $"Data Source={gameFile};Version=3;";
+            string connectionString = $"Data Source={gameFile};Cache=Shared;";
 
             using (SqliteConnection connection = new SqliteConnection(connectionString))
             {
@@ -371,7 +371,7 @@ WHERE 1=1
                 {
                     foreach (var parm in parms)
                     {
-                        command.Parameters.AddWithValue(parm.param_name, parm.param_value);
+                        command.Parameters.AddWithValue(parm.ParamName, parm.ParamValue);
                     }
 
                     using (SqliteDataReader reader = command.ExecuteReader())

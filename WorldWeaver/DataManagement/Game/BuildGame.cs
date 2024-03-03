@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using Mono.Data.Sqlite;
+using Microsoft.Data.Sqlite;
 using Newtonsoft.Json.Linq;
 using WorldWeaver.Classes;
 using WorldWeaver.Tools;
@@ -13,7 +13,7 @@ namespace WorldWeaver.DataManagement.Game
     public class BuildGame
     {
         public int depth = 0;
-        public List<Element> elementsToInsert = new List<Element>();
+        public List<Classes.Element> elementsToInsert = new List<Classes.Element>();
         public int commitSize = 500;
 
         public bool CreateDatabase(string game_key)
@@ -28,7 +28,7 @@ namespace WorldWeaver.DataManagement.Game
 
             File.Create(gameFile);
 
-            string connectionString = $"Data Source={gameFile};Version=3;";
+            string connectionString = $"Data Source={gameFile};Cache=Shared;";
 
             using (SqliteConnection connection = new SqliteConnection(connectionString))
             {
@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS debuglog (
                            UNIQUE
                            NOT NULL,
     type        TEXT (100) NOT NULL,
-    parent_key  TEXT (200) NOT NULL,
+    ParentKey  TEXT (200) NOT NULL,
     parent_type TEXT (100),
     command_in  TEXT (500),
     output      BLOB,
@@ -66,18 +66,18 @@ CREATE TABLE IF NOT EXISTS debuglog (
 DROP TABLE IF EXISTS element;
 
 CREATE TABLE IF NOT EXISTS element (
-    element_type TEXT (200) NOT NULL,
-    element_key  TEXT (300) PRIMARY KEY
+    ElementType TEXT (200) NOT NULL,
+    ElementKey  TEXT (300) PRIMARY KEY
                             UNIQUE
                             NOT NULL,
     name         TEXT (300),
-    parent_key   TEXT (300) NOT NULL,
+    ParentKey   TEXT (300) NOT NULL,
     location     TEXT (300),
     syntax       TEXT (300),
     logic        BLOB,
     output       BLOB,
     tags         BLOB,
-    repeat_type  TEXT (200) DEFAULT ('repeat'),
+    repeat_type  TEXT (200),
     repeat_index NUMERIC DEFAULT (-1),
     active       TEXT (100) DEFAULT ('1'),
     sort         NUMERIC    NOT NULL,
@@ -137,11 +137,11 @@ CREATE INDEX IF NOT EXISTS ix_debuglog_output ON debuglog (
 );
 
 
--- Index: ix_debuglog_parent_key
-DROP INDEX IF EXISTS ix_debuglog_parent_key;
+-- Index: ix_debuglog_ParentKey
+DROP INDEX IF EXISTS ix_debuglog_ParentKey;
 
-CREATE INDEX IF NOT EXISTS ix_debuglog_parent_key ON debuglog (
-    parent_key
+CREATE INDEX IF NOT EXISTS ix_debuglog_ParentKey ON debuglog (
+    ParentKey
 );
 
 
@@ -161,19 +161,19 @@ CREATE INDEX IF NOT EXISTS ix_debuglog_type ON debuglog (
 );
 
 
--- Index: ix_element_element_key
-DROP INDEX IF EXISTS ix_element_element_key;
+-- Index: ix_element_ElementKey
+DROP INDEX IF EXISTS ix_element_ElementKey;
 
-CREATE UNIQUE INDEX IF NOT EXISTS ix_element_element_key ON element (
-    element_key
+CREATE UNIQUE INDEX IF NOT EXISTS ix_element_ElementKey ON element (
+    ElementKey
 );
 
 
--- Index: ix_element_element_type
-DROP INDEX IF EXISTS ix_element_element_type;
+-- Index: ix_element_ElementType
+DROP INDEX IF EXISTS ix_element_ElementType;
 
-CREATE INDEX IF NOT EXISTS ix_element_element_type ON element (
-    element_type
+CREATE INDEX IF NOT EXISTS ix_element_ElementType ON element (
+    ElementType
 );
 
 
@@ -185,14 +185,14 @@ CREATE INDEX IF NOT EXISTS ix_element_name ON element (
 );
 
 
--- Index: ix_element_parent_key
-DROP INDEX IF EXISTS ix_element_parent_key;
+-- Index: ix_element_ParentKey
+DROP INDEX IF EXISTS ix_element_ParentKey;
 
-CREATE INDEX IF NOT EXISTS ix_element_parent_key ON element (
-    parent_key
+CREATE INDEX IF NOT EXISTS ix_element_ParentKey ON element (
+    ParentKey
 );
 
--- Index: ix_element_parent_key
+-- Index: ix_element_ParentKey
 DROP INDEX IF EXISTS ix_element_location;
 
 CREATE INDEX IF NOT EXISTS ix_element_location ON element (
@@ -256,7 +256,7 @@ PRAGMA foreign_keys = on;
         private bool LoadGameFiles(string gameFile, string gameDirectory)
         {
             var success = false;
-            var connectionString = $"Data Source={gameFile};Version=3;";
+            var connectionString = $"Data Source={gameFile};Cache=Shared;";
 
             foreach (var dir in Directory.GetDirectories(gameDirectory))
             {
@@ -283,7 +283,7 @@ PRAGMA foreign_keys = on;
         {
             var success = false;
             var currentDepth = depth;
-            Element element = null;
+            Classes.Element element = null;
             var initRow = startLine;
             var currentRow = startLine;
 
@@ -313,26 +313,26 @@ PRAGMA foreign_keys = on;
 
                     if (element == null)
                     {
-                        element = new Element
+                        element = new Classes.Element
                         {
-                            parent_key = parentKey,
-                            sort = ix
+                            ParentKey = parentKey,
+                            Sort = ix
                         };
 
                         if (line.Length > 1)
                         {
                             element = ParseInlineProperties(element, line);
-                            if (element.parent_key == null)
+                            if (element.ParentKey == null)
                             {
-                                element.parent_key = parentKey;
+                                element.ParentKey = parentKey;
                             }
                         }
 
                         if (singleLine)
                         {
-                            if (element.element_key == null)
+                            if (element.ElementKey == null)
                             {
-                                element.element_key = Guid.NewGuid().ToString();
+                                element.ElementKey = Guid.NewGuid().ToString();
                             }
 
                             success = LoadElement(connectionString, element);
@@ -344,11 +344,11 @@ PRAGMA foreign_keys = on;
                     else
                     {
                         depth++;
-                        if (element.element_key == null)
+                        if (element.ElementKey == null)
                         {
-                            element.element_key = Guid.NewGuid().ToString();
+                            element.ElementKey = Guid.NewGuid().ToString();
                         }
-                        ix = ParseElement(connectionString, lines, element.element_key, ix);
+                        ix = ParseElement(connectionString, lines, element.ElementKey, ix);
                         depth--;
 
                         // This should never happen
@@ -369,42 +369,42 @@ PRAGMA foreign_keys = on;
                 switch (line)
                 {
                     case string s when line.ToLower().StartsWith("type=", StringComparison.OrdinalIgnoreCase):
-                        element.element_type = line.Replace("type=", "").SqlSafe();
+                        element.ElementType = line.Replace("type=", "").SqlSafe();
                         break;
 
                     case string s when line.ToLower().StartsWith("key=", StringComparison.OrdinalIgnoreCase):
-                        element.element_key = line.Replace("key=", "").SqlSafe();
+                        element.ElementKey = line.Replace("key=", "").SqlSafe();
                         break;
 
                     case string s when line.ToLower().StartsWith("name=", StringComparison.OrdinalIgnoreCase):
-                        element.name = line.Replace("name=", "").SqlSafe();
+                        element.Name = line.Replace("name=", "").SqlSafe();
                         break;
 
                     case string s when line.ToLower().StartsWith("parent=", StringComparison.OrdinalIgnoreCase):
-                        element.parent_key = line.Replace("parent=", "").SqlSafe();
+                        element.ParentKey = line.Replace("parent=", "").SqlSafe();
                         break;
 
                     case string s when line.ToLower().StartsWith("location=", StringComparison.OrdinalIgnoreCase):
-                        element.location = line.Replace("location=", "").SqlSafe();
+                        element.Location = line.Replace("location=", "").SqlSafe();
                         break;
 
                     case string s when line.ToLower().StartsWith("syntax=", StringComparison.OrdinalIgnoreCase):
-                        element.syntax = line.Replace("syntax=", "").SqlSafe();
+                        element.Syntax = line.Replace("syntax=", "").SqlSafe();
                         break;
 
                     case string s when line.ToLower().StartsWith("logic=", StringComparison.OrdinalIgnoreCase):
                         ix = GetFieldValue(element, lines, "logic", ix);
-                        element.logic = ParseLogicField(element.logic);
+                        element.Logic = ParseLogicField(element.Logic);
                         break;
 
                     case string s when line.ToLower().StartsWith("repeat=", StringComparison.OrdinalIgnoreCase):
                         ix = GetFieldValue(element, lines, "repeat_type", ix);
-                        element.repeat = line.Replace("repeat=", "").SqlSafe();
+                        element.Repeat = line.Replace("repeat=", "").SqlSafe();
                         break;
 
                     case string s when line.ToLower().StartsWith("output=", StringComparison.OrdinalIgnoreCase):
                         ix = GetFieldValue(element, lines, "output", ix);
-                        element.output = ParseOutputField(element.output);
+                        element.Output = ParseOutputField(element.Output);
                         break;
 
                     case string s when line.ToLower().StartsWith("tags=", StringComparison.OrdinalIgnoreCase):
@@ -412,11 +412,11 @@ PRAGMA foreign_keys = on;
                         break;
 
                     case string s when line.ToLower().StartsWith("active=", StringComparison.OrdinalIgnoreCase):
-                        element.active = line.Replace("active=", "");
+                        element.Active = line.Replace("active=", "");
                         break;
 
                     case string s when line.ToLower().StartsWith("sort=", StringComparison.OrdinalIgnoreCase):
-                        element.sort = Convert.ToInt32(line.Replace("sort=", ""));
+                        element.Sort = Convert.ToInt32(line.Replace("sort=", ""));
                         break;
 
                     case "}":
@@ -427,9 +427,9 @@ PRAGMA foreign_keys = on;
 
                         if (depth == currentDepth)
                         {
-                            if (element.element_key == null)
+                            if (element.ElementKey == null)
                             {
-                                element.element_key = Guid.NewGuid().ToString();
+                                element.ElementKey = Guid.NewGuid().ToString();
                             }
 
                             success = LoadElement(connectionString, element);
@@ -444,7 +444,7 @@ PRAGMA foreign_keys = on;
             return currentRow;
         }
 
-        private int GetFieldValue(Element element, List<string> lines, string fieldName, int startRow)
+        private int GetFieldValue(Classes.Element element, List<string> lines, string fieldName, int startRow)
         {
             var currentRow = startRow;
             var autoBreak = false;
@@ -494,7 +494,7 @@ PRAGMA foreign_keys = on;
             return currentRow;
         }
 
-        private Element ParseInlineProperties(Element element, string dataRow)
+        private Classes.Element ParseInlineProperties(Classes.Element element, string dataRow)
         {
             dataRow = dataRow.Replace("{", "");
             var arr = dataRow.Split(',');
@@ -507,51 +507,51 @@ PRAGMA foreign_keys = on;
                     switch (pairArr[0].Trim().ToLower())
                     {
                         case "key":
-                            element.element_key = pairArr[1].Trim();
+                            element.ElementKey = pairArr[1].Trim();
                             break;
 
                         case "type":
-                            element.element_type = pairArr[1].Trim();
+                            element.ElementType = pairArr[1].Trim();
                             break;
 
                         case "name":
-                            element.name = pairArr[1].Trim();
+                            element.Name = pairArr[1].Trim();
                             break;
 
                         case "parent":
-                            element.parent_key = pairArr[1].Trim();
+                            element.ParentKey = pairArr[1].Trim();
                             break;
 
                         case "location":
-                            element.location = pairArr[1].Trim();
+                            element.Location = pairArr[1].Trim();
                             break;
 
                         case "syntax":
-                            element.syntax = pairArr[1].Trim();
+                            element.Syntax = pairArr[1].Trim();
                             break;
 
                         case "repeat":
-                            element.repeat = pairArr[1].Trim();
+                            element.Repeat = pairArr[1].Trim();
                             break;
 
                         case "logic":
-                            element.logic = ParseLogicField(pairArr[1].Trim());
+                            element.Logic = ParseLogicField(pairArr[1].Trim());
                             break;
 
                         case "output":
-                            element.output = pairArr[1].Trim();
+                            element.Output = pairArr[1].Trim();
                             break;
 
                         case "tags":
-                            element.tags = pairArr[1].Trim();
+                            element.Tags = pairArr[1].Trim();
                             break;
 
                         case "active":
-                            element.active = pairArr[1].Trim();
+                            element.Active = pairArr[1].Trim();
                             break;
 
                         case "sort":
-                            element.sort = Convert.ToInt32(pairArr[1].Trim());
+                            element.Sort = Convert.ToInt32(pairArr[1].Trim());
                             break;
                     }
                 }
@@ -612,7 +612,7 @@ PRAGMA foreign_keys = on;
             return output;
         }
 
-        private bool LoadElement(string connectionString, Element element)
+        private bool LoadElement(string connectionString, Classes.Element element)
         {
             var success = false;
 
@@ -658,19 +658,19 @@ VALUES";
                 foreach (var e in elementsToInsert)
                 {
                     createDbQuery += $@"
-('{e.element_type}',
-'{e.element_key}',
-'{e.name}',
-'{e.parent_key}',
-'{e.location}',
-'{e.syntax}',
-'{e.logic}',
-'{e.output}',
-'{e.tags}',
-'{e.active}',
-'{e.sort}',
-'{e.create_date}',
-'{e.update_date}')";
+('{e.ElementType}',
+'{e.ElementKey}',
+'{e.Name}',
+'{e.ParentKey}',
+'{e.Location}',
+'{e.Syntax}',
+'{e.Logic}',
+'{e.Output}',
+'{e.Tags}',
+'{e.Active}',
+'{e.Sort}',
+'{e.CreateDate}',
+'{e.UpdateDate}')";
 
                     if (e.Equals(lastElem))
                     {

@@ -6,21 +6,21 @@ namespace WorldWeaver.Classes
 {
     public class Element
     {
-        public string element_type { get; set; }
-        public string element_key { get; set; }
-        public string name { get; set; }
-        public string parent_key { get; set; }
-        public string location { get; set; }
-        public string syntax { get; set; }
-        public string logic { get; set; }
-        public string repeat { get; set; } = "repeat";
-        public int repeat_index { get; set; } = 0;
-        public string output { get; set; }
-        public string tags { get; set; }
-        public string active { get; set; } = "1";
-        public List<Element> children { get; set; }
-        public int sort { get; set; } = 1;
-        public string create_date { get; set; } = DateTime.Now.FormatDate();
-        public string update_date { get; set; } = DateTime.Now.FormatDate();
+        public string ElementType { get; set; } = "";
+        public string ElementKey { get; set; } = "";
+        public string Name { get; set; } = "";
+        public string ParentKey { get; set; } = "";
+        public string Location { get; set; }= "";
+        public string Syntax { get; set; } = "";
+        public string Logic { get; set; } = "";
+        public string Repeat { get; set; } = "repeat";
+        public int RepeatIndex { get; set; } = 0;
+        public string Output { get; set; } = "";
+        public string Tags { get; set; } = "";
+        public string Active { get; set; } = "1";
+        public List<Element> Children { get; set; } = new List<Element>();
+        public int Sort { get; set; } = 1;
+        public string CreateDate { get; set; } = DateTime.Now.FormatDate();
+        public string UpdateDate { get; set; } = DateTime.Now.FormatDate();
     }
 }

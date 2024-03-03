@@ -6,76 +6,109 @@ namespace WorldWeaver.Parsers.Elements
 {
     public class Element
     {
-        public Classes.Output ParseElement(Classes.Output output, string gameDb, Classes.Element currentElement, string userInput, string proc)
+        public Classes.Output ParseElement(Classes.Output output, string gameDb, Classes.Element currentElement, string userInput, Classes.ElementProc procObj)
         {
             var input = new Parsers.Elements.Input();
             var msg = new Parsers.Elements.Message();
-            var rptType = currentElement.repeat;
+            var rptType = currentElement.Repeat;
             var index = -1;
             var handledMessage = false;
             var handledMove = false;
 
-            for (var ix = 0; ix < currentElement.children.Count; ix++)
+            foreach (var proc in procObj.ChildProcElements)
             {
-                var child = currentElement.children[ix];
-
-                if (!child.element_type.Equals(proc))
+                foreach (var child in currentElement.Children)
                 {
-                    continue;
-                }
+                    var currentIndex = 0;
+                    var currentType = "";
 
-                index = HandleRepeat(gameDb, currentElement, currentElement.children, rptType);
+                    if (!child.ElementType.Equals(proc))
+                    {
+                        continue;
+                    }
 
-                switch (child.element_type)
-                {
-                    case "input":
-                        if (output.MatchMade)
-                        {
-                            return output;
-                        }
+                    index = HandleRepeat(gameDb, child, child.Children, rptType);
 
-                        output = input.ParseInput(output, gameDb, currentElement, child, userInput);
-                        if (output.MatchMade)
-                        {
-                            return output;
-                        }
-                        break;
+                    if (child.ElementType.Equals(currentType))
+                    {
+                        currentIndex++;
+                    }
+                    else
+                    {
+                        currentType = child.ElementType;
+                        currentIndex = 0;
+                    }
 
-                    case "message":
-                        if (!handledMessage && ix == index)
-                        {
-                            output = msg.ParseMessage(output, gameDb, child);
-                            handledMessage = true;
-                        }
-                        break;
-
-                    case "action":
-                        var action = new Parsers.Elements.Action();
-                        if (child.logic.Equals(""))
-                        {
-                            output = action.ParseAction(output, gameDb, child, userInput);
-                        }
-                        else
-                        {
-                            var el = new DataManagement.GameLogic.Element();
-                            var target = el.GetElementByKey(gameDb, child.logic);
-                            var procItems = Tools.ProcFunctions.GetProcessStepsByType(target.element_type);
-
-                            foreach (var actionProc in procItems)
+                    switch (child.ElementType)
+                    {
+                        case "input":
+                            if (output.MatchMade)
                             {
-                                output = ParseElement(output, gameDb, target, userInput, actionProc);
+                                return output;
                             }
-                        }
-                        break;
 
-                    case "move":
-                        if (!handledMove && ix == index)
-                        {
-                            var move = new Parsers.Elements.Move();
-                            output = move.ParseMove(output, gameDb, child, userInput);
-                            handledMove = true;
-                        }
-                        break;
+                            if (!procObj.AllowRepeatOptions || currentIndex == index)
+                            {
+                                output = input.ParseInput(output, gameDb, currentElement, child, userInput);
+                                if (output.MatchMade)
+                                {
+                                    return output;
+                                }
+                            }
+                            break;
+
+                        case "message":
+                            if (!handledMessage && (!procObj.AllowRepeatOptions || currentIndex == index))
+                            {
+                                output = msg.ParseMessage(output, gameDb, child);
+                                if (!child.Output.Equals(""))
+                                {
+                                    handledMessage = true;
+                                }
+                            }
+                            break;
+
+                        case "action":
+                            if (!procObj.AllowRepeatOptions || currentIndex == index)
+                            {
+                                output = HandleAction(output, gameDb, child, userInput);
+                            }
+                            break;
+
+                        case "move":
+                            if (!procObj.AllowRepeatOptions || currentIndex == index)
+                            {
+                                if (!handledMove && currentIndex == index)
+                                {
+                                    var move = new Parsers.Elements.Move();
+                                    output = move.ParseMove(output, gameDb, child, userInput);
+                                    handledMove = true;
+                                }
+                            }
+                            break;
+                    }
+                }
+            }
+
+            return output;
+        }
+
+        private Output HandleAction(Output output, string gameDb, Classes.Element child, string userInput)
+        {
+            var action = new Parsers.Elements.Action();
+            if (child.Logic.Equals(""))
+            {
+                output = action.ParseAction(output, gameDb, child, userInput);
+            }
+            else
+            {
+                var el = new DataManagement.GameLogic.Element();
+                var target = el.GetElementByKey(gameDb, child.Logic);
+                var procItems = Tools.ProcFunctions.GetProcessStepsByType(target.ElementType);
+
+                foreach (var actionProc in procItems)
+                {
+                    output = ParseElement(output, gameDb, target, userInput, actionProc);
                 }
             }
 
@@ -86,7 +119,12 @@ namespace WorldWeaver.Parsers.Elements
         {
             var output = 0;
             DataManagement.GameLogic.Element dbElem = new DataManagement.GameLogic.Element();
-            var index = currentElement.repeat_index;
+            var index = currentElement.RepeatIndex;
+
+            if (children.Count < 2)
+            {
+                return 0;
+            }
 
             switch (rptType.Trim().ToLower())
             {
@@ -131,8 +169,8 @@ namespace WorldWeaver.Parsers.Elements
                     break;
             }
 
-            currentElement.repeat_index = output;
-            dbElem.SetElementField(gameDb, currentElement.element_key, "repeat_index", output.ToString());
+            currentElement.RepeatIndex = output;
+            dbElem.SetElementField(gameDb, currentElement.ElementKey, "repeat_index", output.ToString());
             return output;
         }
     }

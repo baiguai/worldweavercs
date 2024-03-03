@@ -110,9 +110,9 @@ namespace WorldWeaver.Parsers
                 playingGame = true;
             }
 
-            foreach (var gameChild in gameElem.children)
+            foreach (var gameChild in gameElem.Children)
             {
-                if (gameChild.element_type.Equals("player"))
+                if (gameChild.ElementType.Equals("player"))
                 {
                     Cache.PlayerCache.Player = gameChild;
                     break;
@@ -146,7 +146,7 @@ namespace WorldWeaver.Parsers
                 var logic = new DataManagement.GameLogic.Element();
                 var player = logic.GetElementsByType(gameDb, "player");
 
-                if (player[0].name.Equals(""))
+                if (player[0].Name.Equals(""))
                 {
                     output.OutputText = $@"
 To specify your player name use:

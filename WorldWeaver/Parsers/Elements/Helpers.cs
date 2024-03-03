@@ -7,9 +7,9 @@ namespace WorldWeaver.Parsers.Elements
         {
             var output = false;
 
-            foreach (var child in element.children)
+            foreach (var child in element.Children)
             { 
-                if (child.element_type.Equals("enter_message"))
+                if (child.ElementType.Equals("enter_message"))
                 {
                     return true;
                 }
@@ -22,9 +22,9 @@ namespace WorldWeaver.Parsers.Elements
         {
             Classes.Element output = null;
 
-            foreach (var child in currentElement.children)
+            foreach (var child in currentElement.Children)
             { 
-                if (child.element_type.Equals(type))
+                if (child.ElementType.Equals(type))
                 {
                     return child;
                 }

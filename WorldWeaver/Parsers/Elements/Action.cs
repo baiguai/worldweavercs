@@ -8,9 +8,9 @@ namespace WorldWeaver.Parsers.Elements
         internal Classes.Output ParseAction(Output output, string gameDb, Classes.Element currentElement, string userInput)
         {
             var elem = new Parsers.Elements.Element();
-            var procItems = Tools.ProcFunctions.GetProcessStepsByType(currentElement.element_type);
+            var procItems = Tools.ProcFunctions.GetProcessStepsByType(currentElement.ElementType);
 
-            foreach (var child in currentElement.children)
+            foreach (var child in currentElement.Children)
             {
                 foreach (var proc in procItems)
                 {

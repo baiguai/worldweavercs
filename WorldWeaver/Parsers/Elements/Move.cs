@@ -7,7 +7,7 @@ namespace WorldWeaver.Parsers.Elements
         {
             var moveDb = new DataManagement.GameLogic.Move();
 
-            output = moveDb.MoveElement(output, gameDb, moveElement.location, moveElement.tags, userInput);
+            output = moveDb.MoveElement(output, gameDb, moveElement.Location, moveElement.Tags, userInput);
 
             return output;
         }

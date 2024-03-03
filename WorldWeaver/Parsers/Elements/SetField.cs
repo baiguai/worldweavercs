@@ -8,7 +8,7 @@ namespace WorldWeaver.Parsers.Elements
         public Classes.Output DoMatch(string gameDb, Classes.Element parentElement, Classes.Element currentElement, string userInput)
         {
             var output = new Classes.Output();
-            var logicArr = currentElement.logic.Split('|');
+            var logicArr = currentElement.Logic.Split('|');
 
             output.OutputText = "false";
 
@@ -24,11 +24,11 @@ namespace WorldWeaver.Parsers.Elements
                 if (success)
                 {
                     Message msg = new Message();
-                    foreach (var elem in parentElement.children)
+                    foreach (var elem in parentElement.Children)
                     { 
-                        if (elem.element_type.Equals("message"))
+                        if (elem.ElementType.Equals("message"))
                         {
-                            output.OutputText = elem.output.OutputFormat();
+                            output.OutputText = elem.Output.OutputFormat();
                         }
                     }
                 }
