@@ -1,20 +1,20 @@
 ﻿{key=local_pub, name=Local Pub, type=room, parent=root
-    {type=message, repeat=repeat
-        {type=message
-            output={@
+    {type=message
+        output={@
 You are sitting in your local pub.
-            }
-        }
-        {type=message
-            output={@
-You are still sitting in the pub.
-            }
         }
     }
-    
-    {key=local_pub_look, type=message
-        output={@
+
+    {key=local_pub_look, type=message, repeat=repeat
+        {type=message
+            output={@
 You look around the local pub...
+            }
+        }
+        {type=message
+            output={@
+You look around the local pub again...
+            }
         }
     }
     

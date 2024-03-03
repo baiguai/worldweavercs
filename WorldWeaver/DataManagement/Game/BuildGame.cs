@@ -19,7 +19,7 @@ namespace WorldWeaver.DataManagement.Game
         public bool CreateDatabase(string game_key)
         {
             var success = false;
-            var gameFile = $"Games/{game_key.FileSafe()}.db";
+            var gameFile = $"{AppDomain.CurrentDomain.BaseDirectory}/Games/{game_key.FileSafe()}.db";
 
             if (File.Exists(gameFile))
             {
