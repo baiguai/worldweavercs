@@ -1,0 +1,76 @@
+{
+  "format": 1,
+  "restore": {
+    "/media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/WorldWeaver.csproj": {}
+  },
+  "projects": {
+    "/media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/WorldWeaver.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/WorldWeaver.csproj",
+        "projectName": "WorldWeaver",
+        "projectPath": "/media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/WorldWeaver.csproj",
+        "packagesPath": "/home/baiguai/.nuget/packages/",
+        "outputPath": "/media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/baiguai/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Microsoft.Data.Sqlite": {
+              "target": "Package",
+              "version": "[8.0.2, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.3, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/8.0.200/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

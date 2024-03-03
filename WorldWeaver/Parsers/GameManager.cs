@@ -16,29 +16,29 @@ namespace WorldWeaver.Parsers
                 var gameElem = elemLogic.GetElementsByType(gameDb, "game")[0];
                 Cache.GameCache.Game = gameElem;
 
-                foreach (var gameChild in gameElem.children)
+                foreach (var gameChild in gameElem.Children)
                 { 
-                    if (gameChild.element_type.Equals("player"))
+                    if (gameChild.ElementType.Equals("player"))
                     {
                         Cache.PlayerCache.Player = gameChild;
                         break;
                     }
                 }
 
-                var procItems = Tools.ProcFunctions.GetProcessStepsByType(gameElem.element_type);
+                var procItems = Tools.ProcFunctions.GetProcessStepsByType(gameElem.ElementType);
                 foreach (var proc in procItems)
                 {
                     output = elemParser.ParseElement(output, gameDb, gameElem, userInput, proc);
                 }
 
-                procItems = Tools.ProcFunctions.GetProcessStepsByType(Cache.PlayerCache.Player.element_type);
+                procItems = Tools.ProcFunctions.GetProcessStepsByType(Cache.PlayerCache.Player.ElementType);
                 foreach (var proc in procItems)
                 {
                     output = elemParser.ParseElement(output, gameDb, Cache.PlayerCache.Player, userInput, proc);
                 }
 
-                var locElem = elemLogic.GetElementByKey(gameDb, Cache.PlayerCache.Player.location);
-                procItems = Tools.ProcFunctions.GetProcessStepsByType(locElem.element_type);
+                var locElem = elemLogic.GetElementByKey(gameDb, Cache.PlayerCache.Player.Location);
+                procItems = Tools.ProcFunctions.GetProcessStepsByType(locElem.ElementType);
                 foreach (var proc in procItems)
                 {
                     output = elemParser.ParseElement(output, gameDb, locElem, userInput, proc);
@@ -46,15 +46,15 @@ namespace WorldWeaver.Parsers
             }
             else
             {
-                if (!Cache.PlayerCache.Player.name.Equals(""))
+                if (!Cache.PlayerCache.Player.Name.Equals(""))
                 {
                     var logic = new DataManagement.GameLogic.Element();
                     var player = logic.GetElementByKey(gameDb, "player");
 
-                    if (player.location.Equals(""))
+                    if (player.Location.Equals(""))
                     {
                         var gameElem = logic.GetElementByKey(gameDb, gameKey);
-                        var procItems = Tools.ProcFunctions.GetProcessStepsByType(gameElem.element_type);
+                        var procItems = Tools.ProcFunctions.GetProcessStepsByType(gameElem.ElementType);
 
                         foreach (var proc in procItems)
                         {
@@ -63,8 +63,8 @@ namespace WorldWeaver.Parsers
                     }
                     else
                     {
-                        var locElem = logic.GetElementByKey(gameDb, player.location);
-                        var procItems = Tools.ProcFunctions.GetProcessStepsByType(locElem.element_type);
+                        var locElem = logic.GetElementByKey(gameDb, player.Location);
+                        var procItems = Tools.ProcFunctions.GetProcessStepsByType(locElem.ElementType);
 
                         foreach (var proc in procItems)
                         {

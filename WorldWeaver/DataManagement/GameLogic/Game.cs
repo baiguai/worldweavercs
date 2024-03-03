@@ -1,6 +1,6 @@
 ﻿using System;
 using System.IO;
-using Mono.Data.Sqlite;
+using Microsoft.Data.Sqlite;
 
 namespace WorldWeaver.DataManagement.GameLogic
 {
@@ -16,7 +16,7 @@ namespace WorldWeaver.DataManagement.GameLogic
                 return "";
             }
 
-            string connectionString = $"Data Source={gameFile};Version=3;";
+            string connectionString = $"Data Source={gameFile};Cache=Shared;";
 
             string selectQuery = @"
 SELECT

@@ -29,9 +29,9 @@ namespace WorldWeaver.Tools
             return output;
         }
 
-        public static List<string> GetProcessStepsByType(string type)
+        public static List<Classes.ElementProc> GetProcessStepsByType(string type)
         {
-            var output = new List<string>();
+            var output = new List<Classes.ElementProc>();
 
             using (StreamReader r = new StreamReader($"Config/ElementProcRules/ElementByType.json"))
             {
@@ -44,8 +44,14 @@ namespace WorldWeaver.Tools
 
                     if (types.Contains(type))
                     {
+                        var proc = new Classes.ElementProc();
+                        proc.CurrentElementTypes.Add(type);
                         var els = JArray.Parse(tp["elements"].ToString());
-                        output = els.ToObject<List<string>>();
+                        var rpt = (tp["repeat_options"].ToString() == "true") ? true : false;
+                        proc.ChildProcElements = els.ToObject<List<string>>();
+                        proc.AllowRepeatOptions = rpt;
+
+                        output.Add(proc);
                         break;
                     }
                 }

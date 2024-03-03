@@ -20,7 +20,7 @@ namespace WorldWeaver.DataManagement.GameLogic
             if (success)
             {
                 var locElem = elemDb.GetElementByKey(gameDb, location);
-                var procItems = Tools.ProcFunctions.GetProcessStepsByType(locElem.element_type);
+                var procItems = Tools.ProcFunctions.GetProcessStepsByType(locElem.ElementType);
 
                 foreach (var proc in procItems)
                 {
