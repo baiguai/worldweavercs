@@ -58,3 +58,4 @@
 /media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/obj/Debug/net8.0/WorldWeaver.pdb
 /media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/obj/Debug/net8.0/WorldWeaver.genruntimeconfig.cache
 /media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/obj/Debug/net8.0/ref/WorldWeaver.dll
+/media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/obj/Debug/net8.0/WorldWeaver.sourcelink.json

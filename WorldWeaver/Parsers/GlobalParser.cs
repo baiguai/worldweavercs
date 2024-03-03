@@ -13,7 +13,7 @@ namespace WorldWeaver.Parsers
 {
     public class GlobalParser
     {
-        public string playerInput;
+        public string playerInput = "";
 
         public Classes.Output ParseInput(string input)
         {

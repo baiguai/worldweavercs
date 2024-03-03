@@ -1,0 +1,36 @@
+﻿<Properties StartupConfiguration="{A3B8FA8E-74CC-45DE-B68E-5EAC42D02E59}|Default">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Parsers/Elements/Element.cs">
+    <Files>
+      <File FileName="Parsers/Elements/Element.cs" Line="42" Column="48" />
+      <File FileName="Tools/ProcFunctions.cs" Line="32" Column="70" />
+      <File FileName="Config/ElementProcRules/ElementByType.json" Line="5" Column="25" />
+      <File FileName="Parsers/Elements/Action.cs" Line="17" Column="41" />
+      <File FileName="Parsers/Elements/Move.cs" Line="10" Column="1" />
+      <File FileName="Parsers/Elements/Message.cs" Line="20" Column="1" />
+      <File FileName="Admin/GameSources/DarkWorld/game.nrmn" Line="1" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="WorldWeaver" expanded="True">
+            <Node name="WorldWeaver" expanded="True" />
+          </Node>
+        </State>
+      </Pad>
+      <Pad Id="MonoDevelop.Debugger.WatchPad">
+        <State />
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.ItemProperties.WorldWeaver PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore>
+      <Breakpoint file="/media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/Parsers/Elements/Element.cs" relfile="Parsers/Elements/Element.cs" line="61" column="27" />
+      <Breakpoint file="/media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/Parsers/Elements/Element.cs" relfile="Parsers/Elements/Element.cs" line="80" column="26" />
+      <Breakpoint file="/media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/Parsers/Elements/Message.cs" relfile="Parsers/Elements/Message.cs" line="7" column="10" />
+    </BreakpointStore>
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>
