@@ -12,24 +12,24 @@ namespace WorldWeaver.DataManagement.GameLogic
         {
             var selectQuery = $@"
 SELECT
-    element_type,
-    element_key,
-    name,
-    parent_key,
-    location,
-    syntax,
-    logic,
-    output,
-    tags,
-    repeat_type,
-    repeat_index,
-    active,
-    sort
+    ElementType,
+    ElementKey,
+    Name,
+    ParentKey,
+    Location,
+    Syntax,
+    Logic,
+    Output,
+    Tags,
+    Repeat,
+    RepeatIndex,
+    Active,
+    Sort
 FROM
     element
 WHERE 1=1
-    AND element_type = @type
-    AND active = '1'
+    AND ElementType = @type
+    AND Active = '1'
 ORDER BY
     sort
 ;
@@ -63,10 +63,10 @@ ORDER BY
 UPDATE
     element
 SET
-    location = @newlocation
+    Location = @newlocation
 WHERE 1=1
-    AND element_key = @elementkey
-    AND active = '1'
+    AND ElementKey = @elementkey
+    AND Active = '1'
 ;
             ";
 
@@ -93,24 +93,24 @@ WHERE 1=1
         {
             var selectQuery = $@"
 SELECT
-    element_type,
-    element_key,
-    name,
-    parent_key,
-    location,
-    syntax,
-    logic,
-    output,
-    tags,
-    repeat_type,
-    repeat_index,
-    active,
-    sort
+    ElementType,
+    ElementKey,
+    Name,
+    ParentKey,
+    Location,
+    Syntax,
+    Logic,
+    Output,
+    Tags,
+    Repeat,
+    RepeatIndex,
+    Active,
+    Sort
 FROM
     element
 WHERE 1=1
-    AND element_key = @elementkey
-    AND active = '1'
+    AND ElementKey = @elementkey
+    AND Active = '1'
 ;
             ";
 
@@ -131,26 +131,26 @@ WHERE 1=1
         {
             var selectQuery = $@"
 SELECT
-    element_type,
-    element_key,
-    name,
-    parent_key,
-    location,
-    syntax,
-    logic,
-    output,
-    tags,
-    repeat_type,
-    repeat_index,
-    active,
-    sort
+    ElementType,
+    ElementKey,
+    Name,
+    ParentKey,
+    Location,
+    Syntax,
+    Logic,
+    Output,
+    Tags,
+    Repeat,
+    RepeatIndex,
+    Active,
+    Sort
 FROM
     element
 WHERE 1=1
-    AND parent_key = @parentkey
-    AND active = '1'
+    AND ParentKey = @parentkey
+    AND Active = '1'
 ORDER BY
-    sort
+    Sort
 ;
             ";
 
@@ -198,20 +198,20 @@ ORDER BY
                         {
                             var e = new Classes.Element();
 
-                            e.ElementType = reader.GetString(reader.GetOrdinal("element_type"));
-                            e.ElementKey = reader.GetString(reader.GetOrdinal("element_key"));
-                            if (reader["name"] != DBNull.Value) { e.Name = reader.GetString(reader.GetOrdinal("name")); }
-                            e.ParentKey = reader.GetString(reader.GetOrdinal("parent_key"));
-                            e.Location = reader.GetString(reader.GetOrdinal("location"));
-                            if (reader["syntax"] != DBNull.Value) { e.Syntax = reader.GetString(reader.GetOrdinal("syntax")); }
-                            if (reader["logic"] != DBNull.Value) { e.Logic = reader.GetString(reader.GetOrdinal("logic")); }
-                            if (reader["output"] != DBNull.Value) { e.Output = reader.GetString(reader.GetOrdinal("output")); }
-                            if (reader["tags"] != DBNull.Value) { e.Tags = reader.GetString(reader.GetOrdinal("tags")); }
-                            e.Repeat = reader.GetString(reader.GetOrdinal("repeat_type"));
-                            e.RepeatIndex = reader.GetInt32(reader.GetOrdinal("repeat_index"));
-                            e.Active = reader.GetString(reader.GetOrdinal("active"));
-                            e.Sort = reader.GetInt32(reader.GetOrdinal("sort"));
-                            e.Children = GetElementChildren(gameDb, reader.GetString(reader.GetOrdinal("element_key")));
+                            e.ElementType = reader.GetString(reader.GetOrdinal("ElementType"));
+                            e.ElementKey = reader.GetString(reader.GetOrdinal("ElementKey"));
+                            if (reader["Name"] != DBNull.Value) { e.Name = reader.GetString(reader.GetOrdinal("Name")); }
+                            e.ParentKey = reader.GetString(reader.GetOrdinal("ParentKey"));
+                            e.Location = reader.GetString(reader.GetOrdinal("Location"));
+                            if (reader["Syntax"] != DBNull.Value) { e.Syntax = reader.GetString(reader.GetOrdinal("Syntax")); }
+                            if (reader["Logic"] != DBNull.Value) { e.Logic = reader.GetString(reader.GetOrdinal("Logic")); }
+                            if (reader["Output"] != DBNull.Value) { e.Output = reader.GetString(reader.GetOrdinal("Output")); }
+                            if (reader["Tags"] != DBNull.Value) { e.Tags = reader.GetString(reader.GetOrdinal("Tags")); }
+                            if (reader["Repeat"] != DBNull.Value) { e.Repeat = reader.GetString(reader.GetOrdinal("Repeat")); }
+                            e.RepeatIndex = reader.GetInt32(reader.GetOrdinal("RepeatIndex"));
+                            e.Active = reader.GetString(reader.GetOrdinal("Active"));
+                            e.Sort = reader.GetInt32(reader.GetOrdinal("Sort"));
+                            e.Children = GetElementChildren(gameDb, reader.GetString(reader.GetOrdinal("ElementKey")));
 
                             output = e;
                             break;
@@ -255,20 +255,20 @@ ORDER BY
                         {
                             var e = new Classes.Element();
 
-                            e.ElementType = reader.GetString(reader.GetOrdinal("element_type"));
-                            e.ElementKey = reader.GetString(reader.GetOrdinal("element_key"));
-                            if (reader["name"] != DBNull.Value) { e.Name = reader.GetString(reader.GetOrdinal("name")); }
-                            e.ParentKey = reader.GetString(reader.GetOrdinal("parent_key"));
-                            e.Location = reader.GetString(reader.GetOrdinal("location"));
-                            if (reader["syntax"] != DBNull.Value) { e.Syntax = reader.GetString(reader.GetOrdinal("syntax")); }
-                            if (reader["logic"] != DBNull.Value) { e.Logic = reader.GetString(reader.GetOrdinal("logic")); }
-                            if (reader["output"] != DBNull.Value) { e.Output = reader.GetString(reader.GetOrdinal("output")); }
-                            if (reader["tags"] != DBNull.Value) { e.Tags = reader.GetString(reader.GetOrdinal("tags")); }
-                            e.Repeat = reader.GetString(reader.GetOrdinal("repeat_type"));
-                            e.RepeatIndex = reader.GetInt32(reader.GetOrdinal("repeat_index"));
-                            e.Active = reader.GetString(reader.GetOrdinal("active"));
-                            e.Sort = reader.GetInt32(reader.GetOrdinal("sort"));
-                            e.Children = GetElementChildren(gameDb, reader.GetString(reader.GetOrdinal("element_key")));
+                            e.ElementType = reader.GetString(reader.GetOrdinal("ElementType"));
+                            e.ElementKey = reader.GetString(reader.GetOrdinal("ElementKey"));
+                            if (reader["Name"] != DBNull.Value) { e.Name = reader.GetString(reader.GetOrdinal("Name")); }
+                            e.ParentKey = reader.GetString(reader.GetOrdinal("ParentKey"));
+                            e.Location = reader.GetString(reader.GetOrdinal("Location"));
+                            if (reader["Syntax"] != DBNull.Value) { e.Syntax = reader.GetString(reader.GetOrdinal("Syntax")); }
+                            if (reader["Logic"] != DBNull.Value) { e.Logic = reader.GetString(reader.GetOrdinal("Logic")); }
+                            if (reader["Output"] != DBNull.Value) { e.Output = reader.GetString(reader.GetOrdinal("Output")); }
+                            if (reader["Tags"] != DBNull.Value) { e.Tags = reader.GetString(reader.GetOrdinal("Tags")); }
+                            if (reader["Repeat"] != DBNull.Value) { e.Repeat = reader.GetString(reader.GetOrdinal("Repeat")); }
+                            e.RepeatIndex = reader.GetInt32(reader.GetOrdinal("RepeatIndex"));
+                            e.Active = reader.GetString(reader.GetOrdinal("Active"));
+                            e.Sort = reader.GetInt32(reader.GetOrdinal("Sort"));
+                            e.Children = GetElementChildren(gameDb, reader.GetString(reader.GetOrdinal("ElementKey")));
 
                             output.Add(e);
                         }
@@ -300,8 +300,8 @@ UPDATE
 SET
     {field} = @newvalue
 WHERE 1=1
-    AND element_key = @elementkey
-    AND active = '1'
+    AND ElementKey = @elementkey
+    AND Active = '1'
 ;
             ";
 
@@ -328,12 +328,12 @@ WHERE 1=1
         {
             var selectQuery = $@"
 SELECT
-    repeat_index
+    RepeatIndex
 FROM
     element
 WHERE 1=1
-    AND element_key = @elementkey
-    AND active = '1'
+    AND ElementKey = @elementkey
+    AND Active = '1'
 ;
             ";
 

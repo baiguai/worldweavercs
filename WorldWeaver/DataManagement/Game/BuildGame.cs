@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -19,7 +20,7 @@ namespace WorldWeaver.DataManagement.Game
         public bool CreateDatabase(string game_key)
         {
             var success = false;
-            var gameFile = $"{AppDomain.CurrentDomain.BaseDirectory}/Games/{game_key.FileSafe()}.db";
+            var gameFile = $"{Environment.CurrentDirectory}/Games/{game_key.FileSafe()}.db";
 
             if (File.Exists(gameFile))
             {
@@ -47,18 +48,18 @@ BEGIN TRANSACTION;
 DROP TABLE IF EXISTS debuglog;
 
 CREATE TABLE IF NOT EXISTS debuglog (
-    debuglog_id TEXT (100) PRIMARY KEY
+    DebuglogId TEXT (100) PRIMARY KEY
                            UNIQUE
                            NOT NULL,
-    type        TEXT (100) NOT NULL,
+    Type        TEXT (100) NOT NULL,
     ParentKey  TEXT (200) NOT NULL,
-    parent_type TEXT (100),
-    command_in  TEXT (500),
-    output      BLOB,
-    logic       BLOB,
-    message     BLOB,
-    create_date TEXT (10)  NOT NULL,
-    update_date TEXT (10)  NOT NULL
+    ParentType TEXT (100),
+    CommandIn  TEXT (500),
+    Output      BLOB,
+    Logic       BLOB,
+    Message     BLOB,
+    CreateDate TEXT (10)  NOT NULL,
+    UpdateDate TEXT (10)  NOT NULL
 );
 
 
@@ -70,40 +71,40 @@ CREATE TABLE IF NOT EXISTS element (
     ElementKey  TEXT (300) PRIMARY KEY
                             UNIQUE
                             NOT NULL,
-    name         TEXT (300),
+    Name         TEXT (300),
     ParentKey   TEXT (300) NOT NULL,
-    location     TEXT (300),
-    syntax       TEXT (300),
-    logic        BLOB,
-    output       BLOB,
-    tags         BLOB,
-    repeat_type  TEXT (200),
-    repeat_index NUMERIC DEFAULT (-1),
-    active       TEXT (100) DEFAULT ('1'),
-    sort         NUMERIC    NOT NULL,
-    create_date  TEXT (10)  NOT NULL,
-    update_date  TEXT (10)  NOT NULL
+    Location     TEXT (300),
+    Syntax       TEXT (300),
+    Logic        BLOB,
+    Output       BLOB,
+    Tags         BLOB,
+    Repeat       TEXT (200),
+    RepeatIndex NUMERIC DEFAULT (-1),
+    Active       TEXT (100) DEFAULT ('1'),
+    Sort         NUMERIC    NOT NULL,
+    CreateDate  TEXT (10)  NOT NULL,
+    UpdateDate  TEXT (10)  NOT NULL
 );
 
 -- Table: gamestate
 DROP TABLE IF EXISTS gamestate;
 
 CREATE TABLE IF NOT EXISTS gamestate (
-    gamestate_id TEXT (200) PRIMARY KEY
+    GamestateId TEXT (200) PRIMARY KEY
                             UNIQUE
                             NOT NULL,
-    game_started INTEGER    DEFAULT (0) 
+    GameStarted INTEGER    DEFAULT (0) 
                             NOT NULL,
-    create_date  TEXT (10)  NOT NULL,
-    update_date  TEXT (10)  NOT NULL
+    CreateDate  TEXT (10)  NOT NULL,
+    UpdateDate  TEXT (10)  NOT NULL
 );
 
 
 INSERT INTO gamestate (
-  gamestate_id,
-  game_started,
-  create_date,
-  update_date
+  GamestateId,
+  GameStarted,
+  CreateDate,
+  UpdateDate
 )
 VALUES (
   '{Guid.NewGuid()}',
@@ -113,27 +114,27 @@ VALUES (
 );
 
 
--- Index: ix_debuglog_command_in
-DROP INDEX IF EXISTS ix_debuglog_command_in;
+-- Index: ix_debuglog_CommandIn
+DROP INDEX IF EXISTS ix_debuglog_CommandIn;
 
-CREATE INDEX IF NOT EXISTS ix_debuglog_command_in ON debuglog (
-    command_in
+CREATE INDEX IF NOT EXISTS ix_debuglog_CommandIn ON debuglog (
+    CommandIn
 );
 
 
--- Index: ix_debuglog_debuglog_id
-DROP INDEX IF EXISTS ix_debuglog_debuglog_id;
+-- Index: ix_debuglog_DebuglogId
+DROP INDEX IF EXISTS ix_debuglog_DebuglogId;
 
-CREATE UNIQUE INDEX IF NOT EXISTS ix_debuglog_debuglog_id ON debuglog (
-    debuglog_id
+CREATE UNIQUE INDEX IF NOT EXISTS ix_debuglog_DebuglogId ON debuglog (
+    DebuglogId
 );
 
 
--- Index: ix_debuglog_output
-DROP INDEX IF EXISTS ix_debuglog_output;
+-- Index: ix_debuglog_Output
+DROP INDEX IF EXISTS ix_debuglog_Output;
 
-CREATE INDEX IF NOT EXISTS ix_debuglog_output ON debuglog (
-    output
+CREATE INDEX IF NOT EXISTS ix_debuglog_Output ON debuglog (
+    Output
 );
 
 
@@ -145,19 +146,19 @@ CREATE INDEX IF NOT EXISTS ix_debuglog_ParentKey ON debuglog (
 );
 
 
--- Index: ix_debuglog_parent_type
-DROP INDEX IF EXISTS ix_debuglog_parent_type;
+-- Index: ix_debuglog_ParentType
+DROP INDEX IF EXISTS ix_debuglog_ParentType;
 
-CREATE INDEX IF NOT EXISTS ix_debuglog_parent_type ON debuglog (
-    parent_type
+CREATE INDEX IF NOT EXISTS ix_debuglog_ParentType ON debuglog (
+    ParentType
 );
 
 
--- Index: ix_debuglog_type
-DROP INDEX IF EXISTS ix_debuglog_type;
+-- Index: ix_debuglog_Type
+DROP INDEX IF EXISTS ix_debuglog_Type;
 
-CREATE INDEX IF NOT EXISTS ix_debuglog_type ON debuglog (
-    type
+CREATE INDEX IF NOT EXISTS ix_debuglog_Type ON debuglog (
+    Type
 );
 
 
@@ -177,11 +178,11 @@ CREATE INDEX IF NOT EXISTS ix_element_ElementType ON element (
 );
 
 
--- Index: ix_element_name
-DROP INDEX IF EXISTS ix_element_name;
+-- Index: ix_ElementName
+DROP INDEX IF EXISTS ix_ElementName;
 
-CREATE INDEX IF NOT EXISTS ix_element_name ON element (
-    name
+CREATE INDEX IF NOT EXISTS ix_ElementName ON element (
+    Name
 );
 
 
@@ -192,26 +193,26 @@ CREATE INDEX IF NOT EXISTS ix_element_ParentKey ON element (
     ParentKey
 );
 
--- Index: ix_element_ParentKey
-DROP INDEX IF EXISTS ix_element_location;
+-- Index: ix_element_Location
+DROP INDEX IF EXISTS ix_element_Location;
 
-CREATE INDEX IF NOT EXISTS ix_element_location ON element (
-    location
+CREATE INDEX IF NOT EXISTS ix_element_Location ON element (
+    Location
 );
 
--- Index: ix_element_syntax
-DROP INDEX IF EXISTS ix_element_syntax;
+-- Index: ix_element_Syntax
+DROP INDEX IF EXISTS ix_element_Syntax;
 
-CREATE INDEX IF NOT EXISTS ix_element_syntax ON element (
-    syntax
+CREATE INDEX IF NOT EXISTS ix_element_Syntax ON element (
+    Syntax
 );
 
 
--- Index: ix_element_tags
-DROP INDEX IF EXISTS ix_element_tags;
+-- Index: ix_element_Tags
+DROP INDEX IF EXISTS ix_element_Tags;
 
-CREATE INDEX IF NOT EXISTS ix_element_tags ON element (
-    tags
+CREATE INDEX IF NOT EXISTS ix_element_Tags ON element (
+    Tags
 );
 
 
@@ -237,9 +238,9 @@ PRAGMA foreign_keys = on;
         internal bool LoadGame(string game_key)
         {
             var success = false;
-            var gameFile = $"Games/{game_key.FileSafe()}.db";
+            var gameFile = $"./Games/{game_key.FileSafe()}.db";
             var gameDirString = game_key.FileSafe();
-            var gameDirectory = $"GameSources/{gameDirString}/";
+            var gameDirectory = $"./GameSources/{gameDirString}/";
 
             if (File.Exists(gameFile))
             {
@@ -330,7 +331,7 @@ PRAGMA foreign_keys = on;
 
                         if (singleLine)
                         {
-                            if (element.ElementKey == null)
+                            if (element.ElementKey == "" || element.ElementKey == null)
                             {
                                 element.ElementKey = Guid.NewGuid().ToString();
                             }
@@ -393,12 +394,12 @@ PRAGMA foreign_keys = on;
                         break;
 
                     case string s when line.ToLower().StartsWith("logic=", StringComparison.OrdinalIgnoreCase):
-                        ix = GetFieldValue(element, lines, "logic", ix);
+                        ix = GetFieldValue(element, lines, "Logic", ix);
                         element.Logic = ParseLogicField(element.Logic);
                         break;
 
                     case string s when line.ToLower().StartsWith("repeat=", StringComparison.OrdinalIgnoreCase):
-                        ix = GetFieldValue(element, lines, "repeat_type", ix);
+                        ix = GetFieldValue(element, lines, "repeat", ix);
                         element.Repeat = line.Replace("repeat=", "").SqlSafe();
                         break;
 
@@ -427,7 +428,7 @@ PRAGMA foreign_keys = on;
 
                         if (depth == currentDepth)
                         {
-                            if (element.ElementKey == null)
+                            if (element.ElementKey == null || element.ElementKey == "")
                             {
                                 element.ElementKey = Guid.NewGuid().ToString();
                             }
@@ -487,6 +488,9 @@ PRAGMA foreign_keys = on;
                     propertyValue += line.OutputFormat();
                 }
             }
+
+            TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
+            fieldName = textInfo.ToTitleCase(fieldName);
 
             PropertyInfo propertyInfo = element.GetType().GetProperty(fieldName);
             propertyInfo.SetValue(element, Convert.ChangeType(propertyValue.SqlSafe(), propertyInfo.PropertyType), null);
@@ -638,19 +642,19 @@ PRAGMA foreign_keys = on;
 
                 string createDbQuery = $@"
 INSERT INTO element (
-    element_type,
-    element_key,
-    name,
-    parent_key,
-    location,
-    syntax,
-    logic,
-    output,
-    tags,
-    active,
-    sort,
-    create_date,
-    update_date
+    ElementType,
+    ElementKey,
+    Name,
+    ParentKey,
+    Location,
+    Syntax,
+    Logic,
+    Output,
+    Tags,
+    Active,
+    Sort,
+    CreateDate,
+    UpdateDate
 )
 VALUES";
 

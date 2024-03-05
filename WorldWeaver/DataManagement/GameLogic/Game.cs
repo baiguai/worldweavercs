@@ -20,11 +20,11 @@ namespace WorldWeaver.DataManagement.GameLogic
 
             string selectQuery = @"
 SELECT
-    element_key
+    ElementKey
 FROM
     element
 WHERE
-    element_type = 'game'
+    ElementType = 'game'
 LIMIT 1
 ;
             ";
@@ -39,7 +39,7 @@ LIMIT 1
                     {
                         if (reader.Read())
                         {
-                            output = reader.GetString(reader.GetOrdinal("element_key"));
+                            output = reader.GetString(reader.GetOrdinal("ElementKey"));
                         }
                     }
                 }
