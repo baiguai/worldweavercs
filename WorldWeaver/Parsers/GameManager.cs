@@ -6,13 +6,13 @@ namespace WorldWeaver.Parsers
     {
         public Classes.Output ProcessGameInput(string gameKey, string gameDb, Classes.Output output, string userInput)
         {
-            DataManagement.GameLogic.Game gameLogic = new DataManagement.GameLogic.Game();
-            DataManagement.GameLogic.Element elemLogic = new DataManagement.GameLogic.Element();
-            Elements.Element elemParser = new Elements.Element();
+            var gameLogic = new DataManagement.GameLogic.Game();
+            var elemLogic = new DataManagement.GameLogic.Element();
+            var elemParser = new Elements.Element();
+            var logic = new DataManagement.GameLogic.Element();
 
             if (!gameLogic.IsGameRunning(gameDb))
             {
-                var procTypes = Tools.ProcFunctions.GetProcessStepsByType("game");
                 var gameElem = elemLogic.GetElementsByType(gameDb, "game")[0];
                 Cache.GameCache.Game = gameElem;
 
@@ -48,29 +48,27 @@ namespace WorldWeaver.Parsers
             {
                 if (!Cache.PlayerCache.Player.Name.Equals(""))
                 {
-                    var logic = new DataManagement.GameLogic.Element();
-                    var player = logic.GetElementByKey(gameDb, "player");
-
-                    if (player.Location.Equals(""))
+                    if (!Cache.GameCache.GameInitialized)
                     {
                         var gameElem = logic.GetElementByKey(gameDb, gameKey);
-                        var procItems = Tools.ProcFunctions.GetProcessStepsByType(gameElem.ElementType);
+                        var gameProcItems = Tools.ProcFunctions.GetProcessStepsByType(gameElem.ElementType);
 
-                        foreach (var proc in procItems)
+                        foreach (var proc in gameProcItems)
                         {
                             output = elemParser.ParseElement(output, gameDb, gameElem, userInput, proc);
                         }
-                    }
-                    else
-                    {
-                        var locElem = logic.GetElementByKey(gameDb, player.Location);
-                        var procItems = Tools.ProcFunctions.GetProcessStepsByType(locElem.ElementType);
 
-                        foreach (var proc in procItems)
-                        {
-                            output = elemParser.ParseElement(output, gameDb, locElem, userInput, proc);
-                        }
+                        Cache.GameCache.GameInitialized = true;
                     }
+                }
+
+                var player = logic.GetElementByKey(gameDb, "player");
+                var locElem = logic.GetElementByKey(gameDb, player.Location);
+                var locProcItems = Tools.ProcFunctions.GetProcessStepsByType(locElem.ElementType);
+
+                foreach (var proc in locProcItems)
+                {
+                    output = elemParser.ParseElement(output, gameDb, locElem, userInput, proc);
                 }
             }
                 

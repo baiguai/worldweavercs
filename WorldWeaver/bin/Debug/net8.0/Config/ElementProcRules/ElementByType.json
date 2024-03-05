@@ -5,7 +5,7 @@
                 "action"
             ],
             "elements" : [
-                "logicset",
+                "logic",
                 "input",
                 "action",
                 "move",
@@ -43,7 +43,7 @@
             "elements" : [
                 "logic",
                 "operand",
-                "logicset",
+                "logic",
                 "action",
                 "message"
             ],
@@ -64,8 +64,8 @@
                 "move"
             ],
             "elements" : [
-                "logicset",
-                "message"
+                "logic",
+                "enter_message"
             ],
             "repeat_options" : "true"
         },

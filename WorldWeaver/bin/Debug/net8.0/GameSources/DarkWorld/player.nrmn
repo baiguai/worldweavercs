@@ -1,4 +1,4 @@
-﻿{key=player, name=, type=player, parent=game
+﻿{key=player, name=, type=player, location=local_pub
 
         {key=player_life, name=Life, type=attribute
         output=[rand:8|18]

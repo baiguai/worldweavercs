@@ -9,8 +9,4 @@ Welcome to DarkWorld.
 
         }
     }
-    
-    {type=action
-        {type=move, location=local_pub, tags=player }
-    }
 }

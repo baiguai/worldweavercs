@@ -77,6 +77,13 @@ namespace WorldWeaver.Parsers.Elements
                             }
                             break;
 
+                        case "logic":
+                            var lgc = new Parsers.Elements.Logic();
+
+                            output = lgc.ParseLogic(output, gameDb, child, userInput);
+
+                            break;
+
                         case "move":
                             if (!procObj.AllowRepeatOptions || currentIndex == index)
                             {
@@ -100,7 +107,13 @@ namespace WorldWeaver.Parsers.Elements
             var action = new Parsers.Elements.Action();
             if (child.Logic.Equals(""))
             {
-                output = action.ParseAction(output, gameDb, child, userInput);
+                var procItems = Tools.ProcFunctions.GetProcessStepsByType(child.ElementType);
+
+                foreach (var actionProc in procItems)
+                {
+                    output = ParseElement(output, gameDb, child, userInput, actionProc);
+                }
+                return output;
             }
             else
             {
@@ -172,7 +185,7 @@ namespace WorldWeaver.Parsers.Elements
             }
 
             currentElement.RepeatIndex = output;
-            dbElem.SetElementField(gameDb, currentElement.ElementKey, "repeat_index", output.ToString());
+            dbElem.SetElementField(gameDb, currentElement.ElementKey, "RepeatIndex", output.ToString());
             return output;
         }
     }
