@@ -13,24 +13,11 @@ namespace WorldWeaver.Parsers.Elements
 
             if (rgx.IsMatch(userInput))
             {
-                switch (parentElement.ElementType)
+                var procItems = Tools.ProcFunctions.GetProcessStepsByType(currentElement.ElementType);
+                foreach (var proc in procItems)
                 {
-                    case "set_field":
-                        var set_field = new SetField();
-                        output = set_field.DoMatch(gameDb, parentElement, currentElement, userInput);
-                        output.MatchMade = true;
-                        break;
-                }
-            }
-            else
-            { 
-                if (Helpers.HasEnterMessage(currentElement))
-                {
-                    var msgElem = Helpers.GetChildByType(currentElement, "enter_message");
-                    var msg = new Message();
-
-                    output = msg.ParseMessage(output, gameDb, msgElem);
-                    output.MatchMade = true;
+                    foreach (var child in currentElement.Children)
+                    {}
                 }
             }
 

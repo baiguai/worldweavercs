@@ -1,5 +1,5 @@
 ﻿{key=local_pub, name=Local Pub, type=room, parent=root
-    {type=message
+    {type=enter_message
         output={@
 You are sitting in your local pub.
         }
