@@ -21,6 +21,8 @@ namespace WorldWeaver.Parsers.Elements
                 {
                     var currentIndex = 0;
                     var currentType = "";
+                    handledMessage = false;
+                    handledMove = false;
 
                     if (!child.ElementType.Equals(proc))
                     {

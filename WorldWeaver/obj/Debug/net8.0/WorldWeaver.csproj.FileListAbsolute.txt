@@ -3,7 +3,6 @@
 /media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/obj/Debug/net8.0/WorldWeaver.AssemblyInfo.cs
 /media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/obj/Debug/net8.0/WorldWeaver.csproj.CoreCompileInputs.cache
 /media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/obj/Debug/net8.0/WorldWeaver.csproj.AssemblyReference.cache
-/media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/bin/Debug/net8.0/Games/DarkWorld.db
 /media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/bin/Debug/net8.0/Games/DarkWorld_playing.db
 /media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/bin/Debug/net8.0/Games/readme.md
 /media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/bin/Debug/net8.0/Config/ElementProcRules/ElementByType.json
@@ -59,3 +58,4 @@
 /media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/obj/Debug/net8.0/WorldWeaver.genruntimeconfig.cache
 /media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/obj/Debug/net8.0/ref/WorldWeaver.dll
 /media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/obj/Debug/net8.0/WorldWeaver.sourcelink.json
+/media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/bin/Debug/net8.0/Games/DarkWorld.db
