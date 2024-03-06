@@ -102,24 +102,25 @@ namespace WorldWeaver.Parsers
             DataManagement.GameLogic.Element elemLogic = new DataManagement.GameLogic.Element();
             DataManagement.GameLogic.Game gameLogic = new DataManagement.GameLogic.Game();
             var gameElem = elemLogic.GetElementsByType(gameDb, "game")[0];
+            var playerElem = elemLogic.GetElementsByType(gameDb, "player")[0];
+            var roomElem = elemLogic.GetElementByKey(gameDb, playerElem.Location);
+            var elemParser = new Parsers.Elements.Element();
 
             Cache.GameCache.Game = gameElem;
+            Cache.PlayerCache.Player = playerElem;
+            Cache.RoomCache.Room = roomElem;
 
             if (gameElem != null)
             {
                 playingGame = true;
             }
 
-            foreach (var gameChild in gameElem.Children)
-            {
-                if (gameChild.ElementType.Equals("player"))
-                {
-                    Cache.PlayerCache.Player = gameChild;
-                    break;
-                }
-            }
+            var proc = new Classes.ElementProc();
+            proc.CurrentElementTypes.Add("room");
+            proc.ChildProcElements.Add("enter_message");
+            proc.AllowRepeatOptions = true;
 
-            output = InitiateGame(output);
+            output = elemParser.ParseElement(output, gameDb, roomElem, playerInput, proc);
 
             return output;
         }
