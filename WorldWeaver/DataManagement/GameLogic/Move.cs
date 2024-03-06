@@ -20,12 +20,14 @@ namespace WorldWeaver.DataManagement.GameLogic
             if (success)
             {
                 var locElem = elemDb.GetElementByKey(gameDb, location);
-                var procItems = Tools.ProcFunctions.GetProcessStepsByType(locElem.ElementType);
+                Cache.RoomCache.Room = locElem;
+                var procItem = new ElementProc();
 
-                foreach (var proc in procItems)
-                {
-                    output = elem.ParseElement(output, gameDb, locElem, userInput, proc);
-                }
+                procItem.CurrentElementTypes.Add(locElem.ElementType);
+                procItem.ChildProcElements.Add("enter_message");
+                procItem.AllowRepeatOptions = true;
+
+                output = elem.ParseElement(output, gameDb, locElem, userInput, procItem);
             }
 
             return output;

@@ -64,8 +64,7 @@
                 "move"
             ],
             "elements" : [
-                "logic",
-                "enter_message"
+                "logic"
             ],
             "repeat_options" : "true"
         },
