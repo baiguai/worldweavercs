@@ -19,8 +19,7 @@ You look around the local pub again...
     }
     
     
-    {type=input, syntax=\\b(look|l)\\b
-        {type=action, logic=local_pub_look
-        }
+    {type=input, syntax=\b(look|l)\b
+        {type=action, logic=local_pub_look, tags=element }
     }
 }

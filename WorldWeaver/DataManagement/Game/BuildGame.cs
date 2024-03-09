@@ -345,7 +345,7 @@ PRAGMA foreign_keys = on;
                     else
                     {
                         depth++;
-                        if (element.ElementKey == null)
+                        if (element.ElementKey == null || element.ElementKey.Equals(""))
                         {
                             element.ElementKey = Guid.NewGuid().ToString();
                         }

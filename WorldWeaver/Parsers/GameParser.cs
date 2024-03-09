@@ -58,7 +58,7 @@ namespace WorldWeaver.Parsers
             }
             else
             {
-                if (!gameKey.Equals(""))
+                if (DataManagement.GameLogic.Game.IsGameRunning())
                 {
                     output = DoGameInput(output);
                 }
@@ -110,17 +110,11 @@ namespace WorldWeaver.Parsers
             Cache.PlayerCache.Player = playerElem;
             Cache.RoomCache.Room = roomElem;
 
-            if (gameElem != null)
+            var procItems = ProcFunctions.GetProcessStepsByType("room");
+            foreach (var proc in procItems)
             {
-                playingGame = true;
+                output = elemParser.ParseElement(output, gameDb, roomElem, playerInput, proc, true);
             }
-
-            var proc = new Classes.ElementProc();
-            proc.CurrentElementTypes.Add("room");
-            proc.ChildProcElements.Add("enter_message");
-            proc.AllowRepeatOptions = true;
-
-            output = elemParser.ParseElement(output, gameDb, roomElem, playerInput, proc);
 
             return output;
         }
@@ -170,7 +164,7 @@ set player name <<NAME>>
 
         public Classes.Output DoGameInput(Classes.Output output)
         {
-            if (!playingGame)
+            if (!DataManagement.GameLogic.Game.IsGameRunning())
             {
                 output.MatchMade = false;
                 return output;

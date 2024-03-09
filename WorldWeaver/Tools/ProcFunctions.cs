@@ -33,6 +33,11 @@ namespace WorldWeaver.Tools
         {
             var output = new List<Classes.ElementProc>();
 
+            if (type.Equals("enter_message"))
+            {
+                type = "message";
+            }
+
             using (StreamReader r = new StreamReader($"Config/ElementProcRules/ElementByType.json"))
             {
                 string json = r.ReadToEnd();

@@ -1,4 +1,5 @@
 ﻿using System;
+using WorldWeaver.Tools;
 
 namespace WorldWeaver.Parsers
 {
@@ -11,7 +12,7 @@ namespace WorldWeaver.Parsers
             var elemParser = new Elements.Element();
             var logic = new DataManagement.GameLogic.Element();
 
-            if (!gameLogic.IsGameRunning(gameDb))
+            if (!DataManagement.GameLogic.Game.IsGameRunning())
             {
                 var gameElem = elemLogic.GetElementsByType(gameDb, "game")[0];
                 Cache.GameCache.Game = gameElem;
@@ -64,8 +65,18 @@ namespace WorldWeaver.Parsers
 
                 var player = logic.GetElementByKey(gameDb, "player");
                 var locElem = logic.GetElementByKey(gameDb, player.Location);
-                var locProcItems = Tools.ProcFunctions.GetProcessStepsByType(locElem.ElementType);
+                var globalElems = logic.GetElementsByType(gameDb, "global");
 
+                var globalProcItems = ProcFunctions.GetProcessStepsByType("global");
+                foreach (var elem in globalElems)
+                {
+                    foreach (var proc in globalProcItems)
+                    {
+                        output = elemParser.ParseElement(output, gameDb, elem, userInput, proc);
+                    }
+                }
+
+                var locProcItems = ProcFunctions.GetProcessStepsByType(locElem.ElementType);
                 foreach (var proc in locProcItems)
                 {
                     output = elemParser.ParseElement(output, gameDb, locElem, userInput, proc);

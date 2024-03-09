@@ -26,6 +26,17 @@
             "repeat_options" : "false"
         },
         {
+            "types": [
+                "global"
+            ],
+            "elements" : [
+                "logic",
+                "input",
+                "action"
+            ],
+            "repeat_options" : "false"
+        },
+        {
             "types" : [
                 "input"
             ],
@@ -42,8 +53,6 @@
             ],
             "elements" : [
                 "logic",
-                "operand",
-                "logic",
                 "action",
                 "message"
             ],
@@ -51,9 +60,10 @@
         },
         {
             "types" : [
-                "message"
+                "message",
             ],
             "elements" : [
+                "logic",
                 "action",
                 "message"
             ],
@@ -64,7 +74,8 @@
                 "move"
             ],
             "elements" : [
-                "logic"
+                "logic",
+                "message"
             ],
             "repeat_options" : "true"
         },

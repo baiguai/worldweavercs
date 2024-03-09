@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Globalization;
 using System.Text.RegularExpressions;
+using WorldWeaver.Tools;
 
 namespace WorldWeaver.Parsers.Elements
 {
@@ -8,16 +10,22 @@ namespace WorldWeaver.Parsers.Elements
         public Classes.Output ParseInput(Classes.Output output, string gameDb, Classes.Element parentElement, Classes.Element currentElement, string userInput)
         {
             output.MatchMade = false;
+            var elemParser = new Elements.Element();
+            var elemLogic = new DataManagement.GameLogic.Element();
 
             Regex rgx = new Regex(currentElement.Syntax, RegexOptions.IgnoreCase);
 
             if (rgx.IsMatch(userInput))
             {
-                var procItems = Tools.ProcFunctions.GetProcessStepsByType(currentElement.ElementType);
-                foreach (var proc in procItems)
+                var elemChildren = currentElement.Children;
+
+                foreach (var child in elemChildren)
                 {
-                    foreach (var child in currentElement.Children)
-                    {}
+                    var procs = ProcFunctions.GetProcessStepsByType(child.ElementType);
+                    foreach (var proc in procs)
+                    {
+                        output = elemParser.ParseElement(output, gameDb, child, userInput, proc, false);
+                    }
                 }
             }
 
