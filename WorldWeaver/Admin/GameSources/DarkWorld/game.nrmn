@@ -1,6 +1,6 @@
 ﻿{key=game, name=Dark World, type=game, parent=root
     
-    {type=message
+    {type=enter_message
         output={@
 Something dark is happening throughout the continent of Aetherus.
 
