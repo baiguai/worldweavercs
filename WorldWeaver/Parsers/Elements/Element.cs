@@ -60,6 +60,7 @@ namespace WorldWeaver.Parsers.Elements
                             break;
 
                         case "message":
+                        case "enter_message":
                             if (!handledMessage && (!procObj.AllowRepeatOptions || currentIndex == index))
                             {
                                 output = msg.ParseMessage(output, gameDb, child);
