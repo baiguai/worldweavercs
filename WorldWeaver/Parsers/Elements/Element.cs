@@ -6,7 +6,7 @@ namespace WorldWeaver.Parsers.Elements
 {
     public class Element
     {
-        public Classes.Output ParseElement(Classes.Output output, string gameDb, Classes.Element currentElement, string userInput, Classes.ElementProc procObj)
+        public Classes.Output ParseElement(Classes.Output output, string gameDb, Classes.Element currentElement, string userInput, Classes.ElementProc procObj, bool isEntering = false)
         {
             var input = new Parsers.Elements.Input();
             var msg = new Parsers.Elements.Message();
@@ -24,7 +24,7 @@ namespace WorldWeaver.Parsers.Elements
                     handledMessage = false;
                     handledMove = false;
 
-                    if (!child.ElementType.Equals(proc))
+                    if (!child.ElementType.Equals(proc) && (proc.Equals("message") && (!child.ElementType.Equals("enter_message")) && (!child.ElementType.Equals("message"))))
                     {
                         continue;
                     }
@@ -61,6 +61,11 @@ namespace WorldWeaver.Parsers.Elements
 
                         case "message":
                         case "enter_message":
+                            if (child.ElementType.Equals("enter_message") && !isEntering)
+                            {
+                                continue;
+                            }
+
                             if (!handledMessage && (!procObj.AllowRepeatOptions || currentIndex == index))
                             {
                                 output = msg.ParseMessage(output, gameDb, child);

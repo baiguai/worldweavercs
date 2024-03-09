@@ -50,7 +50,7 @@ LIMIT 1
             return output;
         }
 
-        public bool IsGameRunning(string gameDb)
+        public static bool IsGameRunning()
         {
             var output = false;
 
