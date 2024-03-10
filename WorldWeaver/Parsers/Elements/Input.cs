@@ -17,15 +17,10 @@ namespace WorldWeaver.Parsers.Elements
 
             if (rgx.IsMatch(userInput))
             {
-                var elemChildren = currentElement.Children;
-
-                foreach (var child in elemChildren)
+                var procs = ProcFunctions.GetProcessStepsByType(currentElement.ElementType);
+                foreach (var proc in procs)
                 {
-                    var procs = ProcFunctions.GetProcessStepsByType(child.ElementType);
-                    foreach (var proc in procs)
-                    {
-                        output = elemParser.ParseElement(output, gameDb, child, userInput, proc, false);
-                    }
+                    output = elemParser.ParseElement(output, gameDb, currentElement, userInput, proc, false);
                 }
             }
 

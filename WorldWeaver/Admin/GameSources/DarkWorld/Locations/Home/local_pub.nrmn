@@ -5,7 +5,7 @@ You are sitting in your local pub.
         }
     }
 
-    {key=local_pub_look, type=message, repeat=repeat
+    {type=look, repeat=repeat
         {type=message
             output={@
 You look around the local pub...
@@ -20,6 +20,6 @@ You look around the local pub again...
     
     
     {type=input, syntax=\b(look|l)\b
-        {type=action, logic=local_pub_look, tags=element }
+        {type=action, logic=look, tags=type }
     }
 }

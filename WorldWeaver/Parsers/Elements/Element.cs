@@ -17,14 +17,15 @@ namespace WorldWeaver.Parsers.Elements
 
             foreach (var proc in procObj.ChildProcElements)
             {
+                handledMessage = false;
+
                 foreach (var child in currentElement.Children)
                 {
                     var currentIndex = 0;
                     var currentType = "";
-                    handledMessage = false;
                     handledMove = false;
 
-                    if (!child.ElementType.Equals(proc) && (proc.Equals("message") && (!child.ElementType.Equals("enter_message")) && (!child.ElementType.Equals("message"))))
+                    if (!child.ElementType.Equals(proc))
                     {
                         continue;
                     }
@@ -46,7 +47,7 @@ namespace WorldWeaver.Parsers.Elements
                         case "input":
                             if (output.MatchMade)
                             {
-                                return output;
+                                continue;
                             }
 
                             if (!procObj.AllowRepeatOptions || currentIndex == index)
@@ -91,6 +92,10 @@ namespace WorldWeaver.Parsers.Elements
                             break;
 
                         case "move":
+                            if (output.MatchMade)
+                            {
+                                continue;
+                            }
                             if (!procObj.AllowRepeatOptions || currentIndex == index)
                             {
                                 if (!handledMove && currentIndex == index)
@@ -108,39 +113,17 @@ namespace WorldWeaver.Parsers.Elements
             return output;
         }
 
-        private Output HandleAction(Output output, string gameDb, Classes.Element child, string userInput)
+        private Output HandleAction(Output output, string gameDb, Classes.Element currentElement, string userInput)
         {
             var action = new Parsers.Elements.Action();
-            if (child.Logic.Equals(""))
-            {
-                var procItems = Tools.ProcFunctions.GetProcessStepsByType(child.ElementType);
-
-                foreach (var actionProc in procItems)
-                {
-                    output = ParseElement(output, gameDb, child, userInput, actionProc);
-                }
-                return output;
-            }
-            else
-            {
-                var el = new DataManagement.GameLogic.Element();
-                var target = el.GetElementByKey(gameDb, child.Logic);
-                var procItems = Tools.ProcFunctions.GetProcessStepsByType(target.ElementType);
-
-                foreach (var actionProc in procItems)
-                {
-                    output = ParseElement(output, gameDb, target, userInput, actionProc);
-                }
-            }
-
-            return output;
+            return action.ParseAction(output, gameDb, currentElement, userInput);
         }
 
         private int HandleRepeat(string gameDb, Classes.Element currentElement, List<Classes.Element> children, string rptType)
         {
             var output = 0;
             DataManagement.GameLogic.Element dbElem = new DataManagement.GameLogic.Element();
-            var index = currentElement.RepeatIndex;
+            var index = dbElem.GetRepeatIndex(gameDb, currentElement.ElementKey);
 
             if (children.Count < 2)
             {

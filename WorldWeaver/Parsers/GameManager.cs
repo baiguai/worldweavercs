@@ -56,7 +56,7 @@ namespace WorldWeaver.Parsers
 
                         foreach (var proc in gameProcItems)
                         {
-                            output = elemParser.ParseElement(output, gameDb, gameElem, userInput, proc);
+                            output = elemParser.ParseElement(output, gameDb, gameElem, userInput, proc, true);
                         }
 
                         Cache.GameCache.GameInitialized = true;

@@ -19,6 +19,7 @@
             ],
             "elements" : [
                 "set_field",
+                "enter_message",
                 "message",
                 "action",
                 "input"
@@ -61,6 +62,7 @@
         {
             "types" : [
                 "message",
+                "general"
             ],
             "elements" : [
                 "logic",
@@ -84,6 +86,7 @@
                 "object"
             ],
             "elements" : [
+                "enter_message",
                 "logic",
                 "action",
                 "message"
@@ -104,6 +107,7 @@
                 "room"
             ],
             "elements" : [
+                "enter_message",
                 "action",
                 "message",
                 "input"
