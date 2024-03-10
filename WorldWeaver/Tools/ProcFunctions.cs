@@ -62,6 +62,11 @@ namespace WorldWeaver.Tools
                 }
             }
 
+            if (output.Count == 0)
+            {
+                output = GetProcessStepsByType("general");
+            }
+
             return output;
         }
     }
