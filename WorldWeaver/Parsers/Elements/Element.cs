@@ -18,28 +18,22 @@ namespace WorldWeaver.Parsers.Elements
             foreach (var proc in procObj.ChildProcElements)
             {
                 handledMessage = false;
+                if (!currentElement.Repeat.Equals(""))
+                {
+                    index = HandleRepeat(gameDb, currentElement, currentElement.Children, rptType);
+                }
+                else
+                {
+                    index = -1;
+                }
 
                 foreach (var child in currentElement.Children)
                 {
-                    var currentIndex = 0;
-                    var currentType = "";
                     handledMove = false;
 
                     if (!child.ElementType.Equals(proc))
                     {
                         continue;
-                    }
-
-                    index = HandleRepeat(gameDb, child, child.Children, rptType);
-
-                    if (child.ElementType.Equals(currentType))
-                    {
-                        currentIndex++;
-                    }
-                    else
-                    {
-                        currentType = child.ElementType;
-                        currentIndex = 0;
                     }
 
                     switch (child.ElementType)
@@ -50,13 +44,10 @@ namespace WorldWeaver.Parsers.Elements
                                 continue;
                             }
 
-                            if (!procObj.AllowRepeatOptions || currentIndex == index)
+                            output = input.ParseInput(output, gameDb, currentElement, child, userInput);
+                            if (output.MatchMade)
                             {
-                                output = input.ParseInput(output, gameDb, currentElement, child, userInput);
-                                if (output.MatchMade)
-                                {
-                                    return output;
-                                }
+                                return output;
                             }
                             break;
 
@@ -67,9 +58,9 @@ namespace WorldWeaver.Parsers.Elements
                                 continue;
                             }
 
-                            if (!handledMessage && (!procObj.AllowRepeatOptions || currentIndex == index))
+                            if (!handledMessage)
                             {
-                                output = msg.ParseMessage(output, gameDb, child);
+                                output = msg.ParseMessage(output, gameDb, currentElement, child, procObj.AllowRepeatOptions, index);
                                 if (!child.Output.Equals(""))
                                 {
                                     handledMessage = true;
@@ -78,7 +69,7 @@ namespace WorldWeaver.Parsers.Elements
                             break;
 
                         case "action":
-                            if (!procObj.AllowRepeatOptions || currentIndex == index)
+                            if (!procObj.AllowRepeatOptions)
                             {
                                 output = HandleAction(output, gameDb, child, userInput);
                             }
@@ -96,14 +87,12 @@ namespace WorldWeaver.Parsers.Elements
                             {
                                 continue;
                             }
-                            if (!procObj.AllowRepeatOptions || currentIndex == index)
+
+                            if (!handledMove)
                             {
-                                if (!handledMove && currentIndex == index)
-                                {
-                                    var move = new Parsers.Elements.Move();
-                                    output = move.ParseMove(output, gameDb, child, userInput);
-                                    handledMove = true;
-                                }
+                                var move = new Parsers.Elements.Move();
+                                output = move.ParseMove(output, gameDb, currentElement, child, procObj.AllowRepeatOptions, index, userInput);
+                                handledMove = output.MatchMade;
                             }
                             break;
                     }
