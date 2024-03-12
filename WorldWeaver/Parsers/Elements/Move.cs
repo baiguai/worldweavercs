@@ -3,13 +3,13 @@ namespace WorldWeaver.Parsers.Elements
 {
     public class Move
     {
-        public Classes.Output ParseMove(Classes.Output output, string gameDb, Classes.Element parentElement, Classes.Element child, bool allowRepeatOptions, int currentIndex, string userInput)
+        public Classes.Output ParseMove(Classes.Output output, string gameDb, Classes.Element parentElement, Classes.Element currentElement, bool allowRepeatOptions, int currentIndex, string userInput)
         {
             var moveDb = new DataManagement.GameLogic.Move();
 
             if (!allowRepeatOptions)
             {
-                output = moveDb.MoveElement(output, gameDb, child.Output, parentElement.Tags, userInput);
+                output = moveDb.MoveElement(output, gameDb, currentElement.Output, currentElement.Tags, currentElement.Logic, userInput);
             }
             else
             {
@@ -19,7 +19,7 @@ namespace WorldWeaver.Parsers.Elements
                 {
                     if (idx == currentIndex)
                     {
-                        output = moveDb.MoveElement(output, gameDb, mv.Output, parentElement.Tags, userInput);
+                        output = moveDb.MoveElement(output, gameDb, mv.Output, currentElement.Tags, currentElement.Logic, userInput);
                         break;
                     }
                     else

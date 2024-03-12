@@ -29,7 +29,7 @@ namespace WorldWeaver.Parsers
                 var procItems = Tools.ProcFunctions.GetProcessStepsByType(gameElem.ElementType);
                 foreach (var proc in procItems)
                 {
-                    output = elemParser.ParseElement(output, gameDb, gameElem, userInput, proc);
+                    output = elemParser.ParseElement(output, gameDb, gameElem, userInput, proc, false);
                 }
 
                 procItems = Tools.ProcFunctions.GetProcessStepsByType(Cache.PlayerCache.Player.ElementType);
@@ -56,7 +56,7 @@ namespace WorldWeaver.Parsers
 
                         foreach (var proc in gameProcItems)
                         {
-                            output = elemParser.ParseElement(output, gameDb, gameElem, userInput, proc, true);
+                            output = elemParser.ParseElement(output, gameDb, gameElem, userInput, proc, false);
                         }
 
                         Cache.GameCache.GameInitialized = true;

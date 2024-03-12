@@ -74,6 +74,8 @@ namespace WorldWeaver.Parsers
 
             output = gameObj.SetPlayerName(output, gameDb, playerInput.Replace("set player name ", "set_player_name ").GetInputParams());
 
+            output = DoResumeGame(output, true);
+
             return output;
         }
 
@@ -91,7 +93,7 @@ namespace WorldWeaver.Parsers
             return output;
         }
 
-        public Classes.Output DoResumeGame(Classes.Output output)
+        public Classes.Output DoResumeGame(Classes.Output output, bool startingGame = false)
         {
             var gameFile = playerInput.Replace("resume ", "");
             if (gameDb.Equals(""))
@@ -109,6 +111,15 @@ namespace WorldWeaver.Parsers
             Cache.GameCache.Game = gameElem;
             Cache.PlayerCache.Player = playerElem;
             Cache.RoomCache.Room = roomElem;
+
+            if (startingGame)
+            {
+                var gameProcs = ProcFunctions.GetProcessStepsByType("game");
+                foreach (var proc in gameProcs)
+                {
+                    output = elemParser.ParseElement(output, gameDb, gameElem, playerInput, proc, true);
+                }
+            }
 
             var procItems = ProcFunctions.GetProcessStepsByType("room");
             foreach (var proc in procItems)
