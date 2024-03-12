@@ -5,9 +5,9 @@ namespace WorldWeaver.DataManagement.GameLogic
 {
     public class Move
     {
-        internal Output MoveElement(Output output, string gameDb, string location, string tags, string userInput)
+        internal Output MoveElement(Output output, string gameDb, string outputText, string subject, string location, string userInput)
         {
-            var tagList = tags.Split('|');
+            var tagList = subject.Split('|');
             var elemDb = new DataManagement.GameLogic.Element();
             var elem = new Parsers.Elements.Element();
             var success = false;
@@ -21,13 +21,15 @@ namespace WorldWeaver.DataManagement.GameLogic
             {
                 var locElem = elemDb.GetElementByKey(gameDb, location);
                 Cache.RoomCache.Room = locElem;
-                var procItem = new ElementProc();
 
-                procItem.CurrentElementTypes.Add(locElem.ElementType);
-                procItem.ChildProcElements.Add("enter_message");
-                procItem.AllowRepeatOptions = true;
+                var procItems = Tools.ProcFunctions.GetProcessStepsByType(locElem.ElementType);
 
-                output = elem.ParseElement(output, gameDb, locElem, userInput, procItem);
+                output.OutputText += outputText;
+
+                foreach (var proc in procItems)
+                {
+                    output = elem.ParseElement(output, gameDb, locElem, userInput, proc, true);
+                }
             }
 
             return output;

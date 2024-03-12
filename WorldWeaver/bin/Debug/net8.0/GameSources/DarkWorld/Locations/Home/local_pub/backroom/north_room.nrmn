@@ -1,0 +1,19 @@
+{key=local_pub_north, name=Backroom, type=room, parent=root
+    {type=enter_message
+        output={@
+You are in the north room.        
+        }
+    }
+
+    {type=look
+        {type=message
+            output={@
+You look around. The north room is small and dimly lit.
+            }
+        }
+    }
+
+    {type=input, syntax=\b(look|l)\b
+        {type=action, logic=look, tags=type }
+    }
+}
