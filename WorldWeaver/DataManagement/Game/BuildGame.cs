@@ -309,7 +309,7 @@ PRAGMA foreign_keys = on;
 
                     if (singleLine)
                     {
-                        line = line.Substring(0, line.Length - 1);
+                        line = line.Substring(0, line.Length - 1).Trim();
                     }
 
                     if (element == null)
@@ -320,9 +320,10 @@ PRAGMA foreign_keys = on;
                             Sort = ix
                         };
 
+                        element = ParseInlineProperties(element, line);
+
                         if (line.Length > 1)
                         {
-                            element = ParseInlineProperties(element, line);
                             if (element.ParentKey == null)
                             {
                                 element.ParentKey = parentKey;
@@ -543,7 +544,7 @@ PRAGMA foreign_keys = on;
                             break;
 
                         case "output":
-                            element.Output = pairArr[1].Trim();
+                            element.Output = ParseOutputField(pairArr[1].Trim());
                             break;
 
                         case "tags":

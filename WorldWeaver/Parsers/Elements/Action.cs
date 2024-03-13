@@ -31,35 +31,45 @@ namespace WorldWeaver.Parsers.Elements
         {
             var tags = currentElement.Tags.Split('|');
 
+            if (tags.Contains("list", StringComparer.OrdinalIgnoreCase))
+            {
+                output = ParseTags_List(output, gameDb, currentElement, userInput);
+            }
+
             if (tags.Contains("type", StringComparer.OrdinalIgnoreCase))
             {
-                if (tags.Contains("global", StringComparer.OrdinalIgnoreCase))
-                {
-                    // TODO: Implement global references. This MUST be by key not type.
-                }
-                else
-                {
-                    if (Cache.RoomCache.Room == null)
-                    {
-                        return output;
-                    }
-                    var type = currentElement.Logic.Trim();
-                    var targets = Tools.Elements.GetElementsByType(Cache.RoomCache.Room, type);
+                output = ParseTags_Type(output, gameDb, currentElement, userInput);
+            }
 
-                    var elemParser = new Parsers.Elements.Element();
-                    
-                    foreach (var elem in targets)
-                    {
-                        var procItems = Tools.ProcFunctions.GetProcessStepsByType(elem.ElementType);
-                        foreach (var proc in procItems)
-                        {
-                            output = elemParser.ParseElement(output, gameDb, elem, userInput, proc);
-                        }
-                    }
+            return output;
+        }
+
+        private Output ParseTags_Type(Output output, string gameDb, Classes.Element currentElement, string userInput)
+        {
+            if (Cache.RoomCache.Room == null)
+            {
+                return output;
+            }
+            var type = currentElement.Logic.Trim();
+            var targets = Tools.Elements.GetElementsByType(Cache.RoomCache.Room, type);
+
+            var elemParser = new Parsers.Elements.Element();
+            
+            foreach (var elem in targets)
+            {
+                var procItems = Tools.ProcFunctions.GetProcessStepsByType(elem.ElementType);
+                foreach (var proc in procItems)
+                {
+                    output = elemParser.ParseElement(output, gameDb, elem, userInput, proc);
                 }
             }
 
             return output;
+        }
+
+        private Output ParseTags_List(Output output, string gameDb, Classes.Element currentElement, string userInput)
+        {
+            throw new NotImplementedException();
         }
     }
 }

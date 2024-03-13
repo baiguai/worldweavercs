@@ -1,7 +1,7 @@
 {key=local_pub_north, name=Backroom, type=room, parent=root
     {type=enter_message
         output={@
-You are in the north room.        
+You are in the north room.
         }
     }
 
