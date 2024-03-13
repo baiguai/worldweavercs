@@ -24,6 +24,12 @@ namespace WorldWeaver.Parsers
                         Cache.PlayerCache.Player = gameChild;
                         break;
                     }
+
+                    if (gameChild.ElementType.Equals("global"))
+                    {
+                        Cache.GlobalCache.Global = gameChild;
+                        break;
+                    }
                 }
 
                 var procItems = Tools.ProcFunctions.GetProcessStepsByType(gameElem.ElementType);
@@ -44,6 +50,8 @@ namespace WorldWeaver.Parsers
                 {
                     output = elemParser.ParseElement(output, gameDb, locElem, userInput, proc);
                 }
+
+                var globElem = elemLogic.GetElementsByKey(gameDb, )
             }
             else
             {
