@@ -24,13 +24,9 @@ namespace WorldWeaver.Parsers
                         Cache.PlayerCache.Player = gameChild;
                         break;
                     }
-
-                    if (gameChild.ElementType.Equals("global"))
-                    {
-                        Cache.GlobalCache.Global = gameChild;
-                        break;
-                    }
                 }
+
+                Cache.GlobalCache.Global = elemLogic.GetElementsByType(gameDb, "global");
 
                 var procItems = Tools.ProcFunctions.GetProcessStepsByType(gameElem.ElementType);
                 foreach (var proc in procItems)
@@ -50,8 +46,6 @@ namespace WorldWeaver.Parsers
                 {
                     output = elemParser.ParseElement(output, gameDb, locElem, userInput, proc);
                 }
-
-                var globElem = elemLogic.GetElementsByKey(gameDb, )
             }
             else
             {
@@ -75,12 +69,15 @@ namespace WorldWeaver.Parsers
                 var locElem = logic.GetElementByKey(gameDb, player.Location);
                 var globalElems = logic.GetElementsByType(gameDb, "global");
 
-                var globalProcItems = ProcFunctions.GetProcessStepsByType("global");
-                foreach (var elem in globalElems)
+                foreach (var glob in globalElems)
                 {
-                    foreach (var proc in globalProcItems)
+                    var globalProcItems = ProcFunctions.GetProcessStepsByType("global");
+                    foreach (var elem in globalElems)
                     {
-                        output = elemParser.ParseElement(output, gameDb, elem, userInput, proc);
+                        foreach (var proc in globalProcItems)
+                        {
+                            output = elemParser.ParseElement(output, gameDb, elem, userInput, proc);
+                        }
                     }
                 }
 
