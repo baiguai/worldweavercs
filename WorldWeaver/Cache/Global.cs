@@ -3,6 +3,6 @@ namespace WorldWeaver.Cache
 {
     public class GlobalCache
     {
-        public static Classes.Element Global { get; set; } = new Classes.Element();
+        public static List<Classes.Element> Global { get; set; } = new List<Classes.Element>();
     }
 }

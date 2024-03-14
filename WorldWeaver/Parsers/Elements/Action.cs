@@ -69,7 +69,31 @@ namespace WorldWeaver.Parsers.Elements
 
         private Output ParseTags_List(Output output, string gameDb, Classes.Element currentElement, string userInput)
         {
-            throw new NotImplementedException();
+            if (currentElement.Logic.Contains("}") || currentElement.Logic.Contains("{"))
+            {
+                var arr = currentElement.Logic.Split('|');
+
+                if (arr.Length == 2)
+                {
+                    var key = arr[0];
+                    key = key.Replace("{", "");
+                    key = key.Replace("}", "");
+                    var logic = new DataManagement.GameLogic.Element();
+
+                    var elem = logic.GetElementByKey(gameDb, key);
+
+                    foreach (var child in elem.Children)
+                    {
+                        if (child.Tags.Contains(arr[1].Trim()))
+                        {
+                            output.OutputText += $"{child.Name}: {child.Output}{Environment.NewLine}";
+                            output.MatchMade = true;
+                        }
+                    }
+                }
+            }
+
+            return output;
         }
     }
 }
