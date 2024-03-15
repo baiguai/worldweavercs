@@ -1,0 +1,15 @@
+{
+    "topics" : [
+        {
+            "pattern" : "\\b(commands)\\b",
+            "title" : "Build Games",
+            "string" : "
+[B]
+    _buildgame <Game Key>
+        Note:
+        The Game Key must match the game's root directory in the ~/Admmin/GameSources/ directory.
+        The output database will match this key.
+"
+        }
+    ]
+}

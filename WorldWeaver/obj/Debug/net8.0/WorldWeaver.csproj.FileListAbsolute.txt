@@ -52,3 +52,7 @@
 /media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/obj/Debug/net8.0/ref/WorldWeaver.dll
 /media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/obj/Debug/net8.0/WorldWeaver.sourcelink.json
 /media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/bin/Debug/net8.0/Games/DarkWorld.db
+/media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/bin/Debug/net8.0/Admin/Help/Commands.json
+/media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/bin/Debug/net8.0/Help/Admin/Commands.json
+/media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/bin/Debug/net8.0/Admin/Help/CreateGames.json
+/media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/bin/Debug/net8.0/Help/Admin/CreateGames.json

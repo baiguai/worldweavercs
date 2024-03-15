@@ -9,19 +9,8 @@ Welcome to the Admin Help System.
 To see a list of possible Admin commands use:
 _help commands
 
-"
-        },
-        {
-            "pattern" : "\\b(commands)\\b",
-            "title" : "Build Games",
-            "string" : "
-To build games, use the following syntax:
-
-_buildgame <Game Key>
-
-Note:
-The Game Key must match the game's root directory in the ~/Admmin/GameSources/ directory.
-The output database will match this key.
+For help with defining games use:
+_help create games
 "
         }
     ]

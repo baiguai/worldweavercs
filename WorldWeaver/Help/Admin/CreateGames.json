@@ -1,0 +1,11 @@
+{
+    "topics" : [
+        {
+            "pattern" : "\\b(create games)\\b",
+            "title" : "Creating Games",
+            "string" : "
+Games built with WorldWeaver are defined by json files.
+"
+        }
+    ]
+}

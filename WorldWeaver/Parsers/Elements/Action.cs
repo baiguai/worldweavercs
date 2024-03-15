@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using WorldWeaver.Classes;
 
 namespace WorldWeaver.Parsers.Elements
@@ -81,6 +82,11 @@ namespace WorldWeaver.Parsers.Elements
                     var logic = new DataManagement.GameLogic.Element();
 
                     var elem = logic.GetElementByKey(gameDb, key);
+
+                    if (!currentElement.Output.Equals(""))
+                    {
+                        output.OutputText += $"{currentElement.Output}{Environment.NewLine}{Environment.NewLine}";
+                    }
 
                     foreach (var child in elem.Children)
                     {

@@ -1,5 +1,5 @@
 {key=global, type=global
     {type=input, syntax=\b(stats)\b
-        {type=action, logic={player}|stats, tags=list }
+        {type=action, logic={player}|stats, tags=list, output=Stats: }
     }
 }
