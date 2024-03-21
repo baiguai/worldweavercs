@@ -1,5 +1,6 @@
 ﻿using System;
 using WorldWeaver.Classes;
+using WorldWeaver.Tools;
 
 namespace WorldWeaver
 {
@@ -8,6 +9,7 @@ namespace WorldWeaver
         private static Parsers.GlobalParser globalParser = new Parsers.GlobalParser();
         private static Parsers.AdminParser adminParser = new Parsers.AdminParser();
         private static Parsers.GameParser gameParser = new Parsers.GameParser();
+        public static Logger logger = new Logger() { LogDate = DateTime.Now };
 
         public static void Main(string[] args)
         {

@@ -1,0 +1,11 @@
+{
+    "topics" : [
+        {
+            "pattern" : "\\b(configuration)\\b",
+            "title" : "WorldWeaver Configuration",
+            "string" : "
+...
+"
+        }
+    ]
+}

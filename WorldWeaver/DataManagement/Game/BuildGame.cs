@@ -17,7 +17,6 @@ namespace WorldWeaver.DataManagement.Game
         public int depth = 0;
         public List<Classes.Element> elementsToInsert = new List<Classes.Element>();
         public int commitSize = 500;
-        public Logger logger = new Logger() { LogDate = DateTime.Now };
 
         public bool CreateDatabase(string game_key)
         {
@@ -282,7 +281,7 @@ PRAGMA foreign_keys = on;
             return success;
         }
 
-        private int ParseElement(string connectionString, List<string> lines, string parentKey, int startLine)
+        private int ParseElement(string connectionString, List<string> lines, string parentKey, int startLine) //@note
         {
             var success = false;
             var currentDepth = depth;
@@ -324,6 +323,8 @@ PRAGMA foreign_keys = on;
 
                         element = ParseInlineProperties(element, line);
 
+                        MainClass.logger.WriteToLog($"New Element created: {element.ElementKey}, Parent: {element.ParentKey}", Logger.LogTypes.BuildGame);
+
                         if (line.Length > 1)
                         {
                             if (element.ParentKey == null)
@@ -340,7 +341,8 @@ PRAGMA foreign_keys = on;
                             }
 
                             success = LoadElement(connectionString, element);
-                            element = null;
+                            MainClass.logger.WriteToLog($"Returning row: {currentRow}", Logger.LogTypes.BuildGame);
+                            return currentRow;
                         }
 
                         continue;
@@ -426,6 +428,7 @@ PRAGMA foreign_keys = on;
                     case "}":
                         if (element == null)
                         {
+                            MainClass.logger.WriteToLog($"Returning row-index: {currentRow-1}", Logger.LogTypes.BuildGame);
                             return currentRow-1;
                         }
 
@@ -441,6 +444,11 @@ PRAGMA foreign_keys = on;
                         }
                         break;
                 }
+            }
+
+            if (element != null) //@note
+            {
+                success = LoadElement(connectionString, element);
             }
 
             SaveElements(connectionString);
@@ -693,7 +701,7 @@ VALUES";
                         createDbQuery += ",";
                     }
 
-                    logger.WriteToLog($"Element Type: {e.ElementType}, Key: {e.ElementKey}, Parent: {e.ParentKey}", Logger.LogTypes.BuildGame);
+                    MainClass.logger.WriteToLog($"Element Type: {e.ElementType}, Key: {e.ElementKey}, Parent: {e.ParentKey}", Logger.LogTypes.BuildGame);
                 }
 
                 using (SqliteCommand command = new SqliteCommand(createDbQuery, connection))

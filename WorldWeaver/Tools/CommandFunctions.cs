@@ -43,11 +43,20 @@ namespace WorldWeaver.Tools
                 {
                     string json = r.ReadToEnd();
                     var jsonObj = JObject.Parse(json);
+                    var links = new List<string>();
                     foreach (var cmd in jsonObj["topics"])
                     {
                         var syntax = (string)cmd["pattern"];
                         var title = (string)cmd["title"];
                         var content = (string)cmd["string"];
+
+                        if (cmd["links"] != null) 
+                        {
+                            foreach (var link in cmd["links"])
+                            {
+                                links.Add((string)link);
+                            }
+                        }
 
                         Regex rgx = new Regex(syntax, RegexOptions.IgnoreCase);
 
@@ -61,6 +70,17 @@ namespace WorldWeaver.Tools
                             output += $"{title}{Environment.NewLine}";
                             output += $"--------------------------------------------------------------------------------{Environment.NewLine}";
                             output += content;
+
+                            if (links.Count > 0)
+                            {
+                                output += $"{Environment.NewLine}{Environment.NewLine}";
+                                output += $"Links{Environment.NewLine}";
+                                output += $"-----{Environment.NewLine}";
+                                foreach (var l in links)
+                                {
+                                    output += $"{l}{Environment.NewLine}";
+                                }
+                            }
                         }
                     }
                 }

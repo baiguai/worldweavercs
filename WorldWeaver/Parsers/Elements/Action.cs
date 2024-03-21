@@ -77,8 +77,6 @@ namespace WorldWeaver.Parsers.Elements
                 if (arr.Length == 2)
                 {
                     var key = arr[0];
-                    key = key.Replace("{", "");
-                    key = key.Replace("}", "");
                     var logic = new DataManagement.GameLogic.Element();
 
                     var elem = logic.GetElementByKey(gameDb, key);
