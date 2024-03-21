@@ -1,8 +1,8 @@
 {key=global, type=global, parent=root
     {type=input, syntax=\b(stats)\b
-        {type=action, logic={player}|stats, tags=list, output=Stats: }
+        {type=action, logic=player|stats, tags=list, output=Stats: }
     }
     {type=input, syntax=\b(inventory|inv)\b
-        {type=action, logic={player}|inventory, tags=list, output=Inventory: }
+        {type=action, logic=player|inventory, tags=list, output=Inventory: }
     }
 }
