@@ -1,0 +1,15 @@
+{
+    "topics" : [
+        {
+            "pattern" : "\\b(if)\\b",
+            "title" : "Interactive Fiction Help",
+            "string" : "
+Interactive Fiction games are text-based games. Think of them like Choose Your
+Own Adventure books on steroids.
+You can not only decide how the story is going to play out, but you can
+actually change the state of the game, by picking up items, opening doors or
+objects, using weapons to attack enemies, etc.
+            "
+        }
+    ]
+}

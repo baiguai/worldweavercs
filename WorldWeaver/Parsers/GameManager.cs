@@ -31,7 +31,10 @@ namespace WorldWeaver.Parsers
                 var procItems = Tools.ProcFunctions.GetProcessStepsByType(gameElem.ElementType);
                 foreach (var proc in procItems)
                 {
-                    output = elemParser.ParseElement(output, gameDb, gameElem, userInput, proc, false);
+                    foreach (var glob in Cache.GlobalCache.Global)
+                    {
+                        output = elemParser.ParseElement(output, gameDb, glob, userInput, proc, false);
+                    }
                 }
 
                 procItems = Tools.ProcFunctions.GetProcessStepsByType(Cache.PlayerCache.Player.ElementType);

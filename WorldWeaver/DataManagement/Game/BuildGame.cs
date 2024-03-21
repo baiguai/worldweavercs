@@ -13,9 +13,11 @@ namespace WorldWeaver.DataManagement.Game
 {
     public class BuildGame
     {
+
         public int depth = 0;
         public List<Classes.Element> elementsToInsert = new List<Classes.Element>();
         public int commitSize = 500;
+        public Logger logger = new Logger() { LogDate = DateTime.Now };
 
         public bool CreateDatabase(string game_key)
         {
@@ -659,6 +661,11 @@ INSERT INTO element (
 )
 VALUES";
 
+                if (elementsToInsert.Count < 1)
+                {
+                    return true;
+                }
+
                 var lastElem = elementsToInsert.Last();
                 foreach (var e in elementsToInsert)
                 {
@@ -685,6 +692,8 @@ VALUES";
                     {
                         createDbQuery += ",";
                     }
+
+                    logger.WriteToLog($"Element Type: {e.ElementType}, Key: {e.ElementKey}, Parent: {e.ParentKey}", Logger.LogTypes.BuildGame);
                 }
 
                 using (SqliteCommand command = new SqliteCommand(createDbQuery, connection))
