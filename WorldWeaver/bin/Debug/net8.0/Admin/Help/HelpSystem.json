@@ -1,0 +1,27 @@
+{
+    "topics" : [
+        {
+            "pattern" : "\\b(helpsystem)\\b",
+            "title" : "Building Your Own Help System",
+            "string" : "
+Here is a template that you can use for building your own Help topics (Note that 'help' does not need to be added to the start of 'pattern'):
+
+{
+    \"topics\" : [
+        {
+            \"pattern\" : \"\\b(some topic)\\b\",
+            \"title\" : \"Some Topic\",
+            \"string\" : \"
+Topic content here...
+\",
+            \"links\" : [
+                \"help related topic\",
+                \"help another topic\"
+            ]
+        }
+    ]
+}
+"
+        }
+    ]
+}

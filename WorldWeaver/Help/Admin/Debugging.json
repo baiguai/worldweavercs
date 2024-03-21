@@ -1,0 +1,14 @@
+{
+    "topics" : [
+        {
+            "pattern" : "\\b(debugging)\\b",
+            "title" : "Debugging Game Definitions",
+            "string" : "
+...
+",
+            "links" : [
+                "_help gotchas"
+            ]
+        }
+    ]
+}
