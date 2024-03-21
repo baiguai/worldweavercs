@@ -70,29 +70,26 @@ namespace WorldWeaver.Parsers.Elements
 
         private Output ParseTags_List(Output output, string gameDb, Classes.Element currentElement, string userInput)
         {
-            if (currentElement.Logic.Contains("}") || currentElement.Logic.Contains("{"))
+            var arr = currentElement.Logic.Split('|');
+
+            if (arr.Length == 2)
             {
-                var arr = currentElement.Logic.Split('|');
+                var key = arr[0];
+                var logic = new DataManagement.GameLogic.Element();
 
-                if (arr.Length == 2)
+                var elem = logic.GetElementByKey(gameDb, key);
+
+                if (!currentElement.Output.Equals(""))
                 {
-                    var key = arr[0];
-                    var logic = new DataManagement.GameLogic.Element();
+                    output.OutputText += $"{currentElement.Output}{Environment.NewLine}{Environment.NewLine}";
+                }
 
-                    var elem = logic.GetElementByKey(gameDb, key);
-
-                    if (!currentElement.Output.Equals(""))
+                foreach (var child in elem.Children)
+                {
+                    if (child.Tags.Contains(arr[1].Trim()))
                     {
-                        output.OutputText += $"{currentElement.Output}{Environment.NewLine}{Environment.NewLine}";
-                    }
-
-                    foreach (var child in elem.Children)
-                    {
-                        if (child.Tags.Contains(arr[1].Trim()))
-                        {
-                            output.OutputText += $"{child.Name}: {child.Output}{Environment.NewLine}";
-                            output.MatchMade = true;
-                        }
+                        output.OutputText += $"{child.Name}: {child.Output}{Environment.NewLine}";
+                        output.MatchMade = true;
                     }
                 }
             }
