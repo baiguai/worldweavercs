@@ -86,6 +86,59 @@ namespace WorldWeaver.Tools
                 }
             }
 
+            if (output.Equals(""))
+            {
+                output = SearchHelp(input, system);
+            }
+
+            return output;
+        }
+
+        private static string SearchHelp(string input, string system)
+        {
+            var output = "";
+            var rgxString = "";
+            var pfx = "help ";
+            var matchedStr = "";
+
+            if (system.Equals("Admin"))
+            {
+                pfx = "_help ";
+            }
+
+            rgxString = @$"(?i)\b({input})\b";
+
+            Regex rgx = new Regex(rgxString, RegexOptions.IgnoreCase);
+
+            foreach (var f in Directory.GetFiles($"Help/{system}"))
+            {
+                using (StreamReader r = new StreamReader(f))
+                {
+                    string json = r.ReadToEnd();
+                    var jsonObj = JObject.Parse(json);
+                    foreach (var cmd in jsonObj["topics"])
+                    {
+                        var syntax = (string)cmd["pattern"];
+                        var title = (string)cmd["title"];
+                        var content = (string)cmd["string"];
+
+                        if (rgx.IsMatch(syntax) || rgx.IsMatch(title) || rgx.IsMatch(content))
+                        {
+                            if (!output.Equals(""))
+                            {
+                                output += $"{Environment.NewLine}";
+                            }
+
+                            matchedStr = syntax.Replace("\\b(", "").Replace(")\\b", "");
+                            if (matchedStr.Trim()+" " != pfx)
+                            {
+                                output += $"{pfx}{matchedStr}";
+                            }
+                        }
+                    }
+                }
+            }
+
             return output;
         }
     }
