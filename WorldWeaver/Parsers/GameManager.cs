@@ -15,6 +15,7 @@ namespace WorldWeaver.Parsers
             if (!DataManagement.GameLogic.Game.IsGameRunning())
             {
                 var gameElem = elemLogic.GetElementsByType(gameDb, "game")[0];
+                Cache.GameCache.GameDb = gameDb;
                 Cache.GameCache.Game = gameElem;
 
                 foreach (var gameChild in gameElem.Children)

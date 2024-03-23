@@ -5,4 +5,14 @@
     {type=input, syntax=\b(inventory|inv)\b
         {type=action, logic=player|inventory, tags=list, output=Inventory: }
     }
+
+    {type=input, syntax=\b(arm *)\b
+        {type=set, logic=player_armed|output|[input], tags=arm
+            {type=message
+                output={@
+You are now armed with the [field|longsword_01|name].
+                }
+            }
+        }
+    }
 }

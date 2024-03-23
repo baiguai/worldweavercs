@@ -8,6 +8,7 @@
                 "logic",
                 "input",
                 "action",
+                "set",
                 "move",
                 "message"
             ],
@@ -44,6 +45,7 @@
             "elements" : [
                 "logic",
                 "message",
+                "set",
                 "action",
                 "move"
             ],
@@ -56,6 +58,7 @@
             "elements" : [
                 "logic",
                 "action",
+                "set",
                 "message"
             ],
             "repeat_options" : "false"
@@ -78,6 +81,7 @@
             ],
             "elements" : [
                 "logic",
+                "set",
                 "message"
             ],
             "repeat_options" : "true"
@@ -110,6 +114,7 @@
             "elements" : [
                 "enter_message",
                 "action",
+                "set",
                 "message",
                 "input"
             ],
@@ -117,28 +122,12 @@
         },
         {
             "types" : [
-                "set_attribute"
+                "set"
             ],
             "elements" : [
-                "message"
-            ],
-            "repeat_options" : "false"
-        },
-        {
-            "types" : [
-                "set_field"
-            ],
-            "elements" : [
-                "message"
-            ],
-            "repeat_options" : "false"
-        },
-        {
-            "types" : [
-                "set_field_matched"
-            ],
-            "elements" : [
-                "message"
+                "message",
+                "logic",
+                "set"
             ],
             "repeat_options" : "false"
         }

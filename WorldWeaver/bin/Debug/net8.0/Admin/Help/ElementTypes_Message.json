@@ -1,0 +1,11 @@
+{
+    "topics" : [
+        {
+            "pattern" : "\\b(element type message)\\b",
+            "title" : "Message Element Type",
+            "string" : "
+The Message Event type...
+"
+        }
+    ]
+}

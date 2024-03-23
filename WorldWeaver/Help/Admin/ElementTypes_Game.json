@@ -1,0 +1,11 @@
+{
+    "topics" : [
+        {
+            "pattern" : "\\b(element type game)\\b",
+            "title" : "Game Element Type",
+            "string" : "
+The Game Event type...
+"
+        }
+    ]
+}

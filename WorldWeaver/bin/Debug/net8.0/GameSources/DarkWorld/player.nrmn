@@ -3,7 +3,7 @@
     {key=player_strength, name=Strength, type=attribute, output=[rand:8|18], tags=stats }
     {key=player_intelligence, name=Intelligence, type=attribute, output=[rand:8|18], tags=stats }
     {key=player_cunning, name=Cunning, type=attribute, output=[rand:8|18], tags=stats }
-    {key=player_armed, name=Armed Weapon, type=attribute, output=longsword_01, tags=armed }
+    {key=player_armed, name=Armed Weapon, type=attribute, output=, tags=armed|stats }
 
     {key=longsword_01, name=Long Sword, type=weapon, syntax=\b(long sword)\b, tags=inventory
         {name=Damage, type=attribute, logic=[rand:4|12], tags=damage }

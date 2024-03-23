@@ -109,6 +109,7 @@ namespace WorldWeaver.Parsers
             var elemParser = new Parsers.Elements.Element();
 
             Cache.GameCache.Game = gameElem;
+            Cache.GameCache.GameDb = gameDb;
             Cache.PlayerCache.Player = playerElem;
             Cache.RoomCache.Room = roomElem;
 

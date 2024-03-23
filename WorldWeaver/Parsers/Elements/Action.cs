@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Formats.Asn1;
 using System.Globalization;
 using WorldWeaver.Classes;
 
@@ -86,10 +87,22 @@ namespace WorldWeaver.Parsers.Elements
 
                 foreach (var child in elem.Children)
                 {
-                    if (child.Tags.Contains(arr[1].Trim()))
+                    var tagList = child.Tags.Split('|');
+
+                    foreach (var tag in tagList)
                     {
-                        output.OutputText += $"{child.Name}: {child.Output}{Environment.NewLine}";
-                        output.MatchMade = true;
+                        if (tag.Equals(arr[1].Trim()))
+                        {
+                            if (child.Output.Equals(""))
+                            {
+                                output.OutputText += $"{child.Name}{Environment.NewLine}";
+                            }
+                            else
+                            {
+                                output.OutputText += $"{child.Name}: {child.Output}{Environment.NewLine}";
+                            }
+                            output.MatchMade = true;
+                        }
                     }
                 }
             }
