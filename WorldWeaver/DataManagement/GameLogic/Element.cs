@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text.RegularExpressions;
 using Microsoft.Data.Sqlite;
 using WorldWeaver.Classes;
 
@@ -167,6 +168,63 @@ ORDER BY
             return output;
         }
 
+        public string GetElementField(string gameDb, string element_key, string element_field)
+        {
+            var output = "";
+            var selectQuery = $@"
+SELECT
+    {element_field} as Field
+FROM
+    element
+WHERE 1=1
+    AND ElementKey = @elementkey
+    AND Active = '1'
+;
+            ";
+
+            var parms = new List<DbParameter>();
+            parms.Add(new DbParameter()
+            {
+                ParamName = "@elementkey",
+                ParamValue = element_key
+            });
+
+            var gameFile = $"Games/{gameDb}";
+
+            if (!File.Exists(gameFile))
+            {
+                return "";
+            }
+
+            string connectionString = $"Data Source={gameFile};Cache=Shared;";
+
+            using (SqliteConnection connection = new SqliteConnection(connectionString))
+            {
+                connection.Open();
+
+                using (SqliteCommand command = new SqliteCommand(selectQuery, connection))
+                {
+                    foreach (var parm in parms)
+                    {
+                        command.Parameters.AddWithValue(parm.ParamName, parm.ParamValue);
+                    }
+
+                    using (SqliteDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            output = reader.GetString(reader.GetOrdinal("Field"));
+                            break;
+                        }
+                    }
+                }
+
+                connection.Close();
+            }
+
+            return output;
+        }
+
 
         public Classes.Element GetElement(string selectQuery, string gameDb, List<DbParameter> parms)
         {
@@ -269,6 +327,50 @@ ORDER BY
                             e.Active = reader.GetString(reader.GetOrdinal("Active"));
                             e.Sort = reader.GetInt32(reader.GetOrdinal("Sort"));
                             e.Children = GetElementChildren(gameDb, reader.GetString(reader.GetOrdinal("ElementKey")));
+
+                            output.Add(e);
+                        }
+                    }
+                }
+
+                connection.Close();
+            }
+
+            return output;
+        }
+
+        public List<Classes.SearchElement> GetSearchElements(string selectQuery, string gameDb, List<DbParameter> parms)
+        {
+            var output = new List<Classes.SearchElement>();
+
+            var gameFile = $"Games/{gameDb}";
+
+            if (!File.Exists(gameFile))
+            {
+                return output;
+            }
+
+            string connectionString = $"Data Source={gameFile};Cache=Shared;";
+
+            using (SqliteConnection connection = new SqliteConnection(connectionString))
+            {
+                connection.Open();
+
+                using (SqliteCommand command = new SqliteCommand(selectQuery, connection))
+                {
+                    foreach (var parm in parms)
+                    {
+                        command.Parameters.AddWithValue(parm.ParamName, parm.ParamValue);
+                    }
+
+                    using (SqliteDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            var e = new Classes.SearchElement();
+
+                            e.ElementKey = reader.GetString(reader.GetOrdinal("ElementKey"));
+                            if (reader["Syntax"] != DBNull.Value) { e.Syntax = reader.GetString(reader.GetOrdinal("Syntax")); }
 
                             output.Add(e);
                         }
@@ -386,6 +488,62 @@ WHERE 1=1
 
                 connection.Close();
             }
+
+            return output;
+        }
+
+        internal string ElementLookup(string gameDb, string idValue)
+        {
+            var elem = GetElementByKey(gameDb, idValue);
+            if (!elem.ElementKey.Equals(""))
+            {
+                return elem.ElementKey;
+            }
+
+            var elems = GetElementKeysBySyntax(gameDb, idValue);
+            if (elems.Count == 1)
+            {
+                return elems.First();
+            }
+
+            return "";
+        }
+
+        private List<string> GetElementKeysBySyntax(string gameDb, string idValue)
+        {
+            var output = new List<string>();
+            var allElems = GetElemsForSyntaxSearch(gameDb);
+
+            foreach (var elem in allElems)
+            {
+                Regex rgx = new Regex(idValue, RegexOptions.IgnoreCase);
+
+                if (rgx.IsMatch(elem.Syntax))
+                {
+                    output.Add(elem.ElementKey);
+                }
+            }
+
+            return output;
+        }
+
+        private List<SearchElement> GetElemsForSyntaxSearch(string gameDb)
+        {
+            var selectQuery = $@"
+SELECT
+    ElementKey,
+    Syntax
+FROM
+    element
+WHERE 1=1
+    AND Syntax IS NOT NULL
+    AND Active = '1'
+;
+            ";
+
+            var parms = new List<DbParameter>();
+
+            var output = GetSearchElements(selectQuery, gameDb, parms);
 
             return output;
         }

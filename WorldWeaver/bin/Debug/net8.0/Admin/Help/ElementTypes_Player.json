@@ -1,0 +1,11 @@
+{
+    "topics" : [
+        {
+            "pattern" : "\\b(element type player)\\b",
+            "title" : "Player Element Type",
+            "string" : "
+The Player Event type...
+"
+        }
+    ]
+}

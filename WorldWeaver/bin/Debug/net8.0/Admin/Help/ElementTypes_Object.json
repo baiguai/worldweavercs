@@ -1,0 +1,11 @@
+{
+    "topics" : [
+        {
+            "pattern" : "\\b(element type object)\\b",
+            "title" : "Object Element Type",
+            "string" : "
+The Object Event type...
+"
+        }
+    ]
+}

@@ -15,5 +15,14 @@ namespace WorldWeaver.Parsers.Elements
 
             return output;
         }
+
+        public string ParseSetLogic(string gameDb, string logic, string userInput)
+        {
+            var output = "";
+
+            output = logic.Replace("[input]", userInput);
+
+            return output;
+        }
     }
 }

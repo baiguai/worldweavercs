@@ -1,0 +1,27 @@
+{
+    "topics" : [
+        {
+            "pattern" : "\\b(element types)\\b",
+            "title" : "Element Types",
+            "string" : "
+Element Types are hard coded into the logic of WorldWeaver, however these types can be processed however you like.
+To adjust how they are handled you can modify the: ~/Config/ElementProcRules/ElementByType.json file.
+You will want to make a backup of this file before editing it.
+This particular configuration file tells WorldWeaver what child Element Types each Element should process.
+The possible Element Type choices are (To see the details of each of these use: _help element type <type>):
+
+- action
+- game
+- global
+- input
+- logic
+- message
+- move
+- object
+- player
+- room
+- set
+"
+        }
+    ]
+}

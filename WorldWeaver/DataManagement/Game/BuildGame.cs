@@ -471,7 +471,7 @@ PRAGMA foreign_keys = on;
                     line = line.Replace($"{fieldName}=", "");
                     if (!line.StartsWith("{", StringComparison.OrdinalIgnoreCase))
                     {
-                        propertyValue = line.OutputFormat();
+                        propertyValue = line;
                         break;
                     }
                     else
@@ -496,7 +496,7 @@ PRAGMA foreign_keys = on;
                         propertyValue += Environment.NewLine;
                     }
 
-                    propertyValue += line.OutputFormat();
+                    propertyValue += line;
                 }
             }
 

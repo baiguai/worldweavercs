@@ -95,6 +95,19 @@ namespace WorldWeaver.Parsers.Elements
                                 handledMove = output.MatchMade;
                             }
                             break;
+
+                        case "set":
+                            var set = new Parsers.Elements.Set();
+                            output = set.ParseSet(output, gameDb, currentElement, child, userInput);
+                            if (output.MatchMade)
+                            {
+                                var procs = Tools.ProcFunctions.GetProcessStepsByType(child.ElementType);
+                                foreach (var childProc in procs)
+                                {
+                                    output = ParseElement(output, gameDb, child, userInput, childProc);
+                                }
+                            }
+                            break;
                     }
                 }
             }
