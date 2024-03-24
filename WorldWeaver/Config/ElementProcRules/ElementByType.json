@@ -115,6 +115,7 @@
                 "enter_message",
                 "action",
                 "set",
+                "object",
                 "message",
                 "input"
             ],

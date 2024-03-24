@@ -1,4 +1,4 @@
-{key=global, type=global, parent=root
+{key=global01, type=global, parent=root
     {type=input, syntax=\b(stats)\b
         {type=action, logic=player|stats, tags=list, output=Stats: }
     }

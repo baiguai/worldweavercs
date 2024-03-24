@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using WorldWeaver.Classes;
 
 namespace WorldWeaver.Parsers.Elements
@@ -91,7 +92,7 @@ namespace WorldWeaver.Parsers.Elements
                             if (!handledMove)
                             {
                                 var move = new Parsers.Elements.Move();
-                                output = move.ParseMove(output, gameDb, currentElement, child, procObj.AllowRepeatOptions, index, userInput);
+                                output = move.ParseMove(output, gameDb, currentElement, child, index, userInput);
                                 handledMove = output.MatchMade;
                             }
                             break;
@@ -106,6 +107,14 @@ namespace WorldWeaver.Parsers.Elements
                                 {
                                     output = ParseElement(output, gameDb, child, userInput, childProc);
                                 }
+                            }
+                            break;
+
+                        case "object":
+                            var childProcs = Tools.ProcFunctions.GetProcessStepsByType(child.ElementType);
+                            foreach (var childProc in childProcs)
+                            {
+                                output = ParseElement(output, gameDb, child, userInput, childProc, isEntering);
                             }
                             break;
                     }
@@ -176,7 +185,7 @@ namespace WorldWeaver.Parsers.Elements
             }
 
             currentElement.RepeatIndex = output;
-            dbElem.SetElementField(gameDb, currentElement.ElementKey, "RepeatIndex", output.ToString());
+            dbElem.SetElementField(gameDb, currentElement.ElementKey, "RepeatIndex", output.ToString(), false);
             return output;
         }
     }

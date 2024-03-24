@@ -105,7 +105,7 @@ namespace WorldWeaver.Parsers
             DataManagement.GameLogic.Game gameLogic = new DataManagement.GameLogic.Game();
             var gameElem = elemLogic.GetElementsByType(gameDb, "game")[0];
             var playerElem = elemLogic.GetElementsByType(gameDb, "player")[0];
-            var roomElem = elemLogic.GetElementByKey(gameDb, playerElem.Location);
+            var roomElem = elemLogic.GetElementByKey(gameDb, playerElem.ParentKey);
             var elemParser = new Parsers.Elements.Element();
 
             Cache.GameCache.Game = gameElem;

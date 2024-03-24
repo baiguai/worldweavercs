@@ -1,4 +1,5 @@
 ﻿using System;
+using WorldWeaver.Tools;
 namespace WorldWeaver.DataManagement.Game
 {
     public class PlayGame
@@ -30,6 +31,8 @@ namespace WorldWeaver.DataManagement.Game
                 output.OutputText = $"Unable to set the player name.";
                 output.MatchMade = true;
             }
+
+            CacheManager.RefreshCache(gameDb);
 
             return output;
         }

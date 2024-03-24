@@ -1,4 +1,4 @@
-﻿{key=player, name=, type=player, location=local_pub
+﻿{key=player, name=, type=player, parent=local_pub
     {key=player_life, name=Life, type=attribute, output=[rand:8|18] tags=life }
     {key=player_strength, name=Strength, type=attribute, output=[rand:8|18] tags=strength }
 }

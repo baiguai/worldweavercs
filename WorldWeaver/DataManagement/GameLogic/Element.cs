@@ -4,6 +4,7 @@ using System.IO;
 using System.Text.RegularExpressions;
 using Microsoft.Data.Sqlite;
 using WorldWeaver.Classes;
+using WorldWeaver.Tools;
 
 namespace WorldWeaver.DataManagement.GameLogic
 {
@@ -11,13 +12,21 @@ namespace WorldWeaver.DataManagement.GameLogic
     {
         public List<Classes.Element> GetElementsByType(string gameDb, string type)
         {
+            var cachedElems = Tools.CacheManager.GetCachedElementByType(type);
+            if (cachedElems.Count > 0)
+            {
+                if (cachedElems.Count == 1 && cachedElems[0] != null)
+                {
+                    return cachedElems;
+                }
+            }
+
             var selectQuery = $@"
 SELECT
     ElementType,
     ElementKey,
     Name,
     ParentKey,
-    Location,
     Syntax,
     Logic,
     Output,
@@ -47,7 +56,7 @@ ORDER BY
             return output;
         }
 
-        internal bool SetElementLocation(string gameDb, string key, string location)
+        internal bool SetElementParentKey(string gameDb, string key, string parentKey)
         {
             var output = false;
 
@@ -64,7 +73,7 @@ ORDER BY
 UPDATE
     element
 SET
-    Location = @newlocation
+    ParentKey = @newParentKey
 WHERE 1=1
     AND ElementKey = @elementkey
     AND Active = '1'
@@ -78,7 +87,7 @@ WHERE 1=1
                 using (SqliteCommand command = new SqliteCommand(updateQuery, connection))
                 {
                     command.Parameters.AddWithValue("@elementkey", key);
-                    command.Parameters.AddWithValue("@newlocation", location);
+                    command.Parameters.AddWithValue("@newParentKey", parentKey);
 
                     command.ExecuteNonQuery();
                 }
@@ -87,18 +96,25 @@ WHERE 1=1
                 output = true;
             }
 
+            CacheManager.RefreshCache(gameDb);
+
             return output;
         }
 
         public Classes.Element GetElementByKey(string gameDb, string element_key)
         {
+            var cachedElem = CacheManager.GetCachedElement(element_key);
+            if (cachedElem != null)
+            {
+                return cachedElem;
+            }
+
             var selectQuery = $@"
 SELECT
     ElementType,
     ElementKey,
     Name,
     ParentKey,
-    Location,
     Syntax,
     Logic,
     Output,
@@ -130,13 +146,18 @@ WHERE 1=1
 
         public List<Classes.Element> GetElementChildren(string gameDb, string parent_key)
         {
+            var cachedElem = Tools.CacheManager.GetCachedElement(parent_key);
+            if (cachedElem != null)
+            {
+                return cachedElem.Children;
+            }
+
             var selectQuery = $@"
 SELECT
     ElementType,
     ElementKey,
     Name,
     ParentKey,
-    Location,
     Syntax,
     Logic,
     Output,
@@ -260,7 +281,6 @@ WHERE 1=1
                             e.ElementKey = reader.GetString(reader.GetOrdinal("ElementKey"));
                             if (reader["Name"] != DBNull.Value) { e.Name = reader.GetString(reader.GetOrdinal("Name")); }
                             e.ParentKey = reader.GetString(reader.GetOrdinal("ParentKey"));
-                            e.Location = reader.GetString(reader.GetOrdinal("Location"));
                             if (reader["Syntax"] != DBNull.Value) { e.Syntax = reader.GetString(reader.GetOrdinal("Syntax")); }
                             if (reader["Logic"] != DBNull.Value) { e.Logic = reader.GetString(reader.GetOrdinal("Logic")); }
                             if (reader["Output"] != DBNull.Value) { e.Output = reader.GetString(reader.GetOrdinal("Output")); }
@@ -317,7 +337,6 @@ WHERE 1=1
                             e.ElementKey = reader.GetString(reader.GetOrdinal("ElementKey"));
                             if (reader["Name"] != DBNull.Value) { e.Name = reader.GetString(reader.GetOrdinal("Name")); }
                             e.ParentKey = reader.GetString(reader.GetOrdinal("ParentKey"));
-                            e.Location = reader.GetString(reader.GetOrdinal("Location"));
                             if (reader["Syntax"] != DBNull.Value) { e.Syntax = reader.GetString(reader.GetOrdinal("Syntax")); }
                             if (reader["Logic"] != DBNull.Value) { e.Logic = reader.GetString(reader.GetOrdinal("Logic")); }
                             if (reader["Output"] != DBNull.Value) { e.Output = reader.GetString(reader.GetOrdinal("Output")); }
@@ -383,7 +402,7 @@ WHERE 1=1
             return output;
         }
 
-        public bool SetElementField(string gameDb, string element_key, string field, string new_value)
+        public bool SetElementField(string gameDb, string element_key, string field, string new_value, bool refreshCache = true)
         {
             var output = false;
 
@@ -421,6 +440,11 @@ WHERE 1=1
 
                 connection.Close();
                 output = true;
+            }
+
+            if (refreshCache)
+            {
+                CacheManager.RefreshCache(gameDb);
             }
 
             return output;

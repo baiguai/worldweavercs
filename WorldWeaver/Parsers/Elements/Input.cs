@@ -21,6 +21,15 @@ namespace WorldWeaver.Parsers.Elements
                 foreach (var proc in procs)
                 {
                     output = elemParser.ParseElement(output, gameDb, currentElement, userInput, proc, false);
+
+                    foreach (var child in currentElement.Children)
+                    {
+                        var ChildProcs = ProcFunctions.GetProcessStepsByType(currentElement.ElementType);
+                        foreach (var childProc in ChildProcs)
+                        {
+                            output = elemParser.ParseElement(output, gameDb, child, userInput, childProc);
+                        }
+                    }
                 }
             }
 

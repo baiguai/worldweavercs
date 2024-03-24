@@ -17,3 +17,29 @@ You look around. The north room is small and dimly lit.
         {type=action, logic=look, tags=type }
     }
 }
+
+
+{key=golden_egg, name=Golden Egg, type=object, parent=local_pub_north
+    {type=enter_message
+        output={
+You see a golden egg.
+        }
+    }
+
+    {type=look
+        output={
+You see a golden egg.
+        }
+    }
+
+    {type=inspect
+        output={
+You inspect the egg...
+        }
+    }
+
+
+    {type=input, syntax=\b(examine * egg)\b
+        {type=action, logic=inspect, tags=type }
+    }
+}
