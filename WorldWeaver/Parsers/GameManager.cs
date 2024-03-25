@@ -57,6 +57,12 @@ namespace WorldWeaver.Parsers
                     }
                 }
 
+                var locProcItems = ProcFunctions.GetProcessStepsByType(Cache.RoomCache.Room.ElementType);
+                foreach (var proc in locProcItems)
+                {
+                    output = elemParser.ParseElement(output, gameDb, Cache.RoomCache.Room, userInput, proc);
+                }
+
                 foreach (var glob in Cache.GlobalCache.Global)
                 {
                     var globalProcItems = ProcFunctions.GetProcessStepsByType("global");
@@ -64,12 +70,6 @@ namespace WorldWeaver.Parsers
                     {
                         output = elemParser.ParseElement(output, gameDb, glob, userInput, proc);
                     }
-                }
-
-                var locProcItems = ProcFunctions.GetProcessStepsByType(Cache.RoomCache.Room.ElementType);
-                foreach (var proc in locProcItems)
-                {
-                    output = elemParser.ParseElement(output, gameDb, Cache.RoomCache.Room, userInput, proc);
                 }
             }
                 

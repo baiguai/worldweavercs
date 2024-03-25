@@ -40,20 +40,19 @@ namespace WorldWeaver.Parsers.Elements
 
             if (tags.Contains("type", StringComparer.OrdinalIgnoreCase))
             {
-                output = ParseTags_Type(output, gameDb, currentElement, userInput);
+                output = ParseTags_Type(output, gameDb, Cache.RoomCache.Room, currentElement.Logic, userInput);
             }
 
             return output;
         }
 
-        private Output ParseTags_Type(Output output, string gameDb, Classes.Element currentElement, string userInput)
+        private Output ParseTags_Type(Output output, string gameDb, Classes.Element parentElement, string type, string userInput)
         {
             if (Cache.RoomCache.Room == null)
             {
                 return output;
             }
-            var type = currentElement.Logic.Trim();
-            var targets = Tools.Elements.GetElementsByType(Cache.RoomCache.Room, type);
+            var targets = Tools.Elements.GetElementsByType(parentElement, type);
 
             var elemParser = new Parsers.Elements.Element();
             
@@ -64,6 +63,8 @@ namespace WorldWeaver.Parsers.Elements
                 {
                     output = elemParser.ParseElement(output, gameDb, elem, userInput, proc);
                 }
+
+                output = ParseTags_Type(output, gameDb, elem, type, userInput);
             }
 
             return output;

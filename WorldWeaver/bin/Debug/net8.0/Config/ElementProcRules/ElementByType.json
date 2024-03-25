@@ -94,7 +94,8 @@
                 "enter_message",
                 "logic",
                 "action",
-                "message"
+                "message",
+                "input"
             ],
             "repeat_options" : "false"
         },
