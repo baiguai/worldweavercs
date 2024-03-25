@@ -6,7 +6,7 @@ namespace WorldWeaver.Tools
 {
     public class InitFunctions
     {
-        public static string GetInitMessage()
+        public static string GetInitMessage(bool IsLaunching = true)
         {
             var output = "";
 
@@ -21,7 +21,10 @@ namespace WorldWeaver.Tools
                 }
             }
 
-            output += $"{Environment.NewLine}{Environment.NewLine}>>";
+            if (IsLaunching)
+            {
+                output += $"{Environment.NewLine}{Environment.NewLine}>>";
+            }
 
             return output;
         }
