@@ -55,6 +55,12 @@ namespace WorldWeaver.Parsers
                 {
                     output = DoSetPlayerName(output);
                 }
+
+                if (!output.MatchMade && method.Equals("DoMenu"))
+                {
+                    output.OutputText = Tools.InitFunctions.GetInitMessage(false);
+                    output.MatchMade = true;
+                }
             }
             else
             {

@@ -15,6 +15,10 @@
         {
             "pattern" : "\\b(set player name *)\\b",
             "method" : "DoSetPlayerName"
+        },
+        {
+            "pattern" : "\\b(menu)\\b",
+            "method" : "DoMenu"
         }
     ]
 }
