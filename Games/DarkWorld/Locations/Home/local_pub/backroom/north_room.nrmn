@@ -19,7 +19,7 @@ You look around. The north room is small and dimly lit.
 }
 
 
-{key=golden_egg, name=Golden Egg, type=object, parent=local_pub_north
+{key=golden_egg, name=Golden Egg, type=object, parent=local_pub_north, tags=inventory
     {type=enter_message
         output={
 You see a golden egg.
@@ -27,8 +27,10 @@ You see a golden egg.
     }
 
     {type=look
-        output={
+        {type=message
+            output={
 You see a golden egg.
+            }
         }
     }
 
@@ -39,7 +41,15 @@ You inspect the egg...
     }
 
 
-    {type=input, syntax=\b(examine * egg)\b
+    {type=input, syntax=\b(examine*egg)\b
         {type=action, logic=inspect, tags=type }
+    }
+
+    {type=input, syntax=\b(take*egg)\b
+        {type=move, logic=player, tags=golden_egg
+            output={@
+You pick up the golden egg.
+            }
+        }
     }
 }

@@ -20,46 +20,57 @@ namespace WorldWeaver.Parsers
                 MatchMade = false
             };
             var method = Tools.CommandFunctions.GetCommandMethod(input, "GameParser");
+            var duringGame = Tools.CommandFunctions.GetDuringGameOption(input, "GameParser");
 
             playerInput = input;
 
             if (!method.Equals(""))
             {
-                if (!output.MatchMade && method.Equals("DoPlayGame"))
+                if (!DataManagement.GameLogic.Game.IsGameRunning() && !duringGame)
                 {
-                    output = DoPlayGame(output);
-                    var logic = new DataManagement.GameLogic.Element();
-                    var player = logic.GetElementsByType(gameDb, "player");
-
-                    if (output.MatchMade)
+                    if (!output.MatchMade && method.Equals("DoPlayGame"))
                     {
+                        output = DoPlayGame(output);
+                        var logic = new DataManagement.GameLogic.Element();
+                        var player = logic.GetElementsByType(gameDb, "player");
+
+                        if (output.MatchMade)
+                        {
+                            return output;
+                        }
+
+                        var mgr = new Parsers.GameManager();
+                        output = mgr.ProcessGameInput(gameKey, gameDb, output, playerInput);
                         return output;
                     }
 
-                    var mgr = new Parsers.GameManager();
-                    output = mgr.ProcessGameInput(gameKey, gameDb, output, playerInput);
-                    return output;
-                }
+                    if (!output.MatchMade && method.Equals("DoResumeGame"))
+                    {
+                        output = DoResumeGame(output);
+                    }
 
-                if (!output.MatchMade && method.Equals("DoResumeGame"))
-                {
-                    output = DoResumeGame(output);
-                }
+                    if (!output.MatchMade && method.Equals("DoListGames"))
+                    {
+                        output = DoListGames(output);
+                    }
 
-                if (!output.MatchMade && method.Equals("DoListGames"))
-                {
-                    output = DoListGames(output);
-                }
+                    if (!output.MatchMade && method.Equals("DoSetPlayerName"))
+                    {
+                        output = DoSetPlayerName(output);
+                    }
 
-                if (!output.MatchMade && method.Equals("DoSetPlayerName"))
-                {
-                    output = DoSetPlayerName(output);
+                    if (!output.MatchMade && method.Equals("DoMenu"))
+                    {
+                        output.OutputText = Tools.InitFunctions.GetInitMessage(false);
+                        output.MatchMade = true;
+                    }
                 }
-
-                if (!output.MatchMade && method.Equals("DoMenu"))
+                if (DataManagement.GameLogic.Game.IsGameRunning() && duringGame)
                 {
-                    output.OutputText = Tools.InitFunctions.GetInitMessage(false);
-                    output.MatchMade = true;
+                    if (!output.MatchMade && method.Equals("DoQuit"))
+                    {
+                        output = DoQuit(output);
+                    }
                 }
             }
             else
@@ -69,6 +80,16 @@ namespace WorldWeaver.Parsers
                     output = DoGameInput(output);
                 }
             }
+
+            return output;
+        }
+
+        private Output DoQuit(Output output)
+        {
+            Tools.CacheManager.ClearCache();
+
+            output.OutputText = Tools.InitFunctions.GetInitMessage(false);
+            output.MatchMade = true;
 
             return output;
         }

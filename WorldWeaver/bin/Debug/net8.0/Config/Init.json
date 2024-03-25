@@ -22,6 +22,13 @@
   |   To resume a game use:                                    |
   |   resume <Game name (Case sensitive)>                      |
   |                                                            |
+  |   To quit the current game use:                            |
+  |   quit                                                     |
+  |                                                            |
+  |   To exit WorldWeaver use:                                 |
+  |   exit                                                     |
+  |                                                            |
+  |                                                            |
   |   To view this menu use:                                   |
   |   menu                                                     |
   |                                                            |

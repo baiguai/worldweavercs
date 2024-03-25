@@ -94,6 +94,31 @@ namespace WorldWeaver.Tools
             return output;
         }
 
+        internal static bool GetDuringGameOption(string input, string parser)
+        {
+            var output = false;
+
+            using (StreamReader r = new StreamReader($"Config/Commands/{parser}.json"))
+            {
+                string json = r.ReadToEnd();
+                var jsonObj = JObject.Parse(json);
+                foreach (var cmd in jsonObj["commands"])
+                {
+                    var syntax = (string)cmd["pattern"];
+                    var duringGame = (string)cmd["during_game"];
+
+                    Regex rgx = new Regex(syntax, RegexOptions.IgnoreCase);
+
+                    if (rgx.IsMatch(input))
+                    {
+                        output = duringGame != "false";
+                    }
+                }
+            }
+
+            return output;
+        }
+
         private static string SearchHelp(string input, string system)
         {
             var output = "";
