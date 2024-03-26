@@ -104,7 +104,8 @@
                 "player"
             ],
             "elements" : [
-                "message"
+                "message",
+                "input"
             ],
             "repeat_options" : "false"
         },
