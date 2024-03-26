@@ -10,6 +10,7 @@ namespace WorldWeaver.Parsers
             var gameLogic = new DataManagement.GameLogic.Game();
             var elemParser = new Elements.Element();
             var logic = new DataManagement.GameLogic.Element();
+            var elemDb = new DataManagement.GameLogic.Element();
 
             if (!DataManagement.GameLogic.Game.IsGameRunning())
             {
@@ -54,6 +55,16 @@ namespace WorldWeaver.Parsers
                         }
 
                         Cache.GameCache.GameInitialized = true;
+                    }
+                }
+
+                var playerInv = elemDb.GetElementChildren(gameDb, Cache.PlayerCache.Player.ElementKey);
+                foreach (var child in playerInv)
+                {
+                    var playerProcItems = ProcFunctions.GetProcessStepsByType(child.ElementType);
+                    foreach (var proc in playerProcItems)
+                    {
+                        output = elemParser.ParseElement(output, gameDb, child, userInput, proc);
                     }
                 }
 

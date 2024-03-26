@@ -58,13 +58,16 @@ namespace WorldWeaver.Parsers.Elements
             
             foreach (var elem in targets)
             {
-                var procItems = Tools.ProcFunctions.GetProcessStepsByType(elem.ElementType);
-                foreach (var proc in procItems)
+                if (elem.ParentKey == parentElement.ElementKey)
                 {
-                    output = elemParser.ParseElement(output, gameDb, elem, userInput, proc);
-                }
+                    var procItems = Tools.ProcFunctions.GetProcessStepsByType(elem.ElementType);
+                    foreach (var proc in procItems)
+                    {
+                        output = elemParser.ParseElement(output, gameDb, elem, userInput, proc);
+                    }
 
-                output = ParseTags_Type(output, gameDb, elem, type, userInput);
+                    output = ParseTags_Type(output, gameDb, elem, type, userInput);
+                }
             }
 
             return output;

@@ -41,14 +41,22 @@ You inspect the egg...
     }
 
 
-    {type=input, syntax=\b(examine*egg)\b
+    {type=input, syntax=\b(?:examine.*egg)\b
         {type=action, logic=inspect, tags=type }
     }
 
-    {type=input, syntax=\b(take*egg)\b
+    {type=input, syntax=\b(?:take.*egg)\b
         {type=move, logic=player, tags=golden_egg
             output={@
 You pick up the golden egg.
+            }
+        }
+    }
+
+    {type=input, syntax=\b(?:drop.*egg)\b
+        {type=move, logic=[room], tags=golden_egg
+            output={@
+You drop the golden egg.
             }
         }
     }

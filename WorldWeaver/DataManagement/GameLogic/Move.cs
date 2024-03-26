@@ -13,6 +13,8 @@ namespace WorldWeaver.DataManagement.GameLogic
             var elem = new Parsers.Elements.Element();
             var success = false;
 
+            newParentKey = HandleSpecialLocations(gameDb, newParentKey);
+
             foreach (var tag in tagList)
             {
                 success = elemDb.SetElementParentKey(gameDb, tag, newParentKey);
@@ -30,9 +32,21 @@ namespace WorldWeaver.DataManagement.GameLogic
                 }
             }
 
+            Tools.CacheManager.RefreshCache(gameDb);
             var test = Cache.RoomCache.Room;
 
             return output;
+        }
+
+        private string HandleSpecialLocations(string gameDb, string newParentKey)
+        {
+            switch (newParentKey)
+            {
+                case "[room]":
+                    return Cache.RoomCache.Room.ElementKey;
+            }
+
+            return newParentKey;
         }
     }
 }
