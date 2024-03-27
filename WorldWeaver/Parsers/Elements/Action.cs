@@ -53,12 +53,14 @@ namespace WorldWeaver.Parsers.Elements
                 return output;
             }
             var targets = Tools.Elements.GetElementsByType(parentElement, type);
+            var elemDb = new DataManagement.GameLogic.Element();
 
             var elemParser = new Parsers.Elements.Element();
             
             foreach (var elem in targets)
             {
-                if (elem.ParentKey == parentElement.ElementKey)
+                var parent = elemDb.GetElementByKey(gameDb, elem.ParentKey);
+                if (elem.ParentKey == parentElement.ElementKey || parent.ParentKey == parentElement.ElementKey)
                 {
                     var procItems = Tools.ProcFunctions.GetProcessStepsByType(elem.ElementType);
                     foreach (var proc in procItems)

@@ -399,7 +399,7 @@ PRAGMA foreign_keys = on;
 
                     case string s when line.ToLower().StartsWith("output=", StringComparison.OrdinalIgnoreCase):
                         ix = GetFieldValue(element, lines, "output", ix);
-                        element.Output = ParseOutputField(element.Output);
+                        element.Output = ParseMultilineField(element.Output);
                         break;
 
                     case string s when line.ToLower().StartsWith("tags=", StringComparison.OrdinalIgnoreCase):
@@ -535,11 +535,11 @@ PRAGMA foreign_keys = on;
                             break;
 
                         case "logic":
-                            element.Logic = ParseLogicField(pairArr[1].Trim());
+                            element.Logic = ParseMultilineField(pairArr[1].Trim());
                             break;
 
                         case "output":
-                            element.Output = ParseOutputField(pairArr[1].Trim());
+                            element.Output = ParseMultilineField(pairArr[1].Trim());
                             break;
 
                         case "tags":
@@ -560,7 +560,7 @@ PRAGMA foreign_keys = on;
             return element;
         }
 
-        private string ParseOutputField(string output)
+        private string ParseMultilineField(string output)
         {
             var retVal = output;
 

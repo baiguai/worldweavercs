@@ -9,12 +9,22 @@ You are in the north room.
         {type=message
             output={@
 You look around. The north room is small and dimly lit.
+
+In the south wall is the door leading back to the tavern's main room.
             }
         }
     }
 
     {type=input, syntax=\b(look|l)\b
         {type=action, logic=look, tags=type }
+    }
+
+    {type=input, syntax=\b(south|s)\b
+        {type=move, logic=local_pub, tags=player
+            output={@
+You go south into the main bar area,
+            }
+        }
     }
 }
 

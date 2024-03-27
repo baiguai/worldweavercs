@@ -22,6 +22,8 @@ namespace WorldWeaver.DataManagement.GameLogic
 
             if (success)
             {
+                Tools.CacheManager.RefreshCache(gameDb);
+
                 var procItems = Tools.ProcFunctions.GetProcessStepsByType(Cache.RoomCache.Room.ElementType);
 
                 output.OutputText += outputText;
@@ -31,9 +33,6 @@ namespace WorldWeaver.DataManagement.GameLogic
                     output = elem.ParseElement(output, gameDb, Cache.RoomCache.Room, userInput, proc, true);
                 }
             }
-
-            Tools.CacheManager.RefreshCache(gameDb);
-            var test = Cache.RoomCache.Room;
 
             return output;
         }
