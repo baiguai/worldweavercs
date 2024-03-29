@@ -81,6 +81,11 @@ namespace WorldWeaver.Parsers.Elements
 
                             output = lgc.ParseLogic(output, gameDb, child, userInput);
 
+                            if (output.FailedLogic)
+                            {
+                                return output;
+                            }
+
                             break;
 
                         case "move":

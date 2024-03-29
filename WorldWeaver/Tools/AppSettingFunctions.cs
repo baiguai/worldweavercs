@@ -34,5 +34,21 @@ namespace WorldWeaver.Tools
 
             return output;
         }
+
+        public static List<string> GetRootArray(string file)
+        {
+            var output = new List<string>();
+
+            using (StreamReader r = new StreamReader(file))
+            {
+                string json = r.ReadToEnd();
+                var jsonObj = JObject.Parse(json);
+
+                var itms = JArray.Parse(jsonObj["items"].ToString());
+                output = itms.ToObject<List<string>>();
+            }
+
+            return output;
+        }
     }
 }

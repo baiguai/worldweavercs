@@ -388,8 +388,8 @@ PRAGMA foreign_keys = on;
                         break;
 
                     case string s when line.ToLower().StartsWith("logic=", StringComparison.OrdinalIgnoreCase):
-                        ix = GetFieldValue(element, lines, "Logic", ix);
-                        element.Logic = ParseLogicField(element.Logic);
+                        ix = GetFieldValue(element, lines, "logic", ix);
+                        element.Logic = ParseMultilineField(element.Logic);
                         break;
 
                     case string s when line.ToLower().StartsWith("repeat=", StringComparison.OrdinalIgnoreCase):
