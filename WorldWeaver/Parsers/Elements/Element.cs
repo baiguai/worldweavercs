@@ -85,6 +85,10 @@ namespace WorldWeaver.Parsers.Elements
                             {
                                 return output;
                             }
+                            else
+                            {
+                                continue;
+                            }
 
                             break;
 

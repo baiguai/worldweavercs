@@ -86,6 +86,8 @@ You drop the golden egg.
     {type=input, syntax=\b(?:use.*egg)\b
         {type=logic
             logic={@
+                ?[self].location = player
+                and
                 ?player_intelligence > 12
                 and
                 ?player_gold > 30
