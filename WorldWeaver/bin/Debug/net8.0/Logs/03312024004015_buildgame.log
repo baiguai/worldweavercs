@@ -1,0 +1,135 @@
+New Element created: local_pub_north, Parent: root
+New Element created: , Parent: local_pub_north
+New Element created: , Parent: local_pub_north
+New Element created: , Parent: 622d59f3-b6fa-4b6d-aea8-315807b124f3
+Returning row-index: 14
+New Element created: , Parent: local_pub_north
+New Element created: , Parent: e5772243-66be-49d2-b6b3-e58dfa69d467
+Returning row: 18
+New Element created: , Parent: local_pub_north
+New Element created: , Parent: 200188f8-51fb-40ad-8966-6fc68d6508ce
+Returning row-index: 26
+Returning row-index: 27
+New Element created: golden_egg, Parent: local_pub_north
+New Element created: , Parent: golden_egg
+New Element created: , Parent: golden_egg
+New Element created: , Parent: f6dac5e7-1d00-402d-b47a-427db6629965
+Returning row-index: 45
+New Element created: , Parent: golden_egg
+New Element created: , Parent: golden_egg
+New Element created: , Parent: golden_egg
+New Element created: , Parent: 060841fc-1aab-4771-8cd2-d96f9f445ea4
+Returning row: 62
+New Element created: , Parent: golden_egg
+New Element created: , Parent: 20ab9032-4fa5-49cc-b270-b9d6ace07b87
+Returning row-index: 72
+New Element created: , Parent: golden_egg
+New Element created: , Parent: f1628621-91fc-4790-b73c-58ecc29d8dc0
+Returning row-index: 82
+New Element created: , Parent: golden_egg
+New Element created: , Parent: d8717c16-ce52-46a4-aee8-c6806b33afcc
+New Element created: , Parent: d8717c16-ce52-46a4-aee8-c6806b33afcc
+Returning row: 99
+Returning row-index: 100
+Element Type: enter_message, Key: 373ce7ea-b0a1-4fc1-b32d-3002f81455df, Parent: local_pub_north
+Element Type: message, Key: 9334f0ee-e0af-4ecf-bd5f-afb3d9d7ab33, Parent: 622d59f3-b6fa-4b6d-aea8-315807b124f3
+Element Type: look, Key: 622d59f3-b6fa-4b6d-aea8-315807b124f3, Parent: local_pub_north
+Element Type: action, Key: ab47645f-3f2f-42b5-9f63-5da9aa2fb83c, Parent: e5772243-66be-49d2-b6b3-e58dfa69d467
+Element Type: input, Key: e5772243-66be-49d2-b6b3-e58dfa69d467, Parent: local_pub_north
+Element Type: move, Key: ecb0df58-0592-4294-8b62-183574219922, Parent: 200188f8-51fb-40ad-8966-6fc68d6508ce
+Element Type: input, Key: 200188f8-51fb-40ad-8966-6fc68d6508ce, Parent: local_pub_north
+Element Type: room, Key: local_pub_north, Parent: root
+Element Type: enter_message, Key: a7b2ec19-66ec-4d08-932b-f609b05ed74d, Parent: golden_egg
+Element Type: message, Key: ec31fefb-dec4-496d-a014-54717fc0e44e, Parent: f6dac5e7-1d00-402d-b47a-427db6629965
+Element Type: look, Key: f6dac5e7-1d00-402d-b47a-427db6629965, Parent: golden_egg
+Element Type: inspect, Key: 10901dc4-6220-40f7-bc2f-5822955b730f, Parent: golden_egg
+Element Type: use_egg, Key: 5da6fdab-8398-4eb0-93b0-45f6ed69faba, Parent: golden_egg
+Element Type: action, Key: 0593cc65-4f86-4c21-b52c-3b842ab5f7f7, Parent: 060841fc-1aab-4771-8cd2-d96f9f445ea4
+Element Type: input, Key: 060841fc-1aab-4771-8cd2-d96f9f445ea4, Parent: golden_egg
+Element Type: move, Key: c500484c-d47c-420d-8d98-12eebbb432a4, Parent: 20ab9032-4fa5-49cc-b270-b9d6ace07b87
+Element Type: input, Key: 20ab9032-4fa5-49cc-b270-b9d6ace07b87, Parent: golden_egg
+Element Type: move, Key: e1e07225-c9d9-446c-ab51-348695d5b83d, Parent: f1628621-91fc-4790-b73c-58ecc29d8dc0
+Element Type: input, Key: f1628621-91fc-4790-b73c-58ecc29d8dc0, Parent: golden_egg
+Element Type: logic, Key: 28209aeb-b589-4fd4-846c-6b59a997cbc3, Parent: d8717c16-ce52-46a4-aee8-c6806b33afcc
+Element Type: action, Key: 264582ae-263b-4887-b3bb-d65868bb68ba, Parent: d8717c16-ce52-46a4-aee8-c6806b33afcc
+Element Type: input, Key: d8717c16-ce52-46a4-aee8-c6806b33afcc, Parent: golden_egg
+Element Type: object, Key: golden_egg, Parent: local_pub_north
+New Element created: local_pub, Parent: root
+New Element created: , Parent: local_pub
+New Element created: , Parent: local_pub
+New Element created: , Parent: a9930e80-d0e8-4e60-b030-0d759d4a843d
+New Element created: , Parent: a9930e80-d0e8-4e60-b030-0d759d4a843d
+Returning row-index: 19
+New Element created: , Parent: local_pub
+New Element created: , Parent: 4e4804fc-380c-4649-a2b7-1aa465669d5b
+Returning row: 24
+New Element created: , Parent: local_pub
+New Element created: , Parent: 98be2dd2-0c71-4212-8e6c-5ea0ef75ee12
+Returning row-index: 32
+Returning row-index: 33
+Element Type: enter_message, Key: b411f15a-14f0-49ab-983a-27d3973c41f4, Parent: local_pub
+Element Type: message, Key: dccf39e2-0a30-4fb8-8f8a-ee33100e5394, Parent: a9930e80-d0e8-4e60-b030-0d759d4a843d
+Element Type: message, Key: 97fa8269-f5fa-4728-87ee-855be9bd4671, Parent: a9930e80-d0e8-4e60-b030-0d759d4a843d
+Element Type: look, Key: a9930e80-d0e8-4e60-b030-0d759d4a843d, Parent: local_pub
+Element Type: action, Key: 3cd0f2af-6141-4b28-9693-c71c03292e96, Parent: 4e4804fc-380c-4649-a2b7-1aa465669d5b
+Element Type: input, Key: 4e4804fc-380c-4649-a2b7-1aa465669d5b, Parent: local_pub
+Element Type: move, Key: d710585a-756e-40ad-a668-d50bfbbe5d06, Parent: 98be2dd2-0c71-4212-8e6c-5ea0ef75ee12
+Element Type: input, Key: 98be2dd2-0c71-4212-8e6c-5ea0ef75ee12, Parent: local_pub
+Element Type: room, Key: local_pub, Parent: root
+New Element created: dragon, Parent: darkworld
+New Element created: dragon_life, Parent: dragon
+Returning row-index: 5
+Element Type: attribute, Key: dragon_life, Parent: dragon
+Element Type: person, Key: dragon, Parent: darkworld
+New Element created: game, Parent: root
+New Element created: , Parent: game
+Returning row-index: 21
+Element Type: enter_message, Key: 4e2a6b1f-cff0-41a1-8da7-24483298b064, Parent: game
+Element Type: game, Key: game, Parent: root
+New Element created: global01, Parent: root
+New Element created: , Parent: global01
+New Element created: , Parent: 2a77c94f-bb2b-44cd-81be-3201f799ebd9
+Returning row: 2
+New Element created: , Parent: global01
+New Element created: , Parent: 7fe79230-4720-4667-a2df-6ba065b474f0
+Returning row: 5
+New Element created: , Parent: global01
+New Element created: , Parent: 51e7b9ff-f6fa-4c13-b9a0-3fdc3e05c830
+New Element created: , Parent: 2a98cbd2-621a-427c-8b98-e7a40bd34139
+Returning row-index: 14
+Returning row-index: 15
+Returning row-index: 16
+Element Type: action, Key: b16cdf30-3e1e-4cc2-8915-00599fa4df20, Parent: 2a77c94f-bb2b-44cd-81be-3201f799ebd9
+Element Type: input, Key: 2a77c94f-bb2b-44cd-81be-3201f799ebd9, Parent: global01
+Element Type: action, Key: 76b277c0-3a83-47e3-ab1e-b1cb013b6726, Parent: 7fe79230-4720-4667-a2df-6ba065b474f0
+Element Type: input, Key: 7fe79230-4720-4667-a2df-6ba065b474f0, Parent: global01
+Element Type: message, Key: 5a5db551-78c1-405a-96ff-ce8e582f5f80, Parent: 2a98cbd2-621a-427c-8b98-e7a40bd34139
+Element Type: set, Key: 2a98cbd2-621a-427c-8b98-e7a40bd34139, Parent: 51e7b9ff-f6fa-4c13-b9a0-3fdc3e05c830
+Element Type: input, Key: 51e7b9ff-f6fa-4c13-b9a0-3fdc3e05c830, Parent: global01
+Element Type: global, Key: global01, Parent: root
+New Element created: player, Parent: local_pub
+New Element created: player_life, Parent: player
+Returning row: 1
+New Element created: player_strength, Parent: player
+Returning row: 2
+New Element created: player_intelligence, Parent: player
+Returning row: 3
+New Element created: player_cunning, Parent: player
+Returning row: 4
+New Element created: player_gold, Parent: player
+Returning row: 5
+New Element created: player_armed, Parent: player
+Returning row: 6
+New Element created: longsword_01, Parent: player
+New Element created: , Parent: longsword_01
+Returning row: 9
+Returning row-index: 10
+Element Type: attribute, Key: player_life, Parent: player
+Element Type: attribute, Key: player_strength, Parent: player
+Element Type: attribute, Key: player_intelligence, Parent: player
+Element Type: attribute, Key: player_cunning, Parent: player
+Element Type: attribute, Key: player_gold, Parent: player
+Element Type: attribute, Key: player_armed, Parent: player
+Element Type: attribute, Key: 73e476d9-aebf-4d6c-b093-c56cc99f3986, Parent: longsword_01
+Element Type: weapon, Key: longsword_01, Parent: player
+Element Type: player, Key: player, Parent: local_pub

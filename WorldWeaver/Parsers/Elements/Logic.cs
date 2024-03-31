@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using SQLitePCL;
 using WorldWeaver.Classes;
 using WorldWeaver.Tools;
 
@@ -47,33 +48,28 @@ namespace WorldWeaver.Parsers.Elements
             var passed = true;
             var curCheck = true;
             var operand = "";
-            var logicType = "";
 
             foreach (var line in lines)
             {
-                if (logicType.Equals("comparison"))
+                switch (line.ToLower().Trim())
                 {
-                    switch (line.ToLower().Trim())
-                    {
-                        case "and":
-                            if (!curCheck)
-                            {
-                                return curCheck;
-                            }
-                            break;
+                    case "and":
+                        if (!curCheck)
+                        {
+                            return curCheck;
+                        }
+                        break;
 
-                        case "or":
-                            if (curCheck)
-                            {
-                                return curCheck;
-                            }
-                            break;
-                    }
+                    case "or":
+                        if (curCheck)
+                        {
+                            return curCheck;
+                        }
+                        break;
                 }
 
                 if (line.StartsWith("?"))
                 {
-                    logicType = "comparison";
                     operand = GetOperand(line);
                     var arr = line.Split(operand);
                     if (arr.Length == 2)
@@ -84,6 +80,8 @@ namespace WorldWeaver.Parsers.Elements
                     }
                 }
             }
+
+            passed = curCheck;
 
             return passed;
         }
@@ -107,12 +105,16 @@ namespace WorldWeaver.Parsers.Elements
 
         private Classes.ConditionalVariable GetVariableValue(string gameDb, Classes.Element currentElement, string rawVariable)
         {
+            if (rawVariable.StartsWith("?"))
+            {
+                rawVariable = rawVariable.Substring(1).Trim();
+            }
+
             var output = new Classes.ConditionalVariable();
             var variableProcs = Tools.AppSettingFunctions.GetRootArray("Config/LogicVariableTypes.json");
             var subCondProcs = Tools.AppSettingFunctions.GetRootArray("Config/LogicSubConditions.json");
             var elemLog = new DataManagement.GameLogic.Element();
             var arrSubCond = rawVariable.Split(".");
-            var value = "";
             
             Classes.Element varElement = null;
 
@@ -127,34 +129,40 @@ namespace WorldWeaver.Parsers.Elements
                     }
                 }
 
-                value = arrSubCond[0].Trim();
+                output.Condition = arrSubCond[0].Trim();
             }
             else
             {
-                value = rawVariable;
+                output.Condition = rawVariable;
             }
 
-            if (output.Value.StartsWith('"'))
+            if (output.Condition.StartsWith("'"))
             {
-                output.Value = output.Value.Replace("\"", "");
+                output.Value = output.Condition.Replace("'", "");
                 return output;
             }
 
             int test;
-            var isnumeric = int.TryParse(output.Value, out test);
+            var isnumeric = int.TryParse(output.Condition, out test);
             if (isnumeric)
             {
+                output.Value = output.Condition;
                 return output;
             }
 
-            if (rawVariable.ToLower().Equals("[room]"))
+            if (output.Condition.ToLower().Equals("[room]"))
             {
-                value = Cache.RoomCache.Room.ElementKey;
+                output.Condition = Cache.RoomCache.Room.ElementKey;
             }
 
-            if (rawVariable.ToLower().Equals("[self]"))
+            if (output.Condition.ToLower().Equals("[self]"))
             {
-                value = Tools.Elements.GetSelf(gameDb, currentElement).ElementKey;
+                output.Condition = Tools.Elements.GetSelf(gameDb, currentElement).ElementKey;
+            }
+
+            if (output.Condition.ToLower().Equals("[inventory]"))
+            {
+                output.Condition = "inventory";
             }
 
             foreach (var proc in variableProcs)
@@ -162,37 +170,49 @@ namespace WorldWeaver.Parsers.Elements
                 switch (proc)
                 {
                     case "element_key":
-                        varElement =elemLog.GetElementByKey(gameDb, value);
+                        varElement = elemLog.GetElementByKey(gameDb, output.Condition);
+                        if (varElement.ElementKey.Equals(""))
+                        {
+                            continue;
+                        }
                         output.Type = "element";
                         output.Element = varElement;
                         switch (output.SubCondition)
                         {
                             case "location":
                                 output.Value = output.Element.ParentKey;
-                                break;
+                                return output;
 
                             case "tags":
                                 output.Value = output.Element.Tags;
-                                break;
+                                return output;
 
                             case "active":
                                 output.Value = output.Element.Active;
-                                break;
+                                return output;
 
                             case "type":
                                 output.Value = output.Element.ElementType;
-                                break;
+                                return output;
                         }
                         break;
 
                     case "element_attributes":
-                        varElement = elemLog.GetElementByKey(gameDb, value);
+                        varElement = elemLog.GetElementByKey(gameDb, output.Condition);
+                        if (varElement.ElementKey.Equals(""))
+                        {
+                            continue;
+                        }
                         output.Type = "attribute";
                         output.Element = varElement;
                         output.Value = varElement.Output;
-                        break;
+                        return output;
 
                     case "inventory":
+                        if (!output.Condition.Equals("inventory"))
+                        {
+                            continue;
+                        }
                         var varCount = 0;
                         var invElems = elemLog.GetElementChildren(gameDb, "player");
                         foreach (var elem in invElems)

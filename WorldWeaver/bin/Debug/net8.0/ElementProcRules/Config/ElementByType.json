@@ -1,0 +1,138 @@
+﻿{
+    "elements" : [
+        {
+            "types" : [
+                "action"
+            ],
+            "elements" : [
+                "logic",
+                "input",
+                "action",
+                "set",
+                "move",
+                "message"
+            ],
+            "repeat_options" : "false"
+        },
+        {
+            "types" : [
+                "game"
+            ],
+            "elements" : [
+                "set_field",
+                "enter_message",
+                "message",
+                "action",
+                "input"
+            ],
+            "repeat_options" : "false"
+        },
+        {
+            "types": [
+                "global"
+            ],
+            "elements" : [
+                "logic",
+                "input",
+                "action"
+            ],
+            "repeat_options" : "false"
+        },
+        {
+            "types" : [
+                "input"
+            ],
+            "elements" : [
+                "logic",
+                "message",
+                "set",
+                "action",
+                "move"
+            ],
+            "repeat_options" : "false"
+        },
+        {
+            "types" : [
+                "logic"
+            ],
+            "elements" : [
+                "logic",
+                "action",
+                "set",
+                "message"
+            ],
+            "repeat_options" : "false"
+        },
+        {
+            "types" : [
+                "message",
+                "general"
+            ],
+            "elements" : [
+                "logic",
+                "action",
+                "message"
+            ],
+            "repeat_options" : "true"
+        },
+        {
+            "types" : [
+                "move"
+            ],
+            "elements" : [
+                "logic",
+                "set",
+                "message"
+            ],
+            "repeat_options" : "true"
+        },
+        {
+            "types" : [
+                "object"
+            ],
+            "elements" : [
+                "enter_message",
+                "logic",
+                "action",
+                "message",
+                "input"
+            ],
+            "repeat_options" : "false"
+        },
+        {
+            "types" : [
+                "player"
+            ],
+            "elements" : [
+                "message",
+                "input"
+            ],
+            "repeat_options" : "false"
+        },
+        {
+            "types" : [
+                "room"
+            ],
+            "elements" : [
+                "enter_message",
+                "action",
+                "set",
+                "object",
+                "message",
+                "input"
+            ],
+            "repeat_options" : "false"
+        },
+        {
+            "types" : [
+                "set"
+            ],
+            "elements" : [
+                "message",
+                "logic",
+                "set"
+            ],
+            "repeat_options" : "false"
+        }
+    ]
+}

@@ -47,14 +47,20 @@ You see a golden egg.
     }
 
     {type=inspect
-        output={
+        {type=message
+            output={@
 You inspect the egg...
+
+            }
         }
     }
 
     {type=use_egg
-        output={
+        {type=message
+            output={@
 You are using the egg!!
+
+            }
         }
     }
 
@@ -86,11 +92,9 @@ You drop the golden egg.
     {type=input, syntax=\b(?:use.*egg)\b
         {type=logic
             logic={@
-                ?[self].location = player
+                ?[self].location = 'player'
                 and
                 ?player_intelligence > 12
-                and
-                ?player_gold > 30
             }
             output={@
 Well... It looks like you can't use the egg.
