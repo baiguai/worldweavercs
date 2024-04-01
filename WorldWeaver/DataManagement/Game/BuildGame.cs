@@ -95,6 +95,14 @@ CREATE TABLE IF NOT EXISTS gamestate (
                             NOT NULL,
     GameStarted INTEGER    DEFAULT (0) 
                             NOT NULL,
+    TimeHour    INTEGER    DEFAULT (12)
+                            NOT NULL,
+    TimeMinute  INTEGER    DEFAULT (0)
+                            NOT NULL,
+    TotalDays   INTEGER    DEFAULT (0)
+                            NOT NULL,
+    MissionDays INTEGER    DEFAULT (0)
+                            NOT NULL,
     CreateDate  TEXT (10)  NOT NULL,
     UpdateDate  TEXT (10)  NOT NULL
 );
@@ -103,12 +111,16 @@ CREATE TABLE IF NOT EXISTS gamestate (
 INSERT INTO gamestate (
   GamestateId,
   GameStarted,
+  TimeHour,
+  TimeMinute,
   CreateDate,
   UpdateDate
 )
 VALUES (
   '{Guid.NewGuid()}',
   0,
+  '{Convert.ToInt32(Tools.AppSettingFunctions.GetConfigValue("time", "init_hour"))}',
+  '{Convert.ToInt32(Tools.AppSettingFunctions.GetConfigValue("time", "init_minute"))}',
   '{DateTime.Now.FormatDate()}',
   '{DateTime.Now.FormatDate()}'
 );

@@ -70,10 +70,7 @@ namespace WorldWeaver.Parsers.Elements
                             break;
 
                         case "action":
-                            if (!procObj.AllowRepeatOptions)
-                            {
-                                output = HandleAction(output, gameDb, child, userInput);
-                            }
+                            output = HandleAction(output, gameDb, child, userInput);
                             break;
 
                         case "logic":

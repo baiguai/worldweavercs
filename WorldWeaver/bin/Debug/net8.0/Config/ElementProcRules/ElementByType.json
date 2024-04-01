@@ -16,10 +16,35 @@
         },
         {
             "types" : [
+                "enter_message"
+            ],
+            "elements" : [
+                "message",
+                "action",
+                "logic"
+            ],
+            "repeat_options" : "true"
+        },
+        {
+            "types" : [
+                "event"
+            ],
+            "elements" : [
+                "set_field",
+                "set_game_state",
+                "logic",
+                "event",
+                "action"
+            ],
+            "repeat_options" : "false"
+        },
+        {
+            "types" : [
                 "game"
             ],
             "elements" : [
                 "set_field",
+                "set_game_state",
                 "enter_message",
                 "message",
                 "action",

@@ -5,6 +5,8 @@ namespace WorldWeaver.Parsers.Elements
     {
         public Classes.Output ParseMessage(Classes.Output output, string gameDb, Classes.Element parentElement, Classes.Element msgElement, bool allowRepeatOptions, int currentIndex)
         {
+            var elemParser = new Parsers.Elements.Element();
+
             if (msgElement.Output.Equals(""))
             {
                 return output;
@@ -14,6 +16,12 @@ namespace WorldWeaver.Parsers.Elements
             {
                 output.OutputText += Environment.NewLine + msgElement.Output;
                 output.MatchMade = true;
+
+                var msgProcs = Tools.ProcFunctions.GetProcessStepsByType(msgElement.ElementType);
+                foreach (var proc in msgProcs)
+                {
+                    output = elemParser.ParseElement(output, gameDb, msgElement, "", proc, false);
+                }
             }
             else
             {

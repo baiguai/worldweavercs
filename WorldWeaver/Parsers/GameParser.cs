@@ -71,6 +71,11 @@ namespace WorldWeaver.Parsers
                     {
                         output = DoQuit(output);
                     }
+
+                    if (!output.MatchMade && method.Equals("DoTime"))
+                    {
+                        output = DoTime(output);
+                    }
                 }
             }
             else
@@ -80,6 +85,16 @@ namespace WorldWeaver.Parsers
                     output = DoGameInput(output);
                 }
             }
+
+            return output;
+        }
+
+        private Output DoTime(Output output)
+        {
+            DataManagement.GameLogic.Game gameData = new DataManagement.GameLogic.Game();
+
+            output.OutputText = gameData.GetTime(gameDb);
+            output.MatchMade = true;
 
             return output;
         }

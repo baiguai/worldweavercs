@@ -1,0 +1,11 @@
+﻿{
+    "topics" : [
+        {
+            "pattern" : "\\b(tutorial player)\\b",
+            "title" : "Creating a Game Tutorial",
+            "string" : "
+Next let's define the player.
+"
+        }
+    ]
+}

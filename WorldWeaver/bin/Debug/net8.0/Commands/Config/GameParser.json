@@ -2,19 +2,28 @@
     "commands" : [
         {
             "pattern" : "\\b(list games)\\b",
-            "method" : "DoListGames"
+            "method" : "DoListGames",
+            "during_game" : "false"
         },
         {
             "pattern" : "\\b(play *)\\b",
-            "method" : "DoPlayGame"
+            "method" : "DoPlayGame",
+            "during_game" : "false"
         },
         {
             "pattern" : "\\b(resume *)\\b",
-            "method" : "DoResumeGame"
+            "method" : "DoResumeGame",
+            "during_game" : "false"
         },
         {
             "pattern" : "\\b(set player name *)\\b",
-            "method" : "DoSetPlayerName"
+            "method" : "DoSetPlayerName",
+            "during_game" : "false"
+        },
+        {
+            "pattern" : "\\b(time)\\b",
+            "method" : "DoTime",
+            "during_game" : "true"
         }
     ]
 }

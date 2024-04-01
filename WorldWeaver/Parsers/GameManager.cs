@@ -58,6 +58,9 @@ namespace WorldWeaver.Parsers
                     }
                 }
 
+                // Parse the system events
+                Tools.Game.IncrementTime(gameDb);
+
                 var playerInv = elemDb.GetElementChildren(gameDb, Cache.PlayerCache.Player.ElementKey);
                 foreach (var child in playerInv)
                 {
@@ -65,6 +68,15 @@ namespace WorldWeaver.Parsers
                     foreach (var proc in playerProcItems)
                     {
                         output = elemParser.ParseElement(output, gameDb, child, userInput, proc);
+                    }
+                }
+
+                foreach (var evnt in Cache.EventCache.Event)
+                {
+                    var eventProcItems = ProcFunctions.GetProcessStepsByType("event");
+                    foreach (var proc in eventProcItems)
+                    {
+                        output = elemParser.ParseElement(output, gameDb, evnt, userInput, proc);
                     }
                 }
 

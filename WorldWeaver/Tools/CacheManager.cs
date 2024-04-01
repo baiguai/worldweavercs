@@ -22,11 +22,13 @@ namespace WorldWeaver.Tools
             var player = logic.GetElementByKey(gameDb, "player");
             var locElem = logic.GetElementByKey(gameDb, player.ParentKey);
             var globalElems = logic.GetElementsByType(gameDb, "global");
+            var eventElems = logic.GetElementsByType(gameDb, "event");
 
             Cache.GameCache.Game = gameElem;
             Cache.PlayerCache.Player = player;
             Cache.RoomCache.Room = locElem;
             Cache.GlobalCache.Global = globalElems;
+            Cache.EventCache.Event = eventElems;
         }
 
         internal static void ClearCache()
@@ -35,6 +37,7 @@ namespace WorldWeaver.Tools
             Cache.PlayerCache.Player = new Classes.Element();
             Cache.RoomCache.Room = new Classes.Element();
             Cache.GlobalCache.Global.Clear();
+            Cache.EventCache.Event.Clear();
         }
 
         internal static Element? GetCachedElement(string key)
@@ -70,6 +73,18 @@ namespace WorldWeaver.Tools
                 }
             }
 
+            if (elem == null)
+            {
+                foreach (var evnt in Cache.EventCache.Event)
+                {
+                    if (evnt.ElementKey.Equals(key) && !evnt.ElementKey.Equals(""))
+                    {
+                        elem = evnt;
+                        break;
+                    }
+                }
+            }
+
             return elem;
         }
 
@@ -95,6 +110,10 @@ namespace WorldWeaver.Tools
 
                 case "global":
                     elems.AddRange(Cache.GlobalCache.Global);
+                    break;
+
+                case "event":
+                    elems.AddRange(Cache.EventCache.Event);
                     break;
             }
 

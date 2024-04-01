@@ -1,0 +1,30 @@
+﻿{
+    "topics" : [
+        {
+            "pattern" : "\\b(create games)\\b",
+            "title" : "Creating Games",
+            "string" : "
+WorldWeaver games are defined using the Nrmn mark up language. This mark up was created specifically for WorldWeaver and is intended to be as concise as possible.
+The best way to learn Nrmn is to look at some sample code (See _help nrmn).
+
+!NOTE!
+Pay close attention to when commas are and aren't used. This can cause unforseen issues when compiling WorldWeaver games (See _help debugging).
+
+
+To create a new game, create a directory within:
+~/GameSources
+
+!NOTE!
+The directory name you choose is the name of your game and it IS case sensitive. For example, the included sample game has a folder called 'DarkWorld'.
+This is how the game is referred to. For example when building it you would use:
+_buildgame DarkWorld
+
+Everything in a WorldWeaver game is an element. If you are en experienced WorldWeaver game developer you can use the following to look up element types etc:
+_help elements
+
+If you are new to WorldWeaver use:
+_help tutorial
+"
+        }
+    ]
+}

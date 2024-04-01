@@ -27,7 +27,7 @@ namespace WorldWeaver.Parsers.Elements
                     if (!passed)
                     {
                         output.FailedLogic = true;
-                        output.OutputText = currentElement.Output;
+                        output.OutputText += currentElement.Output;
                         return output;
                     }
                     else
@@ -138,7 +138,7 @@ namespace WorldWeaver.Parsers.Elements
 
             if (output.Condition.StartsWith("'"))
             {
-                output.Value = output.Condition.Replace("'", "");
+                output.Condition = output.Condition.Replace("'", "");
                 return output;
             }
 
@@ -158,6 +158,11 @@ namespace WorldWeaver.Parsers.Elements
             if (output.Condition.ToLower().Equals("[self]"))
             {
                 output.Condition = Tools.Elements.GetSelf(gameDb, currentElement).ElementKey;
+            }
+
+            if (output.Condition.ToLower().Equals("[isday]"))
+            {
+                output.Condition = Tools.Game.IsDay(gameDb).ToString().ToLower();
             }
 
             if (output.Condition.ToLower().Equals("[inventory]"))

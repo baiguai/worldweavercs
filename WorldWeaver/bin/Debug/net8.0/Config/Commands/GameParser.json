@@ -21,13 +21,8 @@
             "during_game" : "false"
         },
         {
-            "pattern" : "\\b(menu)\\b",
-            "method" : "DoMenu",
-            "during_game" : "false"
-        },
-        {
-            "pattern" : "\\b(quit)\\b",
-            "method" : "DoQuit",
+            "pattern" : "\\b(time)\\b",
+            "method" : "DoTime",
             "during_game" : "true"
         }
     ]
