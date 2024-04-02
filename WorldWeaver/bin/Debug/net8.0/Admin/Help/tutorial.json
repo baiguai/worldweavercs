@@ -1,7 +1,7 @@
 ﻿{
     "topics" : [
         {
-            "pattern" : "\\b(tutorial)\\b",
+            "pattern" : "\\b(?:tutorial.game)\\b",
             "title" : "Creating a Game Tutorial",
             "string" : "
 Let's create a WorldWeaver game.
@@ -9,12 +9,18 @@ Let's create a WorldWeaver game.
 Navigate to ~/GameSources and create a folder called MyGame. 'MyGame' is the name of your new game.
 So to build it you would use _buildgame MyGame.
 
+And when players want to play your game, they would use:
+play MyGame
+
+
 (NOTE:
 When building or playing games the game (Folder) name is case sensitive.)
 
 In this new folder we want to define our new game.
 Create a file called game.nrmn.
 You can name this file whatever you want, but ONE of your files must contain an element of a type set to 'game'.
+There can be only one game element in your game's code. If you define more than one WorldWeaver will simply load the first one
+it encounters in the database.
 There can be other element types in the file, but the cleanest way to define your game is with a file dedicated to the game element.
 
 Everything is an element and that includes the game itself. So in this file we'll define our game.
@@ -26,7 +32,7 @@ To define a game we'll create a new element with a type of 'game':
 
 !NOTE!
 When an element's parameters are defined on a single line, they are separated by a comma.
-If you want to use multiple lines instead, you would use linebreaks intead. Like below:
+If you want to use multiple lines instead, you would use linebreaks. Like below:
 
 {key=game
     name=My Game
@@ -34,6 +40,9 @@ If you want to use multiple lines instead, you would use linebreaks intead. Like
     parent=root
         ...
 }
+
+Be sure to read through the notes on debugging:
+_help debugging
 
 Notice that no commas are used when parameters are defined on multiple lines.
 

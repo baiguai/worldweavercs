@@ -69,3 +69,17 @@
 /media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/bin/Debug/net8.0/Help/Admin/tutorial.json
 /media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/bin/Debug/net8.0/Admin/Help/tutorial_player.json
 /media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/bin/Debug/net8.0/Help/Admin/tutorial_player.json
+/media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/bin/Debug/net8.0/Admin/Help/debugging.json
+/media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/bin/Debug/net8.0/Admin/Help/regex.json
+/media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/bin/Debug/net8.0/Admin/Help/tutorial_attributes.json
+/media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/bin/Debug/net8.0/Admin/Help/tutorial_enter_message.json
+/media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/bin/Debug/net8.0/Admin/Help/tutorial_room.json
+/media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/bin/Debug/net8.0/Help/Admin/debugging.json
+/media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/bin/Debug/net8.0/Help/Admin/regex.json
+/media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/bin/Debug/net8.0/Help/Admin/tutorial_attributes.json
+/media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/bin/Debug/net8.0/Help/Admin/tutorial_enter_message.json
+/media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/bin/Debug/net8.0/Help/Admin/tutorial_room.json
+/media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/bin/Debug/net8.0/Admin/Help/tutorial_input.json
+/media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/bin/Debug/net8.0/Help/Admin/tutorial_input.json
+/media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/bin/Debug/net8.0/Admin/Help/tutorial_actions.json
+/media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/bin/Debug/net8.0/Help/Admin/tutorial_actions.json

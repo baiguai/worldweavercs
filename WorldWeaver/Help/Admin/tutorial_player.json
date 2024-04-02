@@ -1,10 +1,42 @@
 ﻿{
     "topics" : [
         {
-            "pattern" : "\\b(tutorial player)\\b",
-            "title" : "Creating a Game Tutorial",
+            "pattern" : "\\b(?:tutorial.player)\\b",
+            "title" : "Creating a Player Tutorial",
             "string" : "
-Next let's define the player.
+Next let's define the player. One thing that sets WorldWeaver apart from other Interactive Fiction engines
+is it was designed to create more RPG or video game-style games. Also it is very flexible, you can use the elements
+to construct whatever behavior you can imagine. You'll see the RPG influence in the upcomig topics.
+
+Just like the game element we saw in the first tutorial article, there can be only one player element in your game
+code.
+
+Let's define a player. To keep things neat and organized, we'll create a new file called player.nrmn. So we now have:
+~/GameSources/MyGame/player.nrmn
+
+In this file we'll define an element of type 'player':
+
+{key=player, name=, type=player, parent=local_pub
+    ...
+}
+
+
+You'll notice that the name field is left blank. When a player runs your game for the first time, they will be prompted
+to set their player name.
+The parent field specifies where the player is located.
+
+We will discuss locations in a later step. For now you can use a made up value here - since we won't be playing our game just yet.
+
+So here you can enter the element_key for the starting location.
+As the player moves around, this value will change in the database. And if they use 'resume MyGame' instead of 'play MyGame',
+they will start in the location they left off in.
+
+A resumed game has the same state the game was in when the player left off.
+
+Let's give our player some Attributes that will further define the player.
+
+See:
+_help tutorial attributes
 "
         }
     ]

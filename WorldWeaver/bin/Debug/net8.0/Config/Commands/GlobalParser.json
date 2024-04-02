@@ -5,6 +5,10 @@
             "method" : "DoExit"
         },
         {
+            "pattern" : "\\b(quit)\\b",
+            "method" : "DoQuit"
+        },
+        {
             "pattern" : "\\b(help*)\\b",
             "method" : "DoHelp"
         }

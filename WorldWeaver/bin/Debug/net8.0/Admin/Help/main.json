@@ -6,9 +6,6 @@
             "string" : "
 Welcome to the Admin Help System.
 
-To see a list of possible Admin commands use:
-_help commands
-
 For help with defining games use:
 _help create games
 "

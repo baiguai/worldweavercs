@@ -27,7 +27,7 @@ namespace WorldWeaver.Parsers
 
                 if (!output.MatchMade && method.Equals("DoAdminHelp"))
                 {
-                    DoAdminHelp(output);
+                    output = DoAdminHelp(output);
                 }
             }
 
@@ -59,7 +59,7 @@ namespace WorldWeaver.Parsers
             return success;
         }
 
-        public void DoAdminHelp(Classes.Output output)
+        public Classes.Output DoAdminHelp(Classes.Output output)
         {
             var parms = playerInput.GetInputParams();
 
@@ -70,6 +70,8 @@ namespace WorldWeaver.Parsers
 
             output.MatchMade = true;
             output.OutputText = Tools.CommandFunctions.GetHelpTopic(parms, "Admin");
+
+            return output;
         }
     }
 }
