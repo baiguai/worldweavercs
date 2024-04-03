@@ -24,6 +24,16 @@
             "pattern" : "\\b(time)\\b",
             "method" : "DoTime",
             "during_game" : "true"
+        },
+        {
+            "pattern" : "\\b(menu)\\b",
+            "method" : "DoMenu",
+            "during_game" : "false"
+        },
+        {
+            "pattern" : "\\b(quit)\\b",
+            "method" : "DoQuit",
+            "during_game" : "true"
         }
     ]
 }

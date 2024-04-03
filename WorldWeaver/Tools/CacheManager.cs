@@ -40,6 +40,14 @@ namespace WorldWeaver.Tools
             Cache.EventCache.Event.Clear();
         }
 
+        internal static void ClearCache()
+        {
+            Cache.GameCache.Game = null;
+            Cache.PlayerCache.Player = new Classes.Element();
+            Cache.RoomCache.Room = new Classes.Element();
+            Cache.GlobalCache.Global.Clear();
+        }
+
         internal static Element? GetCachedElement(string key)
         {
             Classes.Element elem = null;
