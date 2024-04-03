@@ -1,0 +1,14 @@
+﻿{
+    "topics" : [
+        {
+            "pattern" : "\\b(_help)\\b",
+            "title" : "Admin Help",
+            "string" : "
+Welcome to the Admin Help System.
+
+For help with defining games use:
+_help create games
+"
+        }
+    ]
+}

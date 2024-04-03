@@ -40,19 +40,20 @@ namespace WorldWeaver.Parsers.Elements
 
             if (tags.Contains("type", StringComparer.OrdinalIgnoreCase))
             {
-                output = ParseTags_Type(output, gameDb, Cache.RoomCache.Room, currentElement.Logic, userInput);
+                output = ParseTags_Type(output, gameDb, currentElement, currentElement.Logic, userInput);
             }
 
             return output;
         }
 
-        private Output ParseTags_Type(Output output, string gameDb, Classes.Element parentElement, string type, string userInput)
+        private Output ParseTags_Type(Output output, string gameDb, Classes.Element currentElement, string type, string userInput)
         {
             if (Cache.RoomCache.Room == null)
             {
                 return output;
             }
-            var targets = Tools.Elements.GetElementsByType(parentElement, type);
+            var self = Tools.Elements.GetSelf(gameDb, currentElement);
+            var targets = Tools.Elements.GetElementsByType(self, type);
             var elemDb = new DataManagement.GameLogic.Element();
 
             var elemParser = new Parsers.Elements.Element();
@@ -60,7 +61,7 @@ namespace WorldWeaver.Parsers.Elements
             foreach (var elem in targets)
             {
                 var parent = elemDb.GetElementByKey(gameDb, elem.ParentKey);
-                if (elem.ParentKey == parentElement.ElementKey || parent.ParentKey == parentElement.ElementKey)
+                if (elem.ParentKey == currentElement.ElementKey || elem.ParentKey == self.ElementKey || parent.ParentKey == currentElement.ElementKey)
                 {
                     var procItems = Tools.ProcFunctions.GetProcessStepsByType(elem.ElementType);
                     foreach (var proc in procItems)
@@ -68,8 +69,13 @@ namespace WorldWeaver.Parsers.Elements
                         output = elemParser.ParseElement(output, gameDb, elem, userInput, proc);
                     }
 
-                    output = ParseTags_Type(output, gameDb, elem, type, userInput);
+                    // output = ParseTags_Type(output, gameDb, elem, type, userInput);
                 }
+            }
+
+            if (output.OutputText.Equals(""))
+            {
+                output = ParseTags_Type(output, gameDb, Cache.RoomCache.Room, type, userInput);
             }
 
             return output;

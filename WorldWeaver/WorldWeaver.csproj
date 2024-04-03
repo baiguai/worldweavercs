@@ -25,16 +25,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ContentWithTargetPath Include="Config\Init.json">
+    <ContentWithTargetPath Include="Config\**">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <TargetPath>%(RecursiveDir)\Config\Init.json</TargetPath>
-    </ContentWithTargetPath>
-  </ItemGroup>
-
-  <ItemGroup>
-    <ContentWithTargetPath Include="Config\AppSettings.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <TargetPath>%(RecursiveDir)\Config\AppSettings.json</TargetPath>
+      <TargetPath>%(RecursiveDir)\Config\%(Filename)%(Extension)</TargetPath>
     </ContentWithTargetPath>
   </ItemGroup>
 

@@ -70,16 +70,22 @@ namespace WorldWeaver.Parsers.Elements
                             break;
 
                         case "action":
-                            if (!procObj.AllowRepeatOptions)
-                            {
-                                output = HandleAction(output, gameDb, child, userInput);
-                            }
+                            output = HandleAction(output, gameDb, child, userInput);
                             break;
 
                         case "logic":
                             var lgc = new Parsers.Elements.Logic();
 
                             output = lgc.ParseLogic(output, gameDb, child, userInput);
+
+                            if (output.FailedLogic)
+                            {
+                                return output;
+                            }
+                            else
+                            {
+                                continue;
+                            }
 
                             break;
 

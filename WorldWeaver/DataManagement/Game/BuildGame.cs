@@ -95,6 +95,14 @@ CREATE TABLE IF NOT EXISTS gamestate (
                             NOT NULL,
     GameStarted INTEGER    DEFAULT (0) 
                             NOT NULL,
+    TimeHour    INTEGER    DEFAULT (12)
+                            NOT NULL,
+    TimeMinute  INTEGER    DEFAULT (0)
+                            NOT NULL,
+    TotalDays   INTEGER    DEFAULT (0)
+                            NOT NULL,
+    MissionDays INTEGER    DEFAULT (0)
+                            NOT NULL,
     CreateDate  TEXT (10)  NOT NULL,
     UpdateDate  TEXT (10)  NOT NULL
 );
@@ -103,12 +111,16 @@ CREATE TABLE IF NOT EXISTS gamestate (
 INSERT INTO gamestate (
   GamestateId,
   GameStarted,
+  TimeHour,
+  TimeMinute,
   CreateDate,
   UpdateDate
 )
 VALUES (
   '{Guid.NewGuid()}',
   0,
+  '{Convert.ToInt32(Tools.AppSettingFunctions.GetConfigValue("time", "init_hour"))}',
+  '{Convert.ToInt32(Tools.AppSettingFunctions.GetConfigValue("time", "init_minute"))}',
   '{DateTime.Now.FormatDate()}',
   '{DateTime.Now.FormatDate()}'
 );
@@ -388,8 +400,8 @@ PRAGMA foreign_keys = on;
                         break;
 
                     case string s when line.ToLower().StartsWith("logic=", StringComparison.OrdinalIgnoreCase):
-                        ix = GetFieldValue(element, lines, "Logic", ix);
-                        element.Logic = ParseLogicField(element.Logic);
+                        ix = GetFieldValue(element, lines, "logic", ix);
+                        element.Logic = ParseMultilineField(element.Logic);
                         break;
 
                     case string s when line.ToLower().StartsWith("repeat=", StringComparison.OrdinalIgnoreCase):

@@ -3,6 +3,25 @@
         output={@
 You are sitting in your local pub.
         }
+
+        {type=action
+            {type=logic
+                logic={@
+                    ?[isday]='true'
+                }
+                output={@
+
+It is night time.
+                }
+            }
+
+            {type=message
+                output={@
+
+It is day time.
+                }
+            }
+        }
     }
 
     {type=look, repeat=repeat
@@ -16,6 +35,25 @@ North of where you are sitting is a small door.
             output={@
 You look around the local pub again...
 North of where you are sitting is a small door.
+            }
+        }
+
+        {type=action
+            {type=logic
+                logic={@
+                    ?[isday]='true'
+                }
+                output={@
+
+It is night time.
+                }
+            }
+
+            {type=message
+                output={@
+
+It is day time.
+                }
             }
         }
     }

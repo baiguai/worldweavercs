@@ -32,6 +32,11 @@ namespace WorldWeaver.Parsers
                         output.OutputText = DoExit();
                         break;
 
+                    case "DoQuit":
+                        output.MatchMade = true;
+                        output.OutputText = DoQuit();
+                        break;
+
                     case "DoHelp":
                         output.MatchMade = true;
                         output.OutputText = DoHelp();
@@ -42,6 +47,11 @@ namespace WorldWeaver.Parsers
             return output;
         }
 
+        private string DoQuit()
+        {
+            CacheManager.ClearCache();
+            return InitFunctions.GetInitMessage(false);
+        }
 
         public string DoExit()
         {

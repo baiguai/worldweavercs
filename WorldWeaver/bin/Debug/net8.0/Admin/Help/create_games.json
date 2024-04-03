@@ -1,0 +1,16 @@
+﻿{
+    "topics" : [
+        {
+            "pattern" : "\\b(create games)\\b",
+            "title" : "Creating Games",
+            "string" : "
+WorldWeaver games are defined using the Nrmn mark up language. This mark up was created specifically for WorldWeaver and is intended to be as concise as possible.
+The best way to learn Nrmn is to go through the tutorial below.
+
+
+If you are new to WorldWeaver use:
+_help tutorial game
+"
+        }
+    ]
+}

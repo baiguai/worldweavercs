@@ -1,0 +1,83 @@
+﻿{
+    "topics" : [
+        {
+            "pattern" : "\\b(?:tutorial.attributes)\\b",
+            "title" : "Defining Attributes Tutorial",
+            "string" : "
+In our last topic we began to define our player element. We gave the player a starting location, but that's about it.
+So let's begin to flesh out our player's definition.
+
+we're going to give our player some random stats that will be useful as they play the game. Here is our player definition
+as we defined it so far:
+
+{key=player, name=, type=player, parent=local_pub
+    ...
+}
+
+Now we're going to define how much 'life' the player has. To do this we're going to take advantage of some 'inline logic'.
+
+(Note: Keep this help topic handy - it is the hub for all things logic as well as useful 'special values':
+_help gamelogic
+)
+
+For now just know that we can use special logic within the output value of an atrribute. Because it is in the 'output' field, as
+opposed to the 'logic' field, this special processing occurs when the game is built. It doesn't run every time the value is retrieved.
+This allows us to set a range, and have a random value put into this attribute, and it only changes when we actively change it. :)
+
+Here is what that looks like:
+
+{key=player, name=, type=player, parent=local_pub
+    {key=player_life, name=Life, type=attribute, output=[rand:8|18], tags=stats }
+    ...
+}
+
+!Important!
+Notice the 'key' value. That is the element_key in the database and it MUST be unique.
+You don't have to specify a key. If you don't one will be generated for you.
+So it is good practice to only set keys for elements that you know you might want to reference.
+We know that we will want to check our player's life at some point, so we give it a unique key.
+We may also want to simply show the player's life, and we'll be covering that in a future topic
+(Spoiler alert - notice the 'tags' value).
+
+Ok let's give our player some more attributes:
+
+
+{key=player, name=, type=player, parent=local_pub
+    {key=player_life, name=Life, type=attribute, output=[rand:8|18], tags=stats }
+    {key=player_strength, name=Strength, type=attribute, output=[rand:8|18], tags=stats }
+    {key=player_intelligence, name=Intelligence, type=attribute, output=[rand:8|18], tags=stats }
+    {key=player_cunning, name=Cunning, type=attribute, output=[rand:8|18], tags=stats }
+    {key=player_gold, name=Gold, type=attribute, output=[rand:20|40], tags=stats }
+    {key=player_armed, name=Armed Weapon, type=attribute, output=, tags=armed|stats }
+
+    {key=longsword_01, name=Long Sword, type=weapon, syntax=\b(long sword)\b, tags=inventory
+        {name=Damage, type=attribute, logic=[rand:4|12], tags=damage }
+    }
+}
+
+
+Notice the longsword_01. It has a type of 'weapon', and a weird looking value for its 'syntax'.
+That is a Regular Expression. Regular Expressions can be tricky to get the hang of, but when you do -
+they are EXTREMELY powerful. And all syntax fields in WorldWeaver use them (As well as in some of the configuration
+files - But more on those MUCH later).
+
+For examples and information on Regular Expressions (regex) see:
+_help regex
+
+
+We see some familiar logic in the sword's definition. Except it is in the logic field. Because it is specified
+there, every time we retrieve that attribute's value, the logic is re-run. So we get random values between 4 and 12
+every time we get the damage value.
+
+Another interesting thing is the damage attribute doesn't have a unique key. But you'll notice it has a 'damage' tag.
+We can use tags so that we don't need a unique key, we can get the damage value by grabbing the sword's attributes by tag.
+More on that later.
+
+
+So now we have a game defined, and a player definition. Let's create our first room.
+
+_help tutorial room
+"
+        }
+    ]
+}
