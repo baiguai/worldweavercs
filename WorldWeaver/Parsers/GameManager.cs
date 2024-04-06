@@ -71,15 +71,6 @@ namespace WorldWeaver.Parsers
                     }
                 }
 
-                foreach (var evnt in Cache.EventCache.Event)
-                {
-                    var eventProcItems = ProcFunctions.GetProcessStepsByType("event");
-                    foreach (var proc in eventProcItems)
-                    {
-                        output = elemParser.ParseElement(output, gameDb, evnt, userInput, proc);
-                    }
-                }
-
                 var locProcItems = ProcFunctions.GetProcessStepsByType(Cache.RoomCache.Room.ElementType);
                 foreach (var proc in locProcItems)
                 {

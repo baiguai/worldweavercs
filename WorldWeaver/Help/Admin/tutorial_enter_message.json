@@ -37,6 +37,7 @@ For output and logic, this specifies that there are multiple lines of text or lo
 
 Also, you may have noticed the '@' after the '{', that specifies that any time you enter a line break, that should be part
 of the output -- OR the logic in that field. MOST of the time, you want that present.
+You can manually add a line break by using a backslash '\\' and a 'b'.
 
 When should you exclude it?
 When you want the output to wrap according to the size of the window, regardless of where you put line breaks in your

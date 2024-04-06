@@ -15,4 +15,24 @@ You are now armed with the [field|longsword_01|name].
             }
         }
     }
+
+    {key=is_day, type=logic
+        logic={@
+            ?[isday] = 'true'
+        }
+        output={@
+It is night.
+
+        }
+    }
+
+    {key=is_night, type=logic
+        logic={@
+            ?[isday] = 'true'
+        }
+        output={@
+It is day.
+
+        }
+    }
 }
