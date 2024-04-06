@@ -11,6 +11,10 @@ You are in the north room.
 You look around. The north room is small and dimly lit.
 
 In the south wall is the door leading back to the tavern's main room.
+
+And your name is: [field|player|name].
+And your strength is: [field|player_strength|output].
+[?[field|player_life|output] > 0 [=\bOh good! You are alive.=][=\b... You aren't a zombie are you?=]?]
             }
         }
     }
@@ -101,6 +105,6 @@ Well... It looks like you can't use the egg.
 
             }
         }
-        {type=action, logic=use_egg, tags=type }
+        {type=action, logic=[die] }
     }
 }
