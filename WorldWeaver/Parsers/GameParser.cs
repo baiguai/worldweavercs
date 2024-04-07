@@ -31,6 +31,10 @@ namespace WorldWeaver.Parsers
                     if (!output.MatchMade && method.Equals("DoPlayGame"))
                     {
                         output = DoPlayGame(output);
+                        if (output.Error)
+                        {
+                            return output;
+                        }
                         var logic = new DataManagement.GameLogic.Element();
                         var player = logic.GetElementsByType(gameDb, "player");
 
@@ -127,7 +131,18 @@ namespace WorldWeaver.Parsers
             if (gameDb.Equals(""))
             {
                 gameDb = $"{gameFile}_playing.db";
-                File.Copy($"Games/{gameFile}.db", $"Games/{gameDb}", true);
+
+                try
+                {
+                    File.Copy($"Games/{gameFile}.db", $"Games/{gameDb}", true);
+                }
+                catch (Exception)
+                {
+                    output.OutputText = "Game file not found. Game names are case sensitive, so be sure it matches the game's case.";
+                    output.MatchMade = true;
+                    output.Error = true;
+                    return output;
+                }
             }
 
             output = InitiateGame(output);

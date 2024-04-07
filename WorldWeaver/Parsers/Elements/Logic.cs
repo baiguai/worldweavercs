@@ -76,7 +76,7 @@ namespace WorldWeaver.Parsers.Elements
                     {
                         var variable1 = GetVariableValue(gameDb, currentElement, arr[0].Trim());
                         var variable2 = GetVariableValue(gameDb, currentElement, arr[1].Trim());
-                        curCheck = DoComparison(variable1, variable2, operand);
+                        curCheck = DoComparison(variable1.Value, variable2.Value, operand);
                     }
                 }
             }
@@ -87,7 +87,7 @@ namespace WorldWeaver.Parsers.Elements
         }
 
         #region Conditional Helpers
-        private string GetOperand(string line)
+        public static string GetOperand(string line)
         {
             var opList = AppSettingFunctions.GetRootArray("Config/LogicOperands.json");
 
@@ -239,7 +239,7 @@ namespace WorldWeaver.Parsers.Elements
             return output;
         }
 
-        private bool DoComparison(ConditionalVariable variable1, ConditionalVariable variable2, string operand)
+        public static bool DoComparison(string variable1, string variable2, string operand)
         {
             var success = false;
             string[] arr;
@@ -247,7 +247,7 @@ namespace WorldWeaver.Parsers.Elements
             switch (operand)
             {
                 case "!=":
-                    if (variable1.Value != variable2.Value)
+                    if (variable1 != variable2)
                     {
                         success = true;
                     }
@@ -255,7 +255,7 @@ namespace WorldWeaver.Parsers.Elements
                 case ">":
                     try
                     {
-                        if (Convert.ToInt32(variable1.Value) > Convert.ToInt32(variable2.Value))
+                        if (Convert.ToInt32(variable1) > Convert.ToInt32(variable2))
                         {
                             success = true;
                         }
@@ -268,7 +268,7 @@ namespace WorldWeaver.Parsers.Elements
                 case "<":
                     try
                     {
-                        if (Convert.ToInt32(variable1.Value) < Convert.ToInt32(variable2.Value))
+                        if (Convert.ToInt32(variable1) < Convert.ToInt32(variable2))
                         {
                             success = true;
                         }
@@ -281,7 +281,7 @@ namespace WorldWeaver.Parsers.Elements
                 case ">=":
                     try
                     {
-                        if (Convert.ToInt32(variable1.Value) >= Convert.ToInt32(variable2.Value))
+                        if (Convert.ToInt32(variable1) >= Convert.ToInt32(variable2))
                         {
                             success = true;
                         }
@@ -294,7 +294,7 @@ namespace WorldWeaver.Parsers.Elements
                 case "<=":
                     try
                     {
-                        if (Convert.ToInt32(variable1.Value) <= Convert.ToInt32(variable2.Value))
+                        if (Convert.ToInt32(variable1) <= Convert.ToInt32(variable2))
                         {
                             success = true;
                         }
@@ -305,24 +305,24 @@ namespace WorldWeaver.Parsers.Elements
                     }
                     break;
                 case "in":
-                    if (variable2.Value.Contains(variable1.Value))
+                    if (variable2.Contains(variable1))
                     {
                         success = true;
                     }
                     break;
                 case "!in":
-                    if (!variable2.Value.Contains(variable1.Value))
+                    if (!variable2.Contains(variable1))
                     {
                         success = true;
                     }
                     break;
                 case "><":
-                    arr = variable2.Value.Split('|');
+                    arr = variable2.Split('|');
                     if (arr.Length == 2)
                     {
                         try
                         {
-                            var chkVar = Convert.ToInt32(variable1.Value);
+                            var chkVar = Convert.ToInt32(variable1);
                             var minChk = Convert.ToInt32(arr[0].Trim());
                             var maxChk = Convert.ToInt32(arr[1].Trim());
                             if (chkVar >= minChk && chkVar <= maxChk)
@@ -337,12 +337,12 @@ namespace WorldWeaver.Parsers.Elements
                     }
                     break;
                 case "<>":
-                    arr = variable2.Value.Split('|');
+                    arr = variable2.Split('|');
                     if (arr.Length == 2)
                     {
                         try
                         {
-                            var chkVar = Convert.ToInt32(variable1.Value);
+                            var chkVar = Convert.ToInt32(variable1);
                             var minChk = Convert.ToInt32(arr[0].Trim());
                             var maxChk = Convert.ToInt32(arr[1].Trim());
                             if (chkVar < minChk || chkVar > maxChk)
@@ -357,7 +357,7 @@ namespace WorldWeaver.Parsers.Elements
                     }
                     break;
                 default: // The default is =
-                    if (variable1.Value == variable2.Value)
+                    if (variable1 == variable2)
                     {
                         success = true;
                     }

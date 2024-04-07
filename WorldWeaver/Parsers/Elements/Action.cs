@@ -14,6 +14,8 @@ namespace WorldWeaver.Parsers.Elements
 
             output = ParseMessageActions(output, gameDb, currentElement, userInput);
 
+            // output = ParseLogicActions(output, gameDb, currentElement, userInput);
+
             foreach (var child in currentElement.Children)
             {
                 foreach (var proc in procItems)
@@ -68,8 +70,6 @@ namespace WorldWeaver.Parsers.Elements
                     {
                         output = elemParser.ParseElement(output, gameDb, elem, userInput, proc);
                     }
-
-                    // output = ParseTags_Type(output, gameDb, elem, type, userInput);
                 }
             }
 
@@ -118,6 +118,19 @@ namespace WorldWeaver.Parsers.Elements
                         }
                     }
                 }
+            }
+
+            return output;
+        }
+
+        private Output ParseLogicActions(Output output, string gameDb, Classes.Element currentElement, string userInput)
+        {
+            switch (currentElement.Logic.ToLower())
+            {
+                case "[die]":
+                    Tools.CacheManager.ClearCache();
+                    Tools.InitFunctions.GetInitMessage(false);
+                    return output;
             }
 
             return output;

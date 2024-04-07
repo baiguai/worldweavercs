@@ -27,19 +27,6 @@
         },
         {
             "types" : [
-                "event"
-            ],
-            "elements" : [
-                "set_field",
-                "set_game_state",
-                "logic",
-                "event",
-                "action"
-            ],
-            "repeat_options" : "false"
-        },
-        {
-            "types" : [
                 "game"
             ],
             "elements" : [
@@ -156,6 +143,17 @@
                 "message",
                 "logic",
                 "set"
+            ],
+            "repeat_options" : "false"
+        },
+        {
+            "types" : [
+                "travel"
+            ],
+            "elements" : [
+                "enter_message",
+                "logic",
+                "action"
             ],
             "repeat_options" : "false"
         }

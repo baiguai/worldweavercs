@@ -47,7 +47,7 @@ namespace WorldWeaver.Parsers
             return output;
         }
 
-        private string DoQuit()
+        private string DoQuit() // @note
         {
             CacheManager.ClearCache();
             return InitFunctions.GetInitMessage(false);
