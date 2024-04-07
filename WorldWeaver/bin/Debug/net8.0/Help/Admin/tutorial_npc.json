@@ -1,0 +1,15 @@
+﻿{
+    "topics" : [
+        {
+            "pattern" : "\\b(?:tutorial.npc)\\b",
+            "title" : "Defining an NPC",
+            "string" : "
+...
+
+See:
+
+_help tutorial conclusion
+"
+        }
+    ]
+}
