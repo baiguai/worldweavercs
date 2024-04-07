@@ -1,0 +1,183 @@
+﻿{
+    "topics" : [
+        {
+            "pattern" : "\\b(?:tutorial.move)\\b",
+            "title" : "Moving Elements",
+            "string" : "
+At the end of the last topic, we had an object added to our room:
+
+{key=golden_egg, name=Golden Egg, type=object, parent=local_pub, tags=inventory
+    {type=enter_message
+        output={@
+You see a golden egg.
+
+        }
+    }
+
+    {type=look
+        {type=message
+            output={@
+You see a golden egg.
+
+            }
+        }
+    }
+
+    {type=inspect
+        {type=message
+            output={@
+You inspect the egg...
+
+            }
+        }
+    }
+
+
+    {type=input, syntax=\b(?:examine.*egg)\b
+        {type=action, logic=inspect, tags=type }
+    }
+}
+
+
+Let's creat an input and action for picking up the egg. This would be defined like so:
+
+{type=input, syntax=\b(?:take.*egg)\b
+    {type=move, logic=player, tags=golden_egg
+        output={@
+You pick up the golden egg.
+
+
+        }
+    }
+}
+
+
+The 'output' in the above defines a message that will be displayed when the player
+picks up the egg.
+
+Notice that the 'input' has a child element with a type of 'move'. This element type exists
+to move an element to a new location. The 'move' type element uses its 'logic' attribute to
+specify where it will be moving to.
+The 'tags' attribute specifies what will be moving there. Since it uses 'tags' you can move
+more than one item by entering their element keys separated by a pipe '|'.
+In this case, we are just moving the egg.
+
+So the final object definition looks like:
+
+{key=golden_egg, name=Golden Egg, type=object, parent=local_pub, tags=inventory
+    {type=enter_message
+        output={@
+You see a golden egg.
+
+        }
+    }
+
+    {type=look
+        {type=message
+            output={@
+You see a golden egg.
+
+            }
+        }
+    }
+
+    {type=inspect
+        {type=message
+            output={@
+You inspect the egg...
+
+            }
+        }
+    }
+
+
+    {type=input, syntax=\b(?:examine.*egg)\b
+        {type=action, logic=inspect, tags=type }
+    }
+
+    {type=input, syntax=\b(?:take.*egg)\b
+        {type=move, logic=player, tags=golden_egg
+            output={@
+You pick up the golden egg.
+
+
+            }
+        }
+    }
+}
+
+
+We can also use this pattern to allow the player to drop the egg. We would use another
+move element. Consider the example below:
+
+
+{key=golden_egg, name=Golden Egg, type=object, parent=local_pub, tags=inventory
+    {type=enter_message
+        output={@
+You see a golden egg.
+
+        }
+    }
+
+    {type=look
+        {type=message
+            output={@
+You see a golden egg.
+
+            }
+        }
+    }
+
+    {type=inspect
+        {type=message
+            output={@
+You inspect the egg...
+
+            }
+        }
+    }
+
+
+    {type=input, syntax=\b(?:examine.*egg)\b
+        {type=action, logic=inspect, tags=type }
+    }
+
+    {type=input, syntax=\b(?:take.*egg)\b
+        {type=move, logic=player, tags=golden_egg
+            output={@
+You pick up the golden egg.
+
+
+            }
+        }
+    }
+
+    {type=input, syntax=\b(?:drop.*egg)\b
+        {type=move, logic=[room], tags=golden_egg
+            output={@
+You drop the golden egg.
+
+
+            }
+        }
+    }
+}
+
+
+
+You'll notice for the 'drop' the logic is set to [room].
+By putting square brackets around it we denote an element type versus its actual
+element key. Currently the only type you can use is 'room'.
+In the future this may be expanded.
+
+Now that we have the game, player, room, and an object defined let's create an
+NPC (In role playing parlance this is Non Player Character).
+This can be either an enemy or a friend.
+
+See:
+
+_help tutorial npc
+"
+        }
+    ]
+}

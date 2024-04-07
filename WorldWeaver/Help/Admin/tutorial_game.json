@@ -18,7 +18,8 @@ When building or playing games the game (Folder) name is case sensitive.)
 
 In this new folder we want to define our new game.
 Create a file called game.nrmn.
-You can name this file whatever you want, but ONE of your files must contain an element of a type set to 'game'.
+You can name this file whatever you want (It must have an 'nrmn' extension, ALL game definition files must have an extension of 'nrmn'),
+but ONE of your files must contain an element of a type set to 'game'.
 There can be only one game element in your game's code. If you define more than one WorldWeaver will simply load the first one
 it encounters in the database.
 There can be other element types in the file, but the cleanest way to define your game is with a file dedicated to the game element.

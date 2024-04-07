@@ -2,7 +2,7 @@
     "topics" : [
         {
             "pattern" : "\\b(?:tutorial.actions)\\b",
-            "title" : "Handling User Input with Actions Tutorial",
+            "title" : "Defining Actions: Custom Element Types",
             "string" : "
 In the last article, this is what our room looked like:
 
@@ -61,6 +61,17 @@ North of where you are sitting is a small door.
         {type=action, logic=look, tags=type }
     }
 }
+
+
+You may have noticed the 'repeat=repeat' specification. We'll discuss this later,
+but it works in conjunction with a type that has multiple messages. This is useful for
+showing random messages, or repeating messages.
+
+Later on we will use this in conjunction with inline output logic.
+
+Next let's define an object.
+
+_help tutorial objects
 "
         }
     ]
