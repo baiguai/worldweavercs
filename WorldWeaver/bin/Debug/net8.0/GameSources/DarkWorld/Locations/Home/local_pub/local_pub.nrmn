@@ -3,25 +3,6 @@
         output={@
 You are sitting in your local pub.
         }
-
-        {type=action
-            {type=logic
-                logic={@
-                    ?[isday]='true'
-                }
-                output={@
-
-It is night time.
-                }
-            }
-
-            {type=message
-                output={@
-
-It is day time.
-                }
-            }
-        }
     }
 
     {type=look, repeat=repeat

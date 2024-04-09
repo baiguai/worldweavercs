@@ -16,23 +16,33 @@ You are now armed with the [field|longsword_01|name].
         }
     }
 
-    {key=is_day, type=logic
-        logic={@
-            ?[isday] = 'true'
-        }
-        output={@
+    {key=day_string
+        {type=action
+            {type=logic
+                logic={@
+                    ?[isday] = 'false'
+                }
+            }
+            {type=message
+                output={@
 It is night.
 
+                }
+            }
         }
-    }
 
-    {key=is_night, type=logic
-        logic={@
-            ?[isday] = 'true'
-        }
-        output={@
+        {type=action
+            {type=logic
+                logic={@
+                    ?[isday] = 'true'
+                }
+            }
+            {type=message
+                output={@
 It is day.
 
+                }
+            }
         }
     }
 }

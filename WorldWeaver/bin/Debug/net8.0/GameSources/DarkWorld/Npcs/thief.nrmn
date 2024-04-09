@@ -1,0 +1,32 @@
+{key=thief_01, name=thief_01, syntax=\bthief 01\b, type=npc, parent=local_pub
+    {key=thief_01_life, name=Life, type=attribute, output=[rand:8|18], tags=stats }
+    {key=thief_01_strength, name=Strength, type=attribute, output=[rand:8|18], tags=stats }
+    {key=thief_01_intelligence, name=Intelligence, type=attribute, output=[rand:8|18], tags=stats }
+    {key=thief_01_cunning, name=Cunning, type=attribute, output=[rand:8|18], tags=stats }
+    {key=thief_01_gold, name=Gold, type=attribute, output=[rand:20|40], tags=stats }
+    {key=thief_01_armed, name=Armed Weapon, type=attribute, output=, tags=armed|stats }
+
+    {key=thief_01_msg_idx, type=attribute, output=[rand:1|3] }
+
+    {key=stolen_shortsword_01, name=Short Sword, type=weapon, syntax=\b(short sword)\b, tags=inventory
+        {name=Damage, type=attribute, logic=[rand:4|8], tags=damage }
+    }
+
+    {type=enter_message, repeat=attribute, logic=thief_01_msg_idx
+        {type=message
+            output={@
+You see a shifty character.
+            }
+        }
+        {type=message
+            output={@
+There is a shadowy figure nearby.
+            }
+        }
+        {type=message
+            output={@
+You see an unsavory hooded figure.
+            }
+        }
+    }
+}

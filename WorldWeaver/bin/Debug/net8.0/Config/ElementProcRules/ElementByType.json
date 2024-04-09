@@ -100,9 +100,23 @@
         },
         {
             "types" : [
+                "npc"
+            ],
+            "elements" : [
+                "travel",
+                "enter_message",
+                "logic",
+                "action",
+                "message"
+            ],
+            "repeat_options" : "false"
+        },
+        {
+            "types" : [
                 "object"
             ],
             "elements" : [
+                "travel",
                 "enter_message",
                 "logic",
                 "action",
@@ -131,6 +145,7 @@
                 "set",
                 "object",
                 "message",
+                "npc",
                 "input"
             ],
             "repeat_options" : "false"
@@ -152,8 +167,7 @@
             ],
             "elements" : [
                 "enter_message",
-                "logic",
-                "action"
+                "logic"
             ],
             "repeat_options" : "false"
         }

@@ -1,0 +1,77 @@
+﻿{
+    "topics" : [
+        {
+            "pattern" : "\\b(?:tutorial.logic)\\b",
+            "title" : "Defining Logic",
+            "string" : "
+Logic elements are extremely powerful and useful. In the previous topic we discussed
+using multiple actions to process more than one message - BUT consider all messages.
+
+For this scenario we had an 'isday' string we wanted to inject into our message element:
+
+
+{key=day_string
+    {type=action
+        {type=logic
+            logic={@
+                ?[isday] = 'false'
+            }
+        }
+        {type=message
+            output={@
+It is night.
+
+            }
+        }
+    }
+
+    {type=action
+        {type=logic
+            logic={@
+                ?[isday] = 'true'
+            }
+        }
+        {type=message
+            output={@
+It is day.
+
+            }
+        }
+    }
+}
+
+
+You'll notice that we've defined an element of type 'logic', and we defined a multiline logic value:
+
+{type=logic
+    logic={@
+        ?[isday] = 'true'
+    }
+}
+
+
+'isday' is a built-in check to see if it is currently daytime in the game. Therefore it is wrapped in
+square brackets. When a line is started with a question mark, it sets that logic block as a 'conditional'
+block. (We are comparing two things)
+In the future there may be more, but for now conditionals are the only option for logic elements.
+
+To see more details on logic element logic blocks, use:
+_help logic
+
+
+Consult the ~/Config/ElementProcRules/ElementByType.json  file to see which elements can have logic elements
+as their children.
+
+Note:
+The:
+~/Config/ElementProcRules/ElementByType.json
+
+is a good file to keep handy when you are defineing games. It specifies what type of children an element can have,
+as well as which elements can have repeat options.
+
+
+_help tutorial input
+"
+        }
+    ]
+}

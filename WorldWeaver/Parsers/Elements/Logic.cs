@@ -27,12 +27,13 @@ namespace WorldWeaver.Parsers.Elements
                     if (!passed)
                     {
                         output.FailedLogic = true;
-                        output.OutputText += currentElement.Output;
+                        output.OutputText = currentElement.Output;
                         return output;
                     }
                     else
                     {
                         output.FailedLogic = false;
+                        output.OutputText += currentElement.Output;
                         return output;
                     }
                 }
@@ -138,7 +139,7 @@ namespace WorldWeaver.Parsers.Elements
 
             if (output.Condition.StartsWith("'"))
             {
-                output.Condition = output.Condition.Replace("'", "");
+                output.Value = output.Condition.Replace("'", "");
                 return output;
             }
 
@@ -162,7 +163,8 @@ namespace WorldWeaver.Parsers.Elements
 
             if (output.Condition.ToLower().Equals("[isday]"))
             {
-                output.Condition = Tools.Game.IsDay(gameDb).ToString().ToLower();
+                output.Value = Tools.Game.IsDay(gameDb).ToString().ToLower();
+                return output;
             }
 
             if (output.Condition.ToLower().Equals("[inventory]"))

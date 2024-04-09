@@ -576,17 +576,6 @@ PRAGMA foreign_keys = on;
         {
             var retVal = output;
 
-            if (retVal.Contains("[rand:"))
-            {
-                var tmp = retVal.Replace("[rand:", "").Replace("]", "");
-                var range = tmp.Split('|');
-                if (range.Length == 2)
-                {
-                    Random rnd = new Random((int)DateTime.Now.Ticks);
-                    retVal = rnd.Next(Convert.ToInt32(range[0]), Convert.ToInt32(range[1])).ToString();
-                }
-            }
-
             return retVal.SqlSafe();
         }
 
@@ -658,6 +647,7 @@ INSERT INTO element (
     Logic,
     Output,
     Tags,
+    Repeat,
     Active,
     Sort,
     CreateDate,
@@ -682,6 +672,7 @@ VALUES";
 '{e.Logic}',
 '{e.Output}',
 '{e.Tags}',
+'{e.Repeat}',
 '{e.Active}',
 '{e.Sort}',
 '{e.CreateDate}',

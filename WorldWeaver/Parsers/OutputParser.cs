@@ -14,6 +14,7 @@ namespace WorldWeaver.Parsers
 
             output = output.Replace("\\b", $"{Environment.NewLine}");
             output = ProcessFieldReplacement(gameDb, output);
+            output = ProcessKeyReplacement(gameDb, output);
             output = ProcessInlineComparisons(output);
 
             return output;
@@ -58,6 +59,57 @@ namespace WorldWeaver.Parsers
 
             return output;
         }
+
+        private string ProcessKeyReplacement(string gameDb, string outputText)
+        {
+            var output = outputText;
+            var keyStart = outputText.IndexOf("[key");
+            var errMsg = $"Error: [field] logic is malformed in:{Environment.NewLine + Environment.NewLine}{output}";
+
+            while (keyStart > -1)
+            {
+                var keyEnd = output.IndexOf(']', keyStart) + 1;
+
+                if (keyEnd <= keyStart)
+                {
+                    return errMsg;
+                }
+
+                var keyRef = output[keyStart..keyEnd];
+                var arr = keyRef.Replace("[", "").Replace("]", "").Split('|');
+                var key = "";
+                var field = "";
+                var newValue = "";
+                var elemDb = new DataManagement.GameLogic.Element();
+
+                if (arr.Length == 2)
+                {
+                    key = arr[1].Trim();
+                    var elem = elemDb.GetElementByKey(gameDb, key);
+                    var elemParser = new Parsers.Elements.Element();
+                    if (elem.ElementType.Equals(""))
+                    {
+                        elem.ElementType = "general";
+                    }
+                    var procItems = Tools.ProcFunctions.GetProcessStepsByType(elem.ElementType);
+                    var outputObj = new Classes.Output();
+                    foreach (var proc in procItems)
+                    {
+                        outputObj = elemParser.ParseElement(outputObj, gameDb, elem, "", proc);
+                    }
+                    output = output.Replace(keyRef, outputObj.OutputText);
+                }
+                else
+                {
+                    return errMsg;
+                }
+
+                keyStart = output.IndexOf("[field");
+            }
+
+            return output;
+        }
+
 
         private string ProcessInlineComparisons(string outputText)
         {

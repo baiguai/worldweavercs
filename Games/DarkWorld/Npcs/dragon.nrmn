@@ -1,7 +1,0 @@
-﻿{key=dragon, name=Gold Dragon, type=person, parent=darkworld
-    {key=dragon_life, name=Life, type=attribute
-        logic=rand:35|100
-        output=logic
-        tags=life
-    }
-}

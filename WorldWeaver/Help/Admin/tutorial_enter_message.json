@@ -47,7 +47,7 @@ The enter_message fires any time the player enters a room, so you do not need to
 Next, we'll look at Input elements, that can call Action elements.
 
 
-_help tutorial input
+_help tutorial messages
 "
         }
     ]

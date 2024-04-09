@@ -47,6 +47,9 @@ _help debugging
 
 Notice that no commas are used when parameters are defined on multiple lines.
 
+This also pertains to child elements.
+Separate them by a line break, NOT a comma.
+
 Next we'll define the Player.
 See: _help tutorial player
 "

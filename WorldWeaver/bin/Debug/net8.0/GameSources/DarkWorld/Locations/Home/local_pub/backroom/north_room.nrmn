@@ -12,8 +12,8 @@ You look around. The north room is small and dimly lit.
 
 In the south wall is the door leading back to the tavern's main room.
 
-And your name is: [field|player|name].
-And your strength is: [field|player_strength|output].
+[key|day_string]
+
 [?[field|player_life|output] > 0 [=\bOh good! You are alive.=][=\b... You aren't a zombie are you?=]?]
             }
         }
@@ -30,83 +30,81 @@ You go south into the main bar area,
             }
         }
     }
+}
 
 
+{key=golden_egg, name=Golden Egg, type=object, parent=local_pub_north, tags=inventory
+    {type=enter_message
+        output={@
+You see a golden egg.
 
+        }
+    }
 
-    {key=golden_egg, name=Golden Egg, type=object, tags=inventory
-        {type=enter_message
+    {type=look
+        {type=message
             output={@
-    You see a golden egg.
+You see a golden egg.
 
             }
         }
+    }
 
-        {type=look
-            {type=message
-                output={@
-    You see a golden egg.
+    {type=inspect
+        {type=message
+            output={@
+You inspect the egg...
 
-                }
             }
         }
+    }
 
-        {type=inspect
-            {type=message
-                output={@
-    You inspect the egg...
+    {type=use_egg
+        {type=message
+            output={@
+You are using the egg!!
 
-                }
             }
         }
+    }
 
-        {type=use_egg
-            {type=message
-                output={@
-    You are using the egg!!
 
-                }
+    {type=input, syntax=\b(?:examine.*egg)\b
+        {type=action, logic=inspect, tags=type }
+    }
+
+    {type=input, syntax=\b(?:take.*egg)\b
+        {type=move, logic=player, tags=golden_egg
+            output={@
+You pick up the golden egg.
+
+
             }
         }
+    }
+
+    {type=input, syntax=\b(?:drop.*egg)\b
+        {type=move, logic=[room], tags=golden_egg
+            output={@
+You drop the golden egg.
 
 
-        {type=input, syntax=\b(?:examine.*egg)\b
-            {type=action, logic=inspect, tags=type }
-        }
-
-        {type=input, syntax=\b(?:take.*egg)\b
-            {type=move, logic=player, tags=golden_egg
-                output={@
-    You pick up the golden egg.
-
-
-                }
             }
         }
+    }
 
-        {type=input, syntax=\b(?:drop.*egg)\b
-            {type=move, logic=[room], tags=golden_egg
-                output={@
-    You drop the golden egg.
+    {type=input, syntax=\b(?:use.*egg)\b
+        {type=logic
+            logic={@
+                ?[self].location = 'player'
+                and
+                ?player_intelligence > 12
+            }
+            output={@
+Well... It looks like you can't use the egg.
 
-
-                }
             }
         }
-
-        {type=input, syntax=\b(?:use.*egg)\b
-            {type=logic
-                logic={@
-                    ?[self].location = 'player'
-                    and
-                    ?player_intelligence > 12
-                }
-                output={@
-    Well... It looks like you can't use the egg.
-
-                }
-            }
-            {type=action, logic=[die] }
-        }
+        {type=action, logic=[die] }
     }
 }

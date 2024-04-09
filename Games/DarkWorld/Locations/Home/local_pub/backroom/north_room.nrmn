@@ -12,8 +12,8 @@ You look around. The north room is small and dimly lit.
 
 In the south wall is the door leading back to the tavern's main room.
 
-And your name is: [field|player|name].
-And your strength is: [field|player_strength|output].
+[key|day_string]
+
 [?[field|player_life|output] > 0 [=\bOh good! You are alive.=][=\b... You aren't a zombie are you?=]?]
             }
         }

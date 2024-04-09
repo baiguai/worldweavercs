@@ -40,7 +40,7 @@ namespace WorldWeaver.Parsers.Elements
                     switch (child.ElementType)
                     {
                         case "input":
-                            if (output.MatchMade)
+                            if (output.MatchMade && !output.OutputText.Equals(""))
                             {
                                 continue;
                             }
@@ -80,6 +80,7 @@ namespace WorldWeaver.Parsers.Elements
 
                             if (output.FailedLogic)
                             {
+                                output.FailedLogic = false;
                                 return output;
                             }
                             else
@@ -182,6 +183,21 @@ namespace WorldWeaver.Parsers.Elements
                     {
                         index++;
                         output = index;
+                    }
+                    break;
+
+                case "attribute":
+                    if (!currentElement.Logic.Equals(""))
+                    {
+                        var attribElem = dbElem.GetElementByKey(gameDb, currentElement.Logic);
+                        try
+                        {
+                            output = Convert.ToInt32(attribElem.Output);
+                        }
+                        catch (Exception)
+                        {
+                            return 0;
+                        }
                     }
                     break;
 

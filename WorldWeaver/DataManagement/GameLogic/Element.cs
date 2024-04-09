@@ -56,6 +56,36 @@ ORDER BY
             return output;
         }
 
+        public List<Classes.Element> GetRandOutputElements(string gameDb)
+        {
+            var selectQuery = $@"
+SELECT
+    ElementType,
+    ElementKey,
+    Name,
+    ParentKey,
+    Syntax,
+    Logic,
+    Output,
+    Tags,
+    Repeat,
+    RepeatIndex,
+    Active,
+    Sort
+FROM
+    element
+WHERE 1=1
+    AND Output LIKE '[rand:%'
+    AND Active = '1'
+ORDER BY
+    sort
+;
+            ";
+
+            var output = GetElements(selectQuery, gameDb);
+            return output;
+        }
+
         internal bool SetElementParentKey(string gameDb, string key, string parentKey)
         {
             var output = false;
@@ -303,6 +333,10 @@ WHERE 1=1
             return output;
         }
 
+        public List<Classes.Element> GetElements(string selectQuery, string gameDb)
+        {
+            return GetElements(selectQuery, gameDb, new List<DbParameter>());
+        }
         public List<Classes.Element> GetElements(string selectQuery, string gameDb, List<DbParameter> parms)
         {
             var output = new List<Classes.Element>();
@@ -570,6 +604,56 @@ WHERE 1=1
             var output = GetSearchElements(selectQuery, gameDb, parms);
 
             return output;
+        }
+
+        internal void SetRandOutputElements(string gameDb)
+        {
+            var elems = GetRandOutputElements(gameDb);
+            var gameFile = $"Games/{gameDb}";
+
+            if (!File.Exists(gameFile))
+            {
+                return;
+            }
+
+            string connectionString = $"Data Source={gameFile};Cache=Shared;";
+
+            using (SqliteConnection connection = new SqliteConnection(connectionString))
+            {
+                connection.Open();
+
+                foreach (var elem in elems)
+                {
+                    if (elem.Output.Contains("[rand:"))
+                    {
+                        var tmp = elem.Output.Replace("[rand:", "").Replace("]", "");
+                        var range = tmp.Split('|');
+                        if (range.Length == 2)
+                        {
+                            Random rnd = new Random((int)DateTime.Now.Ticks);
+                            elem.Output = rnd.Next(Convert.ToInt32(range[0]), Convert.ToInt32(range[1])).ToString();
+                        }
+                    }
+
+                    var updateQuery = $@"
+UPDATE
+    element
+SET
+    Output = '{elem.Output}'
+WHERE 1=1
+    AND ElementKey = '{elem.ElementKey}'
+    AND Active = '1'
+;
+                    ";
+
+                    using (SqliteCommand command = new SqliteCommand(updateQuery, connection))
+                    {
+                        command.ExecuteNonQuery();
+                    }
+                }
+
+                connection.Close();
+            }
         }
     }
 }
