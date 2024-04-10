@@ -3,6 +3,7 @@
         "object",
         "room",
         "player",
+        "npc",
         "game"
     ]
 }

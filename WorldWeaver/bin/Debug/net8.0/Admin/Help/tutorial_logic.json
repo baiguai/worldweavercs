@@ -66,8 +66,41 @@ Note:
 The:
 ~/Config/ElementProcRules/ElementByType.json
 
-is a good file to keep handy when you are defineing games. It specifies what type of children an element can have,
+is a good file to keep handy when you are defining games. It specifies what type of children an element can have,
 as well as which elements can have repeat options.
+
+
+More than one comparison can be made within a logic block. And those comparisons can be match all, by using 'and',
+or a match one or more by using 'or'. Consider the block below:
+
+{type=input, syntax=\b(?:use.*egg)\b
+    {type=logic
+        logic={@
+            ?[self].location = 'player'
+            and
+            ?player_intelligence > 12
+        }
+        output={@
+Well... It looks like you can't use the egg.
+
+        }
+    }
+    {type=action
+        {type=message
+            output={@
+You have used the egg!
+            }
+        }
+    }
+}
+
+
+In the above snippet, you may have noticed the input element. These elements allow the player to interact with
+the game. The syntax field uses Regular Expressions to define the user input that must match it to fire the
+input. Regular Expressions (Or regex) are tricky to learn, so it's a good idea to use examples as a guide.
+You can look through the sample game that is provided with WorldWeaver, and adjust the regex's to your needs.
+For more on regex use:  _help regex
+
 
 
 _help tutorial input

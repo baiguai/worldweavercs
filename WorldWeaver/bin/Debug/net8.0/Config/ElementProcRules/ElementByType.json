@@ -16,6 +16,15 @@
         },
         {
             "types" : [
+                "attribute"
+            ],
+            "elements" : [
+                "attribute"
+            ],
+            "repeat_options" : "true"
+        },
+        {
+            "types" : [
                 "enter_message"
             ],
             "elements" : [
@@ -167,7 +176,8 @@
             ],
             "elements" : [
                 "enter_message",
-                "logic"
+                "logic",
+                "move"
             ],
             "repeat_options" : "false"
         }

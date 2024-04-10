@@ -80,7 +80,7 @@ CREATE TABLE IF NOT EXISTS element (
     Tags         BLOB,
     Repeat       TEXT (200),
     RepeatIndex NUMERIC DEFAULT (-1),
-    Active       TEXT (100) DEFAULT ('1'),
+    Active       TEXT (100) DEFAULT ('true'),
     Sort         NUMERIC    NOT NULL,
     CreateDate  TEXT (10)  NOT NULL,
     UpdateDate  TEXT (10)  NOT NULL

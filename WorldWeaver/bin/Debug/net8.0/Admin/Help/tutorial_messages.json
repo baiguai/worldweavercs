@@ -11,7 +11,9 @@ message children that will follow its repeat option.
 
 So consider the following. When the player looks around, let's say we want to let them know if
 it is day or night. Is day is a built in function. And there is 'inline logic' that can be specified
-in a message. (See _help message logic)
+in a message. (See _help message logic). However this is very limited. There is a more powerful
+means of accomplishing this. Within a message, we can use inline logic to point to another element
+and its output will be inserted into our message.
 
 For example, we can define an element with the key of 'day_string'. And in this type we want to do a
 true check, and a false check, and output text accordingly.
@@ -103,9 +105,38 @@ It is day.
 }
 
 
-To reference the day_string within a message, we would use the following syntax:
+Now in our message we can inject the text of the action that passes its logic check:
+
+{key=local_pub, name=Local Pub, type=room, parent=root
+    {type=enter_message
+        output={@
+You are in the pub.
+        }
+    }
+
+    {type=look
+        {type=message
+            output={@
+You look around the local pub.
 
 [key|day_string]
+            }
+        }
+    }
+
+    {type=input, syntax=\b(look|l)\b
+        {type=action, logic=look, tags=type }
+    }
+}
+
+
+
+Our reference to the 'is day' message is a piece of inline logic that looks like this:
+
+[key|day_string]
+
+Key lets the game know that we're referencing an element by its element key.
+And after the pipe delimiter we note the key value itself.
 
 
 You may have noticed that this element's messages are within action elements.
@@ -117,6 +148,10 @@ and the next time it gets hit, the second message.
 
 So unless your messages are repeating, or going down a list of messages, or choosing a random
 message, wrap them within action elements.
+
+
+In this article we've touched on logic. Next we'll dive deeper into what we can do
+with logic elements.
 
 
 _help tutorial logic

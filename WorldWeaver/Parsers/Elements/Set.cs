@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.Tracing;
 namespace WorldWeaver.Parsers.Elements
 {
     public class Set
@@ -8,7 +9,6 @@ namespace WorldWeaver.Parsers.Elements
             var elemDb = new DataManagement.GameLogic.Element();
             var logParse = new Parsers.Elements.Logic();
             var logic = currentElement.Logic;
-            var targetElement = "";
             var targetField = "";
             var newValue = "";
 
@@ -20,9 +20,9 @@ namespace WorldWeaver.Parsers.Elements
 
             if (arr.Length == 3)
             {
-                targetElement = elemDb.ElementLookup(gameDb, arr[0].Trim());
+                var targetElement = elemDb.GetElementByKey(gameDb, arr[0].Trim());
 
-                if (targetElement.Equals(""))
+                if (targetElement.ElementKey.Equals(""))
                 {
                     output.OutputText += "An error occurred while setting a value.";
                     output.MatchMade = false;
@@ -31,9 +31,12 @@ namespace WorldWeaver.Parsers.Elements
 
                 targetField = arr[1].Trim();
                 newValue = arr[2].Trim();
-                newValue = newValue.Replace(currentElement.Tags, "").Trim();
+                if (!currentElement.Tags.Equals(""))
+                {
+                    newValue = newValue.Replace(currentElement.Tags, "").Trim();
+                }
 
-                elemDb.SetElementField(gameDb, targetElement, targetField, newValue);
+                elemDb.SetElementField(gameDb, targetElement.ElementKey, targetField, newValue);
                 output.MatchMade = true;
             }
             else

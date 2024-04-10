@@ -16,7 +16,7 @@ namespace WorldWeaver.Classes
         public int RepeatIndex { get; set; } = 0;
         public string Output { get; set; } = "";
         public string Tags { get; set; } = "";
-        public string Active { get; set; } = "1";
+        public string Active { get; set; } = "true";
         public List<Element> Children { get; set; } = new List<Element>();
         public int Sort { get; set; } = 1;
         public string CreateDate { get; set; } = DateTime.Now.FormatDate();

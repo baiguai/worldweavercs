@@ -39,7 +39,7 @@ FROM
     element
 WHERE 1=1
     AND ElementType = @type
-    AND Active = '1'
+    AND Active = 'true'
 ORDER BY
     sort
 ;
@@ -76,7 +76,7 @@ FROM
     element
 WHERE 1=1
     AND Output LIKE '[rand:%'
-    AND Active = '1'
+    AND Active = 'true'
 ORDER BY
     sort
 ;
@@ -106,7 +106,7 @@ SET
     ParentKey = @newParentKey
 WHERE 1=1
     AND ElementKey = @elementkey
-    AND Active = '1'
+    AND Active = 'true'
 ;
             ";
 
@@ -157,7 +157,6 @@ FROM
     element
 WHERE 1=1
     AND ElementKey = @elementkey
-    AND Active = '1'
 ;
             ";
 
@@ -200,7 +199,7 @@ FROM
     element
 WHERE 1=1
     AND ParentKey = @parentkey
-    AND Active = '1'
+    AND Active = 'true'
 ORDER BY
     Sort
 ;
@@ -229,7 +228,7 @@ FROM
     element
 WHERE 1=1
     AND ElementKey = @elementkey
-    AND Active = '1'
+    AND Active = 'true'
 ;
             ";
 
@@ -456,7 +455,6 @@ SET
     {field} = @newvalue
 WHERE 1=1
     AND ElementKey = @elementkey
-    AND Active = '1'
 ;
             ";
 
@@ -493,7 +491,7 @@ FROM
     element
 WHERE 1=1
     AND ElementKey = @elementkey
-    AND Active = '1'
+    AND Active = 'true'
 ;
             ";
 
@@ -595,7 +593,7 @@ FROM
     element
 WHERE 1=1
     AND Syntax IS NOT NULL
-    AND Active = '1'
+    AND Active = 'true'
 ;
             ";
 
@@ -642,7 +640,7 @@ SET
     Output = '{elem.Output}'
 WHERE 1=1
     AND ElementKey = '{elem.ElementKey}'
-    AND Active = '1'
+    AND Active = 'true'
 ;
                     ";
 

@@ -12,7 +12,19 @@
         {name=Damage, type=attribute, logic=[rand:4|8], tags=damage }
     }
 
-    {type=enter_message, repeat=attribute, logic=thief_01_msg_idx
+
+    {key=thief_01_travel, type=travel, logic=[follow|player], active=false }
+
+
+    {type=enter_message
+        {type=message
+            output={@
+You see a shifty character.
+            }
+        }
+    }
+
+    {type=xenter_message, repeat=attribute, logic=thief_01_msg_idx
         {type=message
             output={@
 You see a shifty character.

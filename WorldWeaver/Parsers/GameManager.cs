@@ -85,6 +85,9 @@ namespace WorldWeaver.Parsers
                         output = elemParser.ParseElement(output, gameDb, glob, userInput, proc);
                     }
                 }
+
+                var trvParser = new Parsers.Elements.Travel();
+                trvParser.ParseTravel(gameDb);
             }
                 
             return output;

@@ -176,7 +176,8 @@
             ],
             "elements" : [
                 "enter_message",
-                "logic"
+                "logic",
+                "move"
             ],
             "repeat_options" : "false"
         }
