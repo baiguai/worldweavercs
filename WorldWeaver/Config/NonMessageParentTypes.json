@@ -1,0 +1,9 @@
+{
+    "items" : [
+        "game",
+        "room",
+        "player",
+        "npc",
+        "object"
+    ]
+}

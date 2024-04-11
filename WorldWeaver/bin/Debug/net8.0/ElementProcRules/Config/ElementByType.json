@@ -44,6 +44,7 @@
                 "enter_message",
                 "message",
                 "action",
+                "room",
                 "input"
             ],
             "repeat_options" : "false"
@@ -154,8 +155,8 @@
                 "set",
                 "object",
                 "message",
-                "npc",
-                "input"
+                "input",
+                "npc"
             ],
             "repeat_options" : "false"
         },

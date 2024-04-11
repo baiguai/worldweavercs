@@ -16,16 +16,38 @@
     {key=thief_01_travel, type=travel, logic=[follow|player], active=false }
 
 
-    {type=enter_message
-        output={@
+    {type=enter_message, repeat=attribute, logic=thief_01_msg_idx
+        {type=message
+            output={@
 You see a shifty character.
+            }
+        }
+        {type=message
+            output={@
+There is a shadowy figure nearby.
+            }
+        }
+        {type=message
+            output={@
+You see an unsavory hooded figure.
+            }
         }
     }
 
-    {type=look
+    {type=look, repeat=attribute, logic=thief_01_msg_idx
         {type=message
             output={@
-                You see a thief.
+                You see a shifty character.
+            }
+        }
+        {type=message
+            output={@
+                You see a shadowy figure.
+            }
+        }
+        {type=message
+            output={@
+                You see a hooded figure.
             }
         }
     }

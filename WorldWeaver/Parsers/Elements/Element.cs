@@ -11,7 +11,6 @@ namespace WorldWeaver.Parsers.Elements
         {
             var input = new Parsers.Elements.Input();
             var msg = new Parsers.Elements.Message();
-            var rptType = currentElement.Repeat;
             var index = -1;
             var handledMessage = false;
             var handledMove = false;
@@ -19,14 +18,6 @@ namespace WorldWeaver.Parsers.Elements
             foreach (var proc in procObj.ChildProcElements)
             {
                 handledMessage = false;
-                if (!currentElement.Repeat.Equals(""))
-                {
-                    index = HandleRepeat(gameDb, currentElement, currentElement.Children, rptType);
-                }
-                else
-                {
-                    index = -1;
-                }
 
                 foreach (var child in currentElement.Children)
                 {
@@ -58,14 +49,16 @@ namespace WorldWeaver.Parsers.Elements
                             {
                                 continue;
                             }
-
-                            if (!handledMessage)
+                            if (handledMessage)
                             {
-                                output = msg.ParseMessage(output, gameDb, currentElement, child, procObj.AllowRepeatOptions, index);
-                                if (!child.Output.Equals(""))
-                                {
-                                    handledMessage = true;
-                                }
+                                continue;
+                            }
+
+                            output.MatchMade = false;
+                            output = HandleMessage(output, gameDb, currentElement, child, userInput, procObj.AllowRepeatOptions, isEntering);
+                            if (output.MatchMade)
+                            {
+                                handledMessage = true;
                             }
                             break;
 
@@ -87,8 +80,6 @@ namespace WorldWeaver.Parsers.Elements
                             {
                                 continue;
                             }
-
-                            break;
 
                         case "move":
                             if (output.MatchMade)
@@ -200,7 +191,7 @@ namespace WorldWeaver.Parsers.Elements
                         var attribElem = dbElem.GetElementByKey(gameDb, currentElement.Logic);
                         try
                         {
-                            output = Convert.ToInt32(attribElem.Output);
+                            output = Convert.ToInt32(attribElem.Output) - 1;
                         }
                         catch (Exception)
                         {
@@ -216,6 +207,59 @@ namespace WorldWeaver.Parsers.Elements
 
             currentElement.RepeatIndex = output;
             dbElem.SetElementField(gameDb, currentElement.ElementKey, "RepeatIndex", output.ToString(), false);
+            return output;
+        }
+
+        private Output HandleMessage(Output output, string gameDb, Classes.Element currentElement, Classes.Element child, string userInput, bool allowRepeatOptions, bool isEntering)
+        {
+            var rptType = currentElement.Repeat;
+
+            var msg = new Parsers.Elements.Message();
+            var msgParent = currentElement;
+            var msgElem = child;
+            var usingChild = false;
+            var index = 0;
+
+            output.MatchMade = false;
+
+            // For certain elements, move in a level
+            if (Tools.AppSettingFunctions.GetRootArray("Config/NonMessageParentTypes.json").Contains(currentElement.ElementType) &&
+                child.Output.Equals(""))
+            {
+                msgParent = child;
+                allowRepeatOptions = true;
+                rptType = msgParent.Repeat;
+                usingChild = true;
+            }
+
+            if (!msgParent.Repeat.Equals(""))
+            {
+                index = HandleRepeat(gameDb, msgParent, msgParent.Children, rptType);
+            }
+            else
+            {
+                index = -1;
+            }
+
+            if (usingChild)
+            {
+                foreach (var c in msgParent.Children)
+                {
+                    if (c.ElementType.Equals("message") || c.ElementType.Equals("enter_message"))
+                    {
+                        output = msg.ParseMessage(output, gameDb, msgParent, c, allowRepeatOptions, index);
+                        if (output.MatchMade)
+                        {
+                            break;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                output = msg.ParseMessage(output, gameDb, msgParent, msgElem, allowRepeatOptions, index);
+            }
+
             return output;
         }
     }
