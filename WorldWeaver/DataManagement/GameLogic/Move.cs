@@ -18,6 +18,12 @@ namespace WorldWeaver.DataManagement.GameLogic
             foreach (var tag in tagList)
             {
                 success = elemDb.SetElementParentKey(gameDb, tag, newParentKey);
+
+                if (tag.Equals(Cache.PlayerCache.Player.ElementKey))
+                {
+                    var trvParser = new Parsers.Elements.Travel();
+                    trvParser.ParseTravel(gameDb);
+                }
             }
 
             if (success)

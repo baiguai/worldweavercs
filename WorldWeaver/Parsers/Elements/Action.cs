@@ -55,7 +55,7 @@ namespace WorldWeaver.Parsers.Elements
                 return output;
             }
             var self = Tools.Elements.GetSelf(gameDb, currentElement);
-            var targets = Tools.Elements.GetElementsByType(self, type);
+            var targets = Tools.Elements.GetElementsByType(Cache.RoomCache.Room, type);
             var elemDb = new DataManagement.GameLogic.Element();
 
             var elemParser = new Parsers.Elements.Element();
@@ -63,13 +63,10 @@ namespace WorldWeaver.Parsers.Elements
             foreach (var elem in targets)
             {
                 var parent = elemDb.GetElementByKey(gameDb, elem.ParentKey);
-                if (elem.ParentKey == currentElement.ElementKey || elem.ParentKey == self.ElementKey || parent.ParentKey == currentElement.ElementKey)
+                var procItems = Tools.ProcFunctions.GetProcessStepsByType(elem.ElementType);
+                foreach (var proc in procItems)
                 {
-                    var procItems = Tools.ProcFunctions.GetProcessStepsByType(elem.ElementType);
-                    foreach (var proc in procItems)
-                    {
-                        output = elemParser.ParseElement(output, gameDb, elem, userInput, proc);
-                    }
+                    output = elemParser.ParseElement(output, gameDb, elem, userInput, proc);
                 }
             }
 

@@ -17,27 +17,15 @@
 
 
     {type=enter_message
-        {type=message
-            output={@
+        output={@
 You see a shifty character.
-            }
         }
     }
 
-    {type=xenter_message, repeat=attribute, logic=thief_01_msg_idx
+    {type=look
         {type=message
             output={@
-You see a shifty character.
-            }
-        }
-        {type=message
-            output={@
-There is a shadowy figure nearby.
-            }
-        }
-        {type=message
-            output={@
-You see an unsavory hooded figure.
+                You see a thief.
             }
         }
     }

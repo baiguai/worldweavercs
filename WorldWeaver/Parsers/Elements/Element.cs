@@ -109,8 +109,8 @@ namespace WorldWeaver.Parsers.Elements
                             output = set.ParseSet(output, gameDb, currentElement, child, userInput);
                             if (output.MatchMade)
                             {
-                                var procs = Tools.ProcFunctions.GetProcessStepsByType(child.ElementType);
-                                foreach (var childProc in procs)
+                                var setProcs = Tools.ProcFunctions.GetProcessStepsByType(child.ElementType);
+                                foreach (var childProc in setProcs)
                                 {
                                     output = ParseElement(output, gameDb, child, userInput, childProc);
                                 }
@@ -118,8 +118,16 @@ namespace WorldWeaver.Parsers.Elements
                             break;
 
                         case "object":
-                            var childProcs = Tools.ProcFunctions.GetProcessStepsByType(child.ElementType);
-                            foreach (var childProc in childProcs)
+                            var objectProcs = Tools.ProcFunctions.GetProcessStepsByType(child.ElementType);
+                            foreach (var childProc in objectProcs)
+                            {
+                                output = ParseElement(output, gameDb, child, userInput, childProc, isEntering);
+                            }
+                            break;
+
+                        case "npc":
+                            var npcProcs = Tools.ProcFunctions.GetProcessStepsByType(child.ElementType);
+                            foreach (var childProc in npcProcs)
                             {
                                 output = ParseElement(output, gameDb, child, userInput, childProc, isEntering);
                             }
