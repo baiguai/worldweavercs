@@ -2,6 +2,7 @@
 using System.Formats.Asn1;
 using System.Globalization;
 using WorldWeaver.Classes;
+using WorldWeaver.Tools;
 
 namespace WorldWeaver.Parsers.Elements
 {
@@ -50,7 +51,7 @@ namespace WorldWeaver.Parsers.Elements
 
         private Output ParseTags_Type(Output output, string gameDb, Classes.Element currentElement, string type, string userInput)
         {
-            if (Cache.RoomCache.Room == null)
+            if (Cache.RoomCache.Room == null || output.MatchMade)
             {
                 return output;
             }
@@ -62,11 +63,16 @@ namespace WorldWeaver.Parsers.Elements
             
             foreach (var elem in targets)
             {
-                var parent = elemDb.GetElementByKey(gameDb, elem.ParentKey);
-                var procItems = Tools.ProcFunctions.GetProcessStepsByType(elem.ElementType);
-                foreach (var proc in procItems)
+                if ((!elem.Tags.TagsContain("inventory") &&
+                    !Tools.Elements.GetSelf(gameDb, elem).Tags.TagsContain("inventory")) || 
+                    elem.Tags.TagsContain("inspect"))
                 {
-                    output = elemParser.ParseElement(output, gameDb, elem, userInput, proc);
+                    var parent = elemDb.GetElementByKey(gameDb, elem.ParentKey);
+                    var procItems = Tools.ProcFunctions.GetProcessStepsByType(elem.ElementType);
+                    foreach (var proc in procItems)
+                    {
+                        output = elemParser.ParseElement(output, gameDb, elem, userInput, proc);
+                    }
                 }
             }
 
@@ -97,22 +103,17 @@ namespace WorldWeaver.Parsers.Elements
 
                 foreach (var child in elem.Children)
                 {
-                    var tagList = child.Tags.Split('|');
-
-                    foreach (var tag in tagList)
+                    if (child.Tags.TagsContain(arr[1].Trim()))
                     {
-                        if (tag.Equals(arr[1].Trim()))
+                        if (child.Output.Equals(""))
                         {
-                            if (child.Output.Equals(""))
-                            {
-                                output.OutputText += $"{child.Name}{Environment.NewLine}";
-                            }
-                            else
-                            {
-                                output.OutputText += $"{child.Name}: {child.Output}{Environment.NewLine}";
-                            }
-                            output.MatchMade = true;
+                            output.OutputText += $"{child.Name}{Environment.NewLine}";
                         }
+                        else
+                        {
+                            output.OutputText += $"{child.Name}: {child.Output}{Environment.NewLine}";
+                        }
+                        output.MatchMade = true;
                     }
                 }
             }

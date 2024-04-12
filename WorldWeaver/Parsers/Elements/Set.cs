@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics.Tracing;
+using WorldWeaver.Tools;
 namespace WorldWeaver.Parsers.Elements
 {
     public class Set
@@ -20,7 +21,16 @@ namespace WorldWeaver.Parsers.Elements
 
             if (arr.Length == 3)
             {
-                var targetElement = elemDb.GetElementByKey(gameDb, arr[0].Trim());
+                Classes.Element targetElement = null;
+
+                if (arr[0].Trim().Equals("[self]"))
+                {
+                    targetElement = Tools.Elements.GetSelf(gameDb, currentElement);
+                }
+                else
+                {
+                    targetElement = elemDb.GetElementByKey(gameDb, arr[0].Trim());
+                }
 
                 if (targetElement.ElementKey.Equals(""))
                 {
@@ -33,7 +43,13 @@ namespace WorldWeaver.Parsers.Elements
                 newValue = arr[2].Trim();
                 if (!currentElement.Tags.Equals(""))
                 {
+                    // This allows the game to remove additional text if needed
                     newValue = newValue.Replace(currentElement.Tags, "").Trim();
+                }
+
+                if (targetField.Equals("tags"))
+                {
+                    newValue = NewTagsValue(targetElement, newValue);
                 }
 
                 elemDb.SetElementField(gameDb, targetElement.ElementKey, targetField, newValue);
@@ -44,6 +60,38 @@ namespace WorldWeaver.Parsers.Elements
                 output.OutputText += "An error has occured while setting a value.";
                 output.MatchMade = false;
                 return output;
+            }
+
+            return output;
+        }
+
+        private string NewTagsValue(Classes.Element targetElement, string newValue)
+        {
+            var output = "";
+
+            if (newValue.Length > 0)
+            {
+                switch (newValue.Substring(0, 1))
+                {
+                    case "+":
+                        newValue = newValue.Replace("+", "");
+                        output = targetElement.Tags.AddTag(newValue);
+                        break;
+
+                    case "-":
+                        newValue = newValue.Replace("-", "");
+                        output = targetElement.Tags.RemoveTag(newValue);
+                        break;
+
+                    case "*":
+                        newValue = newValue.Replace("*", "");
+                        var nvArr = newValue.Split('>');
+                        if (nvArr.Length == 2)
+                        {
+                            output = targetElement.Tags.ReplaceTag(nvArr[0].Trim(), nvArr[1].Trim());
+                        }
+                        break;
+                }
             }
 
             return output;

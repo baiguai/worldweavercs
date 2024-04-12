@@ -105,6 +105,8 @@ namespace WorldWeaver.Parsers.Elements
                                 {
                                     output = ParseElement(output, gameDb, child, userInput, childProc);
                                 }
+
+                                output.MatchMade = false;
                             }
                             break;
 

@@ -33,7 +33,8 @@ You go south into the main bar area,
 }
 
 
-{key=golden_egg, name=Golden Egg, type=object, parent=local_pub_north, tags=inventory
+{key=golden_egg, name=Golden Egg, type=object, parent=local_pub_north
+    {key=egg_visible, name=Visible, type=attribute, output=false }
     {type=enter_message
         output={@
 You see a golden egg.
@@ -50,7 +51,12 @@ You see a golden egg.
         }
     }
 
-    {type=inspect
+    {type=inspect, tags=inspect
+        {type=logic
+            logic={@
+                ?egg_visible='false'
+            }
+        }
         {type=message
             output={@
 You inspect the egg...
@@ -74,6 +80,7 @@ You are using the egg!!
     }
 
     {type=input, syntax=\b(?:take.*egg)\b
+        {type=set, logic=[self]|tags|+inventory }
         {type=move, logic=player, tags=golden_egg
             output={@
 You pick up the golden egg.
@@ -84,6 +91,7 @@ You pick up the golden egg.
     }
 
     {type=input, syntax=\b(?:drop.*egg)\b
+        {type=set, logic=[self]|tags|-inventory }
         {type=move, logic=[room], tags=golden_egg
             output={@
 You drop the golden egg.
