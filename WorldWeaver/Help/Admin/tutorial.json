@@ -1,10 +1,11 @@
 ﻿{
     "topics" : [
         {
-            "pattern" : "\\b(?:tutorial.game)\\b",
+            "pattern" : "\\b(?:tutorial)\\b",
             "title" : "Creating a Game Tutorial",
             "string" : "
-...
+* _help what is worldweaver
+* _help creating a game
 "
         }
     ]

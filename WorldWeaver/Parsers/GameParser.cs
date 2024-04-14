@@ -127,6 +127,11 @@ namespace WorldWeaver.Parsers
 
         public Classes.Output DoPlayGame(Classes.Output output)
         {
+            if (Cache.GameCache.Game == null)
+            {
+                gameDb = "";
+            }
+
             var gameFile = playerInput.Replace("play ", "");
             if (gameDb.Equals(""))
             {

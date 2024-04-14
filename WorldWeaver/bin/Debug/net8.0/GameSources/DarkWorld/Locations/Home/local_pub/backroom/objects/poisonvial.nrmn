@@ -1,0 +1,38 @@
+{key=poison-vial, name=Vial of Poison, type=object, parent=local_pub_north
+    {type=enter_message
+        output={@
+You see a small vial filled with a faintly glowing green liquid.
+        }
+    }
+
+    {type=look
+        {type=message
+            output={@
+You see a small vial full of glowing green liquid.
+
+            }
+        }
+    }
+
+    {type=inspect, tags=inspect
+        {type=message
+            output={@
+You inspect the vial. Upon closer inspection the glowing green liquid appears to be bubbling.
+
+            }
+        }
+    }
+
+    {type=drink
+        {type=action, logic=[die] }
+    }
+
+
+    {type=input, syntax=\b(?:examine.*vial|x.*vial)\b
+        {type=action, logic=inspect, tags=type }
+    }
+
+    {type=input, syntax=\b(?:drink.vial)\b
+        {type=action, logic=drink, tags=type }
+    }
+}

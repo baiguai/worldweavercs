@@ -21,6 +21,11 @@ namespace WorldWeaver.Parsers.Elements
 
                 foreach (var child in currentElement.Children)
                 {
+                    if (Cache.GameCache.Game == null)
+                    {
+                        return output;
+                    }
+
                     handledMove = false;
 
                     if (!child.ElementType.Equals(proc))
@@ -64,6 +69,10 @@ namespace WorldWeaver.Parsers.Elements
 
                         case "action":
                             output = HandleAction(output, gameDb, child, userInput);
+                            if (Cache.GameCache.Game == null)
+                            {
+                                return output;
+                            }
                             break;
 
                         case "logic":

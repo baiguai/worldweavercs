@@ -50,6 +50,8 @@ namespace WorldWeaver.Tools
                         var title = (string)cmd["title"];
                         var content = (string)cmd["string"];
 
+                        content = content.Replace("---", "--------------------------------------------------------------------------------");
+
                         if (cmd["links"] != null) 
                         {
                             foreach (var link in cmd["links"])

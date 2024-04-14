@@ -86,6 +86,11 @@ namespace WorldWeaver.Parsers
                     }
                 }
 
+                if (Cache.GameCache.Game == null)
+                {
+                    return output;
+                }
+
                 var trvParser = new Parsers.Elements.Travel();
                 trvParser.ParseTravel(gameDb);
             }

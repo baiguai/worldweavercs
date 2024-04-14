@@ -1,0 +1,11 @@
+﻿{
+    "topics" : [
+        {
+            "pattern" : "\\b(?:syntax)\\b",
+            "title" : "Syntax",
+            "string" : "
+...
+"
+        }
+    ]
+}

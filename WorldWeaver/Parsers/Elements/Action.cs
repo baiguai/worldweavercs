@@ -14,8 +14,7 @@ namespace WorldWeaver.Parsers.Elements
             var procItems = Tools.ProcFunctions.GetProcessStepsByType(currentElement.ElementType);
 
             output = ParseMessageActions(output, gameDb, currentElement, userInput);
-
-            // output = ParseLogicActions(output, gameDb, currentElement, userInput);
+            output = ParseLogicActions(output, gameDb, currentElement, userInput);
 
             foreach (var child in currentElement.Children)
             {
@@ -126,8 +125,21 @@ namespace WorldWeaver.Parsers.Elements
             switch (currentElement.Logic.ToLower())
             {
                 case "[die]":
+                    var msgParser = new Parsers.Elements.Message();
+                    var elemDb = new DataManagement.GameLogic.Element();
+                    var dieMsg = elemDb.GetElementByKey(gameDb, "die_message");
+
+                    if (dieMsg.ElementKey.Equals(""))
+                    {
+                        output.OutputText = Tools.InitFunctions.GetInitMessage(false);
+                    }
+                    else
+                    {
+                        output.OutputText = dieMsg.Output;
+                    }
+
                     Tools.CacheManager.ClearCache();
-                    Tools.InitFunctions.GetInitMessage(false);
+                    output.MatchMade = true;
                     return output;
             }
 
