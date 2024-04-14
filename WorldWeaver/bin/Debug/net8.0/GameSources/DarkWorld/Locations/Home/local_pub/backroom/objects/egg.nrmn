@@ -40,7 +40,7 @@ You are using the egg!!
     }
 
 
-    {type=input, syntax=\b(?:examine.*egg)\b
+    {type=input, syntax=\b(?:examine.*egg|x.*egg)\b
         {type=action, logic=inspect, tags=type }
     }
 

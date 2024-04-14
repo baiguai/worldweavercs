@@ -19,8 +19,8 @@ North of where you are sitting is a small door.
             }
         }
     }
-    
-    
+
+
     {type=input, syntax=\b(look|l)\b
         {type=action, logic=look, tags=type }
         {type=set, logic=thief_01_travel|active|true }

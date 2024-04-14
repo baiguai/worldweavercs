@@ -1,0 +1,67 @@
+﻿{
+    "topics" : [
+        {
+            "pattern" : "\\b(?:required.game.elements)\\b",
+            "title" : "Required Game Elements",
+            "string" : "
+There are some events in games that require elements to be defined for them.
+For example, when the player dies, WorldWeaver (WW) needs to know what to show the player when this occurs.
+Instead of showing them a predefined message WW allows game developers to set this message to whatever they want.
+A 'die' message uses this structure:
+
+---
+
+{key=die_message
+    output={@
+You have died.
+    }
+}
+
+---
+
+So if we add this to our game element, it now looks like:
+
+---
+
+{key=game
+    name=Shadow Keep
+    type=game
+    parent=root
+
+    {type=enter_message
+        output={@
+Welcome to Shadow Keep.
+        }
+    }
+
+    {key=die_message
+        output={@
+You have died.
+        }
+    }
+}
+
+---
+
+You may have noticed that there is no 'parent' property in the die_message element.
+Since it was defined within the game element, WW automatically assigns it the game element key
+as its parent.
+
+If we have our game definitions organized differently, so that the die_message is defined in a
+different file, or outside the game element, we would need to add a 'parent' property and set
+it to 'game' since that is our game's key.
+
+This is true for other elements as well.
+
+We will discuss how to tell the game that the player has died in a future topic.
+
+---
+
+Now let's define the player.
+",
+            "links" : [
+                "_help defining the player"
+            ]
+        }
+    ]
+}

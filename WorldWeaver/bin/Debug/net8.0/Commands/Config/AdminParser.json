@@ -1,7 +1,7 @@
 ﻿{
     "commands" : [
         {
-            "pattern" : "\\b(_buildgame|_bg)\\b",
+            "pattern" : "\\b(_buildgame|_bg|_build)\\b",
             "method" : "DoBuildGame"
         },
         {
