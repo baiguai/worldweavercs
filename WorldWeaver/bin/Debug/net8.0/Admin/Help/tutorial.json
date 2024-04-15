@@ -6,6 +6,14 @@
             "string" : "
 * _help what is worldweaver
 * _help creating a game
+    * _help defining a game
+    * _help required game elements
+    * _help defining the player
+    * _help building our first room
+    * _help creating a look element
+    * _help creating an action element
+    * _help creating a global file
+        * _help viewing stats
 "
         }
     ]

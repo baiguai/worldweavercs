@@ -39,9 +39,15 @@ perform certain tasks.
 
 You may have noticed the 'stats' tag on these attributes. We will discuss how this is used later in
 this tutorial. The same holds true for the weapon and the 'armed' tag.
+
+Also notice the output values in the attribute elements. We will discuss random values in a later
+topic as well.
+
+You can see that the player's parent is set to 'local_pub'. This specifies where the player is.
+And it refers to the element key of another element. Let's create that element now.
 ",
             "links" : [
-                "_help defining the player"
+                "_help building our first room"
             ]
         }
     ]

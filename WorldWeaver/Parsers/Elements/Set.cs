@@ -21,18 +21,9 @@ namespace WorldWeaver.Parsers.Elements
 
             if (arr.Length == 3)
             {
-                Classes.Element targetElement = null;
+                var targetElements = GetTargetElements(gameDb, currentElement, arr[0].Trim());
 
-                if (arr[0].Trim().Equals("[self]"))
-                {
-                    targetElement = Tools.Elements.GetSelf(gameDb, currentElement);
-                }
-                else
-                {
-                    targetElement = elemDb.GetElementByKey(gameDb, arr[0].Trim());
-                }
-
-                if (targetElement.ElementKey.Equals(""))
+                if (targetElements.Count() < 1)
                 {
                     output.OutputText += "An error occurred while setting a value.";
                     output.MatchMade = false;
@@ -47,12 +38,15 @@ namespace WorldWeaver.Parsers.Elements
                     newValue = newValue.Replace(currentElement.Tags, "").Trim();
                 }
 
-                if (targetField.Equals("tags"))
+                foreach (var targetElement in targetElements)
                 {
-                    newValue = NewTagsValue(targetElement, newValue);
-                }
+                    if (targetField.Equals("tags"))
+                    {
+                        newValue = NewTagsValue(targetElement, newValue);
+                    }
 
-                elemDb.SetElementField(gameDb, targetElement.ElementKey, targetField, newValue);
+                    elemDb.SetElementField(gameDb, targetElement.ElementKey, targetField, newValue);
+                }
                 output.MatchMade = true;
             }
             else
@@ -63,6 +57,75 @@ namespace WorldWeaver.Parsers.Elements
             }
 
             return output;
+        }
+
+        private List<Classes.Element> GetTargetElements(string gameDb, Classes.Element currentElement, string targetString)
+        {
+            var targetElements = new List<Classes.Element>();
+            var elemDb = new DataManagement.GameLogic.Element();
+            var key = "";
+            var type = "";
+            var tag = "";
+
+            if (targetString.Equals("[self]"))
+            {
+                targetElements.Add(Tools.Elements.GetSelf(gameDb, currentElement));
+                return targetElements;
+            }
+
+            var arr = targetString.Split("((");
+            if (arr.Length == 2)
+            {
+                key = arr[0].Trim();
+                tag = arr[1].Trim().Replace("))", "");
+
+                var tmpElem = new Classes.Element();
+                if (key.Equals("[self]"))
+                {
+                    tmpElem = Tools.Elements.GetSelf(gameDb, currentElement);
+                }
+                else
+                {
+                    tmpElem = elemDb.GetElementByKey(gameDb, key);
+                }
+
+                if (tmpElem.Tags.Contains(tag))
+                {
+                    targetElements.Add(tmpElem);
+                }
+
+                targetElements.AddRange(tmpElem.Children.Where(c => c.Tags.Contains(tag)));
+                return targetElements;
+            }
+
+            arr = targetString.Split("(");
+            if (arr.Length == 2)
+            {
+                key = arr[0].Trim();
+                type = arr[1].Trim().Replace(")", "");
+
+                var tmpElem = new Classes.Element();
+                if (key.Equals("[self]"))
+                {
+                    tmpElem = Tools.Elements.GetSelf(gameDb, currentElement);
+                }
+                else
+                {
+                    tmpElem = elemDb.GetElementByKey(gameDb, key);
+                }
+
+                if (tmpElem.ElementType.Equals(type))
+                {
+                    targetElements.Add(tmpElem);
+                }
+
+                targetElements.AddRange(tmpElem.Children.Where(c => c.ElementType.Equals(type)));
+                return targetElements;
+            }
+
+            targetElements.Add(elemDb.GetElementByKey(gameDb, targetString));
+
+            return targetElements;
         }
 
         private string NewTagsValue(Classes.Element targetElement, string newValue)

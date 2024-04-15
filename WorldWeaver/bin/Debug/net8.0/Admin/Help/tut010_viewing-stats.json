@@ -1,0 +1,14 @@
+﻿{
+    "topics" : [
+        {
+            "pattern" : "\\b(?:viewing.stats)\\b",
+            "title" : "Viewing Player Stats",
+            "string" : "
+...
+",
+            "links" : [
+                "_help viewing stats"
+            ]
+        }
+    ]
+}
