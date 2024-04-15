@@ -56,7 +56,10 @@ You pick up the golden egg.
     }
 
     {type=input, syntax=\b(?:drop.*egg)\b
-        {type=set, logic=[self]|tags|-inventory }
+        // This is unnecessary and would cause problems - but it's here for reference
+        // So to select self+children by tags use (())
+        // and to select self+children by type use ()
+        {type=set, logic=[self]((inventory))|tags|-inventory }
         {type=move, logic=[room], tags=golden_egg
             output={@
 You drop the golden egg.

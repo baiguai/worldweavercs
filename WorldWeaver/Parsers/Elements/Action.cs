@@ -85,7 +85,7 @@ namespace WorldWeaver.Parsers.Elements
 
         private Output ParseTags_List(Output output, string gameDb, Classes.Element currentElement, string userInput)
         {
-            var arr = currentElement.Logic.Split('|');
+            var arr = currentElement.Logic.Split("((");
 
             if (arr.Length == 2)
             {
@@ -93,7 +93,15 @@ namespace WorldWeaver.Parsers.Elements
                 Classes.Element elem = null;
 
                 var logic = new DataManagement.GameLogic.Element();
-                elem = logic.GetElementByKey(gameDb, key);
+
+                if (key.Equals("[self]"))
+                {
+                    elem = Tools.Elements.GetSelf(gameDb, currentElement);
+                }
+                else
+                {
+                    elem = logic.GetElementByKey(gameDb, key);
+                }
 
                 if (!currentElement.Output.Equals(""))
                 {
@@ -102,7 +110,7 @@ namespace WorldWeaver.Parsers.Elements
 
                 foreach (var child in elem.Children)
                 {
-                    if (child.Tags.TagsContain(arr[1].Trim()))
+                    if (child.Tags.TagsContain(arr[1].Replace("))", "").Trim()))
                     {
                         if (child.Output.Equals(""))
                         {

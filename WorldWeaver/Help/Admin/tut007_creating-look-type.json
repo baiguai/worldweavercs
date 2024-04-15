@@ -1,0 +1,54 @@
+﻿{
+    "topics" : [
+        {
+            "pattern" : "\\b(?:creating.a.look.element)\\b",
+            "title" : "Creating a Custom Look Element",
+            "string" : "
+WorldWeaver (WW) allows game makers to define whatever element types they want. And those elements can
+be called using action elements. Because of this you - as a game builder - aren't stuck using pre-defined
+actions, or syntax, etc. You can do whatever you want with your game. Some Interactive Fiction (IF) engines
+force you to use compass directions for moving around in the game. In WW you can do whatever you want.
+It requires a bit more work on your end, but the concise nature of the scripting language (nrmn) is uses
+is designed to help mitigate this potential drawback.
+
+Let's define a look element in our local_pub file:
+
+---
+
+{key=local_pub, name=Local Pub, type=room, parent=root
+    {type=enter_message
+        output={@
+You are sitting in your local pub.
+        }
+    }
+
+    {type=look
+        {type=message
+            output={@
+You look around the local pub.
+North of where you are sitting is a small door.
+            }
+        }
+    }
+}
+
+---
+
+In this look element you can see there's an element with a type of 'message'.
+These are special element types that are handled in their own way. We will discuss
+this in future topics.
+
+You'll notice that there is an @ symbol after the opening curly bracket. This means
+that whenever you start a new line of text, that's how it will be shown in the game's
+output. We will talk about that more in the future.
+
+Now that we have a look element we need to allow the player to call that element.
+
+So let's create our first action element.
+",
+            "links" : [
+                "_help creating an action element"
+            ]
+        }
+    ]
+}
