@@ -422,6 +422,7 @@ WHERE 1=1
                             var e = new Classes.SearchElement();
 
                             e.ElementKey = reader.GetString(reader.GetOrdinal("ElementKey"));
+                            e.Name = reader.GetString(reader.GetOrdinal("Name"));
                             if (reader["Syntax"] != DBNull.Value) { e.Syntax = reader.GetString(reader.GetOrdinal("Syntax")); }
 
                             output.Add(e);
@@ -565,7 +566,7 @@ WHERE 1=1
             return "";
         }
 
-        private List<string> GetElementKeysBySyntax(string gameDb, string idValue)
+        internal List<string> GetElementKeysBySyntax(string gameDb, string idValue)
         {
             var output = new List<string>();
             var allElems = GetElemsForSyntaxSearch(gameDb);
@@ -579,6 +580,16 @@ WHERE 1=1
                     output.Add(elem.ElementKey);
                 }
             }
+            if (output.Count == 0)
+            {
+                foreach (var elem in allElems)
+                {
+                    if (elem.Name.Contains(idValue))
+                    {
+                        output.Add(elem.ElementKey);
+                    }
+                }
+            }
 
             return output;
         }
@@ -588,6 +599,7 @@ WHERE 1=1
             var selectQuery = $@"
 SELECT
     ElementKey,
+    Name,
     Syntax
 FROM
     element

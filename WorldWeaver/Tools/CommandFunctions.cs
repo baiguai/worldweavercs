@@ -156,7 +156,7 @@ namespace WorldWeaver.Tools
                                 output += $"{Environment.NewLine}";
                             }
 
-                            matchedStr = syntax.Replace("\\b(", "").Replace(")\\b", "");
+                            matchedStr = syntax.Replace("\\b(", "").Replace(")\\b", "").Replace("?:", "").Replace(".", " ");
                             if (matchedStr.Trim()+" " != pfx)
                             {
                                 output += $"{pfx}{matchedStr}";

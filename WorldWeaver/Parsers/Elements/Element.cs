@@ -258,7 +258,7 @@ namespace WorldWeaver.Parsers.Elements
                 {
                     if (c.ElementType.Equals("message") || c.ElementType.Equals("enter_message"))
                     {
-                        output = msg.ParseMessage(output, gameDb, msgParent, c, allowRepeatOptions, index);
+                        output = msg.ParseMessage(output, gameDb, msgParent, c, userInput, allowRepeatOptions, index);
                         if (output.MatchMade)
                         {
                             break;
@@ -268,7 +268,7 @@ namespace WorldWeaver.Parsers.Elements
             }
             else
             {
-                output = msg.ParseMessage(output, gameDb, msgParent, msgElem, allowRepeatOptions, index);
+                output = msg.ParseMessage(output, gameDb, msgParent, msgElem, userInput, allowRepeatOptions, index);
             }
 
             return output;

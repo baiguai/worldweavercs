@@ -4,10 +4,88 @@
             "pattern" : "\\b(?:viewing.stats)\\b",
             "title" : "Viewing Player Stats",
             "string" : "
-...
+We want our player to be able to view their stats regardless of the room they are in.
+So we will want to define our inputs and actions within an element of type 'global'.
+In the previous article we created the following file:
+
+~/GameSources/ShadowKeep/global.nrmn
+
+In this file, let's create the global element and an input:
+
+---
+
+{key=global01, type=global, parent=root
+    {type=input, syntax=\b(stats)\b
+    }
+}
+
+---
+
+So when the player types stats, we want to display any of their attributes that have
+a stats tag. To do this, let's define an action.
+
+---
+
+{key=global01, type=global, parent=root
+    {type=input, syntax=\b(stats)\b
+        {type=action, logic=player((stats)), tags=list, output=Stats: }
+    }
+}
+
+---
+
+In the logic property of the action tag is some syntax that we haven't seen before.
+You can see that we are referencing the player. But what's up with the double parenthesis?
+This indicates a tag. Single parenthesis here would indicate a key so a child element of
+the player with the specified key.
+
+The action has a tag of 'list' which tells it you are wanting a list back - all the
+names of the elements within the player that have the tag stats.
+
+The output value specifies ha heading you want this list to show.
+
+
+And that's all you need to do to show the player's stats!
+
+You can show other lists as well. Let's say we want to show the player's inventory.
+
+!NOTE!
+    Inventory is a special tag. It tells the game that the element is owned by or is inside
+    its parent element. So when a room's messages are being displayed, the messages of 'owned'
+    items are not shown !UNLESS! the element that houses the messages has a tag of 'inspect'.
+    This is to allow the player to inspect items they are carrying, or items within a container
+    in the room. We'll discuss this more in the future.
+
+So when the player picks up an item, it should get an inventory tag added to it.
+To list what the player is carrying, simply add the following to the global element:
+
+---
+
+{type=input, syntax=\b(inventory|inv)\b
+    {type=action, logic=player((inventory)), tags=list, output=Inventory: }
+}
+
+---
+
+So our global file now looks like this:
+
+---
+
+{key=global01, type=global, parent=root
+    {type=input, syntax=\b(stats)\b
+        {type=action, logic=player((stats)), tags=list, output=Stats: }
+    }
+    {type=input, syntax=\b(inventory|inv)\b
+        {type=action, logic=player((inventory)), tags=list, output=Inventory: }
+    }
+}
+
+---
+
+Let's give our player a weapon.
 ",
             "links" : [
-                "_help viewing stats"
+                "_help creating a weapon"
             ]
         }
     ]

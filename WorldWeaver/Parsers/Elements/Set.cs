@@ -10,18 +10,52 @@ namespace WorldWeaver.Parsers.Elements
             var elemDb = new DataManagement.GameLogic.Element();
             var logParse = new Parsers.Elements.Logic();
             var logic = currentElement.Logic;
+            var targetKey = "";
             var targetField = "";
             var newValue = "";
+            var usingInput = false;
 
             output.MatchMade = false;
 
-            logic = logParse.ParseSetLogic(gameDb, logic, userInput);
-
-            var arr = logic.Split('|');
-
-            if (arr.Length == 3)
+            if (logic.Contains("[input]"))
             {
-                var targetElements = GetTargetElements(gameDb, currentElement, arr[0].Trim());
+                var foundElems = elemDb.GetElementKeysBySyntax(gameDb, userInput.Replace(currentElement.Tags, ""));
+                if (foundElems.Count < 1)
+                {
+                    output.OutputText += "I'm not sure what object you are referencing.";
+                    output.MatchMade = false;
+                    return output;
+                }
+                if (foundElems.Count > 1)
+                {
+                    output.OutputText += "There are multiple items that match the name you specified.";
+                    output.MatchMade = false;
+                    return output;
+                }
+                logic = logic.Replace("[input]", foundElems.First());
+            }
+            logic = logParse.ParseSetLogic(gameDb, logic, userInput, parentElement.Tags);
+
+            var arr = logic.Split('(');
+            if (arr.Length == 2)
+            {
+                targetKey = arr[0].Trim();
+            }
+
+            arr = arr[1].Split(')');
+            if (arr.Length == 2)
+            {
+                targetField = arr[0].Trim();
+                newValue = arr[1].Trim();
+
+                if (targetKey.Equals("gamestate"))
+                {
+                    SetGameState(gameDb, targetField, newValue);
+                    output.MatchMade = true;
+                    return output;
+                }
+
+                var targetElements = GetTargetElements(gameDb, currentElement, targetKey);
 
                 if (targetElements.Count() < 1)
                 {
@@ -30,8 +64,6 @@ namespace WorldWeaver.Parsers.Elements
                     return output;
                 }
 
-                targetField = arr[1].Trim();
-                newValue = arr[2].Trim();
                 if (!currentElement.Tags.Equals(""))
                 {
                     // This allows the game to remove additional text if needed
@@ -57,6 +89,16 @@ namespace WorldWeaver.Parsers.Elements
             }
 
             return output;
+        }
+
+        private void SetGameState(string gameDb, string targetField, string newValue)
+        {
+            if (targetField != "MissionDays")
+            {
+                return;
+            }
+            var gameData = new DataManagement.GameLogic.Game();
+            gameData.UpdateGameState(gameDb, targetField, newValue);
         }
 
         private List<Classes.Element> GetTargetElements(string gameDb, Classes.Element currentElement, string targetString)

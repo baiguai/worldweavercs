@@ -13,9 +13,32 @@ namespace WorldWeaver.Parsers
             var output = outputMessage;
 
             output = output.Replace("\\b", $"{Environment.NewLine}");
+            output = ProcessSpecialFunctions(gameDb, output);
             output = ProcessFieldReplacement(gameDb, output);
             output = ProcessKeyReplacement(gameDb, output);
             output = ProcessInlineComparisons(output);
+
+            return output;
+        }
+
+        private string ProcessSpecialFunctions(string gameDb, string output)
+        {
+            if (output.Contains("[isday]"))
+            {
+                output = output.Replace("[isday]", Tools.Game.IsDay(gameDb).ToString());
+            }
+            if (output.Contains("[time]"))
+            {
+                output = output.Replace("[time]", Tools.Game.CurrentTime(gameDb));
+            }
+            if (output.Contains("[totaldays]"))
+            {
+                output = output.Replace("[totaldays]", Tools.Game.TotalDays(gameDb).ToString("N0"));
+            }
+            if (output.Contains("[missiondays]"))
+            {
+                output = output.Replace("[missiondays]", Tools.Game.TotalDays(gameDb).ToString("N0"));
+            }
 
             return output;
         }

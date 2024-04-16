@@ -8,5 +8,6 @@ namespace WorldWeaver.Classes
     {
         public string ElementKey { get; set; } = "";
         public string Syntax { get; set; } = "";
+        public string Name { get; set; } = "";
     }
 }
