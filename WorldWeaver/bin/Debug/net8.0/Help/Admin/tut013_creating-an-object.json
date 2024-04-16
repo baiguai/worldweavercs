@@ -1,0 +1,108 @@
+﻿{
+    "topics" : [
+        {
+            "pattern" : "\\b(?:creating.an.object)\\b",
+            "title" : "Creating an Object",
+            "string" : "
+Let's look at what our first room definition looked like:
+
+---
+
+{key=local_pub, name=Local Pub, type=room, parent=root
+    {type=enter_message
+        output={@
+You are sitting in your local pub.
+        }
+    }
+
+    {type=look
+        {type=message
+            output={@
+You look around the local pub.
+North of where you are sitting is a small door.
+            }
+        }
+    }
+}
+
+---
+
+We created this in the following file:
+
+~/GameSources/Shadowkeep/Locations/Home/LocalPub/local_pub.nrmn
+
+Now let's create a home for any objects that might be located in the local pub:
+
+~/GameSources/Shadowkeep/Locations/Home/LocalPub/Objects
+
+Generally you would create an object if the player can interact with it.
+If not you could just describe it in the room's messages.
+However you can make anything an object if you like even if it will never change
+or move.
+
+Let's define a wand that the player can pick up.
+So we'll create a file for it.
+
+~/GameSources/Shadowkeep/Locations/Home/LocalPub/Objects/twisted_wand.nrmn
+
+In this file we'll define the object and set its parent to the local pub's key:
+
+---
+
+{key=twisted_wand, name=Twisted Wand, type=object, parent=local_pub
+}
+
+---
+
+Remember that its key must be unique within the game. You can use numbers as a suffix
+to give similar items unique keys, you just have to remember which key goes to which item.
+Now let's give it some messages.
+
+---
+
+{key=twisted_wand, name=Twisted Wand, type=object, parent=local_pub
+    {type=enter_message
+        output={@
+You see a wand.
+
+        }
+    }
+
+    {type=look
+        {type=message
+            output={@
+You see a twisted black wand.
+
+            }
+        }
+    }
+}
+
+----
+
+You can use logic and attributes to make your messages more specific like:
+'You see a twisted black wand lying on the ground.'
+And if you have tables etc in your game, you can give them attributes or tags and use
+logic to determine what it's on and have your messages reflect that.
+
+we'll dive deeper into techniques like these in later topics.
+
+
+You'll notice that we don't have an input and action for the 'look' element type.
+That's because our room has a look action. So if the player looks around, this object's
+look message will be part of the room's look output.
+
+!UNLESS!
+    If the wand has a tag of 'inventory', which means it is being carried or is inside
+    something, the elements like enter_message, or custom element types it has in common
+    with the room will NOT display their messages.
+
+
+Speaking of which let's allow the player to pick the wand up.
+",
+            "links" : [
+                "_help picking up an object"
+            ]
+        }
+    ]
+}

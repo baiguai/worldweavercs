@@ -18,6 +18,27 @@ namespace WorldWeaver.Tools
             return true;
         }
 
+        public static int MissionDays(string gameDb)
+        {
+            var gameData = new DataManagement.GameLogic.Game();
+            var days = gameData.GetMissionDays(gameDb);
+            return days;
+        }
+
+        public static int TotalDays(string gameDb)
+        {
+            var gameData = new DataManagement.GameLogic.Game();
+            var days = gameData.GetTotalDays(gameDb);
+            return days;
+        }
+
+        public static string CurrentTime(string gameDb)
+        {
+            var gameData = new DataManagement.GameLogic.Game();
+            var curTime = gameData.GetTime(gameDb);
+            return curTime;
+        }
+
         public static void IncrementTime(string gameDb)
         {
             var gameData = new DataManagement.GameLogic.Game();

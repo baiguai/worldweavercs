@@ -1,9 +1,10 @@
 ﻿using System;
+
 namespace WorldWeaver.Parsers.Elements
 {
     public class Message
     {
-        public Classes.Output ParseMessage(Classes.Output output, string gameDb, Classes.Element parentElement, Classes.Element msgElement, bool allowRepeatOptions, int currentIndex)
+        public Classes.Output ParseMessage(Classes.Output output, string gameDb, Classes.Element parentElement, Classes.Element msgElement, string userInput, bool allowRepeatOptions, int currentIndex)
         {
             var elemParser = new Parsers.Elements.Element();
 
@@ -31,7 +32,7 @@ namespace WorldWeaver.Parsers.Elements
                 {
                     if (idx == currentIndex)
                     {
-                        output.OutputText += Environment.NewLine + msg.Output;
+                        output.OutputText += Environment.NewLine + ProcessMessageText(msg.Output, userInput, msg.Tags); //@todo
                         output.MatchMade = true;
                         break;
                     }
@@ -41,6 +42,15 @@ namespace WorldWeaver.Parsers.Elements
                     }
                 }
             }
+
+            return output;
+        }
+
+        public string ProcessMessageText(string outputText, string userInput, string tag)
+        {
+            var output = "";
+
+            output = outputText.Replace("[input]", userInput).Replace(tag, "").Trim();
 
             return output;
         }

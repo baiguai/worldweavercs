@@ -22,11 +22,11 @@ Now the local pub is in our player's home town. If our game is going to become a
 probably need to differentiate this pub from others that might show up in the game. So let's create a Home
 folder:
 
-~/GameSources/ShadowKeep/Locations/Home
+~/GameSources/ShadowKeep/Locations/Home/LocalPub
 
 And in this folder we'll create the local pub file:
 
-~/GameSources/Shadowkeep/Locations/Home/local_pub.nrmn
+~/GameSources/Shadowkeep/Locations/Home/LocalPub/local_pub.nrmn
 
 And in this file we'll define a bare bones room:
 

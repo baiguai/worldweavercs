@@ -176,5 +176,89 @@ SET
                 connection.Close();
             }
         }
+
+        internal int GetMissionDays(string gameDb)
+        {
+            var output = 0;
+            var gameFile = $"Games/{gameDb}";
+
+            if (!File.Exists(gameFile))
+            {
+                return -1;
+            }
+
+            string connectionString = $"Data Source={gameFile};Cache=Shared;";
+
+            string selectQuery = @"
+SELECT
+    MissionDays
+FROM
+    gamestate
+LIMIT 1
+;
+            ";
+
+            using (SqliteConnection connection = new SqliteConnection(connectionString))
+            {
+                connection.Open();
+
+                using (SqliteCommand command = new SqliteCommand(selectQuery, connection))
+                {
+                    using (SqliteDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            output = reader.GetInt32(reader.GetOrdinal("MissionDays"));
+                        }
+                    }
+                }
+
+                connection.Close();
+            }
+
+            return output;
+        }
+
+        internal int GetTotalDays(string gameDb)
+        {
+            var output = 0;
+            var gameFile = $"Games/{gameDb}";
+
+            if (!File.Exists(gameFile))
+            {
+                return -1;
+            }
+
+            string connectionString = $"Data Source={gameFile};Cache=Shared;";
+
+            string selectQuery = @"
+SELECT
+    TotalDays
+FROM
+    gamestate
+LIMIT 1
+;
+            ";
+
+            using (SqliteConnection connection = new SqliteConnection(connectionString))
+            {
+                connection.Open();
+
+                using (SqliteCommand command = new SqliteCommand(selectQuery, connection))
+                {
+                    using (SqliteDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            output = reader.GetInt32(reader.GetOrdinal("TotalDays"));
+                        }
+                    }
+                }
+
+                connection.Close();
+            }
+
+            return output;
+        }
     }
 }

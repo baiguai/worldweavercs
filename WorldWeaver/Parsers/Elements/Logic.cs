@@ -167,6 +167,18 @@ namespace WorldWeaver.Parsers.Elements
                 return output;
             }
 
+            if (output.Condition.ToLower().Equals("[missiondays]"))
+            {
+                output.Value = Tools.Game.MissionDays(gameDb).ToString().ToLower();
+                return output;
+            }
+
+            if (output.Condition.ToLower().Equals("[totaldays]"))
+            {
+                output.Value = Tools.Game.TotalDays(gameDb).ToString().ToLower();
+                return output;
+            }
+
             if (output.Condition.ToLower().Equals("[inventory]"))
             {
                 output.Condition = "inventory";
@@ -371,11 +383,12 @@ namespace WorldWeaver.Parsers.Elements
 #endregion
 
 
-        public string ParseSetLogic(string gameDb, string logic, string userInput)
+        public string ParseSetLogic(string gameDb, string logic, string userInput, string tag)
         {
             var output = "";
+            var msgParser = new Parsers.Elements.Message();
 
-            output = logic.Replace("[input]", userInput);
+            output = msgParser.ProcessMessageText(logic, userInput, tag);
 
             return output;
         }
