@@ -1,0 +1,11 @@
+﻿{
+    "topics" : [
+        {
+            "pattern" : "\\b(?:fight.element)\\b",
+            "title" : "Fight Element",
+            "string" : "
+...
+"
+        }
+    ]
+}

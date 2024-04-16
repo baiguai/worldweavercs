@@ -1,0 +1,11 @@
+﻿{
+    "topics" : [
+        {
+            "pattern" : "\\b(?:global.element)\\b",
+            "title" : "Global Element",
+            "string" : "
+...
+"
+        }
+    ]
+}

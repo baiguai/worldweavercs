@@ -1,0 +1,11 @@
+﻿{
+    "topics" : [
+        {
+            "pattern" : "\\b(?:weapon.element)\\b",
+            "title" : "Weapon Element",
+            "string" : "
+...
+"
+        }
+    ]
+}

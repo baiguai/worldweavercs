@@ -1,0 +1,11 @@
+﻿{
+    "topics" : [
+        {
+            "pattern" : "\\b(?:game.element)\\b",
+            "title" : "Game Element",
+            "string" : "
+...
+"
+        }
+    ]
+}
