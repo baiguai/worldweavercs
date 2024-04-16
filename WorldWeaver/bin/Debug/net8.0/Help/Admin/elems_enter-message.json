@@ -1,0 +1,11 @@
+﻿{
+    "topics" : [
+        {
+            "pattern" : "\\b(?:enter.message.element)\\b",
+            "title" : "Enter_Message Element",
+            "string" : "
+...
+"
+        }
+    ]
+}

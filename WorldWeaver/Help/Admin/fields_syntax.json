@@ -1,0 +1,11 @@
+﻿{
+    "topics" : [
+        {
+            "pattern" : "\\b(?:syntax.field)\\b",
+            "title" : "Syntax Field",
+            "string" : "
+...
+"
+        }
+    ]
+}
