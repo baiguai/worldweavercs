@@ -12,11 +12,13 @@
         * _help name field
         * _help parent field
         * _help syntax field
+            * _help regex tools
         * _help logic field
         * _help repeat field
         * _help output field
         * _help tags field
     * _help game element
+        * _help ascii tools
     * _help player element
     * _help global element
     * _help attribute element

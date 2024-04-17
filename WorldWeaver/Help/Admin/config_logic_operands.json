@@ -1,0 +1,15 @@
+﻿{
+    "topics" : [
+        {
+            "pattern" : "\\b(?:logic.operands)\\b",
+            "title" : "Define the Logic Operands",
+            "string" : "
+This configuration is more of a lookup tool utilized by WorldWeaver (WW).
+It would cause issues if this were modified.
+
+The same holds true for the LogicSubConditions and LogicVariableTypes
+configuration files.
+"
+        }
+    ]
+}
