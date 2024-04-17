@@ -1,0 +1,11 @@
+﻿{
+    "topics" : [
+        {
+            "pattern" : "\\b(?:app.settings)\\b",
+            "title" : "App Settings Configuration",
+            "string" : "
+...
+"
+        }
+    ]
+}

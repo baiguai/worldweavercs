@@ -1,0 +1,11 @@
+﻿{
+    "topics" : [
+        {
+            "pattern" : "\\b(?:static.repeat.types)\\b",
+            "title" : "Static Repeat Types",
+            "string" : "
+...
+"
+        }
+    ]
+}
