@@ -1,5 +1,5 @@
-{key=thief_01, name=thief_01, syntax=\bthief 01\b, type=npc, parent=local_pub
-    {key=thief_01_life, name=Life, type=attribute, output=[rand:8|18], tags=stats }
+{key=thief_01, name=shady character, syntax=\b(?:*shifty*|*shadowy*|*unsavory*)\b, type=npc, parent=local_pub
+    {key=thief_01_life, name=Life, type=attribute, output=[rand:8|18], tags=stats|life }
     {key=thief_01_strength, name=Strength, type=attribute, output=[rand:8|18], tags=stats }
     {key=thief_01_intelligence, name=Intelligence, type=attribute, output=[rand:8|18], tags=stats }
     {key=thief_01_cunning, name=Cunning, type=attribute, output=[rand:8|18], tags=stats }

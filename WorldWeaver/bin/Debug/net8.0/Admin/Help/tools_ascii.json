@@ -1,0 +1,11 @@
+﻿{
+    "topics" : [
+        {
+            "pattern" : "\\b(?:ascii.tools)\\b",
+            "title" : "ASCII Tools",
+            "string" : "
+...
+"
+        }
+    ]
+}

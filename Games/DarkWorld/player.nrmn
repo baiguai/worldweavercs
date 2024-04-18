@@ -1,5 +1,5 @@
 ﻿{key=player, name=, type=player, parent=local_pub
-    {key=player_life, name=Life, type=attribute, output=[rand:8|18], tags=stats }
+    {key=player_life, name=Life, type=attribute, output=[rand:8|18], tags=stats|life }
     {key=player_strength, name=Strength, type=attribute, output=[rand:8|18], tags=stats }
     {key=player_intelligence, name=Intelligence, type=attribute, output=[rand:8|18], tags=stats }
     {key=player_cunning, name=Cunning, type=attribute, output=[rand:8|18], tags=stats }
