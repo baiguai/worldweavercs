@@ -207,7 +207,7 @@ ORDER BY
 
             var parms = new List<DbParameter>();
             parms.Add(new DbParameter()
-            { 
+            {
                 ParamName = "@parentkey",
                 ParamValue = parent_key
             });
@@ -424,6 +424,7 @@ WHERE 1=1
                             e.ElementKey = reader.GetString(reader.GetOrdinal("ElementKey"));
                             e.Name = reader.GetString(reader.GetOrdinal("Name"));
                             if (reader["Syntax"] != DBNull.Value) { e.Syntax = reader.GetString(reader.GetOrdinal("Syntax")); }
+                            e.Active = reader.GetBoolean(reader.GetOrdinal("Active"));
 
                             output.Add(e);
                         }
@@ -568,6 +569,10 @@ WHERE 1=1
 
         internal List<string> GetElementKeysBySyntax(string gameDb, string idValue)
         {
+            return GetElementKeysBySyntax(gameDb, idValue, false);
+        }
+        internal List<string> GetElementKeysBySyntax(string gameDb, string idValue, bool activeOnly)
+        {
             var output = new List<string>();
             var allElems = GetElemsForSyntaxSearch(gameDb);
 
@@ -577,7 +582,10 @@ WHERE 1=1
 
                 if (rgx.IsMatch(elem.Syntax))
                 {
-                    output.Add(elem.ElementKey);
+                    if (!activeOnly || elem.Active)
+                    {
+                        output.Add(elem.ElementKey);
+                    }
                 }
             }
             if (output.Count == 0)
@@ -586,7 +594,10 @@ WHERE 1=1
                 {
                     if (elem.Name.Contains(idValue))
                     {
-                        output.Add(elem.ElementKey);
+                        if (!activeOnly || elem.Active)
+                        {
+                            output.Add(elem.ElementKey);
+                        }
                     }
                 }
             }
@@ -600,7 +611,8 @@ WHERE 1=1
 SELECT
     ElementKey,
     Name,
-    Syntax
+    Syntax,
+    Active
 FROM
     element
 WHERE 1=1

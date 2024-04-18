@@ -35,6 +35,11 @@ namespace WorldWeaver.Parsers.Elements
 
                     switch (child.ElementType)
                     {
+                        case "attack":
+                            var attackParser = new Parsers.Elements.Attack();
+                            output = attackParser.ParseAttack(output, gameDb, currentElement, child, userInput);
+                            break;
+
                         case "input":
                             if (output.MatchMade && !output.OutputText.Equals(""))
                             {

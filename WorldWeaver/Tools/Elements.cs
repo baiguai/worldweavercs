@@ -35,5 +35,21 @@ namespace WorldWeaver.Tools
                 return GetSelf(gameDb, elem);
             }
         }
+
+        public static int GetLife(Classes.Element currentElement)
+        {
+            var life = 0;
+
+            try
+            {
+                life = Convert.ToInt32(currentElement.Children.Select(c => c.Tags.TagsContain("life")).First());
+            }
+            catch (Exception)
+            {
+                life = 0;
+            }
+
+            return life;
+        }
     }
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using WorldWeaver.Classes;
+﻿using WorldWeaver.Classes;
 using WorldWeaver.Tools;
 
 namespace WorldWeaver
@@ -48,13 +47,27 @@ namespace WorldWeaver
                 output = gameParser.ParseInput(input);
             }
 
-
             if (output.MatchMade)
             {
+                if (output.OutputText.Equals(""))
+                {
+                    output.OutputText = AppSettingFunctions.GetConfigValue("messages", "unknown_command");
+                }
+
                 Console.Clear();
                 Console.WriteLine(output.OutputText);
                 Console.WriteLine("");
                 Console.WriteLine("");
+
+                if (Cache.FightCache.Fight != null)
+                {
+                    var elemDb = new DataManagement.GameLogic.Element();
+                    var playerLife = Tools.Elements.GetLife(Cache.PlayerCache.Player).ToString("N0");
+                    var enemyLife = Tools.Elements.GetLife(Cache.FightCache.Fight.Enemy).ToString("N0");
+                    Console.WriteLine($"Enemy Life: {enemyLife}");
+                    Console.WriteLine($"Player Life: {playerLife}");
+                    Console.WriteLine("");
+                }
             }
 
             Listener("");

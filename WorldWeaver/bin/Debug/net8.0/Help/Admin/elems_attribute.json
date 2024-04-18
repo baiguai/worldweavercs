@@ -4,7 +4,13 @@
             "pattern" : "\\b(?:attribute.element)\\b",
             "title" : "Attribute Element",
             "string" : "
-...
+Attributes allow you to define details about an element. These can be used
+to display text to the player or perform logic within the game.
+
+---
+
+For a growing list of attribute examples use:
+_help attribute examples
 "
         }
     ]
