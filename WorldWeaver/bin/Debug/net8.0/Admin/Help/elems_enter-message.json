@@ -4,7 +4,19 @@
             "pattern" : "\\b(?:enter.message.element)\\b",
             "title" : "Enter_Message Element",
             "string" : "
-...
+Enter Messages are a special type of message element. They are called when
+the player enters a new room. They can also be called via an action, so
+you can allow the player to see them again if needed.
+
+I like to create 'story' inputs that call the enter_message.
+I usually make the enter_messages the story telling messages, providing
+story details. And define look messages to serve a location
+description role.
+
+---
+
+For a growing list of enter_message examples use:
+_help enter message examples
 "
         }
     ]

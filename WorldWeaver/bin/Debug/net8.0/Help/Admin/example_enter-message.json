@@ -1,0 +1,11 @@
+﻿{
+    "topics" : [
+        {
+            "pattern" : "\\b(?:enter.message.examples)\\b",
+            "title" : "Enter_Message Examples",
+            "string" : "
+...
+"
+        }
+    ]
+}

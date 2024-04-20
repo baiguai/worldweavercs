@@ -48,9 +48,12 @@ namespace WorldWeaver.Parsers.Elements
 
         public string ProcessMessageText(string outputText, string userInput, string tag)
         {
-            var output = "";
+            var output = outputText;
 
-            output = outputText.Replace("[input]", userInput).Replace(tag, "").Trim();
+            if (!userInput.Equals("") && !tag.Equals(""))
+            {
+                output = output.Replace("[input]", userInput).Replace(tag, "").Trim();
+            }
 
             return output;
         }

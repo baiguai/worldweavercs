@@ -1,0 +1,9 @@
+﻿{
+    "commands" : [
+        {
+            "pattern" : "\\b(flee)\\b",
+            "method" : "DoFlee",
+            "during_game" : "true"
+        }
+    ]
+}

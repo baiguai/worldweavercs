@@ -13,9 +13,6 @@ namespace WorldWeaver.Parsers.Elements
             var elem = new Parsers.Elements.Element();
             var procItems = Tools.ProcFunctions.GetProcessStepsByType(currentElement.ElementType);
 
-            output = ParseMessageActions(output, gameDb, currentElement, userInput);
-            output = ParseLogicActions(output, gameDb, currentElement, userInput);
-
             foreach (var child in currentElement.Children)
             {
                 foreach (var proc in procItems)
@@ -27,6 +24,9 @@ namespace WorldWeaver.Parsers.Elements
                     break;
                 }
             }
+
+            output = ParseMessageActions(output, gameDb, currentElement, userInput);
+            output = ParseLogicActions(output, gameDb, currentElement, userInput);
 
             return output;
         }
@@ -59,18 +59,33 @@ namespace WorldWeaver.Parsers.Elements
             var elemDb = new DataManagement.GameLogic.Element();
 
             var elemParser = new Parsers.Elements.Element();
-            
+
             foreach (var elem in targets)
             {
-                if ((!elem.Tags.TagsContain("inventory") &&
-                    !Tools.Elements.GetSelf(gameDb, elem).Tags.TagsContain("inventory")) || 
-                    elem.Tags.TagsContain("inspect"))
+                if (elem.ParentKey == self.ElementKey)
                 {
-                    var parent = elemDb.GetElementByKey(gameDb, elem.ParentKey);
-                    var procItems = Tools.ProcFunctions.GetProcessStepsByType(elem.ElementType);
-                    foreach (var proc in procItems)
+                    var selfProcItems = Tools.ProcFunctions.GetProcessStepsByType(elem.ElementType);
+                    foreach (var proc in selfProcItems)
                     {
                         output = elemParser.ParseElement(output, gameDb, elem, userInput, proc);
+                    }
+                }
+            }
+
+            foreach (var elem in targets)
+            {
+                if (elem.ParentKey != self.ElementKey)
+                {
+                    if ((!elem.Tags.TagsContain("inventory") &&
+                        !Tools.Elements.GetSelf(gameDb, elem).Tags.TagsContain("inventory")) ||
+                        elem.Tags.TagsContain("inspect"))
+                    {
+                        var parent = elemDb.GetElementByKey(gameDb, elem.ParentKey);
+                        var procItems = Tools.ProcFunctions.GetProcessStepsByType(elem.ElementType);
+                        foreach (var proc in procItems)
+                        {
+                            output = elemParser.ParseElement(output, gameDb, elem, userInput, proc);
+                        }
                     }
                 }
             }
