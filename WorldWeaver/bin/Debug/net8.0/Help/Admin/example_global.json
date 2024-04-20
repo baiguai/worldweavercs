@@ -1,20 +1,11 @@
 ﻿{
     "topics" : [
         {
-            "pattern" : "\\b(?:global.element)\\b",
-            "title" : "Global Element",
+            "pattern" : "\\b(?:global.examples)\\b",
+            "title" : "Global Examples",
             "string" : "
-Global elements allow the game designer to define elements that can be called
-regardless of the player's current location. There can be more than one
-global entity in a game's definition files. These files are where you will
-define the input the user will enter for listing their inventory or stats,
-or any other game-wide information.
-
-You can even use global elements to show is it day or night strings.
-Consider the example below:
-
+General Game Example
 ---
-
 {key=global01, type=global, parent=root
     {type=input, syntax=\b(stats)\b
         {type=action, logic=player((stats)), tags=list, output=Stats: }
@@ -63,18 +54,7 @@ It is day.
         }
     }
 }
-
 ---
-
-This file defines the input required for listing the user's inventory, stats,
-and arming a weapon, as well as day/night messages.
-
-Any input or custom element type you want to have accessible to the player
-regardless of where they are should go in a global type element.
-
-
-For a growing list of global entity examples use:
-_help global examples
 "
         }
     ]

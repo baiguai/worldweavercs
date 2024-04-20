@@ -114,7 +114,6 @@
 /media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/bin/Debug/net8.0/Admin/Help/elems_action.json
 /media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/bin/Debug/net8.0/Admin/Help/elems_attribute.json
 /media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/bin/Debug/net8.0/Admin/Help/elems_enter-message.json
-/media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/bin/Debug/net8.0/Admin/Help/elems_fight.json
 /media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/bin/Debug/net8.0/Admin/Help/elems_game.json
 /media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/bin/Debug/net8.0/Admin/Help/elems_global.json
 /media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/bin/Debug/net8.0/Admin/Help/elems_input.json
@@ -138,7 +137,6 @@
 /media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/bin/Debug/net8.0/Help/Admin/elems_action.json
 /media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/bin/Debug/net8.0/Help/Admin/elems_attribute.json
 /media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/bin/Debug/net8.0/Help/Admin/elems_enter-message.json
-/media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/bin/Debug/net8.0/Help/Admin/elems_fight.json
 /media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/bin/Debug/net8.0/Help/Admin/elems_game.json
 /media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/bin/Debug/net8.0/Help/Admin/elems_global.json
 /media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/bin/Debug/net8.0/Help/Admin/elems_input.json
@@ -184,3 +182,9 @@
 /media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/bin/Debug/net8.0/Help/Admin/example_attribute.json
 /media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/bin/Debug/net8.0/Admin/Help/example_random.json
 /media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/bin/Debug/net8.0/Help/Admin/example_random.json
+/media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/bin/Debug/net8.0/Commands/Config/FightParser.json
+/media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/bin/Debug/net8.0/Config/Commands/FightParser.json
+/media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/bin/Debug/net8.0/Admin/Help/example_enter-message.json
+/media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/bin/Debug/net8.0/Help/Admin/example_enter-message.json
+/media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/bin/Debug/net8.0/Admin/Help/example_global.json
+/media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/bin/Debug/net8.0/Help/Admin/example_global.json

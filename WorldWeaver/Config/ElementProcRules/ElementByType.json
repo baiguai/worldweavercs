@@ -66,9 +66,9 @@
             ],
             "elements" : [
                 "logic",
+                "action",
                 "message",
                 "set",
-                "action",
                 "move"
             ],
             "repeat_options" : "false"
@@ -152,8 +152,8 @@
                 "room"
             ],
             "elements" : [
-                "enter_message",
                 "action",
+                "enter_message",
                 "set",
                 "object",
                 "message",
