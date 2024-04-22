@@ -3,6 +3,6 @@ namespace WorldWeaver.Cache
 {
     public class FightCache
     {
-        public static Classes.Fight Fight { get; set; }
+        public static Classes.Fight? Fight { get; set; }
     }
 }

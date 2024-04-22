@@ -148,22 +148,42 @@ namespace WorldWeaver.Parsers.Elements
             switch (currentElement.Logic.ToLower())
             {
                 case "[die]":
-                    var msgParser = new Parsers.Elements.Message();
-                    var elemDb = new DataManagement.GameLogic.Element();
-                    var dieMsg = elemDb.GetElementByKey(gameDb, "die_message");
-
-                    if (dieMsg.ElementKey.Equals(""))
-                    {
-                        output.OutputText = Tools.InitFunctions.GetInitMessage(false);
-                    }
-                    else
-                    {
-                        output.OutputText = dieMsg.Output;
-                    }
-
-                    Tools.CacheManager.ClearCache();
-                    output.MatchMade = true;
+                    output = DoDie(gameDb, output, userInput);
                     return output;
+            }
+
+            return output;
+        }
+
+        public Output DoDie(string gameDb, Output output, string userInput)
+        {
+            var msgParser = new Parsers.Elements.Message();
+            var elemDb = new DataManagement.GameLogic.Element();
+            var dieMsg = elemDb.GetElementByKey(gameDb, "die_message");
+
+            if (dieMsg.ElementKey.Equals(""))
+            {
+                output.OutputText = Tools.InitFunctions.GetInitMessage(false);
+            }
+            else
+            {
+                output.OutputText = dieMsg.Output;
+            }
+
+            Tools.CacheManager.ClearCache();
+            output.MatchMade = true;
+
+            return output;
+        }
+
+        internal Output DoKill(string gameDb, Output output, string userInput)
+        {
+            var dieElem = Cache.FightCache.Fight.Enemy.ChildByType("kill");
+            var elemParser = new Parsers.Elements.Element();
+            var procs = Tools.ProcFunctions.GetProcessStepsByType("kill");
+            foreach (var proc in procs)
+            {
+                output = elemParser.ParseElement(output, gameDb, dieElem, userInput, proc);
             }
 
             return output;

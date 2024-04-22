@@ -7,6 +7,11 @@ namespace WorldWeaver.Parsers.Elements
         {
             var moveDb = new DataManagement.GameLogic.Move();
 
+            if (currentElement.Logic.Equals("[self]"))
+            {
+                currentElement.Logic = Tools.Elements.GetSelf(gameDb, currentElement).ElementKey;
+            }
+
             output = moveDb.MoveElement(output, gameDb, currentElement.Output, currentElement.Tags, currentElement.Logic, userInput);
 
             return output;

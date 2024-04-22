@@ -16,6 +16,17 @@
         },
         {
             "types" : [
+                "attack"
+            ],
+            "elements" : [
+                "attribute",
+                "logic",
+                "action"
+            ],
+            "repeat_options" : "false"
+        },
+        {
+            "types" : [
                 "attribute"
             ],
             "elements" : [
@@ -181,6 +192,14 @@
                 "enter_message",
                 "logic",
                 "move"
+            ],
+            "repeat_options" : "false"
+        },
+        {
+            "types" : [
+                "weapon"
+            ],
+            "elements" : [
             ],
             "repeat_options" : "false"
         }

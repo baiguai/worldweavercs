@@ -61,20 +61,23 @@ namespace WorldWeaver.Parsers
                 // Parse the system events
                 Tools.Game.IncrementTime(gameDb);
 
-                var playerInv = elemDb.GetElementChildren(gameDb, Cache.PlayerCache.Player.ElementKey);
-                foreach (var child in playerInv)
+                if (Cache.FightCache.Fight == null)
                 {
-                    var playerProcItems = ProcFunctions.GetProcessStepsByType(child.ElementType);
-                    foreach (var proc in playerProcItems)
+                    var playerInv = elemDb.GetElementChildren(gameDb, Cache.PlayerCache.Player.ElementKey);
+                    foreach (var child in playerInv)
                     {
-                        output = elemParser.ParseElement(output, gameDb, child, userInput, proc);
+                        var playerProcItems = ProcFunctions.GetProcessStepsByType(child.ElementType);
+                        foreach (var proc in playerProcItems)
+                        {
+                            output = elemParser.ParseElement(output, gameDb, child, userInput, proc);
+                        }
                     }
-                }
 
-                var locProcItems = ProcFunctions.GetProcessStepsByType(Cache.RoomCache.Room.ElementType);
-                foreach (var proc in locProcItems)
-                {
-                    output = elemParser.ParseElement(output, gameDb, Cache.RoomCache.Room, userInput, proc);
+                    var locProcItems = ProcFunctions.GetProcessStepsByType(Cache.RoomCache.Room.ElementType);
+                    foreach (var proc in locProcItems)
+                    {
+                        output = elemParser.ParseElement(output, gameDb, Cache.RoomCache.Room, userInput, proc);
+                    }
                 }
 
                 foreach (var glob in Cache.GlobalCache.Global)
@@ -91,10 +94,16 @@ namespace WorldWeaver.Parsers
                     return output;
                 }
 
+                if (Cache.FightCache.Fight != null)
+                {
+                    var attParser = new Parsers.Elements.Attack();
+                    return attParser.ParseAttack(output, gameDb, Cache.GameCache.Game, Cache.PlayerCache.Player, userInput);
+                }
+
                 var trvParser = new Parsers.Elements.Travel();
                 trvParser.ParseTravel(gameDb);
             }
-                
+
             return output;
         }
     }
