@@ -28,5 +28,37 @@ namespace WorldWeaver.Tools
 
             return output;
         }
+
+        public static void Randomize(this string value)
+        {
+            if (value.Contains("[rand:"))
+            {
+                var tmp = value.Replace("[rand:", "").Replace("]", "");
+                var range = tmp.Split('|');
+                if (range.Length == 2)
+                {
+                    Random rnd = new Random((int)DateTime.Now.Ticks);
+                    value = rnd.Next(Convert.ToInt32(range[0]), Convert.ToInt32(range[1])).ToString();
+                }
+            }
+        }
+
+        public static int RandomValue(this string value)
+        {
+            var rndVal = 0;
+
+            if (value.Contains("[rand:"))
+            {
+                var tmp = value.Replace("[rand:", "").Replace("]", "");
+                var range = tmp.Split('|');
+                if (range.Length == 2)
+                {
+                    Random rnd = new Random((int)DateTime.Now.Ticks);
+                    rndVal = rnd.Next(Convert.ToInt32(range[0]), Convert.ToInt32(range[1]));
+                }
+            }
+
+            return rndVal;
+        }
     }
 }

@@ -38,6 +38,10 @@ namespace WorldWeaver.Parsers.Elements
                         case "attack":
                             var attackParser = new Parsers.Elements.Attack();
                             output = attackParser.ParseAttack(output, gameDb, currentElement, child, userInput);
+                            if (output.MatchMade && !output.OutputText.Equals(""))
+                            {
+                                return output;
+                            }
                             break;
 
                         case "input":

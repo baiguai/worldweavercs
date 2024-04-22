@@ -646,16 +646,7 @@ WHERE 1=1
 
                 foreach (var elem in elems)
                 {
-                    if (elem.Output.Contains("[rand:"))
-                    {
-                        var tmp = elem.Output.Replace("[rand:", "").Replace("]", "");
-                        var range = tmp.Split('|');
-                        if (range.Length == 2)
-                        {
-                            Random rnd = new Random((int)DateTime.Now.Ticks);
-                            elem.Output = rnd.Next(Convert.ToInt32(range[0]), Convert.ToInt32(range[1])).ToString();
-                        }
-                    }
+                    elem.Output.Randomize();
 
                     var updateQuery = $@"
 UPDATE

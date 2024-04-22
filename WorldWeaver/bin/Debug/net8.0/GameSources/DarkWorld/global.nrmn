@@ -7,10 +7,10 @@
     }
 
     {type=input, syntax=\b(arm *)\b
-        {type=set, logic=player_armed|output|[input], tags=arm
-            {type=message
+        {type=set, logic=player_armed(output)[input], tags=arm
+            {type=message, tag=arm
                 output={@
-You are now armed with the [field|longsword_01|name].
+You are now armed with the [field|[input]|name].
                 }
             }
         }

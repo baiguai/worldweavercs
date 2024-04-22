@@ -1,0 +1,11 @@
+﻿{
+    "topics" : [
+        {
+            "pattern" : "\\b(?:input.examples)\\b",
+            "title" : "Input Examples",
+            "string" : "
+...
+"
+        }
+    ]
+}
