@@ -12,8 +12,10 @@ namespace WorldWeaver.Parsers.Elements
             var input = new Parsers.Elements.Input();
             var msg = new Parsers.Elements.Message();
             var index = -1;
+            var handledInpput = false;
             var handledMessage = false;
             var handledMove = false;
+            var handledSet = false;
 
             foreach (var proc in procObj.ChildProcElements)
             {
@@ -50,10 +52,13 @@ namespace WorldWeaver.Parsers.Elements
                                 continue;
                             }
 
-                            output = input.ParseInput(output, gameDb, currentElement, child, userInput);
-                            if (output.MatchMade)
+                            if (!handledInpput)
                             {
-                                return output;
+                                output = input.ParseInput(output, gameDb, currentElement, child, userInput);
+                                if (output.MatchMade)
+                                {
+                                    return output;
+                                }
                             }
                             break;
 
@@ -105,15 +110,26 @@ namespace WorldWeaver.Parsers.Elements
                                 continue;
                             }
 
-                            if (!handledMove)
+                            if (handledMove)
                             {
-                                var move = new Parsers.Elements.Move();
-                                output = move.ParseMove(output, gameDb, currentElement, child, index, userInput);
-                                handledMove = output.MatchMade;
+                                continue;
+                            }
+
+                            var move = new Parsers.Elements.Move();
+                            output = move.ParseMove(output, gameDb, currentElement, child, index, userInput);
+
+                            if (output.MatchMade)
+                            {
+                                return output;
                             }
                             break;
 
                         case "set":
+                            if (handledSet)
+                            {
+                                continue;
+                            }
+
                             var set = new Parsers.Elements.Set();
                             output = set.ParseSet(output, gameDb, currentElement, child, userInput);
                             if (output.MatchMade)
@@ -122,9 +138,11 @@ namespace WorldWeaver.Parsers.Elements
                                 foreach (var childProc in setProcs)
                                 {
                                     output = ParseElement(output, gameDb, child, userInput, childProc);
+                                    if (output.MatchMade)
+                                    {
+                                        return output;
+                                    }
                                 }
-
-                                output.MatchMade = false;
                             }
                             break;
 

@@ -29,8 +29,10 @@ namespace WorldWeaver.Tools
             return output;
         }
 
-        public static void Randomize(this string value)
+        public static string Randomize(this string value)
         {
+            var output = "";
+
             if (value.Contains("[rand:"))
             {
                 var tmp = value.Replace("[rand:", "").Replace("]", "");
@@ -38,9 +40,11 @@ namespace WorldWeaver.Tools
                 if (range.Length == 2)
                 {
                     Random rnd = new Random((int)DateTime.Now.Ticks);
-                    value = rnd.Next(Convert.ToInt32(range[0]), Convert.ToInt32(range[1])).ToString();
+                    output = rnd.Next(Convert.ToInt32(range[0]), Convert.ToInt32(range[1])).ToString();
                 }
             }
+
+            return output;
         }
 
         public static int RandomValue(this string value)

@@ -16,7 +16,7 @@ namespace WorldWeaver.Parsers
         public Classes.Output ParseInput(string input)
         {
             var output = new Classes.Output()
-            { 
+            {
                 MatchMade = false
             };
             var method = Tools.CommandFunctions.GetCommandMethod(input, "GameParser");
@@ -165,7 +165,20 @@ namespace WorldWeaver.Parsers
 
             DataManagement.GameLogic.Element elemLogic = new DataManagement.GameLogic.Element();
             DataManagement.GameLogic.Game gameLogic = new DataManagement.GameLogic.Game();
-            var gameElem = elemLogic.GetElementsByType(gameDb, "game")[0];
+
+            var gameElem = new Classes.Element();
+
+            try
+            {
+                gameElem = elemLogic.GetElementsByType(gameDb, "game")[0];
+            }
+            catch (Exception)
+            {
+                output.OutputText = "The specified game could not be found. Remember game names are case sensitive.";
+                output.MatchMade = true;
+                return output;
+            }
+
             var playerElem = elemLogic.GetElementsByType(gameDb, "player")[0];
             var roomElem = elemLogic.GetElementByKey(gameDb, playerElem.ParentKey);
             var elemParser = new Parsers.Elements.Element();

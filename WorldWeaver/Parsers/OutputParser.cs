@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WorldWeaver.Parsers.Elements;
+using WorldWeaver.Tools;
 
 namespace WorldWeaver.Parsers
 {
     public class OutputParser
     {
-        public string ParseOutput(string gameDb, string outputMessage)
+        public string ParseOutput(string gameDb, string outputMessage) // @todo
         {
             var output = outputMessage;
 
@@ -38,6 +39,19 @@ namespace WorldWeaver.Parsers
             if (output.Contains("[missiondays]"))
             {
                 output = output.Replace("[missiondays]", Tools.Game.TotalDays(gameDb).ToString("N0"));
+            }
+            if (output.Contains("[player_armed_weapon]"))
+            {
+                try
+                {
+                    var weaponKey = Cache.PlayerCache.Player.AttributeByTag("armed").Output;
+                    var weaponElem = Cache.PlayerCache.Player.ChildByKey(weaponKey);
+                    output = output.Replace("[player_armed_weapon]", weaponElem.ChildByTag("title").Output);
+                }
+                catch (Exception)
+                {
+                    output = output.Replace("[player_armed_weapon]", "");
+                }
             }
 
             return output;
