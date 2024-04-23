@@ -19,7 +19,24 @@ namespace WorldWeaver.Parsers.Elements
 
             if (logic.Contains("[input]"))
             {
-                var foundElems = elemDb.GetElementKeysBySyntax(gameDb, userInput.Replace(currentElement.Tags, ""));
+                var foundElems = new List<string>();
+
+                if (currentElement.Tags.TagsContain("child"))
+                {
+                    var tag = currentElement.Tags.RemoveTag("child");
+                    foundElems = elemDb.GetChildElementKeysBySyntax(gameDb, Tools.Elements.GetSelf(gameDb, currentElement), userInput.Replace(tag, ""), true);
+                }
+                else if (currentElement.Tags.TagsContain("[player]"))
+                {
+                    var tag = currentElement.Tags.RemoveTag("[player]");
+                    foundElems = elemDb.GetChildElementKeysBySyntax(gameDb, Cache.PlayerCache.Player, userInput.Replace(tag, ""), true);
+                }
+                else
+                {
+                    foundElems = elemDb.GetElementKeysBySyntax(gameDb, userInput.Replace(currentElement.Tags.Trim(), ""));
+                }
+
+
                 if (foundElems.Count < 1)
                 {
                     output.OutputText += "I'm not sure what object you are referencing.";
@@ -55,9 +72,9 @@ namespace WorldWeaver.Parsers.Elements
                     return output;
                 }
 
-                var targetElements = GetTargetElements(gameDb, currentElement, targetKey);
+                var targetElement = elemDb.GetElementByKey(gameDb, targetKey);
 
-                if (targetElements.Count() < 1)
+                if (targetElement.ElementKey.Equals(""))
                 {
                     output.OutputText += "An error occurred while setting a value.";
                     output.MatchMade = false;
@@ -70,15 +87,13 @@ namespace WorldWeaver.Parsers.Elements
                     newValue = newValue.Replace(currentElement.Tags, "").Trim();
                 }
 
-                foreach (var targetElement in targetElements)
+                if (targetField.Equals("tags"))
                 {
-                    if (targetField.Equals("tags"))
-                    {
-                        newValue = NewTagsValue(targetElement, newValue);
-                    }
-
-                    elemDb.SetElementField(gameDb, targetElement.ElementKey, targetField, newValue);
+                    newValue = NewTagsValue(targetElement, newValue);
                 }
+
+                elemDb.SetElementField(gameDb, targetElement.ElementKey, targetField, newValue);
+
                 output.MatchMade = true;
             }
             else

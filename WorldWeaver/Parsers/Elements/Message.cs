@@ -32,7 +32,7 @@ namespace WorldWeaver.Parsers.Elements
                 {
                     if (idx == currentIndex)
                     {
-                        output.OutputText += Environment.NewLine + ProcessMessageText(msg.Output, userInput, msg.Tags); //@todo
+                        output.OutputText += Environment.NewLine + ProcessMessageText(msg.Output, userInput, msg.Tags);
                         output.MatchMade = true;
                         break;
                     }

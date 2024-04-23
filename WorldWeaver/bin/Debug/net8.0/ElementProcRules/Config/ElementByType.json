@@ -178,7 +178,6 @@
                 "set"
             ],
             "elements" : [
-                "message",
                 "logic",
                 "set"
             ],

@@ -7,11 +7,10 @@
     }
 
     {type=input, syntax=\b(arm *)\b
-        {type=set, logic=player_armed(output)[input], tags=arm
-            {type=message, tag=arm
-                output={@
-You are now armed with the [field|[input]|name].
-                }
+        {type=set, logic=player_armed(output)[input], tags=arm|[player] }
+        {type=message
+            output={@
+You are now armed with the [player_armed_weapon].
             }
         }
     }

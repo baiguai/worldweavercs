@@ -28,6 +28,10 @@ namespace WorldWeaver.Parsers.Elements
                         foreach (var childProc in ChildProcs)
                         {
                             output = elemParser.ParseElement(output, gameDb, child, userInput, childProc);
+                            if (output.MatchMade)
+                            {
+                                return output;
+                            }
                         }
                     }
                 }

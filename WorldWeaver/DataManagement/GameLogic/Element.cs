@@ -573,6 +573,7 @@ WHERE 1=1
         }
         internal List<string> GetElementKeysBySyntax(string gameDb, string idValue, bool activeOnly)
         {
+            idValue = idValue.Trim();
             var output = new List<string>();
             var allElems = GetElemsForSyntaxSearch(gameDb);
 
@@ -605,6 +606,41 @@ WHERE 1=1
             return output;
         }
 
+        internal List<string> GetChildElementKeysBySyntax(string gameDb, Classes.Element parentElement, string idValue, bool activeOnly)
+        {
+            idValue = idValue.Trim();
+            var output = new List<string>();
+            var allElems = parentElement.Children.Where(c => c.Syntax != "");
+
+            foreach (var elem in allElems)
+            {
+                Regex rgx = new Regex(elem.Syntax, RegexOptions.IgnoreCase);
+
+                if (rgx.IsMatch(idValue))
+                {
+                    if (!activeOnly || elem.Active == "true")
+                    {
+                        output.Add(elem.ElementKey);
+                    }
+                }
+            }
+            if (output.Count == 0)
+            {
+                foreach (var elem in allElems)
+                {
+                    if (elem.Name.Contains(idValue))
+                    {
+                        if (!activeOnly || elem.Active == "true")
+                        {
+                            output.Add(elem.ElementKey);
+                        }
+                    }
+                }
+            }
+
+            return output;
+        }
+
         private List<SearchElement> GetElemsForSyntaxSearch(string gameDb)
         {
             var selectQuery = $@"
@@ -617,7 +653,7 @@ FROM
     element
 WHERE 1=1
     AND Syntax IS NOT NULL
-    AND Active = 'true'
+    AND Syntax != ''
 ;
             ";
 
@@ -646,7 +682,7 @@ WHERE 1=1
 
                 foreach (var elem in elems)
                 {
-                    elem.Output.Randomize();
+                    elem.Output = elem.Output.Randomize();
 
                     var updateQuery = $@"
 UPDATE
