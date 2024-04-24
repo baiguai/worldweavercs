@@ -13,7 +13,6 @@
     {key=thief_01_msg_idx, type=attribute, output=[rand:1|3] }
 
     {key=stolen_shortsword_01, name=Short Sword, type=weapon, syntax=\b(short sword)\b, tags=inventory
-        {type=attribute
         {name=Damage, type=attribute, logic=[rand:4|8], tags=damage }
 
         {type=message, tags=hit
@@ -73,7 +72,7 @@ You have killed the shady character.
     }
 
 
-    {type=input, syntax=\b(?:attack.*figure|?:attack.*character)\b
+    {type=input, syntax=attack (shifty|hooded|shady) (figure|character)
         {type=attack
             {type=attribute, output=[self], tags=target }
             {type=attribute, output=[player], tags=initiative }

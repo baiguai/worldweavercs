@@ -18,6 +18,12 @@ namespace WorldWeaver.Parsers.Elements
             {
                 Cache.FightCache.Fight = new Classes.Fight();
                 var target = currentElement.AttributeByTag("target");
+
+                if (target.Output.Equals("[self]") && currentElement.ElementKey != Cache.PlayerCache.Player.ElementKey)
+                {
+                    target = Tools.Elements.GetSelf(gameDb, currentElement);
+                }
+
                 init = currentElement.AttributeByTag("initiative");
                 if (target == null)
                 {
@@ -34,7 +40,7 @@ namespace WorldWeaver.Parsers.Elements
 
             if (newFight)
             {
-                if (init == null || init.Output.Equals("player"))
+                if (init == null || init.Output.Equals("[player]"))
                 {
                     Cache.FightCache.Fight.PlayersTurn = true;
                 }
@@ -70,13 +76,13 @@ namespace WorldWeaver.Parsers.Elements
                     var attackRoll = Tools.ValueTools.Randomize(1, 20);
                     var enemyArmor = Cache.FightCache.Fight.Enemy.AttributeByTag("armor");
 
-                    output.OutputText += $"Player attack roll: {attackRoll}{Environment.NewLine}Enemy's armor rating: {enemyArmor}";
+                    output.OutputText += $"Player attack roll: {attackRoll}{Environment.NewLine}Enemy's armor rating: {enemyArmor}"; // @todo Fix the enemy armor piece
 
                     if (Convert.ToInt32(enemyArmor.Output) <= attackRoll)
                     {
                         var gameLgc = new DataManagement.GameLogic.Element();
                         var enemyLife = Cache.FightCache.Fight.Enemy.AttributeByTag("life");
-                        var damage = playerWeapon.Logic.RandomValue();
+                        var damage = playerWeapon.Logic.RandomValue(); // @todo fix the random value piece
                         var newLifeValue = Convert.ToInt32(enemyLife.Output) - damage;
 
                         var damageOutput = playerWeapon.ChildByTag("hit");
