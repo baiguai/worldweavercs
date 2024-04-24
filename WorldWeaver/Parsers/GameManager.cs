@@ -78,6 +78,16 @@ namespace WorldWeaver.Parsers
                     {
                         output = elemParser.ParseElement(output, gameDb, Cache.RoomCache.Room, userInput, proc);
                     }
+
+                    foreach (var npc in Cache.RoomCache.Room.Children.Where(c => c.ElementType.Equals("npc")))
+                    {
+                        var elem = elemDb.GetElementByKey(gameDb, npc.ElementKey);
+                        var npcProcs = ProcFunctions.GetProcessStepsByType(elem.ElementType);
+                        foreach (var proc in npcProcs)
+                        {
+                            output = elemParser.ParseElement(output, gameDb, elem, userInput, proc);
+                        }
+                    }
                 }
 
                 foreach (var glob in Cache.GlobalCache.Global)

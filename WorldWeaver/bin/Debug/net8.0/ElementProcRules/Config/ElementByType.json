@@ -78,6 +78,7 @@
             "elements" : [
                 "logic",
                 "action",
+                "attack",
                 "message",
                 "set",
                 "move"
@@ -127,6 +128,7 @@
                 "travel",
                 "enter_message",
                 "logic",
+                "input",
                 "action",
                 "attack",
                 "message"
