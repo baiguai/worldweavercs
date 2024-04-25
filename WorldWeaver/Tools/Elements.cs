@@ -42,7 +42,8 @@ namespace WorldWeaver.Tools
 
             try
             {
-                life = Convert.ToInt32(currentElement.Children.Select(c => c.Tags.TagsContain("life")).First());
+                var lifeElem = currentElement.ChildByTag("life");
+                life = Convert.ToInt32(lifeElem.Output);
             }
             catch (Exception)
             {

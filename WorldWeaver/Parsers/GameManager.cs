@@ -79,15 +79,15 @@ namespace WorldWeaver.Parsers
                         output = elemParser.ParseElement(output, gameDb, Cache.RoomCache.Room, userInput, proc);
                     }
 
-                    foreach (var npc in Cache.RoomCache.Room.Children.Where(c => c.ElementType.Equals("npc")))
-                    {
-                        var elem = elemDb.GetElementByKey(gameDb, npc.ElementKey);
-                        var npcProcs = ProcFunctions.GetProcessStepsByType(elem.ElementType);
-                        foreach (var proc in npcProcs)
-                        {
-                            output = elemParser.ParseElement(output, gameDb, elem, userInput, proc);
-                        }
-                    }
+                    // foreach (var npc in Cache.RoomCache.Room.Children.Where(c => c.ElementType.Equals("npc")))
+                    // {
+                    //     var elem = elemDb.GetElementByKey(gameDb, npc.ElementKey);
+                    //     var npcProcs = ProcFunctions.GetProcessStepsByType(elem.ElementType);
+                    //     foreach (var proc in npcProcs)
+                    //     {
+                    //         output = elemParser.ParseElement(output, gameDb, elem, userInput, proc);
+                    //     }
+                    // }
                 }
 
                 foreach (var glob in Cache.GlobalCache.Global)
@@ -102,12 +102,6 @@ namespace WorldWeaver.Parsers
                 if (Cache.GameCache.Game == null)
                 {
                     return output;
-                }
-
-                if (Cache.FightCache.Fight != null)
-                {
-                    var attParser = new Parsers.Elements.Attack();
-                    return attParser.ParseAttack(output, gameDb, Cache.GameCache.Game, Cache.PlayerCache.Player, userInput);
                 }
 
                 var trvParser = new Parsers.Elements.Travel();

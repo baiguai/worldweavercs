@@ -23,6 +23,25 @@ You have been attacked by [self.name]. He has caused your life to be reduced by 
     }
 
 
+
+    {type=damage_message
+        {type=message
+            output={@
+You have attacked [enemy.title]. His life has been reduced by [damage].
+            }
+        }
+    }
+
+    {type=miss_message
+        {type=message, tags=miss
+            output={@
+You attack the [enemy.title]. But your attack failed.
+            }
+        }
+    }
+
+
+
     {key=thief_01_travel, type=travel, logic=[follow|player], active=false }
 
 
@@ -72,7 +91,7 @@ You have killed the shady character.
     }
 
 
-    {type=input, syntax=attack (shifty|hooded|shady) (figure|character)
+    {type=input, syntax=\battack\b.*?\b(shady|shifty|hooded)\b
         {type=attack
             {type=attribute, output=[self], tags=target }
             {type=attribute, output=[player], tags=initiative }

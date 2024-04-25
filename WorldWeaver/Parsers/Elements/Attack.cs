@@ -70,50 +70,60 @@ namespace WorldWeaver.Parsers.Elements
             if (Cache.FightCache.Fight.PlayersTurn)
             {
                 var playerWeapon = Cache.PlayerCache.Player.AttributeByTag("armed");
-                if (playerWeapon != null)
+                if (playerWeapon == null || playerWeapon.Output.Equals(""))
+                {
+                    output.OutputText += Tools.AppSettingFunctions.GetConfigValue("messages", "unarmed");
+                    output.MatchMade = true;
+                    Cache.FightCache.Fight.PlayersTurn = false;
+                    return output;
+                }
+                else
                 {
                     playerWeapon = Cache.PlayerCache.Player.ChildByKey(playerWeapon.Output);
                     var attackRoll = Tools.ValueTools.Randomize(1, 20);
                     var enemyArmor = Cache.FightCache.Fight.Enemy.AttributeByTag("armor");
 
-                    output.OutputText += $"Player attack roll: {attackRoll}{Environment.NewLine}Enemy's armor rating: {enemyArmor}"; // @todo Fix the enemy armor piece
+                    output.OutputText += $"Player attack roll: {attackRoll}{Environment.NewLine}Enemy's armor rating: {enemyArmor.Output}";
 
                     if (Convert.ToInt32(enemyArmor.Output) <= attackRoll)
                     {
+                        var damageMsg = Cache.FightCache.Fight.Enemy.ChildByType("damage_message");
                         var gameLgc = new DataManagement.GameLogic.Element();
                         var enemyLife = Cache.FightCache.Fight.Enemy.AttributeByTag("life");
-                        var damage = playerWeapon.Logic.RandomValue(); // @todo fix the random value piece
+                        var damageAttrib = playerWeapon.AttributeByTag("damage");
+                        var damage = damageAttrib.Logic.RandomValue();
                         var newLifeValue = Convert.ToInt32(enemyLife.Output) - damage;
 
-                        var damageOutput = playerWeapon.ChildByTag("hit");
-                        if (damageOutput != null)
+                        if (damageMsg != null)
                         {
-                            var dmgMsg = ProcessEnemyDamageOutput(damageOutput.Output, damage);
+                            var dmgMsg = ProcessEnemyDamageOutput(damageMsg.Output, damage);
                             output.OutputText += dmgMsg;
                         }
 
                         if (newLifeValue < 1)
                         {
                             var actn = new Parsers.Elements.Action();
+                            output.MatchMade = true;
                             return actn.DoKill(gameDb, output, userInput);
                         }
 
                         gameLgc.SetElementField(gameDb, enemyLife.ElementKey, "Output", newLifeValue.ToString());
-
-                        output.MatchMade = true;
                     }
-                }
-                else
-                {
-                    output.OutputText += Tools.AppSettingFunctions.GetConfigValue("messages", "unarmed");
-                    Cache.FightCache.Fight.PlayersTurn = false;
-                    return ProcessFightRound(gameDb, output, userInput);
+                    else
+                    {
+                        var missElem = Cache.FightCache.Fight.Enemy.ChildByType("miss_message");
+                        var missMsg = ProcessEnemyDamageOutput(missElem.Output, 0);
+                        output.OutputText = missMsg;
+                    }
+
+                    output.MatchMade = true;
                 }
 
                 Cache.FightCache.Fight.PlayersTurn = false;
             }
             else
             {
+                output.OutputText = "";
                 var enemyWeapon = Cache.FightCache.Fight.Enemy.AttributeByTag("armed");
                 if (enemyWeapon != null)
                 {
@@ -121,13 +131,14 @@ namespace WorldWeaver.Parsers.Elements
                     var attackRoll = Tools.ValueTools.Randomize(1, 20);
                     var playerArmor = Cache.PlayerCache.Player.AttributeByTag("armor");
 
-                    output.OutputText += $"Enemy attack roll: {attackRoll}{Environment.NewLine}Player's armor rating: {playerArmor}";
+                    output.OutputText += $"Enemy attack roll: {attackRoll}{Environment.NewLine}Player's armor rating: {playerArmor.Output}{Environment.NewLine}";
 
                     if (Convert.ToInt32(playerArmor.Output) <= attackRoll)
                     {
                         var gameLgc = new DataManagement.GameLogic.Element();
                         var playerLife = Cache.PlayerCache.Player.AttributeByTag("life");
-                        var damage = enemyWeapon.Logic.RandomValue();
+                        var damageAttrib = enemyWeapon.AttributeByTag("damage");
+                        var damage = damageAttrib.Logic.RandomValue();
                         var newLifeValue = Convert.ToInt32(playerLife.Output) - damage;
 
                         var damageOutput = enemyWeapon.ChildByTag("hit");

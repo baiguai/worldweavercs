@@ -67,6 +67,24 @@ namespace WorldWeaver
                     Console.WriteLine($"Enemy Life: {enemyLife}");
                     Console.WriteLine($"Player Life: {playerLife}");
                     Console.WriteLine("");
+
+
+                    if (Cache.FightCache.Fight != null && !Cache.FightCache.Fight.PlayersTurn)
+                    {
+                        Thread.Sleep(2000);
+                        var attParser = new Parsers.Elements.Attack();
+                        var enemyAttackOutput = attParser.ProcessFightRound(Cache.GameCache.GameDb, output, "");
+
+                        Console.WriteLine(output.OutputText);
+                        Console.WriteLine("");
+                        Console.WriteLine("");
+
+                        playerLife = Tools.Elements.GetLife(Cache.PlayerCache.Player).ToString("N0");
+                        enemyLife = Tools.Elements.GetLife(Cache.FightCache.Fight.Enemy).ToString("N0");
+                        Console.WriteLine($"Enemy Life: {enemyLife}");
+                        Console.WriteLine($"Player Life: {playerLife}");
+                        Console.WriteLine("");
+                    }
                 }
             }
 
