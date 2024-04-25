@@ -16,6 +16,7 @@ namespace WorldWeaver.Parsers.Elements
             var handledMessage = false;
             var handledMove = false;
             var handledSet = false;
+            var handledAttack = false;
 
             foreach (var proc in procObj.ChildProcElements)
             {
@@ -38,10 +39,16 @@ namespace WorldWeaver.Parsers.Elements
                     switch (child.ElementType)
                     {
                         case "attack":
+                            if (handledAttack)
+                            {
+                                continue;
+                            }
+
                             var attackParser = new Parsers.Elements.Attack();
                             output = attackParser.ParseAttack(output, gameDb, currentElement, child, userInput);
                             if (output.MatchMade && !output.OutputText.Equals(""))
                             {
+                                handledAttack = true;
                                 return output;
                             }
                             break;
