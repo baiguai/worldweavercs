@@ -75,7 +75,7 @@ namespace WorldWeaver
                     {
                         Thread.Sleep(2000);
                         var attParser = new Parsers.Elements.Attack();
-                        var enemyAttackOutput = attParser.ProcessFightRound(gameDb, output, "");
+                        attParser.ProcessFightRound();
 
                         Console.WriteLine(output.OutputText);
                         Console.WriteLine("");

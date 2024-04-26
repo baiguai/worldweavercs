@@ -15,7 +15,7 @@ namespace WorldWeaver.Parsers.Elements
             var newValue = "";
             var usingInput = false;
 
-            output.MatchMade = false;
+            MainClass.output.MatchMade = false;
 
             if (logic.Contains("[input]"))
             {
@@ -24,30 +24,30 @@ namespace WorldWeaver.Parsers.Elements
                 if (currentElement.Tags.TagsContain("child"))
                 {
                     var tag = currentElement.Tags.RemoveTag("child");
-                    foundElems = elemDb.GetChildElementKeysBySyntax(gameDb, Tools.Elements.GetSelf(gameDb, currentElement), userInput.Replace(tag, ""), true);
+                    foundElems = elemDb.GetChildElementKeysBySyntax(Tools.Elements.GetSelf(currentElement), MainClass.userInput.Replace(tag, ""), true);
                 }
                 else if (currentElement.Tags.TagsContain("[player]"))
                 {
                     var tag = currentElement.Tags.RemoveTag("[player]");
-                    foundElems = elemDb.GetChildElementKeysBySyntax(gameDb, Cache.PlayerCache.Player, userInput.Replace(tag, ""), true);
+                    foundElems = elemDb.GetChildElementKeysBySyntax(Cache.PlayerCache.Player, MainClass.userInput.Replace(tag, ""), true);
                 }
                 else
                 {
-                    foundElems = elemDb.GetElementKeysBySyntax(gameDb, userInput.Replace(currentElement.Tags.Trim(), ""));
+                    foundElems = elemDb.GetElementKeysBySyntax(MainClass.userInput.Replace(currentElement.Tags.Trim(), ""));
                 }
 
 
                 if (foundElems.Count < 1)
                 {
-                    output.OutputText += "I'm not sure what object you are referencing.";
-                    output.MatchMade = false;
-                    return output;
+                    MainClass.output.OutputText += "I'm not sure what object you are referencing.";
+                    MainClass.output.MatchMade = false;
+                    return;
                 }
                 if (foundElems.Count > 1)
                 {
-                    output.OutputText += "There are multiple items that match the name you specified.";
-                    output.MatchMade = false;
-                    return output;
+                    MainClass.output.OutputText += "There are multiple items that match the name you specified.";
+                    MainClass.output.MatchMade = false;
+                    return;
                 }
                 logic = logic.Replace("[input]", foundElems.First());
             }
