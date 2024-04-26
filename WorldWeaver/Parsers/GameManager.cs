@@ -5,7 +5,7 @@ namespace WorldWeaver.Parsers
 {
     public class GameManager
     {
-        public Classes.Output ProcessGameInput(string gameKey, string gameDb, Classes.Output output, string userInput)
+        public void ProcessGameInput()
         {
             var gameLogic = new DataManagement.GameLogic.Game();
             var elemParser = new Elements.Element();
@@ -16,7 +16,7 @@ namespace WorldWeaver.Parsers
             {
                 if (Cache.GameCache.Game == null)
                 {
-                    CacheManager.RefreshCache(gameDb);
+                    CacheManager.RefreshCache();
                 }
 
                 var procItems = Tools.ProcFunctions.GetProcessStepsByType(Cache.GameCache.Game.ElementType);
@@ -24,20 +24,20 @@ namespace WorldWeaver.Parsers
                 {
                     foreach (var glob in Cache.GlobalCache.Global)
                     {
-                        output = elemParser.ParseElement(output, gameDb, glob, userInput, proc, false);
+                        elemParser.ParseElement(glob, proc, false);
                     }
                 }
 
                 procItems = Tools.ProcFunctions.GetProcessStepsByType(Cache.PlayerCache.Player.ElementType);
                 foreach (var proc in procItems)
                 {
-                    output = elemParser.ParseElement(output, gameDb, Cache.PlayerCache.Player, userInput, proc);
+                    elemParser.ParseElement(Cache.PlayerCache.Player, proc);
                 }
 
                 procItems = Tools.ProcFunctions.GetProcessStepsByType(Cache.RoomCache.Room.ElementType);
                 foreach (var proc in procItems)
                 {
-                    output = elemParser.ParseElement(output, gameDb, Cache.RoomCache.Room, userInput, proc);
+                    elemParser.ParseElement(Cache.RoomCache.Room, proc);
                 }
             }
             else
@@ -46,12 +46,12 @@ namespace WorldWeaver.Parsers
                 {
                     if (!Cache.GameCache.GameInitialized)
                     {
-                        CacheManager.RefreshCache(gameDb);
+                        CacheManager.RefreshCache();
                         var gameProcItems = Tools.ProcFunctions.GetProcessStepsByType(Cache.GameCache.Game.ElementType);
 
                         foreach (var proc in gameProcItems)
                         {
-                            output = elemParser.ParseElement(output, gameDb, Cache.GameCache.Game, userInput, proc, false);
+                            elemParser.ParseElement(Cache.GameCache.Game, proc, false);
                         }
 
                         Cache.GameCache.GameInitialized = true;
@@ -59,35 +59,25 @@ namespace WorldWeaver.Parsers
                 }
 
                 // Parse the system events
-                Tools.Game.IncrementTime(gameDb);
+                Tools.Game.IncrementTime();
 
                 if (Cache.FightCache.Fight == null)
                 {
-                    var playerInv = elemDb.GetElementChildren(gameDb, Cache.PlayerCache.Player.ElementKey);
+                    var playerInv = elemDb.GetElementChildren(MainClass.gameDb, Cache.PlayerCache.Player.ElementKey);
                     foreach (var child in playerInv)
                     {
                         var playerProcItems = ProcFunctions.GetProcessStepsByType(child.ElementType);
                         foreach (var proc in playerProcItems)
                         {
-                            output = elemParser.ParseElement(output, gameDb, child, userInput, proc);
+                            elemParser.ParseElement(child, proc);
                         }
                     }
 
                     var locProcItems = ProcFunctions.GetProcessStepsByType(Cache.RoomCache.Room.ElementType);
                     foreach (var proc in locProcItems)
                     {
-                        output = elemParser.ParseElement(output, gameDb, Cache.RoomCache.Room, userInput, proc);
+                        elemParser.ParseElement(Cache.RoomCache.Room, proc);
                     }
-
-                    // foreach (var npc in Cache.RoomCache.Room.Children.Where(c => c.ElementType.Equals("npc")))
-                    // {
-                    //     var elem = elemDb.GetElementByKey(gameDb, npc.ElementKey);
-                    //     var npcProcs = ProcFunctions.GetProcessStepsByType(elem.ElementType);
-                    //     foreach (var proc in npcProcs)
-                    //     {
-                    //         output = elemParser.ParseElement(output, gameDb, elem, userInput, proc);
-                    //     }
-                    // }
                 }
 
                 foreach (var glob in Cache.GlobalCache.Global)
@@ -95,20 +85,18 @@ namespace WorldWeaver.Parsers
                     var globalProcItems = ProcFunctions.GetProcessStepsByType("global");
                     foreach (var proc in globalProcItems)
                     {
-                        output = elemParser.ParseElement(output, gameDb, glob, userInput, proc);
+                        elemParser.ParseElement(glob, proc);
                     }
                 }
 
                 if (Cache.GameCache.Game == null)
                 {
-                    return output;
+                    return;
                 }
 
                 var trvParser = new Parsers.Elements.Travel();
-                trvParser.ParseTravel(gameDb);
+                trvParser.ParseTravel();
             }
-
-            return output;
         }
     }
 }

@@ -10,16 +10,18 @@ namespace WorldWeaver
         private static Parsers.GameParser gameParser = new Parsers.GameParser();
         public static Logger logger = new Logger() { LogDate = DateTime.Now };
 
+        public static Output output = new Output();
+        public static string userInput;
+        public static string gameDb;
+
         public static void Main(string[] args)
         {
-            // Console.SetWindowSize(Console.LargestWindowWidth, Console.LargestWindowHeight);
+            Console.SetWindowSize(Console.LargestWindowWidth, Console.LargestWindowHeight);
             Listener(Tools.InitFunctions.GetInitMessage());
         }
 
         private static void Listener(string initMsg)
         {
-            Output output;
-
             if (initMsg.Equals(""))
             {
                 Console.Write(">> ");
@@ -28,9 +30,9 @@ namespace WorldWeaver
             {
                 Console.Write(initMsg);
             }
-            string input = Console.ReadLine();
+            userInput = Console.ReadLine();
 
-            output = globalParser.ParseInput(input);
+            globalParser.ParseInput();
             if (output.MatchMade && output.OutputText.Equals("DoExit"))
             {
                 Environment.Exit(0);
@@ -39,12 +41,12 @@ namespace WorldWeaver
 
             if (!output.MatchMade)
             {
-                output = adminParser.ParseInput(input);
+                adminParser.ParseInput();
             }
 
             if (!output.MatchMade)
             {
-                output = gameParser.ParseInput(input);
+                gameParser.ParseInput();
             }
 
             if (output.MatchMade)
@@ -73,7 +75,7 @@ namespace WorldWeaver
                     {
                         Thread.Sleep(2000);
                         var attParser = new Parsers.Elements.Attack();
-                        var enemyAttackOutput = attParser.ProcessFightRound(Cache.GameCache.GameDb, output, "");
+                        var enemyAttackOutput = attParser.ProcessFightRound(gameDb, output, "");
 
                         Console.WriteLine(output.OutputText);
                         Console.WriteLine("");

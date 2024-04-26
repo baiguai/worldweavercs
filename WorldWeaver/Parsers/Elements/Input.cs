@@ -7,37 +7,37 @@ namespace WorldWeaver.Parsers.Elements
 {
     public class Input
     {
-        public Classes.Output ParseInput(Classes.Output output, string gameDb, Classes.Element parentElement, Classes.Element currentElement, string userInput)
+        public void ParseInput(Classes.Element parentElement, Classes.Element currentElement)
         {
-            output.MatchMade = false;
+            MainClass.output.MatchMade = false;
             var elemParser = new Elements.Element();
             var elemLogic = new DataManagement.GameLogic.Element();
 
             Regex rgx = new Regex(currentElement.Syntax, RegexOptions.IgnoreCase);
 
-            if (rgx.IsMatch(userInput))
+            if (rgx.IsMatch(MainClass.userInput))
             {
                 var procs = ProcFunctions.GetProcessStepsByType(currentElement.ElementType);
                 foreach (var proc in procs)
                 {
-                    output = elemParser.ParseElement(output, gameDb, currentElement, userInput, proc, false);
+                    elemParser.ParseElement(currentElement, proc, false);
 
                     foreach (var child in currentElement.Children)
                     {
                         var ChildProcs = ProcFunctions.GetProcessStepsByType(currentElement.ElementType);
                         foreach (var childProc in ChildProcs)
                         {
-                            output = elemParser.ParseElement(output, gameDb, child, userInput, childProc);
-                            if (output.MatchMade)
+                            elemParser.ParseElement(child, childProc);
+                            if (MainClass.output.MatchMade)
                             {
-                                return output;
+                                return;
                             }
                         }
                     }
                 }
             }
 
-            return output;
+            return;
         }
     }
 }

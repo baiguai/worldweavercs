@@ -7,7 +7,7 @@ namespace WorldWeaver.Parsers.Elements
 {
     public class Travel
     {
-        public void ParseTravel(string gameDb)
+        public void ParseTravel()
         {
             var elemParser = new Elements.Element();
             var elemLogic = new DataManagement.GameLogic.Element();
@@ -37,7 +37,7 @@ namespace WorldWeaver.Parsers.Elements
                                     elemLogic.SetElementParentKey(gameDb, trvParent.ElementKey, Cache.PlayerCache.Player.ParentKey);
                                     continue;
                                 }
-                                
+
                                 var targetElem = elemLogic.GetElementByKey(gameDb, target);
                                 elemLogic.SetElementParentKey(gameDb, trvParent.ElementKey, targetElem.ParentKey);
                                 continue;

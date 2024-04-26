@@ -8,77 +8,72 @@ namespace WorldWeaver.Parsers
 {
     public class GameParser
     {
-        public string playerInput;
         public bool playingGame = false;
-        public string gameDb = "";
         public string gameKey = "";
 
-        public Classes.Output ParseInput(string input)
+        public void ParseInput()
         {
-            var output = new Classes.Output()
-            {
-                MatchMade = false
-            };
-            var method = Tools.CommandFunctions.GetCommandMethod(input, "GameParser");
-            var duringGame = Tools.CommandFunctions.GetDuringGameOption(input, "GameParser");
+            MainClass.output.MatchMade = false;
+            MainClass.output.OutputText = "";
 
-            playerInput = input;
+            var method = Tools.CommandFunctions.GetCommandMethod(MainClass.userInput, "GameParser");
+            var duringGame = Tools.CommandFunctions.GetDuringGameOption(MainClass.userInput, "GameParser");
 
             if (!method.Equals(""))
             {
                 if (!DataManagement.GameLogic.Game.IsGameRunning() && !duringGame)
                 {
-                    if (!output.MatchMade && method.Equals("DoPlayGame"))
+                    if (!MainClass.output.MatchMade && method.Equals("DoPlayGame"))
                     {
-                        output = DoPlayGame(output);
-                        if (output.Error)
+                        DoPlayGame();
+                        if (MainClass.output.Error)
                         {
-                            return output;
+                            return;
                         }
                         var logic = new DataManagement.GameLogic.Element();
-                        var player = logic.GetElementsByType(gameDb, "player");
+                        var player = logic.GetElementsByType(MainClass.gameDb, "player");
 
-                        if (output.MatchMade)
+                        if (MainClass.output.MatchMade)
                         {
-                            return output;
+                            return;
                         }
 
                         var mgr = new Parsers.GameManager();
-                        output = mgr.ProcessGameInput(gameKey, gameDb, output, playerInput);
-                        return output;
+                        mgr.ProcessGameInput();
+                        return;
                     }
 
-                    if (!output.MatchMade && method.Equals("DoResumeGame"))
+                    if (!MainClass.output.MatchMade && method.Equals("DoResumeGame"))
                     {
-                        output = DoResumeGame(output);
+                        DoResumeGame();
                     }
 
-                    if (!output.MatchMade && method.Equals("DoListGames"))
+                    if (!MainClass.output.MatchMade && method.Equals("DoListGames"))
                     {
-                        output = DoListGames(output);
+                        DoListGames();
                     }
 
-                    if (!output.MatchMade && method.Equals("DoSetPlayerName"))
+                    if (!MainClass.output.MatchMade && method.Equals("DoSetPlayerName"))
                     {
-                        output = DoSetPlayerName(output);
+                        DoSetPlayerName();
                     }
 
-                    if (!output.MatchMade && method.Equals("DoMenu"))
+                    if (!MainClass.output.MatchMade && method.Equals("DoMenu"))
                     {
-                        output.OutputText = Tools.InitFunctions.GetInitMessage(false);
-                        output.MatchMade = true;
+                        MainClass.output.OutputText = Tools.InitFunctions.GetInitMessage(false);
+                        MainClass.output.MatchMade = true;
                     }
                 }
                 if (DataManagement.GameLogic.Game.IsGameRunning() && duringGame)
                 {
-                    if (!output.MatchMade && method.Equals("DoQuit"))
+                    if (!MainClass.output.MatchMade && method.Equals("DoQuit"))
                     {
-                        output = DoQuit(output);
+                        DoQuit();
                     }
 
-                    if (!output.MatchMade && method.Equals("DoTime"))
+                    if (!MainClass.output.MatchMade && method.Equals("DoTime"))
                     {
-                        output = DoTime(output);
+                        DoTime();
                     }
                 }
             }
@@ -86,81 +81,72 @@ namespace WorldWeaver.Parsers
             {
                 if (DataManagement.GameLogic.Game.IsGameRunning())
                 {
-                    output = DoGameInput(output);
+                    DoGameInput();
                 }
             }
 
-            return output;
+            return;
         }
 
-        private Output DoTime(Output output)
+        private void DoTime()
         {
             DataManagement.GameLogic.Game gameData = new DataManagement.GameLogic.Game();
 
-            output.OutputText = gameData.GetTime(gameDb);
-            output.MatchMade = true;
-
-            return output;
+            MainClass.output.OutputText = gameData.GetTime(MainClass.gameDb);
+            MainClass.output.MatchMade = true;
         }
 
-        private Output DoQuit(Output output)
+        private void DoQuit()
         {
             Tools.CacheManager.ClearCache();
 
-            output.OutputText = Tools.InitFunctions.GetInitMessage(false);
-            output.MatchMade = true;
-
-            return output;
+            MainClass.output.OutputText = Tools.InitFunctions.GetInitMessage(false);
+            MainClass.output.MatchMade = true;
         }
 
-        private Classes.Output DoSetPlayerName(Output output)
+        private void DoSetPlayerName()
         {
             var gameObj = new DataManagement.Game.PlayGame();
             Cache.GameCache.Game = null;
 
-            output = gameObj.SetPlayerName(output, gameDb, playerInput.Replace("set player name ", "set_player_name ").GetInputParams());
+            gameObj.SetPlayerName(MainClass.userInput.Replace("set player name ", "set_player_name ").GetInputParams());
 
-            output = DoResumeGame(output, true);
-
-            return output;
+            DoResumeGame(true);
         }
 
-        public Classes.Output DoPlayGame(Classes.Output output)
+        public void DoPlayGame()
         {
             if (Cache.GameCache.Game == null)
             {
-                gameDb = "";
+                MainClass.gameDb = "";
             }
 
-            var gameFile = playerInput.Replace("play ", "");
-            if (gameDb.Equals(""))
+            var gameFile = MainClass.userInput.Replace("play ", "");
+            if (MainClass.gameDb.Equals(""))
             {
-                gameDb = $"{gameFile}_playing.db";
+                MainClass.gameDb = $"{gameFile}_playing.db";
 
                 try
                 {
-                    File.Copy($"Games/{gameFile}.db", $"Games/{gameDb}", true);
+                    File.Copy($"Games/{gameFile}.db", $"Games/{MainClass.gameDb}", true);
                 }
                 catch (Exception)
                 {
-                    output.OutputText = "Game file not found. Game names are case sensitive, so be sure it matches the game's case.";
-                    output.MatchMade = true;
-                    output.Error = true;
-                    return output;
+                    MainClass.output.OutputText = "Game file not found. Game names are case sensitive, so be sure it matches the game's case.";
+                    MainClass.output.MatchMade = true;
+                    MainClass.output.Error = true;
                 }
             }
 
-            output = InitiateGame(output);
-
-            return output;
+            InitiateGame();
         }
 
-        public Classes.Output DoResumeGame(Classes.Output output, bool startingGame = false)
+        public void DoResumeGame(bool startingGame = false)
         {
-            var gameFile = playerInput.Replace("resume ", "");
-            if (gameDb.Equals(""))
+            var gameFile = MainClass.userInput.Replace("resume ", "");
+            if (MainClass.gameDb.Equals(""))
             {
-                gameDb = $"{gameFile}_playing.db";
+                MainClass.gameDb = $"{gameFile}_playing.db";
             }
 
             DataManagement.GameLogic.Element elemLogic = new DataManagement.GameLogic.Element();
@@ -170,21 +156,20 @@ namespace WorldWeaver.Parsers
 
             try
             {
-                gameElem = elemLogic.GetElementsByType(gameDb, "game")[0];
+                gameElem = elemLogic.GetElementsByType(MainClass.gameDb, "game")[0];
             }
             catch (Exception)
             {
-                output.OutputText = "The specified game could not be found. Remember game names are case sensitive.";
-                output.MatchMade = true;
-                return output;
+                MainClass.output.OutputText = "The specified game could not be found. Remember game names are case sensitive.";
+                MainClass.output.MatchMade = true;
+                return;
             }
 
-            var playerElem = elemLogic.GetElementsByType(gameDb, "player")[0];
-            var roomElem = elemLogic.GetElementByKey(gameDb, playerElem.ParentKey);
+            var playerElem = elemLogic.GetElementsByType(MainClass.gameDb, "player")[0];
+            var roomElem = elemLogic.GetElementByKey(MainClass.gameDb, playerElem.ParentKey);
             var elemParser = new Parsers.Elements.Element();
 
             Cache.GameCache.Game = gameElem;
-            Cache.GameCache.GameDb = gameDb;
             Cache.PlayerCache.Player = playerElem;
             Cache.RoomCache.Room = roomElem;
 
@@ -193,103 +178,101 @@ namespace WorldWeaver.Parsers
                 var gameProcs = ProcFunctions.GetProcessStepsByType("game");
                 foreach (var proc in gameProcs)
                 {
-                    output = elemParser.ParseElement(output, gameDb, gameElem, playerInput, proc, true);
+                    elemParser.ParseElement(Cache.GameCache.Game, proc, true);
                 }
             }
 
             var procItems = ProcFunctions.GetProcessStepsByType("room");
             foreach (var proc in procItems)
             {
-                output = elemParser.ParseElement(output, gameDb, roomElem, playerInput, proc, true);
+                elemParser.ParseElement(Cache.RoomCache.Room, proc, true);
             }
-
-            return output;
         }
 
-        public Classes.Output InitiateGame(Classes.Output output)
+        public void InitiateGame()
         {
             var gameObj = new DataManagement.Game.PlayGame();
             var gameManager = new GameManager();
 
-            output.MatchMade = false;
+            MainClass.output.MatchMade = false;
 
-            output = gameObj.StartGame(output, gameDb);
-            if (output.MatchMade)
+            gameObj.StartGame();
+            if (MainClass.output.MatchMade)
             {
-                output.OutputText = "The specified game key could not be found.";
-                output.MatchMade = true;
-                return output;
+                MainClass.output.OutputText = "The specified game key could not be found.";
+                MainClass.output.MatchMade = true;
+                return;
             }
-            gameKey = output.Value;
+            gameKey = MainClass.output.Value;
 
             // Primary game processor
-            if (!output.MatchMade)
+            if (!MainClass.output.MatchMade)
             {
                 var logic = new DataManagement.GameLogic.Element();
-                var player = logic.GetElementsByType(gameDb, "player");
+                var player = logic.GetElementsByType(MainClass.gameDb, "player");
 
                 if (player[0].Name.Equals(""))
                 {
-                    output.OutputText = $@"
+                    MainClass.output.OutputText = $@"
 To specify your player name use:
 set player name <<NAME>>
                         ";
-                    output.MatchMade = true;
-                    return output;
+                    MainClass.output.MatchMade = true;
+                    return;
                 }
 
-                output = gameManager.ProcessGameInput(gameKey, gameDb, output, playerInput);
+                gameManager.ProcessGameInput();
             }
 
             // Final output
-            if (output.MatchMade)
+            if (MainClass.output.MatchMade)
             {
-                output.OutputText = output.OutputText.OutputFormat();
+                MainClass.output.OutputText = MainClass.output.OutputText.OutputFormat();
             }
-            return output;
+            return;
         }
 
-        public Classes.Output DoGameInput(Classes.Output output)
+        public void DoGameInput()
         {
             if (!DataManagement.GameLogic.Game.IsGameRunning())
             {
-                output.MatchMade = false;
-                return output;
+                MainClass.output.MatchMade = false;
+                return;
             }
             var gameManager = new GameManager();
 
             // Primary game processor
-            if (!output.MatchMade)
+            if (!MainClass.output.MatchMade)
             {
-                output = gameManager.ProcessGameInput(gameKey, gameDb, output, playerInput);
+                gameManager.ProcessGameInput();
             }
 
             // Final output
-            if (output.MatchMade)
+            if (MainClass.output.MatchMade)
             {
-                output.OutputText = output.OutputText.OutputFormat();
+                MainClass.output.OutputText = MainClass.output.OutputText.OutputFormat();
             }
-            return output;
+            return;
         }
 
-        public Classes.Output DoListGames(Classes.Output output)
+        public void DoListGames()
         {
             foreach (string file in Directory.GetFiles("Games"))
             {
                 if (Path.GetExtension(file).Equals(".db") && !file.Contains("_playing"))
                 {
-                    if (!output.Equals(""))
+                    if (!MainClass.output.Equals(""))
                     {
-                        output.OutputText += Environment.NewLine;
+                        MainClass.output.OutputText += Environment.NewLine;
                     }
 
-                    output.OutputText += Path.GetFileNameWithoutExtension(file);
+                    MainClass.output.OutputText += Path.GetFileNameWithoutExtension(file);
                 }
             }
 
-            output.MatchMade = true;
+            MainClass.output.MatchMade = true;
 
-            return output;
+            return;
         }
     }
 }

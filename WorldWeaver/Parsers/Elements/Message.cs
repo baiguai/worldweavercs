@@ -4,24 +4,24 @@ namespace WorldWeaver.Parsers.Elements
 {
     public class Message
     {
-        public Classes.Output ParseMessage(Classes.Output output, string gameDb, Classes.Element parentElement, Classes.Element msgElement, string userInput, bool allowRepeatOptions, int currentIndex)
+        public void ParseMessage(Classes.Element parentElement, Classes.Element msgElement, bool allowRepeatOptions, int currentIndex)
         {
             var elemParser = new Parsers.Elements.Element();
 
             if (msgElement.Output.Equals(""))
             {
-                return output;
+                return;
             }
 
             if (!allowRepeatOptions)
             {
-                output.OutputText += Environment.NewLine + msgElement.Output;
-                output.MatchMade = true;
+                MainClass.output.OutputText += Environment.NewLine + msgElement.Output;
+                MainClass.output.MatchMade = true;
 
                 var msgProcs = Tools.ProcFunctions.GetProcessStepsByType(msgElement.ElementType);
                 foreach (var proc in msgProcs)
                 {
-                    output = elemParser.ParseElement(output, gameDb, msgElement, "", proc, false);
+                    elemParser.ParseElement(msgElement, proc, false);
                 }
             }
             else
@@ -32,8 +32,8 @@ namespace WorldWeaver.Parsers.Elements
                 {
                     if (idx == currentIndex)
                     {
-                        output.OutputText += Environment.NewLine + ProcessMessageText(msg.Output, userInput, msg.Tags);
-                        output.MatchMade = true;
+                        MainClass.output.OutputText += Environment.NewLine + ProcessMessageText(msg.Output, msg.Tags);
+                        MainClass.output.MatchMade = true;
                         break;
                     }
                     else
@@ -43,16 +43,16 @@ namespace WorldWeaver.Parsers.Elements
                 }
             }
 
-            return output;
+            return;
         }
 
-        public string ProcessMessageText(string outputText, string userInput, string tag)
+        public string ProcessMessageText(string outputText, string tag)
         {
             var output = outputText;
 
-            if (!userInput.Equals("") && !tag.Equals(""))
+            if (!MainClass.userInput.Equals("") && !tag.Equals(""))
             {
-                output = output.Replace("[input]", userInput).Replace(tag, "").Trim();
+                output = output.Replace("[input]", MainClass.userInput).Replace(tag, "").Trim();
             }
 
             return output;

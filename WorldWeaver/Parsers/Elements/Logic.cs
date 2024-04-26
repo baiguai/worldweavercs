@@ -10,41 +10,41 @@ namespace WorldWeaver.Parsers.Elements
 {
     public class Logic
     {
-        public Classes.Output ParseLogic(Classes.Output output, string gameDb, Classes.Element currentElement, string userInput)
+        public void ParseLogic(Classes.Element currentElement)
         {
-            output.MatchMade = true;
+            MainClass.output.MatchMade = true;
             var passed = true;
             var lines = currentElement.Logic.Split(
                 new string[] { Environment.NewLine },
                 StringSplitOptions.None
             );
-            
+
             foreach (var line in lines)
             {
                 if (line.StartsWith("?"))
                 {
-                    passed = ParseConditional(gameDb, currentElement, lines);
+                    passed = ParseConditional(currentElement, lines);
                     if (!passed)
                     {
-                        output.FailedLogic = true;
-                        output.OutputText = currentElement.Output;
-                        return output;
+                        MainClass.output.FailedLogic = true;
+                        MainClass.output.OutputText = currentElement.Output;
+                        return;
                     }
                     else
                     {
-                        output.FailedLogic = false;
-                        output.OutputText += currentElement.Output;
-                        return output;
+                        MainClass.output.FailedLogic = false;
+                        MainClass.output.OutputText += currentElement.Output;
+                        return;
                     }
                 }
             }
 
-            output.FailedLogic = !passed;
+            MainClass.output.FailedLogic = !passed;
 
-            return output;
+            return;
         }
 
-        private bool ParseConditional(string gameDb, Classes.Element currentElement, string[] lines)
+        private bool ParseConditional(Classes.Element currentElement, string[] lines)
         {
             var passed = true;
             var curCheck = true;
@@ -75,8 +75,8 @@ namespace WorldWeaver.Parsers.Elements
                     var arr = line.Split(operand);
                     if (arr.Length == 2)
                     {
-                        var variable1 = GetVariableValue(gameDb, currentElement, arr[0].Trim());
-                        var variable2 = GetVariableValue(gameDb, currentElement, arr[1].Trim());
+                        var variable1 = GetVariableValue(currentElement, arr[0].Trim());
+                        var variable2 = GetVariableValue(currentElement, arr[1].Trim());
                         curCheck = DoComparison(variable1.Value, variable2.Value, operand);
                     }
                 }
@@ -104,7 +104,7 @@ namespace WorldWeaver.Parsers.Elements
             return "";
         }
 
-        private Classes.ConditionalVariable GetVariableValue(string gameDb, Classes.Element currentElement, string rawVariable)
+        private Classes.ConditionalVariable GetVariableValue(Classes.Element currentElement, string rawVariable)
         {
             if (rawVariable.StartsWith("?"))
             {
@@ -116,7 +116,7 @@ namespace WorldWeaver.Parsers.Elements
             var subCondProcs = Tools.AppSettingFunctions.GetRootArray("Config/LogicSubConditions.json");
             var elemLog = new DataManagement.GameLogic.Element();
             var arrSubCond = rawVariable.Split(".");
-            
+
             Classes.Element varElement = null;
 
             if (arrSubCond.Length == 2)
@@ -158,24 +158,24 @@ namespace WorldWeaver.Parsers.Elements
 
             if (output.Condition.ToLower().Equals("[self]"))
             {
-                output.Condition = Tools.Elements.GetSelf(gameDb, currentElement).ElementKey;
+                output.Condition = Tools.Elements.GetSelf(currentElement).ElementKey;
             }
 
             if (output.Condition.ToLower().Equals("[isday]"))
             {
-                output.Value = Tools.Game.IsDay(gameDb).ToString().ToLower();
+                output.Value = Tools.Game.IsDay().ToString().ToLower();
                 return output;
             }
 
             if (output.Condition.ToLower().Equals("[missiondays]"))
             {
-                output.Value = Tools.Game.MissionDays(gameDb).ToString().ToLower();
+                output.Value = Tools.Game.MissionDays().ToString().ToLower();
                 return output;
             }
 
             if (output.Condition.ToLower().Equals("[totaldays]"))
             {
-                output.Value = Tools.Game.TotalDays(gameDb).ToString().ToLower();
+                output.Value = Tools.Game.TotalDays().ToString().ToLower();
                 return output;
             }
 
@@ -189,7 +189,7 @@ namespace WorldWeaver.Parsers.Elements
                 switch (proc)
                 {
                     case "element_key":
-                        varElement = elemLog.GetElementByKey(gameDb, output.Condition);
+                        varElement = elemLog.GetElementByKey(output.Condition);
                         if (varElement.ElementKey.Equals(""))
                         {
                             continue;
@@ -217,7 +217,7 @@ namespace WorldWeaver.Parsers.Elements
                         break;
 
                     case "element_attributes":
-                        varElement = elemLog.GetElementByKey(gameDb, output.Condition);
+                        varElement = elemLog.GetElementByKey(output.Condition);
                         if (varElement.ElementKey.Equals(""))
                         {
                             continue;
@@ -233,7 +233,7 @@ namespace WorldWeaver.Parsers.Elements
                             continue;
                         }
                         var varCount = 0;
-                        var invElems = elemLog.GetElementChildren(gameDb, "player");
+                        var invElems = elemLog.GetElementChildren("player");
                         foreach (var elem in invElems)
                         {
                             if (output.SubCondition.Equals("count") && elem.Tags.Contains("inventory"))
@@ -380,7 +380,7 @@ namespace WorldWeaver.Parsers.Elements
 
             return success;
         }
-#endregion
+        #endregion
 
 
         public string ParseSetLogic(string gameDb, string logic, string userInput, string tag)
