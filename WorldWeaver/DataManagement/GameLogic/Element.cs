@@ -10,7 +10,7 @@ namespace WorldWeaver.DataManagement.GameLogic
 {
     public class Element
     {
-        public List<Classes.Element> GetElementsByType(string gameDb, string type)
+        public List<Classes.Element> GetElementsByType(string type)
         {
             var cachedElems = Tools.CacheManager.GetCachedElementByType(type);
             if (cachedElems.Count > 0)
@@ -52,11 +52,11 @@ ORDER BY
                 ParamValue = type
             });
 
-            var output = GetElements(selectQuery, gameDb, parms);
+            var output = GetElements(selectQuery, MainClass.gameDb, parms);
             return output;
         }
 
-        public List<Classes.Element> GetRandOutputElements(string gameDb)
+        public List<Classes.Element> GetRandOutputElements()
         {
             var selectQuery = $@"
 SELECT
@@ -82,15 +82,15 @@ ORDER BY
 ;
             ";
 
-            var output = GetElements(selectQuery, gameDb);
+            var output = GetElements(selectQuery);
             return output;
         }
 
-        internal bool SetElementParentKey(string gameDb, string key, string parentKey)
+        internal bool SetElementParentKey(string key, string parentKey)
         {
             var output = false;
 
-            var gameFile = $"Games/{gameDb}";
+            var gameFile = $"Games/{MainClass.gameDb}";
 
             if (!File.Exists(gameFile))
             {
@@ -126,12 +126,12 @@ WHERE 1=1
                 output = true;
             }
 
-            CacheManager.RefreshCache(gameDb);
+            CacheManager.RefreshCache();
 
             return output;
         }
 
-        public Classes.Element GetElementByKey(string gameDb, string element_key)
+        public Classes.Element GetElementByKey(string element_key)
         {
             var cachedElem = CacheManager.GetCachedElement(element_key);
             if (cachedElem != null)
@@ -168,12 +168,12 @@ WHERE 1=1
             });
 
 
-            var output = GetElement(selectQuery, gameDb, parms);
+            var output = GetElement(selectQuery, parms);
 
             return output;
         }
 
-        public List<Classes.Element> GetElementChildren(string gameDb, string parent_key)
+        public List<Classes.Element> GetElementChildren(string parent_key)
         {
             var cachedElem = Tools.CacheManager.GetCachedElement(parent_key);
             if (cachedElem != null)
@@ -213,12 +213,12 @@ ORDER BY
             });
 
 
-            var output = GetElements(selectQuery, gameDb, parms);
+            var output = GetElements(selectQuery, MainClass.gameDb, parms);
 
             return output;
         }
 
-        public string GetElementField(string gameDb, string element_key, string element_field)
+        public string GetElementField(string element_key, string element_field)
         {
             var output = "";
             var selectQuery = $@"
@@ -239,7 +239,7 @@ WHERE 1=1
                 ParamValue = element_key
             });
 
-            var gameFile = $"Games/{gameDb}";
+            var gameFile = $"Games/{MainClass.gameDb}";
 
             if (!File.Exists(gameFile))
             {
@@ -276,11 +276,11 @@ WHERE 1=1
         }
 
 
-        public Classes.Element GetElement(string selectQuery, string gameDb, List<DbParameter> parms)
+        public Classes.Element GetElement(string selectQuery, List<DbParameter> parms)
         {
             var output = new Classes.Element();
 
-            var gameFile = $"Games/{gameDb}";
+            var gameFile = $"Games/{MainClass.gameDb}";
 
             if (!File.Exists(gameFile))
             {
@@ -318,7 +318,7 @@ WHERE 1=1
                             e.RepeatIndex = reader.GetInt32(reader.GetOrdinal("RepeatIndex"));
                             e.Active = reader.GetString(reader.GetOrdinal("Active"));
                             e.Sort = reader.GetInt32(reader.GetOrdinal("Sort"));
-                            e.Children = GetElementChildren(gameDb, reader.GetString(reader.GetOrdinal("ElementKey")));
+                            e.Children = GetElementChildren(reader.GetString(reader.GetOrdinal("ElementKey")));
 
                             output = e;
                             break;
@@ -332,9 +332,9 @@ WHERE 1=1
             return output;
         }
 
-        public List<Classes.Element> GetElements(string selectQuery, string gameDb)
+        public List<Classes.Element> GetElements(string selectQuery)
         {
-            return GetElements(selectQuery, gameDb, new List<DbParameter>());
+            return GetElements(selectQuery, MainClass.gameDb, new List<DbParameter>());
         }
         public List<Classes.Element> GetElements(string selectQuery, string gameDb, List<DbParameter> parms)
         {
@@ -378,7 +378,7 @@ WHERE 1=1
                             e.RepeatIndex = reader.GetInt32(reader.GetOrdinal("RepeatIndex"));
                             e.Active = reader.GetString(reader.GetOrdinal("Active"));
                             e.Sort = reader.GetInt32(reader.GetOrdinal("Sort"));
-                            e.Children = GetElementChildren(gameDb, reader.GetString(reader.GetOrdinal("ElementKey")));
+                            e.Children = GetElementChildren(reader.GetString(reader.GetOrdinal("ElementKey")));
 
                             output.Add(e);
                         }
@@ -437,11 +437,11 @@ WHERE 1=1
             return output;
         }
 
-        public bool SetElementField(string gameDb, string element_key, string field, string new_value, bool refreshCache = true)
+        public bool SetElementField(string element_key, string field, string new_value, bool refreshCache = true)
         {
             var output = false;
 
-            var gameFile = $"Games/{gameDb}";
+            var gameFile = $"Games/{MainClass.gameDb}";
 
             if (!File.Exists(gameFile))
             {
@@ -478,13 +478,13 @@ WHERE 1=1
 
             if (refreshCache)
             {
-                CacheManager.RefreshCache(gameDb);
+                CacheManager.RefreshCache();
             }
 
             return output;
         }
 
-        public int GetRepeatIndex(string gameDb, string element_key)
+        public int GetRepeatIndex(string element_key)
         {
             var selectQuery = $@"
 SELECT
@@ -505,7 +505,7 @@ WHERE 1=1
             });
 
 
-            var output = GetInt(selectQuery, gameDb, parms);
+            var output = GetInt(selectQuery, MainClass.gameDb, parms);
 
             return output;
         }
@@ -552,13 +552,13 @@ WHERE 1=1
 
         internal string ElementLookup(string gameDb, string idValue)
         {
-            var elem = GetElementByKey(gameDb, idValue);
+            var elem = GetElementByKey(idValue);
             if (!elem.ElementKey.Equals(""))
             {
                 return elem.ElementKey;
             }
 
-            var elems = GetElementKeysBySyntax(gameDb, idValue);
+            var elems = GetElementKeysBySyntax(idValue);
             if (elems.Count == 1)
             {
                 return elems.First();
@@ -567,9 +567,9 @@ WHERE 1=1
             return "";
         }
 
-        internal List<string> GetElementKeysBySyntax(string gameDb, string idValue)
+        internal List<string> GetElementKeysBySyntax(string idValue)
         {
-            return GetElementKeysBySyntax(gameDb, idValue, false);
+            return GetElementKeysBySyntax(MainClass.gameDb, idValue, false);
         }
         internal List<string> GetElementKeysBySyntax(string gameDb, string idValue, bool activeOnly)
         {
@@ -664,10 +664,10 @@ WHERE 1=1
             return output;
         }
 
-        internal void SetRandOutputElements(string gameDb)
+        internal void SetRandOutputElements()
         {
-            var elems = GetRandOutputElements(gameDb);
-            var gameFile = $"Games/{gameDb}";
+            var elems = GetRandOutputElements();
+            var gameFile = $"Games/{MainClass.gameDb}";
 
             if (!File.Exists(gameFile))
             {

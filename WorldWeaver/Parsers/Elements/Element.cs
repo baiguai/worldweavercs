@@ -7,7 +7,7 @@ namespace WorldWeaver.Parsers.Elements
 {
     public class Element
     {
-        public Classes.Output ParseElement(Classes.Output output, string gameDb, Classes.Element currentElement, string userInput, Classes.ElementProc procObj, bool isEntering = false)
+        public void ParseElement(Classes.Element currentElement, Classes.ElementProc procObj, bool isEntering = false)
         {
             var input = new Parsers.Elements.Input();
             var msg = new Parsers.Elements.Message();
@@ -26,7 +26,7 @@ namespace WorldWeaver.Parsers.Elements
                 {
                     if (Cache.GameCache.Game == null)
                     {
-                        return output;
+                        return;
                     }
 
                     handledMove = false;
@@ -45,26 +45,26 @@ namespace WorldWeaver.Parsers.Elements
                             }
 
                             var attackParser = new Parsers.Elements.Attack();
-                            output = attackParser.ParseAttack(output, gameDb, currentElement, child, userInput);
-                            if (output.MatchMade && !output.OutputText.Equals(""))
+                            attackParser.ParseAttack(currentElement, child);
+                            if (MainClass.output.MatchMade && !MainClass.output.OutputText.Equals(""))
                             {
                                 handledAttack = true;
-                                return output;
+                                return;
                             }
                             break;
 
                         case "input":
-                            if (output.MatchMade && !output.OutputText.Equals(""))
+                            if (MainClass.output.MatchMade && !MainClass.output.OutputText.Equals(""))
                             {
                                 continue;
                             }
 
                             if (!handledInpput)
                             {
-                                output = input.ParseInput(output, gameDb, currentElement, child, userInput);
-                                if (output.MatchMade)
+                                input.ParseInput(currentElement, child);
+                                if (MainClass.output.MatchMade)
                                 {
-                                    return output;
+                                    return;
                                 }
                             }
                             break;
@@ -80,31 +80,31 @@ namespace WorldWeaver.Parsers.Elements
                                 continue;
                             }
 
-                            output.MatchMade = false;
-                            output = HandleMessage(output, gameDb, currentElement, child, userInput, procObj.AllowRepeatOptions, isEntering);
-                            if (output.MatchMade)
+                            MainClass.output.MatchMade = false;
+                            HandleMessage(currentElement, child, procObj.AllowRepeatOptions, isEntering);
+                            if (MainClass.output.MatchMade)
                             {
                                 handledMessage = true;
                             }
                             break;
 
                         case "action":
-                            output = HandleAction(output, gameDb, child, userInput);
+                            HandleAction(child);
                             if (Cache.GameCache.Game == null)
                             {
-                                return output;
+                                return;
                             }
                             break;
 
                         case "logic":
                             var lgc = new Parsers.Elements.Logic();
 
-                            output = lgc.ParseLogic(output, gameDb, child, userInput);
+                            lgc.ParseLogic(child);
 
-                            if (output.FailedLogic)
+                            if (MainClass.output.FailedLogic)
                             {
-                                output.FailedLogic = false;
-                                return output;
+                                MainClass.output.FailedLogic = false;
+                                return;
                             }
                             else
                             {
@@ -112,7 +112,7 @@ namespace WorldWeaver.Parsers.Elements
                             }
 
                         case "move":
-                            if (output.MatchMade)
+                            if (MainClass.output.MatchMade)
                             {
                                 continue;
                             }
@@ -123,11 +123,11 @@ namespace WorldWeaver.Parsers.Elements
                             }
 
                             var move = new Parsers.Elements.Move();
-                            output = move.ParseMove(output, gameDb, currentElement, child, index, userInput);
+                            move.ParseMove(currentElement, child, index);
 
-                            if (output.MatchMade)
+                            if (MainClass.output.MatchMade)
                             {
-                                return output;
+                                return;
                             }
                             break;
 
@@ -138,16 +138,16 @@ namespace WorldWeaver.Parsers.Elements
                             }
 
                             var set = new Parsers.Elements.Set();
-                            output = set.ParseSet(output, gameDb, currentElement, child, userInput);
-                            if (output.MatchMade)
+                            set.ParseSet(currentElement, child);
+                            if (MainClass.output.MatchMade)
                             {
                                 var setProcs = Tools.ProcFunctions.GetProcessStepsByType(child.ElementType);
                                 foreach (var childProc in setProcs)
                                 {
-                                    output = ParseElement(output, gameDb, child, userInput, childProc);
-                                    if (output.MatchMade)
+                                    ParseElement(child, childProc);
+                                    if (MainClass.output.MatchMade)
                                     {
-                                        return output;
+                                        return;
                                     }
                                 }
                             }
@@ -157,7 +157,7 @@ namespace WorldWeaver.Parsers.Elements
                             var objectProcs = Tools.ProcFunctions.GetProcessStepsByType(child.ElementType);
                             foreach (var childProc in objectProcs)
                             {
-                                output = ParseElement(output, gameDb, child, userInput, childProc, isEntering);
+                                ParseElement(child, childProc, isEntering);
                             }
                             break;
 
@@ -165,27 +165,28 @@ namespace WorldWeaver.Parsers.Elements
                             var npcProcs = Tools.ProcFunctions.GetProcessStepsByType(child.ElementType);
                             foreach (var childProc in npcProcs)
                             {
-                                output = ParseElement(output, gameDb, child, userInput, childProc, isEntering);
+                                ParseElement(child, childProc, isEntering);
                             }
                             break;
                     }
                 }
             }
 
-            return output;
+            return;
         }
 
-        private Output HandleAction(Output output, string gameDb, Classes.Element currentElement, string userInput)
+        private void HandleAction(Classes.Element currentElement)
         {
             var action = new Parsers.Elements.Action();
-            return action.ParseAction(output, gameDb, currentElement, userInput);
+            action.ParseAction(currentElement);
+            return;
         }
 
-        private int HandleRepeat(string gameDb, Classes.Element currentElement, List<Classes.Element> children, string rptType)
+        private int HandleRepeat(Classes.Element currentElement, List<Classes.Element> children, string rptType)
         {
             var output = 0;
             DataManagement.GameLogic.Element dbElem = new DataManagement.GameLogic.Element();
-            var index = dbElem.GetRepeatIndex(gameDb, currentElement.ElementKey);
+            var index = dbElem.GetRepeatIndex(currentElement.ElementKey);
 
             if (children.Count < 2)
             {
@@ -233,7 +234,7 @@ namespace WorldWeaver.Parsers.Elements
                 case "attribute":
                     if (!currentElement.Logic.Equals(""))
                     {
-                        var attribElem = dbElem.GetElementByKey(gameDb, currentElement.Logic);
+                        var attribElem = dbElem.GetElementByKey(currentElement.Logic);
                         try
                         {
                             output = Convert.ToInt32(attribElem.Output) - 1;
@@ -251,11 +252,11 @@ namespace WorldWeaver.Parsers.Elements
             }
 
             currentElement.RepeatIndex = output;
-            dbElem.SetElementField(gameDb, currentElement.ElementKey, "RepeatIndex", output.ToString(), false);
+            dbElem.SetElementField(currentElement.ElementKey, "RepeatIndex", output.ToString(), false);
             return output;
         }
 
-        private Output HandleMessage(Output output, string gameDb, Classes.Element currentElement, Classes.Element child, string userInput, bool allowRepeatOptions, bool isEntering)
+        private void HandleMessage(Classes.Element currentElement, Classes.Element child, bool allowRepeatOptions, bool isEntering)
         {
             var rptType = currentElement.Repeat;
 
@@ -265,7 +266,7 @@ namespace WorldWeaver.Parsers.Elements
             var usingChild = false;
             var index = 0;
 
-            output.MatchMade = false;
+            MainClass.output.MatchMade = false;
 
             // For certain elements, move in a level
             if (Tools.AppSettingFunctions.GetRootArray("Config/NonMessageParentTypes.json").Contains(currentElement.ElementType) &&
@@ -279,7 +280,7 @@ namespace WorldWeaver.Parsers.Elements
 
             if (!msgParent.Repeat.Equals(""))
             {
-                index = HandleRepeat(gameDb, msgParent, msgParent.Children, rptType);
+                index = HandleRepeat(msgParent, msgParent.Children, rptType);
             }
             else
             {
@@ -292,8 +293,8 @@ namespace WorldWeaver.Parsers.Elements
                 {
                     if (c.ElementType.Equals("message") || c.ElementType.Equals("enter_message"))
                     {
-                        output = msg.ParseMessage(output, gameDb, msgParent, c, userInput, allowRepeatOptions, index);
-                        if (output.MatchMade)
+                        msg.ParseMessage(msgParent, c, allowRepeatOptions, index);
+                        if (MainClass.output.MatchMade)
                         {
                             break;
                         }
@@ -302,10 +303,10 @@ namespace WorldWeaver.Parsers.Elements
             }
             else
             {
-                output = msg.ParseMessage(output, gameDb, msgParent, msgElem, userInput, allowRepeatOptions, index);
+                msg.ParseMessage(msgParent, msgElem, allowRepeatOptions, index);
             }
 
-            return output;
+            return;
         }
     }
 }

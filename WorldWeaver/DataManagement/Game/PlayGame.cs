@@ -4,50 +4,48 @@ namespace WorldWeaver.DataManagement.Game
 {
     public class PlayGame
     {
-        public Classes.Output StartGame(Classes.Output output, string gameDb)
+        public void StartGame()
         {
             var gameLogic = new DataManagement.GameLogic.Game();
 
-            var gameKey = gameLogic.GetKey(gameDb);
+            var gameKey = gameLogic.GetKey(MainClass.gameDb);
 
-            output.Value = gameKey;
-            output.MatchMade = gameKey.Equals(""); // Set it to return the output if none found
-
-            return output;
+            MainClass.output.Value = gameKey;
+            MainClass.output.MatchMade = gameKey.Equals(""); // Set it to return the output if none found
         }
 
-        public Classes.Output SetPlayerName(Classes.Output output, string gameDb, string name)
+        public void SetPlayerName(string name)
         {
             var elemLogic = new DataManagement.GameLogic.Element();
 
-            if (elemLogic.SetElementField(gameDb, "player", "name", name))
+            if (elemLogic.SetElementField("player", "name", name))
             {
-                ProcessCustomStaticValues(gameDb);
-                output.OutputText = $"Player name set to {name}.{Environment.NewLine}{Environment.NewLine}";
-                output.MatchMade = true;
+                ProcessCustomStaticValues();
+                MainClass.output.OutputText = $"Player name set to {name}.{Environment.NewLine}{Environment.NewLine}";
+                MainClass.output.MatchMade = true;
             }
             else
             {
-                output.OutputText = $"Unable to set the player name.";
-                output.MatchMade = true;
+                MainClass.output.OutputText = $"Unable to set the player name.";
+                MainClass.output.MatchMade = true;
             }
 
-            CacheManager.RefreshCache(gameDb);
+            CacheManager.RefreshCache();
 
-            return output;
+            return;
         }
 
-        private void ProcessCustomStaticValues(string gameDb)
+        private void ProcessCustomStaticValues()
         {
-            ProcessRandomOutput(gameDb);
+            ProcessRandomOutput();
 
-            CacheManager.RefreshCache(gameDb);
+            CacheManager.RefreshCache();
         }
 
-        private void ProcessRandomOutput(string gameDb)
+        private void ProcessRandomOutput()
         {
             var elemDb = new DataManagement.GameLogic.Element();
-            elemDb.SetRandOutputElements(gameDb);
+            elemDb.SetRandOutputElements(MainClass.gameDb);
         }
     }
 }

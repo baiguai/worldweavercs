@@ -19,7 +19,7 @@ namespace WorldWeaver.Tools
             return output;
         }
 
-        public static Classes.Element GetSelf(string gameDb, Classes.Element currentElement)
+        public static Classes.Element GetSelf(Classes.Element currentElement)
         {
             var self = new Classes.Element();
             var types = Tools.AppSettingFunctions.GetRootArray("Config/SelfTypes.json");
@@ -31,8 +31,8 @@ namespace WorldWeaver.Tools
             }
             else
             {
-                var elem = dbElem.GetElementByKey(gameDb, currentElement.ParentKey);
-                return GetSelf(gameDb, elem);
+                var elem = dbElem.GetElementByKey(MainClass.gameDb, currentElement.ParentKey);
+                return GetSelf(elem);
             }
         }
 

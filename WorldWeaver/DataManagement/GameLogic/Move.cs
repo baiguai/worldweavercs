@@ -6,7 +6,7 @@ namespace WorldWeaver.DataManagement.GameLogic
 {
     public class Move
     {
-        internal Output MoveElement(Output output, string gameDb, string outputText, string subject, string newParentKey, string userInput)
+        internal void MoveElement(string outputText, string subject, string newParentKey)
         {
             var tagList = subject.Split('|');
             var elemDb = new DataManagement.GameLogic.Element();

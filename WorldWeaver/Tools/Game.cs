@@ -2,10 +2,10 @@ namespace WorldWeaver.Tools
 {
     public class Game
     {
-        public static bool IsDay(string gameDb)
+        public static bool IsDay()
         {
             var gameData = new DataManagement.GameLogic.Game();
-            var time = gameData.GetTime(gameDb);
+            var time = gameData.GetTime(MainClass.gameDb);
             var arrTime = time.Split(':');
             var hour = Convert.ToInt32(arrTime[0].Trim());
 
@@ -18,17 +18,17 @@ namespace WorldWeaver.Tools
             return true;
         }
 
-        public static int MissionDays(string gameDb)
+        public static int MissionDays()
         {
             var gameData = new DataManagement.GameLogic.Game();
-            var days = gameData.GetMissionDays(gameDb);
+            var days = gameData.GetMissionDays(MainClass.gameDb);
             return days;
         }
 
-        public static int TotalDays(string gameDb)
+        public static int TotalDays()
         {
             var gameData = new DataManagement.GameLogic.Game();
-            var days = gameData.GetTotalDays(gameDb);
+            var days = gameData.GetTotalDays(MainClass.gameDb);
             return days;
         }
 
@@ -39,10 +39,10 @@ namespace WorldWeaver.Tools
             return curTime;
         }
 
-        public static void IncrementTime(string gameDb)
+        public static void IncrementTime()
         {
             var gameData = new DataManagement.GameLogic.Game();
-            var curTime = gameData.GetTime(gameDb);
+            var curTime = gameData.GetTime(MainClass.gameDb);
             var arrTime = curTime.Split(':');
             var hour = Convert.ToInt32(arrTime[0].Trim());
             var min = Convert.ToInt32(arrTime[1].Trim());
@@ -59,8 +59,8 @@ namespace WorldWeaver.Tools
                 }
             }
 
-            gameData.UpdateGameState(gameDb, "TimeHour", hour);
-            gameData.UpdateGameState(gameDb, "TimeMinute", min);
+            gameData.UpdateGameState(MainClass.gameDb, "TimeHour", hour);
+            gameData.UpdateGameState(MainClass.gameDb, "TimeMinute", min);
         }
     }
 }

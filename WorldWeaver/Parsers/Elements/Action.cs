@@ -8,7 +8,7 @@ namespace WorldWeaver.Parsers.Elements
 {
     public class Action
     {
-        internal Classes.Output ParseAction(Output output, string gameDb, Classes.Element currentElement, string userInput)
+        internal void ParseAction(Classes.Element currentElement)
         {
             var elem = new Parsers.Elements.Element();
             var procItems = Tools.ProcFunctions.GetProcessStepsByType(currentElement.ElementType);
@@ -17,44 +17,42 @@ namespace WorldWeaver.Parsers.Elements
             {
                 foreach (var proc in procItems)
                 {
-                    output = elem.ParseElement(output, gameDb, currentElement, userInput, proc);
+                    elem.ParseElement(currentElement, proc);
                 }
-                if (output.MatchMade)
+                if (MainClass.output.MatchMade)
                 {
                     break;
                 }
             }
 
-            output = ParseMessageActions(output, gameDb, currentElement, userInput);
-            output = ParseLogicActions(output, gameDb, currentElement, userInput);
-
-            return output;
+            ParseMessageActions(currentElement);
+            ParseLogicActions(currentElement);
         }
 
-        internal Classes.Output ParseMessageActions(Output output, string gameDb, Classes.Element currentElement, string userInput)
+        internal void ParseMessageActions(Classes.Element currentElement)
         {
             var tags = currentElement.Tags.Split('|');
 
             if (tags.Contains("list", StringComparer.OrdinalIgnoreCase))
             {
-                output = ParseTags_List(output, gameDb, currentElement, userInput);
+                ParseTags_List(currentElement);
             }
 
             if (tags.Contains("type", StringComparer.OrdinalIgnoreCase))
             {
-                output = ParseTags_Type(output, gameDb, currentElement, currentElement.Logic, userInput);
+                ParseTags_Type(currentElement, currentElement.Logic);
             }
 
-            return output;
+            return;
         }
 
-        private Output ParseTags_Type(Output output, string gameDb, Classes.Element currentElement, string type, string userInput)
+        private void ParseTags_Type(Classes.Element currentElement, string type)
         {
-            if (Cache.RoomCache.Room == null || output.MatchMade)
+            if (Cache.RoomCache.Room == null || MainClass.output.MatchMade)
             {
-                return output;
+                return;
             }
-            var self = Tools.Elements.GetSelf(gameDb, currentElement);
+            var self = Tools.Elements.GetSelf(MainClass.gameDb, currentElement);
             var targets = Tools.Elements.GetElementsByType(Cache.RoomCache.Room, type);
             var elemDb = new DataManagement.GameLogic.Element();
 
@@ -67,7 +65,7 @@ namespace WorldWeaver.Parsers.Elements
                     var selfProcItems = Tools.ProcFunctions.GetProcessStepsByType(elem.ElementType);
                     foreach (var proc in selfProcItems)
                     {
-                        output = elemParser.ParseElement(output, gameDb, elem, userInput, proc);
+                        elemParser.ParseElement(elem, proc);
                     }
                 }
             }
@@ -77,28 +75,28 @@ namespace WorldWeaver.Parsers.Elements
                 if (elem.ParentKey != self.ElementKey)
                 {
                     if ((!elem.Tags.TagsContain("inventory") &&
-                        !Tools.Elements.GetSelf(gameDb, elem).Tags.TagsContain("inventory")) ||
+                        !Tools.Elements.GetSelf(MainClass.gameDb, elem).Tags.TagsContain("inventory")) ||
                         elem.Tags.TagsContain("inspect"))
                     {
-                        var parent = elemDb.GetElementByKey(gameDb, elem.ParentKey);
+                        var parent = elemDb.GetElementByKey(MainClass.gameDb, elem.ParentKey);
                         var procItems = Tools.ProcFunctions.GetProcessStepsByType(elem.ElementType);
                         foreach (var proc in procItems)
                         {
-                            output = elemParser.ParseElement(output, gameDb, elem, userInput, proc);
+                            elemParser.ParseElement(elem, proc);
                         }
                     }
                 }
             }
 
-            if (output.OutputText.Equals(""))
+            if (MainClass.output.OutputText.Equals(""))
             {
-                output = ParseTags_Type(output, gameDb, Cache.RoomCache.Room, type, userInput);
+                ParseTags_Type(Cache.RoomCache.Room, type);
             }
 
-            return output;
+            return;
         }
 
-        private Output ParseTags_List(Output output, string gameDb, Classes.Element currentElement, string userInput)
+        private void ParseTags_List(Classes.Element currentElement)
         {
             var arr = currentElement.Logic.Split("((");
 
@@ -111,16 +109,16 @@ namespace WorldWeaver.Parsers.Elements
 
                 if (key.Equals("[self]"))
                 {
-                    elem = Tools.Elements.GetSelf(gameDb, currentElement);
+                    elem = Tools.Elements.GetSelf(MainClass.gameDb, currentElement);
                 }
                 else
                 {
-                    elem = logic.GetElementByKey(gameDb, key);
+                    elem = logic.GetElementByKey(MainClass.gameDb, key);
                 }
 
                 if (!currentElement.Output.Equals(""))
                 {
-                    output.OutputText += $"{currentElement.Output}{Environment.NewLine}{Environment.NewLine}";
+                    MainClass.output.OutputText += $"{currentElement.Output}{Environment.NewLine}{Environment.NewLine}";
                 }
 
                 foreach (var child in elem.Children)
@@ -129,64 +127,64 @@ namespace WorldWeaver.Parsers.Elements
                     {
                         if (child.Output.Equals(""))
                         {
-                            output.OutputText += $"{child.Name}{Environment.NewLine}";
+                            MainClass.output.OutputText += $"{child.Name}{Environment.NewLine}";
                         }
                         else
                         {
-                            output.OutputText += $"{child.Name}: {child.Output}{Environment.NewLine}";
+                            MainClass.output.OutputText += $"{child.Name}: {child.Output}{Environment.NewLine}";
                         }
-                        output.MatchMade = true;
+                        MainClass.output.MatchMade = true;
                     }
                 }
             }
 
-            return output;
+            return;
         }
 
-        private Output ParseLogicActions(Output output, string gameDb, Classes.Element currentElement, string userInput)
+        private void ParseLogicActions(Classes.Element currentElement)
         {
             switch (currentElement.Logic.ToLower())
             {
                 case "[die]":
-                    output = DoDie(gameDb, output, userInput);
-                    return output;
+                    DoDie();
+                    return;
             }
 
-            return output;
+            return;
         }
 
-        public Output DoDie(string gameDb, Output output, string userInput)
+        public void DoDie()
         {
             var msgParser = new Parsers.Elements.Message();
             var elemDb = new DataManagement.GameLogic.Element();
-            var dieMsg = elemDb.GetElementByKey(gameDb, "die_message");
+            var dieMsg = elemDb.GetElementByKey(MainClass.gameDb, "die_message");
 
             if (dieMsg.ElementKey.Equals(""))
             {
-                output.OutputText = Tools.InitFunctions.GetInitMessage(false);
+                MainClass.output.OutputText = Tools.InitFunctions.GetInitMessage(false);
             }
             else
             {
-                output.OutputText = dieMsg.Output;
+                MainClass.output.OutputText = dieMsg.Output;
             }
 
             Tools.CacheManager.ClearCache();
-            output.MatchMade = true;
+            MainClass.output.MatchMade = true;
 
-            return output;
+            return;
         }
 
-        internal Output DoKill(string gameDb, Output output, string userInput)
+        internal void DoKill()
         {
             var dieElem = Cache.FightCache.Fight.Enemy.ChildByType("kill");
             var elemParser = new Parsers.Elements.Element();
             var procs = Tools.ProcFunctions.GetProcessStepsByType("kill");
             foreach (var proc in procs)
             {
-                output = elemParser.ParseElement(output, gameDb, dieElem, userInput, proc);
+                elemParser.ParseElement(dieElem, proc);
             }
 
-            return output;
+            return;
         }
     }
 }

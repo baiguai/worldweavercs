@@ -6,46 +6,39 @@ namespace WorldWeaver.Parsers
 {
     public class AdminParser
     {
-        public string playerInput = "";
-
-        public Classes.Output ParseInput(string input)
+        public void ParseInput()
         {
-            var output = new Classes.Output()
-            { 
-                MatchMade = false
-            };
-            var method = Tools.CommandFunctions.GetCommandMethod(input, "AdminParser");
+            MainClass.output.MatchMade = false;
+            MainClass.output.OutputText = "";
+
+            var method = Tools.CommandFunctions.GetCommandMethod(MainClass.userInput, "AdminParser");
 
             if (!method.Equals(""))
             {
-                playerInput = input;
-
-                if (!output.MatchMade && method.Equals("DoBuildGame"))
+                if (!MainClass.output.MatchMade && method.Equals("DoBuildGame"))
                 {
-                    DoBuildGame(output);
+                    DoBuildGame();
                 }
 
-                if (!output.MatchMade && method.Equals("DoAdminHelp"))
+                if (!MainClass.output.MatchMade && method.Equals("DoAdminHelp"))
                 {
-                    output = DoAdminHelp(output);
+                    DoAdminHelp();
                 }
             }
-
-            return output;
         }
 
 
-        public void DoBuildGame(Classes.Output output)
+        public void DoBuildGame()
         {
-            output.OutputText = "Could not build the game database.";
+            MainClass.output.OutputText = "Could not build the game database.";
             DataManagement.Game.BuildGame builder = new DataManagement.Game.BuildGame();
 
-            var success = LoadGameData(playerInput.GetInputParamSingle());
+            var success = LoadGameData(MainClass.userInput.GetInputParamSingle());
 
             if (success)
             {
-                output.MatchMade = true;
-                output.OutputText = "Game database successfully built.";
+                MainClass.output.MatchMade = true;
+                MainClass.output.OutputText = "Game database successfully built.";
             }
         }
 
@@ -59,19 +52,17 @@ namespace WorldWeaver.Parsers
             return success;
         }
 
-        public Classes.Output DoAdminHelp(Classes.Output output)
+        public void DoAdminHelp()
         {
-            var parms = playerInput.GetInputParams();
+            var parms = MainClass.userInput.GetInputParams();
 
             if (parms.Equals(""))
             {
                 parms = "_help";
             }
 
-            output.MatchMade = true;
-            output.OutputText = Tools.CommandFunctions.GetHelpTopic(parms, "Admin");
-
-            return output;
+            MainClass.output.MatchMade = true;
+            MainClass.output.OutputText = Tools.CommandFunctions.GetHelpTopic(parms, "Admin");
         }
     }
 }

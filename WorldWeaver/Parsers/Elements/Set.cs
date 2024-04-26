@@ -5,7 +5,7 @@ namespace WorldWeaver.Parsers.Elements
 {
     public class Set
     {
-        public Classes.Output ParseSet(Classes.Output output, string gameDb, Classes.Element parentElement, Classes.Element currentElement, string userInput)
+        public void ParseSet(Classes.Element parentElement, Classes.Element currentElement)
         {
             var elemDb = new DataManagement.GameLogic.Element();
             var logParse = new Parsers.Elements.Logic();

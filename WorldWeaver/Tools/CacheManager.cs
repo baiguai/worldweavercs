@@ -8,7 +8,7 @@ namespace WorldWeaver.Tools
 {
     public class CacheManager
     {
-        public static void RefreshCache(string gameDb)
+        public static void RefreshCache()
         {
             var elemLogic = new DataManagement.GameLogic.Element();
             var logic = new DataManagement.GameLogic.Element();
@@ -18,11 +18,11 @@ namespace WorldWeaver.Tools
             Cache.RoomCache.Room = new Element();
             Cache.GlobalCache.Global = new List<Element>();
 
-            var gameElem = elemLogic.GetElementsByType(gameDb, "game")[0];
-            var player = logic.GetElementByKey(gameDb, "player");
-            var locElem = logic.GetElementByKey(gameDb, player.ParentKey);
-            var globalElems = logic.GetElementsByType(gameDb, "global");
-            var eventElems = logic.GetElementsByType(gameDb, "event");
+            var gameElem = elemLogic.GetElementsByType(MainClass.gameDb, "game")[0];
+            var player = logic.GetElementByKey(MainClass.gameDb, "player");
+            var locElem = logic.GetElementByKey(MainClass.gameDb, player.ParentKey);
+            var globalElems = logic.GetElementsByType(MainClass.gameDb, "global");
+            var eventElems = logic.GetElementsByType(MainClass.gameDb, "event");
 
             Cache.GameCache.Game = gameElem;
             Cache.PlayerCache.Player = player;

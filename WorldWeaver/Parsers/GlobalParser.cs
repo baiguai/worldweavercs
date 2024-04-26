@@ -15,36 +15,35 @@ namespace WorldWeaver.Parsers
     {
         public string playerInput = "";
 
-        public Classes.Output ParseInput(string input)
+        public void ParseInput()
         {
-            var output = new Output();
-            var method = Tools.CommandFunctions.GetCommandMethod(input, "GlobalParser");
+            MainClass.output.MatchMade = false;
+            MainClass.output.OutputText = "";
+            var method = Tools.CommandFunctions.GetCommandMethod(MainClass.userInput, "GlobalParser");
 
             if (!method.Equals(""))
             {
-                playerInput = input;
-                output.MatchMade = true;
+                playerInput = MainClass.userInput;
+                MainClass.output.MatchMade = true;
 
                 switch (method)
                 {
                     case "DoExit":
-                        output.MatchMade = true;
-                        output.OutputText = DoExit();
+                        MainClass.output.MatchMade = true;
+                        MainClass.output.OutputText = DoExit();
                         break;
 
                     case "DoQuit":
-                        output.MatchMade = true;
-                        output.OutputText = DoQuit();
+                        MainClass.output.MatchMade = true;
+                        MainClass.output.OutputText = DoQuit();
                         break;
 
                     case "DoHelp":
-                        output.MatchMade = true;
-                        output.OutputText = DoHelp();
+                        MainClass.output.MatchMade = true;
+                        MainClass.output.OutputText = DoHelp();
                         break;
                 }
             }
-
-            return output;
         }
 
         private string DoQuit() // @note
