@@ -8,15 +8,15 @@ namespace WorldWeaver.Tools
         public static string OutputFormat(this string str)
         {
             if (str == null) return null;
-            var output = str;
+            var formattedOutput = str;
             var outParser = new Parsers.OutputParser();
 
-            output = output.Replace("---", "--------------------------------------------------------------------------------");
-            output = output.Replace("''", "'");
+            formattedOutput = formattedOutput.Replace("---", "--------------------------------------------------------------------------------");
+            formattedOutput = formattedOutput.Replace("''", "'");
 
-            output = outParser.ParseOutput(Cache.GameCache.GameDb, output);
+            formattedOutput = outParser.ParseOutput(formattedOutput);
 
-            return output;
+            return formattedOutput;
         }
 
         public static string FormatDate(this DateTime dt)

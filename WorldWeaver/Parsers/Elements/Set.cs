@@ -51,7 +51,7 @@ namespace WorldWeaver.Parsers.Elements
                 }
                 logic = logic.Replace("[input]", foundElems.First());
             }
-            logic = logParse.ParseSetLogic(gameDb, logic, userInput, parentElement.Tags);
+            logic = logParse.ParseSetLogic(logic, parentElement.Tags);
 
             var arr = logic.Split('(');
             if (arr.Length == 2)
@@ -67,18 +67,18 @@ namespace WorldWeaver.Parsers.Elements
 
                 if (targetKey.Equals("gamestate"))
                 {
-                    SetGameState(gameDb, targetField, newValue);
-                    output.MatchMade = true;
-                    return output;
+                    SetGameState(targetField, newValue);
+                    MainClass.output.MatchMade = true;
+                    return;
                 }
 
-                var targetElement = elemDb.GetElementByKey(gameDb, targetKey);
+                var targetElement = elemDb.GetElementByKey(targetKey);
 
                 if (targetElement.ElementKey.Equals(""))
                 {
-                    output.OutputText += "An error occurred while setting a value.";
-                    output.MatchMade = false;
-                    return output;
+                    MainClass.output.OutputText += "An error occurred while setting a value.";
+                    MainClass.output.MatchMade = false;
+                    return;
                 }
 
                 if (!currentElement.Tags.Equals(""))
@@ -92,28 +92,28 @@ namespace WorldWeaver.Parsers.Elements
                     newValue = NewTagsValue(targetElement, newValue);
                 }
 
-                elemDb.SetElementField(gameDb, targetElement.ElementKey, targetField, newValue);
+                elemDb.SetElementField(targetElement.ElementKey, targetField, newValue);
 
-                output.MatchMade = true;
+                MainClass.output.MatchMade = true;
             }
             else
             {
-                output.OutputText += "An error has occured while setting a value.";
-                output.MatchMade = false;
-                return output;
+                MainClass.output.OutputText += "An error has occured while setting a value.";
+                MainClass.output.MatchMade = false;
+                return;
             }
 
-            return output;
+            return;
         }
 
-        private void SetGameState(string gameDb, string targetField, string newValue)
+        private void SetGameState(string targetField, string newValue)
         {
             if (targetField != "MissionDays")
             {
                 return;
             }
             var gameData = new DataManagement.GameLogic.Game();
-            gameData.UpdateGameState(gameDb, targetField, newValue);
+            gameData.UpdateGameState(targetField, newValue);
         }
 
         private List<Classes.Element> GetTargetElements(string gameDb, Classes.Element currentElement, string targetString)
@@ -126,7 +126,7 @@ namespace WorldWeaver.Parsers.Elements
 
             if (targetString.Equals("[self]"))
             {
-                targetElements.Add(Tools.Elements.GetSelf(gameDb, currentElement));
+                targetElements.Add(Tools.Elements.GetSelf(currentElement));
                 return targetElements;
             }
 
@@ -139,11 +139,11 @@ namespace WorldWeaver.Parsers.Elements
                 var tmpElem = new Classes.Element();
                 if (key.Equals("[self]"))
                 {
-                    tmpElem = Tools.Elements.GetSelf(gameDb, currentElement);
+                    tmpElem = Tools.Elements.GetSelf(currentElement);
                 }
                 else
                 {
-                    tmpElem = elemDb.GetElementByKey(gameDb, key);
+                    tmpElem = elemDb.GetElementByKey(key);
                 }
 
                 if (tmpElem.Tags.Contains(tag))
@@ -164,11 +164,11 @@ namespace WorldWeaver.Parsers.Elements
                 var tmpElem = new Classes.Element();
                 if (key.Equals("[self]"))
                 {
-                    tmpElem = Tools.Elements.GetSelf(gameDb, currentElement);
+                    tmpElem = Tools.Elements.GetSelf(currentElement);
                 }
                 else
                 {
-                    tmpElem = elemDb.GetElementByKey(gameDb, key);
+                    tmpElem = elemDb.GetElementByKey(key);
                 }
 
                 if (tmpElem.ElementType.Equals(type))
@@ -180,7 +180,7 @@ namespace WorldWeaver.Parsers.Elements
                 return targetElements;
             }
 
-            targetElements.Add(elemDb.GetElementByKey(gameDb, targetString));
+            targetElements.Add(elemDb.GetElementByKey(targetString));
 
             return targetElements;
         }

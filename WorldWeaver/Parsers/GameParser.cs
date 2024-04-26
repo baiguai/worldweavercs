@@ -31,7 +31,7 @@ namespace WorldWeaver.Parsers
                             return;
                         }
                         var logic = new DataManagement.GameLogic.Element();
-                        var player = logic.GetElementsByType(MainClass.gameDb, "player");
+                        var player = logic.GetElementsByType("player");
 
                         if (MainClass.output.MatchMade)
                         {
@@ -92,7 +92,7 @@ namespace WorldWeaver.Parsers
         {
             DataManagement.GameLogic.Game gameData = new DataManagement.GameLogic.Game();
 
-            MainClass.output.OutputText = gameData.GetTime(MainClass.gameDb);
+            MainClass.output.OutputText = gameData.GetTime();
             MainClass.output.MatchMade = true;
         }
 
@@ -156,7 +156,7 @@ namespace WorldWeaver.Parsers
 
             try
             {
-                gameElem = elemLogic.GetElementsByType(MainClass.gameDb, "game")[0];
+                gameElem = elemLogic.GetElementsByType("game")[0];
             }
             catch (Exception)
             {
@@ -165,8 +165,8 @@ namespace WorldWeaver.Parsers
                 return;
             }
 
-            var playerElem = elemLogic.GetElementsByType(MainClass.gameDb, "player")[0];
-            var roomElem = elemLogic.GetElementByKey(MainClass.gameDb, playerElem.ParentKey);
+            var playerElem = elemLogic.GetElementsByType("player")[0];
+            var roomElem = elemLogic.GetElementByKey(playerElem.ParentKey);
             var elemParser = new Parsers.Elements.Element();
 
             Cache.GameCache.Game = gameElem;
@@ -209,7 +209,7 @@ namespace WorldWeaver.Parsers
             if (!MainClass.output.MatchMade)
             {
                 var logic = new DataManagement.GameLogic.Element();
-                var player = logic.GetElementsByType(MainClass.gameDb, "player");
+                var player = logic.GetElementsByType("player");
 
                 if (player[0].Name.Equals(""))
                 {

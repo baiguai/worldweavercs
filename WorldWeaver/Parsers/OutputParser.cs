@@ -9,36 +9,36 @@ namespace WorldWeaver.Parsers
 {
     public class OutputParser
     {
-        public string ParseOutput(string gameDb, string outputMessage) // @todo
+        public string ParseOutput(string outputMessage) // @todo
         {
-            var output = outputMessage;
+            var msgOutput = outputMessage;
 
-            output = output.Replace("\\b", $"{Environment.NewLine}");
-            output = ProcessSpecialFunctions(gameDb, output);
-            output = ProcessFieldReplacement(gameDb, output);
-            output = ProcessKeyReplacement(gameDb, output);
-            output = ProcessInlineComparisons(output);
+            msgOutput = msgOutput.Replace("\\b", $"{Environment.NewLine}");
+            msgOutput = ProcessSpecialFunctions(msgOutput);
+            msgOutput = ProcessFieldReplacement(msgOutput);
+            msgOutput = ProcessKeyReplacement(msgOutput);
+            msgOutput = ProcessInlineComparisons(msgOutput);
 
-            return output;
+            return msgOutput;
         }
 
-        private string ProcessSpecialFunctions(string gameDb, string output)
+        private string ProcessSpecialFunctions(string output)
         {
             if (output.Contains("[isday]"))
             {
-                output = output.Replace("[isday]", Tools.Game.IsDay(gameDb).ToString());
+                output = output.Replace("[isday]", Tools.Game.IsDay().ToString());
             }
             if (output.Contains("[time]"))
             {
-                output = output.Replace("[time]", Tools.Game.CurrentTime(gameDb));
+                output = output.Replace("[time]", Tools.Game.CurrentTime());
             }
             if (output.Contains("[totaldays]"))
             {
-                output = output.Replace("[totaldays]", Tools.Game.TotalDays(gameDb).ToString("N0"));
+                output = output.Replace("[totaldays]", Tools.Game.TotalDays().ToString("N0"));
             }
             if (output.Contains("[missiondays]"))
             {
-                output = output.Replace("[missiondays]", Tools.Game.TotalDays(gameDb).ToString("N0"));
+                output = output.Replace("[missiondays]", Tools.Game.TotalDays().ToString("N0"));
             }
             if (output.Contains("[player_armed_weapon]"))
             {
@@ -57,7 +57,7 @@ namespace WorldWeaver.Parsers
             return output;
         }
 
-        private string ProcessFieldReplacement(string gameDb, string outputText)
+        private string ProcessFieldReplacement(string outputText)
         {
             var output = outputText;
             var fldStart = outputText.IndexOf("[field");
@@ -83,7 +83,7 @@ namespace WorldWeaver.Parsers
                 {
                     key = arr[1].Trim();
                     field = arr[2].Trim();
-                    newValue = elemDb.GetElementField(gameDb, key, field);
+                    newValue = elemDb.GetElementField(key, field);
                     output = output.Replace(fld, newValue);
                 }
                 else
@@ -97,54 +97,62 @@ namespace WorldWeaver.Parsers
             return output;
         }
 
-        private string ProcessKeyReplacement(string gameDb, string outputText)
+        private string ProcessKeyReplacement(string outputText)
         {
-            var output = outputText;
+            var keyOutput = outputText;
             var keyStart = outputText.IndexOf("[key");
-            var errMsg = $"Error: [field] logic is malformed in:{Environment.NewLine + Environment.NewLine}{output}";
+            var errMsg = $"Error: [field] logic is malformed in:{Environment.NewLine + Environment.NewLine}{keyOutput}";
 
             while (keyStart > -1)
             {
-                var keyEnd = output.IndexOf(']', keyStart) + 1;
+                var keyEnd = keyOutput.IndexOf(']', keyStart) + 1;
 
                 if (keyEnd <= keyStart)
                 {
                     return errMsg;
                 }
 
-                var keyRef = output[keyStart..keyEnd];
+                var keyRef = keyOutput[keyStart..keyEnd];
                 var arr = keyRef.Replace("[", "").Replace("]", "").Split('|');
-                var key = "";
-                var field = "";
-                var newValue = "";
                 var elemDb = new DataManagement.GameLogic.Element();
 
                 if (arr.Length == 2)
                 {
-                    key = arr[1].Trim();
-                    var elem = elemDb.GetElementByKey(gameDb, key);
+                    string? key = arr[1].Trim();
+                    var elem = elemDb.GetElementByKey(key);
                     var elemParser = new Parsers.Elements.Element();
                     if (elem.ElementType.Equals(""))
                     {
                         elem.ElementType = "general";
                     }
+
+                    // Store the current global output values
+                    var currentOutputText = MainClass.output.OutputText;
+                    var currentMatchedValue = MainClass.output.MatchMade;
+
+                    var customOutputText = "";
                     var procItems = Tools.ProcFunctions.GetProcessStepsByType(elem.ElementType);
-                    var outputObj = new Classes.Output();
                     foreach (var proc in procItems)
                     {
-                        outputObj = elemParser.ParseElement(outputObj, gameDb, elem, "", proc);
+                        elemParser.ParseElement(elem, proc);
                     }
-                    output = output.Replace(keyRef, outputObj.OutputText);
+                    customOutputText = MainClass.output.OutputText;
+
+                    // Reset the global output values
+                    MainClass.output.OutputText = currentOutputText;
+                    MainClass.output.MatchMade = currentMatchedValue;
+
+                    keyOutput = keyOutput.Replace(keyRef, customOutputText);
                 }
                 else
                 {
                     return errMsg;
                 }
 
-                keyStart = output.IndexOf("[field");
+                keyStart = keyOutput.IndexOf("[field");
             }
 
-            return output;
+            return keyOutput;
         }
 
 

@@ -52,7 +52,7 @@ namespace WorldWeaver.Parsers.Elements
             {
                 return;
             }
-            var self = Tools.Elements.GetSelf(MainClass.gameDb, currentElement);
+            var self = Tools.Elements.GetSelf(currentElement);
             var targets = Tools.Elements.GetElementsByType(Cache.RoomCache.Room, type);
             var elemDb = new DataManagement.GameLogic.Element();
 
@@ -75,10 +75,10 @@ namespace WorldWeaver.Parsers.Elements
                 if (elem.ParentKey != self.ElementKey)
                 {
                     if ((!elem.Tags.TagsContain("inventory") &&
-                        !Tools.Elements.GetSelf(MainClass.gameDb, elem).Tags.TagsContain("inventory")) ||
+                        !Tools.Elements.GetSelf(elem).Tags.TagsContain("inventory")) ||
                         elem.Tags.TagsContain("inspect"))
                     {
-                        var parent = elemDb.GetElementByKey(MainClass.gameDb, elem.ParentKey);
+                        var parent = elemDb.GetElementByKey(elem.ParentKey);
                         var procItems = Tools.ProcFunctions.GetProcessStepsByType(elem.ElementType);
                         foreach (var proc in procItems)
                         {
@@ -109,11 +109,11 @@ namespace WorldWeaver.Parsers.Elements
 
                 if (key.Equals("[self]"))
                 {
-                    elem = Tools.Elements.GetSelf(MainClass.gameDb, currentElement);
+                    elem = Tools.Elements.GetSelf(currentElement);
                 }
                 else
                 {
-                    elem = logic.GetElementByKey(MainClass.gameDb, key);
+                    elem = logic.GetElementByKey(key);
                 }
 
                 if (!currentElement.Output.Equals(""))
@@ -157,7 +157,7 @@ namespace WorldWeaver.Parsers.Elements
         {
             var msgParser = new Parsers.Elements.Message();
             var elemDb = new DataManagement.GameLogic.Element();
-            var dieMsg = elemDb.GetElementByKey(MainClass.gameDb, "die_message");
+            var dieMsg = elemDb.GetElementByKey("die_message");
 
             if (dieMsg.ElementKey.Equals(""))
             {

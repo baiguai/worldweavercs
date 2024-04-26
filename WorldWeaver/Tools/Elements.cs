@@ -31,7 +31,7 @@ namespace WorldWeaver.Tools
             }
             else
             {
-                var elem = dbElem.GetElementByKey(MainClass.gameDb, currentElement.ParentKey);
+                var elem = dbElem.GetElementByKey(currentElement.ParentKey);
                 return GetSelf(elem);
             }
         }

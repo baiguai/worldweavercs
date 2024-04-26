@@ -184,7 +184,7 @@ namespace WorldWeaver.Parsers.Elements
 
         private int HandleRepeat(Classes.Element currentElement, List<Classes.Element> children, string rptType)
         {
-            var output = 0;
+            var repeatOutput = 0;
             DataManagement.GameLogic.Element dbElem = new DataManagement.GameLogic.Element();
             var index = dbElem.GetRepeatIndex(currentElement.ElementKey);
 
@@ -198,12 +198,12 @@ namespace WorldWeaver.Parsers.Elements
                 case "none":
                     if (index == children.Count)
                     {
-                        output = children.Count - 1;
+                        repeatOutput = children.Count - 1;
                     }
                     else
                     {
                         index++;
-                        output = index;
+                        repeatOutput = index;
                     }
                     break;
 
@@ -211,23 +211,23 @@ namespace WorldWeaver.Parsers.Elements
                     if (index == -1)
                     {
                         var rnd = new Random((int)DateTime.Now.Ticks);
-                        output = rnd.Next(0, children.Count - 1);
+                        repeatOutput = rnd.Next(0, children.Count - 1);
                     }
                     else
                     {
-                        output = index;
+                        repeatOutput = index;
                     }
                     break;
 
                 case "repeat":
                     if (index >= children.Count - 1)
                     {
-                        output = 0;
+                        repeatOutput = 0;
                     }
                     else
                     {
                         index++;
-                        output = index;
+                        repeatOutput = index;
                     }
                     break;
 
@@ -237,7 +237,7 @@ namespace WorldWeaver.Parsers.Elements
                         var attribElem = dbElem.GetElementByKey(currentElement.Logic);
                         try
                         {
-                            output = Convert.ToInt32(attribElem.Output) - 1;
+                            repeatOutput = Convert.ToInt32(attribElem.Output) - 1;
                         }
                         catch (Exception)
                         {
@@ -247,13 +247,13 @@ namespace WorldWeaver.Parsers.Elements
                     break;
 
                 default:
-                    output = 0;
+                    repeatOutput = 0;
                     break;
             }
 
-            currentElement.RepeatIndex = output;
-            dbElem.SetElementField(currentElement.ElementKey, "RepeatIndex", output.ToString(), false);
-            return output;
+            currentElement.RepeatIndex = repeatOutput;
+            dbElem.SetElementField(currentElement.ElementKey, "RepeatIndex", repeatOutput.ToString(), false);
+            return repeatOutput;
         }
 
         private void HandleMessage(Classes.Element currentElement, Classes.Element child, bool allowRepeatOptions, bool isEntering)

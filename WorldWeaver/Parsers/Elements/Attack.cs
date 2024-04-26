@@ -173,9 +173,9 @@ namespace WorldWeaver.Parsers.Elements
             return;
         }
 
-        private string ProcessEnemyDamageOutput(string output, int damage)
+        private string ProcessEnemyDamageOutput(string damageOutput, int damage)
         {
-            var convOutput = output;
+            var convOutput = damageOutput;
             convOutput = convOutput.Replace("[enemy.title]", Cache.FightCache.Fight.Enemy.AttributeByTag("title").Output);
             convOutput = convOutput.Replace("[enemy.subject_pronoun]", Cache.FightCache.Fight.Enemy.AttributeByTag("subject_pronoun").Output);
             convOutput = convOutput.Replace("[damage]", damage.ToString());
@@ -183,9 +183,9 @@ namespace WorldWeaver.Parsers.Elements
             return convOutput + Environment.NewLine;
         }
 
-        private object ProcessPlayerDamageOutput(string output, int damage)
+        private object ProcessPlayerDamageOutput(string damageOutput, int damage)
         {
-            var convOutput = output;
+            var convOutput = damageOutput;
             convOutput = convOutput.Replace("[self.name]", Cache.FightCache.Fight.Enemy.Name);
             convOutput = convOutput.Replace("[damage]", damage.ToString());
 
