@@ -62,10 +62,10 @@ LIMIT 1
             return output;
         }
 
-        public string GetTime(string gameDb)
+        public string GetTime()
         {
-            var output = "";
-            var gameFile = $"Games/{gameDb}";
+            var timeOutput = "";
+            var gameFile = $"Games/{MainClass.gameDb}";
             var hour = 0;
             var min = 0;
 
@@ -98,7 +98,7 @@ LIMIT 1
                         {
                             hour = reader.GetInt32(reader.GetOrdinal("TimeHour"));
                             min = reader.GetInt32(reader.GetOrdinal("TimeMinute"));
-                            output = $"{hour.ToString().PadLeft(2, '0')}:{min.ToString().PadLeft(2, '0')}";
+                            timeOutput = $"{hour.ToString().PadLeft(2, '0')}:{min.ToString().PadLeft(2, '0')}";
                         }
                     }
                 }
@@ -106,12 +106,12 @@ LIMIT 1
                 connection.Close();
             }
 
-            return output;
+            return timeOutput;
         }
 
-        public void UpdateGameState(string gameDb, string field, string value)
+        public void UpdateGameState(string field, string value)
         {
-            var gameFile = $"Games/{gameDb}";
+            var gameFile = $"Games/{MainClass.gameDb}";
 
             if (!File.Exists(gameFile))
             {
@@ -143,9 +143,9 @@ SET
             }
         }
 
-        public void UpdateGameState(string gameDb, string field, int value)
+        public void UpdateGameState(string field, int value)
         {
-            var gameFile = $"Games/{gameDb}";
+            var gameFile = $"Games/{MainClass.gameDb}";
 
             if (!File.Exists(gameFile))
             {
@@ -177,10 +177,10 @@ SET
             }
         }
 
-        internal int GetMissionDays(string gameDb)
+        internal int GetMissionDays()
         {
-            var output = 0;
-            var gameFile = $"Games/{gameDb}";
+            var missionOutput = 0;
+            var gameFile = $"Games/{MainClass.gameDb}";
 
             if (!File.Exists(gameFile))
             {
@@ -208,7 +208,7 @@ LIMIT 1
                     {
                         if (reader.Read())
                         {
-                            output = reader.GetInt32(reader.GetOrdinal("MissionDays"));
+                            missionOutput = reader.GetInt32(reader.GetOrdinal("MissionDays"));
                         }
                     }
                 }
@@ -216,15 +216,15 @@ LIMIT 1
                 connection.Close();
             }
 
-            return output;
+            return missionOutput;
         }
 
-        internal int GetTotalDays(string gameDb)
+        internal int GetTotalDays()
         {
-            var output = 0;
-            var gameFile = $"Games/{gameDb}";
+            var totalOutput = 0;
+            var gameFile = $"Games/{MainClass.gameDb}";
 
-            if (!File.Exists(gameFile))
+            if (!File.Exists(gameFile)) // @todo Create a ConnectionString function
             {
                 return -1;
             }
@@ -250,7 +250,7 @@ LIMIT 1
                     {
                         if (reader.Read())
                         {
-                            output = reader.GetInt32(reader.GetOrdinal("TotalDays"));
+                            totalOutput = reader.GetInt32(reader.GetOrdinal("TotalDays"));
                         }
                     }
                 }
@@ -258,7 +258,7 @@ LIMIT 1
                 connection.Close();
             }
 
-            return output;
+            return totalOutput;
         }
     }
 }

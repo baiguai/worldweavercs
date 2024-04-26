@@ -63,7 +63,7 @@ namespace WorldWeaver.Parsers
 
                 if (Cache.FightCache.Fight == null)
                 {
-                    var playerInv = elemDb.GetElementChildren(MainClass.gameDb, Cache.PlayerCache.Player.ElementKey);
+                    var playerInv = elemDb.GetElementChildren(Cache.PlayerCache.Player.ElementKey);
                     foreach (var child in playerInv)
                     {
                         var playerProcItems = ProcFunctions.GetProcessStepsByType(child.ElementType);

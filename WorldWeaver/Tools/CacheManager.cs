@@ -18,11 +18,11 @@ namespace WorldWeaver.Tools
             Cache.RoomCache.Room = new Element();
             Cache.GlobalCache.Global = new List<Element>();
 
-            var gameElem = elemLogic.GetElementsByType(MainClass.gameDb, "game")[0];
-            var player = logic.GetElementByKey(MainClass.gameDb, "player");
-            var locElem = logic.GetElementByKey(MainClass.gameDb, player.ParentKey);
-            var globalElems = logic.GetElementsByType(MainClass.gameDb, "global");
-            var eventElems = logic.GetElementsByType(MainClass.gameDb, "event");
+            var gameElem = elemLogic.GetElementsByType("game")[0];
+            var player = logic.GetElementByKey("player");
+            var locElem = logic.GetElementByKey(player.ParentKey);
+            var globalElems = logic.GetElementsByType("global");
+            var eventElems = logic.GetElementsByType("event");
 
             Cache.GameCache.Game = gameElem;
             Cache.PlayerCache.Player = player;
@@ -38,6 +38,7 @@ namespace WorldWeaver.Tools
             Cache.RoomCache.Room = new Classes.Element();
             Cache.GlobalCache.Global.Clear();
             Cache.EventCache.Event.Clear();
+            Cache.FightCache.Fight = null;
         }
 
         internal static Element? GetCachedElement(string key)

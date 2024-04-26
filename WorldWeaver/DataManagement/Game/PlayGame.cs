@@ -45,7 +45,7 @@ namespace WorldWeaver.DataManagement.Game
         private void ProcessRandomOutput()
         {
             var elemDb = new DataManagement.GameLogic.Element();
-            elemDb.SetRandOutputElements(MainClass.gameDb);
+            elemDb.SetRandOutputElements();
         }
     }
 }

@@ -5,32 +5,32 @@ namespace WorldWeaver.Parsers.Elements
     {
         public static bool HasEnterMessage(Classes.Element element)
         {
-            var output = false;
+            var enterMsgOutput = false;
 
             foreach (var child in element.Children)
-            { 
+            {
                 if (child.ElementType.Equals("enter_message"))
                 {
                     return true;
                 }
             }
 
-            return output;
+            return enterMsgOutput;
         }
 
         public static Classes.Element GetChildByType(Classes.Element currentElement, string type)
         {
-            Classes.Element output = null;
+            Classes.Element childOutput = null;
 
             foreach (var child in currentElement.Children)
-            { 
+            {
                 if (child.ElementType.Equals(type))
                 {
                     return child;
                 }
             }
 
-            return output;
+            return childOutput;
         }
     }
 }

@@ -52,7 +52,7 @@ namespace WorldWeaver.Tools
 
                         content = content.Replace("---", "--------------------------------------------------------------------------------");
 
-                        if (cmd["links"] != null) 
+                        if (cmd["links"] != null)
                         {
                             foreach (var link in cmd["links"])
                             {
@@ -157,7 +157,7 @@ namespace WorldWeaver.Tools
                             }
 
                             matchedStr = syntax.Replace("\\b(", "").Replace(")\\b", "").Replace("?:", "").Replace(".", " ");
-                            if (matchedStr.Trim()+" " != pfx)
+                            if (matchedStr.Trim() + " " != pfx)
                             {
                                 output += $"{pfx}{matchedStr}";
                             }

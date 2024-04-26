@@ -111,7 +111,7 @@ namespace WorldWeaver.Parsers.Elements
                 rawVariable = rawVariable.Substring(1).Trim();
             }
 
-            var output = new Classes.ConditionalVariable();
+            var variableOutput = new Classes.ConditionalVariable();
             var variableProcs = Tools.AppSettingFunctions.GetRootArray("Config/LogicVariableTypes.json");
             var subCondProcs = Tools.AppSettingFunctions.GetRootArray("Config/LogicSubConditions.json");
             var elemLog = new DataManagement.GameLogic.Element();
@@ -125,63 +125,63 @@ namespace WorldWeaver.Parsers.Elements
                 {
                     if (arrSubCond[1].Trim().ToLower().Equals(proc.ToLower()))
                     {
-                        output.SubCondition = arrSubCond[1].Trim().ToLower();
+                        variableOutput.SubCondition = arrSubCond[1].Trim().ToLower();
                         break;
                     }
                 }
 
-                output.Condition = arrSubCond[0].Trim();
+                variableOutput.Condition = arrSubCond[0].Trim();
             }
             else
             {
-                output.Condition = rawVariable;
+                variableOutput.Condition = rawVariable;
             }
 
-            if (output.Condition.StartsWith("'"))
+            if (variableOutput.Condition.StartsWith("'"))
             {
-                output.Value = output.Condition.Replace("'", "");
-                return output;
+                variableOutput.Value = variableOutput.Condition.Replace("'", "");
+                return variableOutput;
             }
 
             int test;
-            var isnumeric = int.TryParse(output.Condition, out test);
+            var isnumeric = int.TryParse(variableOutput.Condition, out test);
             if (isnumeric)
             {
-                output.Value = output.Condition;
-                return output;
+                variableOutput.Value = variableOutput.Condition;
+                return variableOutput;
             }
 
-            if (output.Condition.ToLower().Equals("[room]"))
+            if (variableOutput.Condition.ToLower().Equals("[room]"))
             {
-                output.Condition = Cache.RoomCache.Room.ElementKey;
+                variableOutput.Condition = Cache.RoomCache.Room.ElementKey;
             }
 
-            if (output.Condition.ToLower().Equals("[self]"))
+            if (variableOutput.Condition.ToLower().Equals("[self]"))
             {
-                output.Condition = Tools.Elements.GetSelf(currentElement).ElementKey;
+                variableOutput.Condition = Tools.Elements.GetSelf(currentElement).ElementKey;
             }
 
-            if (output.Condition.ToLower().Equals("[isday]"))
+            if (variableOutput.Condition.ToLower().Equals("[isday]"))
             {
-                output.Value = Tools.Game.IsDay().ToString().ToLower();
-                return output;
+                variableOutput.Value = Tools.Game.IsDay().ToString().ToLower();
+                return variableOutput;
             }
 
-            if (output.Condition.ToLower().Equals("[missiondays]"))
+            if (variableOutput.Condition.ToLower().Equals("[missiondays]"))
             {
-                output.Value = Tools.Game.MissionDays().ToString().ToLower();
-                return output;
+                variableOutput.Value = Tools.Game.MissionDays().ToString().ToLower();
+                return variableOutput;
             }
 
-            if (output.Condition.ToLower().Equals("[totaldays]"))
+            if (variableOutput.Condition.ToLower().Equals("[totaldays]"))
             {
-                output.Value = Tools.Game.TotalDays().ToString().ToLower();
-                return output;
+                variableOutput.Value = Tools.Game.TotalDays().ToString().ToLower();
+                return variableOutput;
             }
 
-            if (output.Condition.ToLower().Equals("[inventory]"))
+            if (variableOutput.Condition.ToLower().Equals("[inventory]"))
             {
-                output.Condition = "inventory";
+                variableOutput.Condition = "inventory";
             }
 
             foreach (var proc in variableProcs)
@@ -189,46 +189,46 @@ namespace WorldWeaver.Parsers.Elements
                 switch (proc)
                 {
                     case "element_key":
-                        varElement = elemLog.GetElementByKey(output.Condition);
+                        varElement = elemLog.GetElementByKey(variableOutput.Condition);
                         if (varElement.ElementKey.Equals(""))
                         {
                             continue;
                         }
-                        output.Type = "element";
-                        output.Element = varElement;
-                        switch (output.SubCondition)
+                        variableOutput.Type = "element";
+                        variableOutput.Element = varElement;
+                        switch (variableOutput.SubCondition)
                         {
                             case "location":
-                                output.Value = output.Element.ParentKey;
-                                return output;
+                                variableOutput.Value = variableOutput.Element.ParentKey;
+                                return variableOutput;
 
                             case "tags":
-                                output.Value = output.Element.Tags;
-                                return output;
+                                variableOutput.Value = variableOutput.Element.Tags;
+                                return variableOutput;
 
                             case "active":
-                                output.Value = output.Element.Active;
-                                return output;
+                                variableOutput.Value = variableOutput.Element.Active;
+                                return variableOutput;
 
                             case "type":
-                                output.Value = output.Element.ElementType;
-                                return output;
+                                variableOutput.Value = variableOutput.Element.ElementType;
+                                return variableOutput;
                         }
                         break;
 
                     case "element_attributes":
-                        varElement = elemLog.GetElementByKey(output.Condition);
+                        varElement = elemLog.GetElementByKey(variableOutput.Condition);
                         if (varElement.ElementKey.Equals(""))
                         {
                             continue;
                         }
-                        output.Type = "attribute";
-                        output.Element = varElement;
-                        output.Value = varElement.Output;
-                        return output;
+                        variableOutput.Type = "attribute";
+                        variableOutput.Element = varElement;
+                        variableOutput.Value = varElement.Output;
+                        return variableOutput;
 
                     case "inventory":
-                        if (!output.Condition.Equals("inventory"))
+                        if (!variableOutput.Condition.Equals("inventory"))
                         {
                             continue;
                         }
@@ -236,21 +236,21 @@ namespace WorldWeaver.Parsers.Elements
                         var invElems = elemLog.GetElementChildren("player");
                         foreach (var elem in invElems)
                         {
-                            if (output.SubCondition.Equals("count") && elem.Tags.Contains("inventory"))
+                            if (variableOutput.SubCondition.Equals("count") && elem.Tags.Contains("inventory"))
                             {
                                 varCount++;
                             }
                         }
-                        if (output.SubCondition.Equals("count"))
+                        if (variableOutput.SubCondition.Equals("count"))
                         {
-                            output.Value = varCount.ToString();
-                            return output;
+                            variableOutput.Value = varCount.ToString();
+                            return variableOutput;
                         }
                         break;
                 }
             }
 
-            return output;
+            return variableOutput;
         }
 
         public static bool DoComparison(string variable1, string variable2, string operand)
@@ -383,12 +383,12 @@ namespace WorldWeaver.Parsers.Elements
         #endregion
 
 
-        public string ParseSetLogic(string gameDb, string logic, string userInput, string tag)
+        public string ParseSetLogic(string logic, string tag)
         {
             var output = "";
             var msgParser = new Parsers.Elements.Message();
 
-            output = msgParser.ProcessMessageText(logic, userInput, tag);
+            output = msgParser.ProcessMessageText(logic, tag);
 
             return output;
         }

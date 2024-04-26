@@ -11,11 +11,11 @@ namespace WorldWeaver.Parsers.Elements
         {
             var elemParser = new Elements.Element();
             var elemLogic = new DataManagement.GameLogic.Element();
-            var allTravels = elemLogic.GetElementsByType(gameDb, "travel");
+            var allTravels = elemLogic.GetElementsByType("travel");
 
             foreach (var trv in allTravels)
             {
-                var trvParent = Tools.Elements.GetSelf(gameDb, trv);
+                var trvParent = Tools.Elements.GetSelf(trv);
                 if (trv.Active.ToLower().Equals("true"))
                 {
                     if (!trv.Logic.Equals(""))
@@ -29,17 +29,17 @@ namespace WorldWeaver.Parsers.Elements
 
                                 if (target.Equals(Cache.RoomCache.Room.ElementKey))
                                 {
-                                    elemLogic.SetElementParentKey(gameDb, trvParent.ElementKey, Cache.RoomCache.Room.ElementKey);
+                                    elemLogic.SetElementParentKey(trvParent.ElementKey, Cache.RoomCache.Room.ElementKey);
                                     continue;
                                 }
                                 if (target.Equals(Cache.PlayerCache.Player.ElementKey))
                                 {
-                                    elemLogic.SetElementParentKey(gameDb, trvParent.ElementKey, Cache.PlayerCache.Player.ParentKey);
+                                    elemLogic.SetElementParentKey(trvParent.ElementKey, Cache.PlayerCache.Player.ParentKey);
                                     continue;
                                 }
 
-                                var targetElem = elemLogic.GetElementByKey(gameDb, target);
-                                elemLogic.SetElementParentKey(gameDb, trvParent.ElementKey, targetElem.ParentKey);
+                                var targetElem = elemLogic.GetElementByKey(target);
+                                elemLogic.SetElementParentKey(trvParent.ElementKey, targetElem.ParentKey);
                                 continue;
                             }
                         }
@@ -47,7 +47,7 @@ namespace WorldWeaver.Parsers.Elements
                 }
             }
 
-            CacheManager.RefreshCache(gameDb);
+            CacheManager.RefreshCache();
         }
     }
 }
