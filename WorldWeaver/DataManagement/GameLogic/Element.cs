@@ -606,7 +606,7 @@ WHERE 1=1
             return output;
         }
 
-        internal List<string> GetChildElementKeysBySyntax(string gameDb, Classes.Element parentElement, string idValue, bool activeOnly)
+        internal List<string> GetChildElementKeysBySyntax(Classes.Element parentElement, string idValue, bool activeOnly)
         {
             idValue = idValue.Trim();
             var output = new List<string>();

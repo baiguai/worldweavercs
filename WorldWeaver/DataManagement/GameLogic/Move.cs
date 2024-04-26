@@ -13,37 +13,37 @@ namespace WorldWeaver.DataManagement.GameLogic
             var elem = new Parsers.Elements.Element();
             var success = false;
 
-            newParentKey = HandleSpecialLocations(gameDb, newParentKey);
+            newParentKey = HandleSpecialLocations(newParentKey);
 
             foreach (var tag in tagList)
             {
-                success = elemDb.SetElementParentKey(gameDb, tag, newParentKey);
+                success = elemDb.SetElementParentKey(tag, newParentKey);
 
                 if (tag.Equals(Cache.PlayerCache.Player.ElementKey))
                 {
                     var trvParser = new Parsers.Elements.Travel();
-                    trvParser.ParseTravel(gameDb);
+                    trvParser.ParseTravel();
                 }
             }
 
             if (success)
             {
-                Tools.CacheManager.RefreshCache(gameDb);
+                Tools.CacheManager.RefreshCache();
 
                 var procItems = Tools.ProcFunctions.GetProcessStepsByType(Cache.RoomCache.Room.ElementType);
 
-                output.OutputText += outputText;
+                MainClass.output.OutputText += outputText;
 
                 foreach (var proc in procItems)
                 {
-                    output = elem.ParseElement(output, gameDb, Cache.RoomCache.Room, userInput, proc, true);
+                    elem.ParseElement(Cache.RoomCache.Room, proc, true);
                 }
             }
 
-            return output;
+            return;
         }
 
-        private string HandleSpecialLocations(string gameDb, string newParentKey)
+        private string HandleSpecialLocations(string newParentKey)
         {
             switch (newParentKey)
             {
