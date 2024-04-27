@@ -1,0 +1,17 @@
+﻿{
+    "topics" : [
+        {
+            "pattern" : "\\b(?:example.list)\\b",
+            "title" : "Examples",
+            "string" : "
+* _help ex action examples
+* _help ex attribute examples
+* _help ex enter message examples
+* _help ex game examples
+* _help ex global examples
+* _help ex input examples
+* _help ex random examples
+"
+        }
+    ]
+}

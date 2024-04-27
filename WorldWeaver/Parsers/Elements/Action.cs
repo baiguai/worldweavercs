@@ -153,7 +153,7 @@ namespace WorldWeaver.Parsers.Elements
             return;
         }
 
-        public void DoDie()
+        public void DoDie() // @todo Figure out how to get this to be less buggy.
         {
             var msgParser = new Parsers.Elements.Message();
             var elemDb = new DataManagement.GameLogic.Element();
@@ -165,10 +165,11 @@ namespace WorldWeaver.Parsers.Elements
             }
             else
             {
-                MainClass.output.OutputText = dieMsg.Output;
+                MainClass.output.OutputText = $"{dieMsg.Output}{Environment.NewLine}{Environment.NewLine}{Tools.InitFunctions.GetInitMessage(false)}";
             }
 
             Tools.CacheManager.ClearCache();
+            Tools.Game.RemoveInProgressGame();
             MainClass.output.MatchMade = true;
 
             return;

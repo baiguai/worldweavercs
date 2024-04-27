@@ -18,11 +18,7 @@ namespace WorldWeaver.Parsers.Elements
                 MainClass.output.OutputText += Environment.NewLine + msgElement.Output;
                 MainClass.output.MatchMade = true;
 
-                var msgProcs = Tools.ProcFunctions.GetProcessStepsByType(msgElement.ElementType);
-                foreach (var proc in msgProcs)
-                {
-                    elemParser.ParseElement(msgElement, proc, false);
-                }
+                msgElement.ParseElement();
             }
             else
             {

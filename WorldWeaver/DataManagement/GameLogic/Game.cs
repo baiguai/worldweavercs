@@ -9,7 +9,7 @@ namespace WorldWeaver.DataManagement.GameLogic
         public string GetKey(string gameDb)
         {
             var output = gameDb;
-            var gameFile = $"Games/{gameDb}";
+            var gameFile = $"Games/{gameDb}.db";
 
             if (!File.Exists(gameFile))
             {
@@ -42,9 +42,12 @@ LIMIT 1
                             output = reader.GetString(reader.GetOrdinal("ElementKey"));
                         }
                     }
+
+                    command.Dispose();
                 }
 
                 connection.Close();
+                connection.Dispose();
             }
 
             return output;
@@ -65,16 +68,10 @@ LIMIT 1
         public string GetTime()
         {
             var timeOutput = "";
-            var gameFile = $"Games/{MainClass.gameDb}";
             var hour = 0;
             var min = 0;
 
-            if (!File.Exists(gameFile))
-            {
-                return "";
-            }
-
-            string connectionString = $"Data Source={gameFile};Cache=Shared;";
+            string connectionString = Connection.GetConnection();
 
             string selectQuery = @"
 SELECT
@@ -101,9 +98,12 @@ LIMIT 1
                             timeOutput = $"{hour.ToString().PadLeft(2, '0')}:{min.ToString().PadLeft(2, '0')}";
                         }
                     }
+
+                    command.Dispose();
                 }
 
                 connection.Close();
+                connection.Dispose();
             }
 
             return timeOutput;
@@ -111,14 +111,7 @@ LIMIT 1
 
         public void UpdateGameState(string field, string value)
         {
-            var gameFile = $"Games/{MainClass.gameDb}";
-
-            if (!File.Exists(gameFile))
-            {
-                return;
-            }
-
-            string connectionString = $"Data Source={gameFile};Cache=Shared;";
+            string connectionString = Connection.GetConnection();
 
             var updateQuery = $@"
 UPDATE
@@ -137,22 +130,18 @@ SET
                     command.Parameters.AddWithValue("@newValue", value);
 
                     command.ExecuteNonQuery();
+
+                    command.Dispose();
                 }
 
                 connection.Close();
+                connection.Dispose();
             }
         }
 
         public void UpdateGameState(string field, int value)
         {
-            var gameFile = $"Games/{MainClass.gameDb}";
-
-            if (!File.Exists(gameFile))
-            {
-                return;
-            }
-
-            string connectionString = $"Data Source={gameFile};Cache=Shared;";
+            string connectionString = Connection.GetConnection();
 
             var updateQuery = $@"
 UPDATE
@@ -171,23 +160,19 @@ SET
                     command.Parameters.AddWithValue("@newValue", value);
 
                     command.ExecuteNonQuery();
+
+                    command.Dispose();
                 }
 
                 connection.Close();
+                connection.Dispose();
             }
         }
 
         internal int GetMissionDays()
         {
             var missionOutput = 0;
-            var gameFile = $"Games/{MainClass.gameDb}";
-
-            if (!File.Exists(gameFile))
-            {
-                return -1;
-            }
-
-            string connectionString = $"Data Source={gameFile};Cache=Shared;";
+            string connectionString = Connection.GetConnection();
 
             string selectQuery = @"
 SELECT
@@ -211,9 +196,12 @@ LIMIT 1
                             missionOutput = reader.GetInt32(reader.GetOrdinal("MissionDays"));
                         }
                     }
+
+                    command.Dispose();
                 }
 
                 connection.Close();
+                connection.Dispose();
             }
 
             return missionOutput;
@@ -222,14 +210,7 @@ LIMIT 1
         internal int GetTotalDays()
         {
             var totalOutput = 0;
-            var gameFile = $"Games/{MainClass.gameDb}";
-
-            if (!File.Exists(gameFile)) // @todo Create a ConnectionString function
-            {
-                return -1;
-            }
-
-            string connectionString = $"Data Source={gameFile};Cache=Shared;";
+            string connectionString = Connection.GetConnection();
 
             string selectQuery = @"
 SELECT
@@ -253,9 +234,12 @@ LIMIT 1
                             totalOutput = reader.GetInt32(reader.GetOrdinal("TotalDays"));
                         }
                     }
+
+                    command.Dispose();
                 }
 
                 connection.Close();
+                connection.Dispose();
             }
 
             return totalOutput;

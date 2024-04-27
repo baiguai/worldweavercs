@@ -1,0 +1,11 @@
+﻿{
+    "topics" : [
+        {
+            "pattern" : "\\b(?:gen.games.vs.stories)\\b",
+            "title" : "Games vs Stories",
+            "string" : "
+...
+"
+        }
+    ]
+}

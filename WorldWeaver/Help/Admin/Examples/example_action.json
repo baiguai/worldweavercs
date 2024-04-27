@@ -1,0 +1,22 @@
+﻿{
+    "topics" : [
+        {
+            "pattern" : "\\b(?:ex.action.examples)\\b",
+            "title" : "Action Examples",
+            "string" : "
+Call Custom Element Type
+---
+    {type=input, syntax=\\b(look|l)\\b
+        {type=action, logic=look, tags=type }
+    }
+---
+
+
+Player's Death
+---
+    {type=action, logic=[die] }
+---
+"
+        }
+    ]
+}

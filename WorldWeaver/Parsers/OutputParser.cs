@@ -9,7 +9,7 @@ namespace WorldWeaver.Parsers
 {
     public class OutputParser
     {
-        public string ParseOutput(string outputMessage) // @todo
+        public string ParseOutput(string outputMessage) // @place
         {
             var msgOutput = outputMessage;
 
@@ -131,11 +131,7 @@ namespace WorldWeaver.Parsers
                     var currentMatchedValue = MainClass.output.MatchMade;
 
                     var customOutputText = "";
-                    var procItems = Tools.ProcFunctions.GetProcessStepsByType(elem.ElementType);
-                    foreach (var proc in procItems)
-                    {
-                        elemParser.ParseElement(elem, proc);
-                    }
+                    elem.ParseElement();
                     customOutputText = MainClass.output.OutputText;
 
                     // Reset the global output values

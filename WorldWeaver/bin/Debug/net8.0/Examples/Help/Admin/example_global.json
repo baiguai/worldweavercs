@@ -1,0 +1,61 @@
+﻿{
+    "topics" : [
+        {
+            "pattern" : "\\b(?:ex.global.examples)\\b",
+            "title" : "Global Examples",
+            "string" : "
+General Game Example
+---
+{key=global01, type=global, parent=root
+    {type=input, syntax=\b(stats)\b
+        {type=action, logic=player((stats)), tags=list, output=Stats: }
+    }
+    {type=input, syntax=\b(inventory|inv)\b
+        {type=action, logic=player((inventory)), tags=list, output=Inventory: }
+    }
+
+    {type=input, syntax=\b(arm *)\b
+        {type=set, logic=player_armed(output)[input], tags=arm
+            {type=message, tag=arm
+                output={@
+You are now armed with the [field|[input]|name].
+                }
+            }
+        }
+    }
+
+    {key=day_string
+        {type=action
+            {type=logic
+                logic={@
+                    ?[isday] = 'false'
+                }
+            }
+            {type=message
+                output={@
+It is night.
+
+                }
+            }
+        }
+
+        {type=action
+            {type=logic
+                logic={@
+                    ?[isday] = 'true'
+                }
+            }
+            {type=message
+                output={@
+It is day.
+
+                }
+            }
+        }
+    }
+}
+---
+"
+        }
+    ]
+}

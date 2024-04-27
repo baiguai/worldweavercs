@@ -1,0 +1,11 @@
+﻿{
+    "topics" : [
+        {
+            "pattern" : "\\b(?:gen.escape.characters)\\b",
+            "title" : "Escape Characters",
+            "string" : "
+...
+"
+        }
+    ]
+}

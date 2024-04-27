@@ -1,0 +1,23 @@
+﻿{
+    "topics" : [
+        {
+            "pattern" : "\\b(?:element.list)\\b",
+            "title" : "Elements",
+            "string" : "
+* _help elem action element
+* _help elem attribute element
+* _help elem enter message element
+* _help elem game element
+* _help elem global element
+* _help elem input element
+* _help elem logic element
+* _help elem message element
+* _help elem move element
+* _help elem player element
+* _help elem set element
+* _help elem travel element
+* _help elem weapon element
+"
+        }
+    ]
+}
