@@ -286,7 +286,7 @@ PRAGMA foreign_keys = on;
             return success;
         }
 
-        private int ParseElement(string connectionString, List<string> lines, string parentKey, int startLine) //@note
+        private int ParseElement(string connectionString, List<string> lines, string parentKey, int startLine) // @place
         {
             var success = false;
             var currentDepth = depth;
@@ -429,8 +429,8 @@ PRAGMA foreign_keys = on;
                     case "}":
                         if (element == null)
                         {
-                            MainClass.logger.WriteToLog($"Returning row-index: {currentRow-1}", Logger.LogTypes.BuildGame);
-                            return currentRow-1;
+                            MainClass.logger.WriteToLog($"Returning row-index: {currentRow - 1}", Logger.LogTypes.BuildGame);
+                            return currentRow - 1;
                         }
 
                         if (depth == currentDepth)
@@ -447,7 +447,7 @@ PRAGMA foreign_keys = on;
                 }
             }
 
-            if (element != null) //@note
+            if (element != null) // @place
             {
                 success = LoadElement(connectionString, element);
             }
@@ -476,7 +476,7 @@ PRAGMA foreign_keys = on;
                         break;
                     }
                     else
-                    { 
+                    {
                         if (line.Replace("{", "").Equals("@"))
                         {
                             autoBreak = true;
@@ -515,11 +515,11 @@ PRAGMA foreign_keys = on;
             dataRow = dataRow.Replace("{", "");
             var arr = dataRow.Split(',');
 
-            foreach(var pair in arr)
+            foreach (var pair in arr)
             {
                 var pairArr = pair.Trim().Split('=');
                 if (pairArr.Length == 2)
-                { 
+                {
                     switch (pairArr[0].Trim().ToLower())
                     {
                         case "key":
@@ -693,7 +693,11 @@ VALUES";
                 using (SqliteCommand command = new SqliteCommand(createDbQuery, connection))
                 {
                     command.ExecuteNonQuery();
+                    command.Dispose();
                 }
+
+                connection.Close();
+                connection.Dispose();
             }
 
             success = true;

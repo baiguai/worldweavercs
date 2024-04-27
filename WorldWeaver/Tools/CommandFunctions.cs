@@ -35,9 +35,32 @@ namespace WorldWeaver.Tools
 
         public static string GetHelpTopic(string input, string system)
         {
-            var output = "";
+            var helpOutput = "";
 
-            foreach (var f in Directory.GetFiles($"Help/{system}"))
+            helpOutput = ProcessHelpDirectory($"Help/{system}", input);
+
+            if (helpOutput.Equals(""))
+            {
+                helpOutput = SearchHelp(input, system);
+            }
+
+            return helpOutput;
+        }
+
+        private static string ProcessHelpDirectory(string helpDir, string input)
+        {
+            var helpOutput = "";
+
+            foreach (var d in Directory.GetDirectories(helpDir))
+            {
+                helpOutput = ProcessHelpDirectory(d, input);
+                if (!helpOutput.Equals(""))
+                {
+                    return helpOutput;
+                }
+            }
+
+            foreach (var f in Directory.GetFiles(helpDir))
             {
                 using (StreamReader r = new StreamReader(f))
                 {
@@ -64,36 +87,33 @@ namespace WorldWeaver.Tools
 
                         if (rgx.IsMatch(input))
                         {
-                            if (!output.Equals(""))
+                            if (!helpOutput.Equals(""))
                             {
-                                output += $"{Environment.NewLine}{Environment.NewLine}{Environment.NewLine}";
+                                helpOutput += $"{Environment.NewLine}{Environment.NewLine}{Environment.NewLine}";
                             }
 
-                            output += $"{title}{Environment.NewLine}";
-                            output += $"--------------------------------------------------------------------------------{Environment.NewLine}";
-                            output += content;
+                            helpOutput += $"{title}{Environment.NewLine}";
+                            helpOutput += $"--------------------------------------------------------------------------------{Environment.NewLine}";
+                            helpOutput += content;
 
                             if (links.Count > 0)
                             {
-                                output += $"{Environment.NewLine}{Environment.NewLine}";
-                                output += $"Links{Environment.NewLine}";
-                                output += $"-----{Environment.NewLine}";
+                                helpOutput += $"{Environment.NewLine}{Environment.NewLine}";
+                                helpOutput += $"Links{Environment.NewLine}";
+                                helpOutput += $"-----{Environment.NewLine}";
                                 foreach (var l in links)
                                 {
-                                    output += $"{l}{Environment.NewLine}";
+                                    helpOutput += $"{l}{Environment.NewLine}";
                                 }
                             }
+
+                            return helpOutput;
                         }
                     }
                 }
             }
 
-            if (output.Equals(""))
-            {
-                output = SearchHelp(input, system);
-            }
-
-            return output;
+            return helpOutput;
         }
 
         internal static bool GetDuringGameOption(string input, string parser)
@@ -123,21 +143,32 @@ namespace WorldWeaver.Tools
 
         private static string SearchHelp(string input, string system)
         {
-            var output = "";
-            var rgxString = "";
             var pfx = "help ";
-            var matchedStr = "";
-
             if (system.Equals("Admin"))
             {
                 pfx = "_help ";
             }
 
+            return ProcessHelpSearchDirectory($"Help/{system}", pfx, input);
+        }
+
+        private static string ProcessHelpSearchDirectory(string helpDir, string pfx, string input)
+        {
+            var helpSrchOutput = "";
+            var rgxString = "";
+            var matchedStr = "";
+
+
             rgxString = @$"(?i)\b({input})\b";
 
             Regex rgx = new Regex(rgxString, RegexOptions.IgnoreCase);
 
-            foreach (var f in Directory.GetFiles($"Help/{system}"))
+            foreach (var d in Directory.GetDirectories(helpDir))
+            {
+                helpSrchOutput = ProcessHelpSearchDirectory(d, pfx, input);
+            }
+
+            foreach (var f in Directory.GetFiles(helpDir))
             {
                 using (StreamReader r = new StreamReader(f))
                 {
@@ -151,22 +182,22 @@ namespace WorldWeaver.Tools
 
                         if (rgx.IsMatch(syntax) || rgx.IsMatch(title) || rgx.IsMatch(content))
                         {
-                            if (!output.Equals(""))
+                            if (!helpSrchOutput.Equals(""))
                             {
-                                output += $"{Environment.NewLine}";
+                                helpSrchOutput += $"{Environment.NewLine}";
                             }
 
                             matchedStr = syntax.Replace("\\b(", "").Replace(")\\b", "").Replace("?:", "").Replace(".", " ");
                             if (matchedStr.Trim() + " " != pfx)
                             {
-                                output += $"{pfx}{matchedStr}";
+                                helpSrchOutput += $"{pfx}{matchedStr}";
                             }
                         }
                     }
                 }
             }
 
-            return output;
+            return helpSrchOutput;
         }
     }
 }

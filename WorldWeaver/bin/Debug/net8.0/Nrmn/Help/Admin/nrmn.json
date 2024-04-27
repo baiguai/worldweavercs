@@ -1,0 +1,11 @@
+﻿{
+    "topics" : [
+        {
+            "pattern" : "\\b(?:nrmn)\\b",
+            "title" : "Nrmn Markup",
+            "string" : "
+...
+"
+        }
+    ]
+}

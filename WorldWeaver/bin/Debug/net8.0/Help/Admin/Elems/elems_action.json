@@ -1,0 +1,23 @@
+﻿{
+    "topics" : [
+        {
+            "pattern" : "\\b(?:elem.action.element)\\b",
+            "title" : "Action Element",
+            "string" : "
+{type=action, logic=look, tags=type }
+{type=action, logic=[die] }
+
+---
+
+Actions are extremely powerful elements. If you consult the:
+~/Config/ElementProcRules/ElementByType.json
+configuration file, you will see all the different element types that actions
+can process. Actions can also call custom type elements or even cause the
+player to die.
+",
+            "links" :[
+                "_help ex action examples"
+            ]
+        }
+    ]
+}

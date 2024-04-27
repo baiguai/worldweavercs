@@ -45,7 +45,16 @@ namespace WorldWeaver.Parsers
 
                     if (!MainClass.output.MatchMade && method.Equals("DoResumeGame"))
                     {
-                        DoResumeGame();
+                        var gameFile = MainClass.userInput.Replace("resume ", "");
+                        if (!File.Exists($"Games/{gameFile}_playing.db"))
+                        {
+                            MainClass.userInput = $"play {gameFile}";
+                            DoPlayGame();
+                        }
+                        else
+                        {
+                            DoResumeGame();
+                        }
                     }
 
                     if (!MainClass.output.MatchMade && method.Equals("DoListGames"))
@@ -124,11 +133,11 @@ namespace WorldWeaver.Parsers
             var gameFile = MainClass.userInput.Replace("play ", "");
             if (MainClass.gameDb.Equals(""))
             {
-                MainClass.gameDb = $"{gameFile}_playing.db";
+                MainClass.gameDb = $"{gameFile}_playing";
 
                 try
                 {
-                    File.Copy($"Games/{gameFile}.db", $"Games/{MainClass.gameDb}", true);
+                    File.Copy($"Games/{gameFile}.db", $"Games/{MainClass.gameDb}.db", true);
                 }
                 catch (Exception)
                 {
@@ -144,9 +153,10 @@ namespace WorldWeaver.Parsers
         public void DoResumeGame(bool startingGame = false)
         {
             var gameFile = MainClass.userInput.Replace("resume ", "");
+
             if (MainClass.gameDb.Equals(""))
             {
-                MainClass.gameDb = $"{gameFile}_playing.db";
+                MainClass.gameDb = $"{gameFile}_playing";
             }
 
             DataManagement.GameLogic.Element elemLogic = new DataManagement.GameLogic.Element();
@@ -173,20 +183,12 @@ namespace WorldWeaver.Parsers
             Cache.PlayerCache.Player = playerElem;
             Cache.RoomCache.Room = roomElem;
 
-            if (startingGame)
-            {
-                var gameProcs = ProcFunctions.GetProcessStepsByType("game");
-                foreach (var proc in gameProcs)
-                {
-                    elemParser.ParseElement(Cache.GameCache.Game, proc, true);
-                }
-            }
+            // if (startingGame)
+            // {
+            Cache.GameCache.Game.ParseElement(true);
+            // }
 
-            var procItems = ProcFunctions.GetProcessStepsByType("room");
-            foreach (var proc in procItems)
-            {
-                elemParser.ParseElement(Cache.RoomCache.Room, proc, true);
-            }
+            Cache.RoomCache.Room.ParseElement(true);
         }
 
         public void InitiateGame()

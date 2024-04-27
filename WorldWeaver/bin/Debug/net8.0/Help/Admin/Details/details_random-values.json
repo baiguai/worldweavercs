@@ -1,0 +1,42 @@
+﻿{
+    "topics" : [
+        {
+            "pattern" : "\\b(?:det.random.values)\\b",
+            "title" : "Random Values",
+            "string" : "
+Random values can be stored in an element's output (Typically attributes where
+the random value is all that is stored there. When a random value is
+assigned to an output the value is determined when a new game is started.
+This means that every time the game is played these values are different.
+
+You can use random values like this to store stats on characters or even
+cause the game to be completely different every time it's played, using
+logic and other elements.
+
+Random values can also be stored in the logic field of an element. When they
+are stored here, the value is set every time the element is called.
+
+You can use random logic values for things like the amount of damage a weapon
+inflicts in an attack or other scenarios where the outcome should be different
+every time the element is called.
+
+---
+
+Random syntax:
+
+[rand:4|12]
+
+The numbers following rand: define the limits of its range. Even if you want
+it to be effectively limitless, you will need to set these values however
+you can make them large enough to essentially be limitless:
+
+[rand:0|999999999]
+
+---
+
+For a growing list of random examples use:
+_help ex random examples
+"
+        }
+    ]
+}

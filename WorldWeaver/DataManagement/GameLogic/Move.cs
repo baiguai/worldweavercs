@@ -29,15 +29,8 @@ namespace WorldWeaver.DataManagement.GameLogic
             if (success)
             {
                 Tools.CacheManager.RefreshCache();
-
-                var procItems = Tools.ProcFunctions.GetProcessStepsByType(Cache.RoomCache.Room.ElementType);
-
                 MainClass.output.OutputText += outputText;
-
-                foreach (var proc in procItems)
-                {
-                    elem.ParseElement(Cache.RoomCache.Room, proc, true);
-                }
+                Cache.RoomCache.Room.ParseElement(true);
             }
 
             return;

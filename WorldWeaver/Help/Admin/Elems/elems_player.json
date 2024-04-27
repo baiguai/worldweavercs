@@ -1,0 +1,11 @@
+﻿{
+    "topics" : [
+        {
+            "pattern" : "\\b(?:elem.player.element)\\b",
+            "title" : "Player Element",
+            "string" : "
+...
+"
+        }
+    ]
+}

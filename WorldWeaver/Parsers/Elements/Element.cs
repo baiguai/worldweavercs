@@ -154,19 +154,11 @@ namespace WorldWeaver.Parsers.Elements
                             break;
 
                         case "object":
-                            var objectProcs = Tools.ProcFunctions.GetProcessStepsByType(child.ElementType);
-                            foreach (var childProc in objectProcs)
-                            {
-                                ParseElement(child, childProc, isEntering);
-                            }
+                            child.ParseElement(isEntering);
                             break;
 
                         case "npc":
-                            var npcProcs = Tools.ProcFunctions.GetProcessStepsByType(child.ElementType);
-                            foreach (var childProc in npcProcs)
-                            {
-                                ParseElement(child, childProc, isEntering);
-                            }
+                            child.ParseElement(isEntering);
                             break;
                     }
                 }

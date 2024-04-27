@@ -88,16 +88,13 @@ ORDER BY
 
         internal bool SetElementParentKey(string key, string parentKey)
         {
-            var output = false;
+            var setKeyOutput = false;
 
-            var gameFile = $"Games/{MainClass.gameDb}";
-
-            if (!File.Exists(gameFile))
+            string connectionString = Connection.GetConnection();
+            if (connectionString.Equals(""))
             {
-                return output;
+                return setKeyOutput;
             }
-
-            string connectionString = $"Data Source={gameFile};Cache=Shared;";
 
             var updateQuery = $@"
 UPDATE
@@ -120,15 +117,17 @@ WHERE 1=1
                     command.Parameters.AddWithValue("@newParentKey", parentKey);
 
                     command.ExecuteNonQuery();
+                    command.Dispose();
                 }
 
                 connection.Close();
-                output = true;
+                connection.Dispose();
+                setKeyOutput = true;
             }
 
             CacheManager.RefreshCache();
 
-            return output;
+            return setKeyOutput;
         }
 
         public Classes.Element GetElementByKey(string element_key)
@@ -239,14 +238,7 @@ WHERE 1=1
                 ParamValue = element_key
             });
 
-            var gameFile = $"Games/{MainClass.gameDb}";
-
-            if (!File.Exists(gameFile))
-            {
-                return "";
-            }
-
-            string connectionString = $"Data Source={gameFile};Cache=Shared;";
+            string connectionString = Connection.GetConnection();
 
             using (SqliteConnection connection = new SqliteConnection(connectionString))
             {
@@ -267,9 +259,12 @@ WHERE 1=1
                             break;
                         }
                     }
+
+                    command.Dispose();
                 }
 
                 connection.Close();
+                connection.Dispose();
             }
 
             return output;
@@ -278,16 +273,13 @@ WHERE 1=1
 
         public Classes.Element GetElement(string selectQuery, List<DbParameter> parms)
         {
-            var output = new Classes.Element();
+            var elementOutput = new Classes.Element();
 
-            var gameFile = $"Games/{MainClass.gameDb}";
-
-            if (!File.Exists(gameFile))
+            string connectionString = Connection.GetConnection();
+            if (connectionString.Equals(""))
             {
-                return output;
+                return elementOutput;
             }
-
-            string connectionString = $"Data Source={gameFile};Cache=Shared;";
 
             using (SqliteConnection connection = new SqliteConnection(connectionString))
             {
@@ -320,16 +312,19 @@ WHERE 1=1
                             e.Sort = reader.GetInt32(reader.GetOrdinal("Sort"));
                             e.Children = GetElementChildren(reader.GetString(reader.GetOrdinal("ElementKey")));
 
-                            output = e;
+                            elementOutput = e;
                             break;
                         }
                     }
+
+                    command.Dispose();
                 }
 
                 connection.Close();
+                connection.Dispose();
             }
 
-            return output;
+            return elementOutput;
         }
 
         public List<Classes.Element> GetElements(string selectQuery)
@@ -338,16 +333,13 @@ WHERE 1=1
         }
         public List<Classes.Element> GetElements(string selectQuery, string gameDb, List<DbParameter> parms)
         {
-            var output = new List<Classes.Element>();
+            var elementsOutput = new List<Classes.Element>();
 
-            var gameFile = $"Games/{gameDb}";
-
-            if (!File.Exists(gameFile))
+            string connectionString = Connection.GetConnection(gameDb);
+            if (connectionString.Equals(""))
             {
-                return output;
+                return elementsOutput;
             }
-
-            string connectionString = $"Data Source={gameFile};Cache=Shared;";
 
             using (SqliteConnection connection = new SqliteConnection(connectionString))
             {
@@ -380,22 +372,25 @@ WHERE 1=1
                             e.Sort = reader.GetInt32(reader.GetOrdinal("Sort"));
                             e.Children = GetElementChildren(reader.GetString(reader.GetOrdinal("ElementKey")));
 
-                            output.Add(e);
+                            elementsOutput.Add(e);
                         }
                     }
+
+                    command.Dispose();
                 }
 
                 connection.Close();
+                connection.Dispose();
             }
 
-            return output;
+            return elementsOutput;
         }
 
         public List<Classes.SearchElement> GetSearchElements(string selectQuery, string gameDb, List<DbParameter> parms)
         {
             var output = new List<Classes.SearchElement>();
 
-            var gameFile = $"Games/{gameDb}";
+            var gameFile = $"Games/{gameDb}.db";
 
             if (!File.Exists(gameFile))
             {
@@ -429,9 +424,12 @@ WHERE 1=1
                             output.Add(e);
                         }
                     }
+
+                    command.Dispose();
                 }
 
                 connection.Close();
+                connection.Dispose();
             }
 
             return output;
@@ -441,14 +439,7 @@ WHERE 1=1
         {
             var output = false;
 
-            var gameFile = $"Games/{MainClass.gameDb}";
-
-            if (!File.Exists(gameFile))
-            {
-                return output;
-            }
-
-            string connectionString = $"Data Source={gameFile};Cache=Shared;";
+            string connectionString = Connection.GetConnection();
 
             var updateQuery = $@"
 UPDATE
@@ -470,9 +461,12 @@ WHERE 1=1
                     command.Parameters.AddWithValue("@newvalue", new_value);
 
                     command.ExecuteNonQuery();
+
+                    command.Dispose();
                 }
 
                 connection.Close();
+                connection.Dispose();
                 output = true;
             }
 
@@ -514,7 +508,7 @@ WHERE 1=1
         {
             var output = 0;
 
-            var gameFile = $"Games/{gameDb}";
+            var gameFile = $"Games/{gameDb}.db";
 
             if (!File.Exists(gameFile))
             {
@@ -542,9 +536,12 @@ WHERE 1=1
                             break;
                         }
                     }
+
+                    connection.Dispose();
                 }
 
                 connection.Close();
+                connection.Dispose();
             }
 
             return output;
@@ -667,14 +664,7 @@ WHERE 1=1
         internal void SetRandOutputElements()
         {
             var elems = GetRandOutputElements();
-            var gameFile = $"Games/{MainClass.gameDb}";
-
-            if (!File.Exists(gameFile))
-            {
-                return;
-            }
-
-            string connectionString = $"Data Source={gameFile};Cache=Shared;";
+            string connectionString = Connection.GetConnection();
 
             using (SqliteConnection connection = new SqliteConnection(connectionString))
             {
@@ -698,10 +688,13 @@ WHERE 1=1
                     using (SqliteCommand command = new SqliteCommand(updateQuery, connection))
                     {
                         command.ExecuteNonQuery();
+
+                        command.Dispose();
                     }
                 }
 
                 connection.Close();
+                connection.Dispose();
             }
         }
     }

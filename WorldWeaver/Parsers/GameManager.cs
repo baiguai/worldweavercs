@@ -19,26 +19,12 @@ namespace WorldWeaver.Parsers
                     CacheManager.RefreshCache();
                 }
 
-                var procItems = Tools.ProcFunctions.GetProcessStepsByType(Cache.GameCache.Game.ElementType);
-                foreach (var proc in procItems)
+                foreach (var glob in Cache.GlobalCache.Global)
                 {
-                    foreach (var glob in Cache.GlobalCache.Global)
-                    {
-                        elemParser.ParseElement(glob, proc, false);
-                    }
+                    glob.ParseElement();
                 }
-
-                procItems = Tools.ProcFunctions.GetProcessStepsByType(Cache.PlayerCache.Player.ElementType);
-                foreach (var proc in procItems)
-                {
-                    elemParser.ParseElement(Cache.PlayerCache.Player, proc);
-                }
-
-                procItems = Tools.ProcFunctions.GetProcessStepsByType(Cache.RoomCache.Room.ElementType);
-                foreach (var proc in procItems)
-                {
-                    elemParser.ParseElement(Cache.RoomCache.Room, proc);
-                }
+                Cache.PlayerCache.Player.ParseElement();
+                Cache.RoomCache.Room.ParseElement();
             }
             else
             {
@@ -47,13 +33,7 @@ namespace WorldWeaver.Parsers
                     if (!Cache.GameCache.GameInitialized)
                     {
                         CacheManager.RefreshCache();
-                        var gameProcItems = Tools.ProcFunctions.GetProcessStepsByType(Cache.GameCache.Game.ElementType);
-
-                        foreach (var proc in gameProcItems)
-                        {
-                            elemParser.ParseElement(Cache.GameCache.Game, proc, false);
-                        }
-
+                        Cache.GameCache.Game.ParseElement();
                         Cache.GameCache.GameInitialized = true;
                     }
                 }
@@ -66,27 +46,14 @@ namespace WorldWeaver.Parsers
                     var playerInv = elemDb.GetElementChildren(Cache.PlayerCache.Player.ElementKey);
                     foreach (var child in playerInv)
                     {
-                        var playerProcItems = ProcFunctions.GetProcessStepsByType(child.ElementType);
-                        foreach (var proc in playerProcItems)
-                        {
-                            elemParser.ParseElement(child, proc);
-                        }
+                        child.ParseElement();
                     }
-
-                    var locProcItems = ProcFunctions.GetProcessStepsByType(Cache.RoomCache.Room.ElementType);
-                    foreach (var proc in locProcItems)
-                    {
-                        elemParser.ParseElement(Cache.RoomCache.Room, proc);
-                    }
+                    Cache.RoomCache.Room.ParseElement();
                 }
 
                 foreach (var glob in Cache.GlobalCache.Global)
                 {
-                    var globalProcItems = ProcFunctions.GetProcessStepsByType("global");
-                    foreach (var proc in globalProcItems)
-                    {
-                        elemParser.ParseElement(glob, proc);
-                    }
+                    glob.ParseElement();
                 }
 
                 if (Cache.GameCache.Game == null)

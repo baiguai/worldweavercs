@@ -1,0 +1,11 @@
+﻿{
+    "topics" : [
+        {
+            "pattern" : "\\b(?:fld.logic.field)\\b",
+            "title" : "Logic Field",
+            "string" : "
+...
+"
+        }
+    ]
+}

@@ -1,0 +1,44 @@
+﻿{
+    "topics" : [
+        {
+            "pattern" : "\\b(?:tut.creating.a.global.file)\\b",
+            "title" : "Creating a Global File",
+            "string" : "
+Sometimes we want to allow the player to enter syntax that can be matched regardless
+of what room they are in. This can be done by creating an element of type 'global'.
+Our player element has some attributes with a tag set to 'stats':
+
+---
+
+{key=player, name=, type=player, parent=local_pub
+    {key=player_life, name=Life, type=attribute, output=[rand:8|18], tags=stats }
+    {key=player_strength, name=Strength, type=attribute, output=[rand:8|18], tags=stats }
+    {key=player_intelligence, name=Intelligence, type=attribute, output=[rand:8|18], tags=stats }
+    {key=player_cunning, name=Cunning, type=attribute, output=[rand:8|18], tags=stats }
+    {key=player_gold, name=Gold, type=attribute, output=[rand:20|40], tags=stats }
+    {key=player_armed, name=Armed Weapon, type=attribute, output=, tags=armed|stats }
+
+    {key=longsword_01, name=Long Sword, type=weapon, syntax=\b(long sword)\b, tags=inventory
+        {name=Damage, type=attribute, logic=[rand:4|12], tags=damage }
+    }
+}
+
+---
+
+We want our players to be able to see what these stats are. So let's create a global file:
+
+~/GameSources/ShadowKeep/global.nrmn
+
+!NOTE!
+    You can have more than one 'global' element in your game, so maybe you want to name this file
+    global_player.nrmn
+    That's entirely up to you.
+
+Let's allow the player to view their stats.
+",
+            "links" : [
+                "_help tut viewing stats"
+            ]
+        }
+    ]
+}

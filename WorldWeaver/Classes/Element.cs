@@ -21,5 +21,16 @@ namespace WorldWeaver.Classes
         public int Sort { get; set; } = 1;
         public string CreateDate { get; set; } = DateTime.Now.FormatDate();
         public string UpdateDate { get; set; } = DateTime.Now.FormatDate();
+
+
+        public void ParseElement(bool isEntering = false)
+        {
+            var elemPars = new Parsers.Elements.Element();
+            var procsList = Tools.ProcFunctions.GetProcessStepsByType(this.ElementType);
+            foreach (var procs in procsList)
+            {
+                elemPars.ParseElement(this, procs, isEntering);
+            }
+        }
     }
 }

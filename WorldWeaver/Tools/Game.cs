@@ -62,5 +62,12 @@ namespace WorldWeaver.Tools
             gameData.UpdateGameState("TimeHour", hour);
             gameData.UpdateGameState("TimeMinute", min);
         }
+
+        internal static void RemoveInProgressGame()
+        {
+            var gameFile = $"Games/{MainClass.gameDb}.db";
+            File.Delete(gameFile);
+            MainClass.gameDb = "";
+        }
     }
 }

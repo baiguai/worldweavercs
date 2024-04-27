@@ -1,0 +1,14 @@
+﻿{
+    "topics" : [
+        {
+            "pattern" : "\\b(?:tut.picking.up.an.object)\\b",
+            "title" : "Picking Up an Object",
+            "string" : "
+...
+",
+            "links" : [
+                "_help tut picking up an object"
+            ]
+        }
+    ]
+}
