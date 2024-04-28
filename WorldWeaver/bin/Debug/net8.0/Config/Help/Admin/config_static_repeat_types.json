@@ -4,7 +4,11 @@
             "pattern" : "\\b(?:conf.static.repeat.types)\\b",
             "title" : "Static Repeat Types",
             "string" : "
-...
+File:
+~/Config/StaticRepeatTypes.json
+
+This configuration is a core piece of WorlWeaver's (WW) logic. So it is
+a good idea to not modify this file.
 "
         }
     ]

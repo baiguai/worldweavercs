@@ -257,3 +257,9 @@
 /media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/bin/Debug/net8.0/Admin/Examples/Help/examples.json
 /media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/bin/Debug/net8.0/Examples/Help/Admin/examples.json
 /media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/bin/Debug/net8.0/Help/Admin/Examples/examples.json
+/media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/bin/Debug/net8.0/Admin/Advanced/Help/regex.json
+/media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/bin/Debug/net8.0/Advanced/Help/Admin/regex.json
+/media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/bin/Debug/net8.0/Help/Admin/Advanced/regex.json
+/media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/bin/Debug/net8.0/Admin/Advanced/Help/logic_syntax.json
+/media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/bin/Debug/net8.0/Advanced/Help/Admin/logic_syntax.json
+/media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/bin/Debug/net8.0/Help/Admin/Advanced/logic_syntax.json

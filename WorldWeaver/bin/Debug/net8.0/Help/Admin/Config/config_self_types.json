@@ -4,7 +4,11 @@
             "pattern" : "\\b(?:conf.self.types)\\b",
             "title" : "Self Types",
             "string" : "
-...
+File:
+~/Config/SelfTypes.json
+
+This file defines the element types that a crawl up to the element's 'self'
+should consider. It is a good idea to NOT modify this configuration file.
 "
         }
     ]

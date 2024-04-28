@@ -4,7 +4,37 @@
             "pattern" : "\\b(?:elem.logic.element)\\b",
             "title" : "Logic Element",
             "string" : "
+{type=logic
+    logic={@
+        ?[self].location = 'player'
+        and
+        ?player_intelligence > 12
+    }
+    output={@
+Well... It looks like you can't use the wand.
+
+    }
+}
+
+---
+
+Any element can have a value in its logic field. However there is a dedicated
+logic element type. A dedicated logic type uses the logic field to perform
+complex comparison logic.
+
+To utilize this logic you will create an 'auto line break' multiline value:
+
+{@
 ...
+}
+
+To set that logic block as a comparison, simply define an entry with a leading
+question mark (?). To perform a second or third (or more) comparison, create
+a row of 'and'.
+(See the example above)
+
+For information on logic element syntax use:
+_help logic syntax
 "
         }
     ]
