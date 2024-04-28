@@ -4,7 +4,13 @@
             "pattern" : "\\b(?:conf.non.message.parent.types)\\b",
             "title" : "Non-Message Parent Types",
             "string" : "
-...
+File:
+~/Config/NonMessageParentTypes.json
+
+When WorldWeaver (WW) is processing messages, if it encounters the element
+types in this config, it moves to the element's children when iterating
+through the messages it encounters. It is a good idea to leave this config
+file unchanged.
 "
         }
     ]

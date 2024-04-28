@@ -4,17 +4,17 @@
             "pattern" : "\\b(?:elem.input.element)\\b",
             "title" : "Input Element",
             "string" : "
-Input elements allow the game's player to interact with the game. What that
-input does is up to you as the game's designer. Here is an example of an
-input and the action it takes when the player's input matches the input's
-syntax regular expression:
-
----
-
 {type=input, syntax=\b(look|l)\b
     {type=action, logic=look, tags=type }
     {type=set, logic=thief_01_travel|active|true }
 }
+
+---
+
+Input elements allow the game's player to interact with the game. What that
+input does is up to you as the game's designer. Here is an example of an
+input and the action it takes when the player's input matches the input's
+syntax regular expression:
 
 ---
 

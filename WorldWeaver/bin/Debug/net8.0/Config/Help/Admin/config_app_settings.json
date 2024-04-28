@@ -4,7 +4,10 @@
             "pattern" : "\\b(?:conf.app.settings)\\b",
             "title" : "App Settings Configuration",
             "string" : "
-...
+File:
+~/Config/AppSettings.json
+
+These can be customized to your liking.
 "
         }
     ]

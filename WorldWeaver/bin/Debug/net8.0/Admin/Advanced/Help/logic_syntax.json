@@ -1,0 +1,11 @@
+﻿{
+    "topics" : [
+        {
+            "pattern" : "\\b(?:logic.syntax)\\b",
+            "title" : "Syntax",
+            "string" : "
+...
+"
+        }
+    ]
+}

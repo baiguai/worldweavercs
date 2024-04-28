@@ -4,7 +4,48 @@
             "pattern" : "\\b(?:conf.init.settings)\\b",
             "title" : "Define the Initial Menu Screen",
             "string" : "
-...
+File:
+~/Config/Init.json
+
+
+This config file defines the WorldWeaver (WW) default menu screen. The
+default value is shown below. This can be altered as you see fit.
+
+
+          _ _ _         _   _ _ _ _                     
+         | | | |___ ___| |_| | | | |___ ___ _ _ ___ ___ 
+         | | | | . |  _| | . | | | | -_| .'| | | -_|  _|
+         |_____|___|_| |_|___|_____|___|__,|\\_/|___|_|  
+                                                        
+  ______________________________________________________________
+  |                                                            | 
+  |   Welcome to the WorldWeaver text-based game engine.       |
+  |                                                            |
+  |____________________________________________________________|
+  |                                                            |
+  |   To list the available games use:                         |
+  |   list games                                               |
+  |                                                            |
+  |   To start a new game use:                                 |
+  |   play <Game name (Case sensitive)>                        |
+  |                                                            |
+  |   To resume a game use:                                    |
+  |   resume <Game name (Case sensitive)>                      |
+  |                                                            |
+  |   To quit the current game use:                            |
+  |   quit                                                     |
+  |                                                            |
+  |   To exit WorldWeaver use:                                 |
+  |   exit                                                     |
+  |                                                            |
+  |                                                            |
+  |   To view this menu use:                                   |
+  |   menu                                                     |
+  |                                                            |
+  |   For Help use:                                            |
+  |   help                                                     |
+  |                                                            |
+  |____________________________________________________________|
 "
         }
     ]
