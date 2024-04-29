@@ -4,7 +4,11 @@
             "pattern" : "\\b(?:elem.move.element)\\b",
             "title" : "Move Element",
             "string" : "
-...
+{type=move, logic=local_pub_north, tags=player
+    output={@
+You get up and walk into the north room.
+    }
+}
 "
         }
     ]

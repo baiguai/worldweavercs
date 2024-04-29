@@ -4,10 +4,30 @@
             "pattern" : "\\b(?:elem.message.element)\\b",
             "title" : "Message Element",
             "string" : "
+{type=message
+    output={@
+You look around. The north room is small and dimly lit.
+
+In the south wall is the door leading back to the tavern's main room.
+    }
+}
+
+---
+
+Message type elements define the text that will be returned to the player.
+These element utilize the output field of the message element.
+
+NOTE:
+To define messages that display line breaks wherever you insert a line break
+in your definition files use the syntax:
+
+{@
 ...
+}
 
 
-\"dddddddd\"
+NOTE:
+Use this syntax for logic element outputs.
 "
         }
     ]
