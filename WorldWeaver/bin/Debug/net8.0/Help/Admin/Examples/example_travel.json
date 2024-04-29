@@ -1,0 +1,11 @@
+﻿{
+    "topics" : [
+        {
+            "pattern" : "\\b(?:ex.travel.examples)\\b",
+            "title" : "Travel Examples",
+            "string" : "
+{key=thief_01_travel, type=travel, logic=[follow|player], active=false }
+"
+        }
+    ]
+}

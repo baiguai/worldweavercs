@@ -1,0 +1,17 @@
+﻿{
+    "topics" : [
+        {
+            "pattern" : "\\b(?:ex.move.examples)\\b",
+            "title" : "Move Examples",
+            "string" : "
+{type=input, syntax=\b(north|n)\b
+    {type=move, logic=local_pub_north, tags=player
+        output={@
+You get up and walk into the north room.
+        }
+    }
+}
+"
+        }
+    ]
+}

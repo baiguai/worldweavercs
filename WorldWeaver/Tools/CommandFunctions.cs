@@ -62,6 +62,11 @@ namespace WorldWeaver.Tools
 
             foreach (var f in Directory.GetFiles(helpDir))
             {
+                if (!f.Contains(".json"))
+                {
+                    continue;
+                }
+
                 using (StreamReader r = new StreamReader(f))
                 {
                     string json = r.ReadToEnd();
@@ -149,27 +154,31 @@ namespace WorldWeaver.Tools
                 pfx = "_help ";
             }
 
-            return ProcessHelpSearchDirectory($"Help/{system}", pfx, input);
+            return ProcessHelpSearchDirectory($"Help/{system}", pfx, input, "");
         }
 
-        private static string ProcessHelpSearchDirectory(string helpDir, string pfx, string input)
+        private static string ProcessHelpSearchDirectory(string helpDir, string pfx, string input, string helpSrchOutput)
         {
-            var helpSrchOutput = "";
             var rgxString = "";
             var matchedStr = "";
 
 
-            rgxString = @$"(?i)\b({input})\b";
+            rgxString = @$"(?i)\b({input.Replace(' ', '.')})\b";
 
             Regex rgx = new Regex(rgxString, RegexOptions.IgnoreCase);
 
             foreach (var d in Directory.GetDirectories(helpDir))
             {
-                helpSrchOutput = ProcessHelpSearchDirectory(d, pfx, input);
+                helpSrchOutput = ProcessHelpSearchDirectory(d, pfx, input, helpSrchOutput);
             }
 
             foreach (var f in Directory.GetFiles(helpDir))
             {
+                if (!f.Contains(".json"))
+                {
+                    continue;
+                }
+
                 using (StreamReader r = new StreamReader(f))
                 {
                     string json = r.ReadToEnd();
@@ -180,7 +189,7 @@ namespace WorldWeaver.Tools
                         var title = (string)cmd["title"];
                         var content = (string)cmd["string"];
 
-                        if (rgx.IsMatch(syntax) || rgx.IsMatch(title) || rgx.IsMatch(content))
+                        if (rgx.IsMatch(syntax) || title.Contains(input, StringComparison.CurrentCultureIgnoreCase) || content.Contains(input, StringComparison.CurrentCultureIgnoreCase))
                         {
                             if (!helpSrchOutput.Equals(""))
                             {

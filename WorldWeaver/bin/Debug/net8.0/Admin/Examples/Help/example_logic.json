@@ -1,0 +1,21 @@
+﻿{
+    "topics" : [
+        {
+            "pattern" : "\\b(?:ex.logic.examples)\\b",
+            "title" : "Logic Examples",
+            "string" : "
+{type=logic
+    logic={@
+        ?[self].location = 'player'
+        and
+        ?player_intelligence > 12
+    }
+    output={@
+Well... It looks like you can't use the wand.
+
+    }
+}
+"
+        }
+    ]
+}

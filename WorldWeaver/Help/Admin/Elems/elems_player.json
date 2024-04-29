@@ -4,7 +4,9 @@
             "pattern" : "\\b(?:elem.player.element)\\b",
             "title" : "Player Element",
             "string" : "
-...
+{key=player, name=, type=player, parent=local_pub
+    ...
+}
 "
         }
     ]

@@ -1,0 +1,38 @@
+﻿{
+    "topics" : [
+        {
+            "pattern" : "\\b(?:ex.inline.message.logic.examples)\\b",
+            "title" : "Inline Message Logic Examples",
+            "string" : "
+Add a line break:
+\\b
+
+
+
+{type=message
+    output={@
+You look around. The north room is small and dimly lit.
+
+In the south wall is the door leading back to the tavern's main room.
+
+[key|day_string]
+
+[?[field|player_life|output] > 0 [=\\bOh good! You are alive.=][=\\b... You aren't a zombie are you?=]?]
+    }
+}
+
+
+
+---
+
+During a Fight:
+
+[enemy.title]
+[enemy.subject_pronoun]
+[damage]
+[self.name]
+[damage]
+"
+        }
+    ]
+}

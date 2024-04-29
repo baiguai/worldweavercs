@@ -4,7 +4,9 @@
             "pattern" : "\\b(?:elem.weapon.element)\\b",
             "title" : "Weapon Element",
             "string" : "
-...
+{key=stolen_shortsword_01, name=Short Sword, type=weapon, syntax=\b(short sword)\b, tags=inventory
+    ...
+}
 "
         }
     ]
