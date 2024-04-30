@@ -15,6 +15,10 @@ namespace WorldWeaver.Parsers
 
             if (!method.Equals(""))
             {
+                if (!MainClass.output.MatchMade && method.Equals("DoValidate"))
+                {
+                    DoValidate();
+                }
                 if (!MainClass.output.MatchMade && method.Equals("DoBuildGame"))
                 {
                     DoBuildGame();
@@ -27,6 +31,11 @@ namespace WorldWeaver.Parsers
             }
         }
 
+        private void DoValidate()
+        {
+            var validParse = new ValidationParser();
+            validParse.ProcessGameValidation(MainClass.userInput.GetInputParamSingle());
+        }
 
         public void DoBuildGame()
         {
