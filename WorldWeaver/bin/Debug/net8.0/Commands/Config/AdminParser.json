@@ -1,6 +1,10 @@
 ﻿{
     "commands" : [
         {
+            "pattern" : "\\b(_validate|_v)\\b",
+            "method" : "DoValidate"
+        },
+        {
             "pattern" : "\\b(_buildgame|_bg|_build)\\b",
             "method" : "DoBuildGame"
         },
