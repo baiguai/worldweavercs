@@ -4,11 +4,10 @@
             "pattern" : "\\b(_help)\\b",
             "title" : "Admin Help",
             "string" : "
-Welcome to the Admin Help System.
+For help with modifying WorldWeaver or defining games you will want to view
+the AdminHelp.html file:
 
-For help with defining games use:
-_help tutorial
-_help toc
+~/Help/Admin/AdminHelp.html
 "
         }
     ]

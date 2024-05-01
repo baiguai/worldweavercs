@@ -58,66 +58,6 @@
     </ContentWithTargetPath>
   </ItemGroup>
   <ItemGroup>
-    <ContentWithTargetPath Include="Help\Admin\Config\**">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <TargetPath>%(RecursiveDir)\Help\Admin\Config\%(Filename)%(Extension)</TargetPath>
-    </ContentWithTargetPath>
-  </ItemGroup>
-  <ItemGroup>
-    <ContentWithTargetPath Include="Help\Admin\Elems\**">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <TargetPath>%(RecursiveDir)\Help\Admin\Elems\%(Filename)%(Extension)</TargetPath>
-    </ContentWithTargetPath>
-  </ItemGroup>
-  <ItemGroup>
-    <ContentWithTargetPath Include="Help\Admin\Fields\**">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <TargetPath>%(RecursiveDir)\Help\Admin\Fields\%(Filename)%(Extension)</TargetPath>
-    </ContentWithTargetPath>
-  </ItemGroup>
-  <ItemGroup>
-    <ContentWithTargetPath Include="Help\Admin\Details\**">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <TargetPath>%(RecursiveDir)\Help\Admin\Details\%(Filename)%(Extension)</TargetPath>
-    </ContentWithTargetPath>
-  </ItemGroup>
-  <ItemGroup>
-    <ContentWithTargetPath Include="Help\Admin\Examples\**">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <TargetPath>%(RecursiveDir)\Help\Admin\Examples\%(Filename)%(Extension)</TargetPath>
-    </ContentWithTargetPath>
-  </ItemGroup>
-  <ItemGroup>
-    <ContentWithTargetPath Include="Help\Admin\General\**">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <TargetPath>%(RecursiveDir)\Help\Admin\General\%(Filename)%(Extension)</TargetPath>
-    </ContentWithTargetPath>
-  </ItemGroup>
-  <ItemGroup>
-    <ContentWithTargetPath Include="Help\Admin\Tools\**">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <TargetPath>%(RecursiveDir)\Help\Admin\Tools\%(Filename)%(Extension)</TargetPath>
-    </ContentWithTargetPath>
-  </ItemGroup>
-  <ItemGroup>
-    <ContentWithTargetPath Include="Help\Admin\Advanced\**">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <TargetPath>%(RecursiveDir)\Help\Admin\Advanced\%(Filename)%(Extension)</TargetPath>
-    </ContentWithTargetPath>
-  </ItemGroup>
-  <ItemGroup>
-    <ContentWithTargetPath Include="Help\Admin\Nrmn\**">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <TargetPath>%(RecursiveDir)\Help\Admin\Nrmn\%(Filename)%(Extension)</TargetPath>
-    </ContentWithTargetPath>
-  </ItemGroup>
-  <ItemGroup>
-    <ContentWithTargetPath Include="Help\Admin\Tutorials\**">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <TargetPath>%(RecursiveDir)\Help\Admin\Tutorials\%(Filename)%(Extension)</TargetPath>
-    </ContentWithTargetPath>
-  </ItemGroup>
-  <ItemGroup>
     <ContentWithTargetPath Include="Help\General\**">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <TargetPath>%(RecursiveDir)\Help\General\%(Filename)%(Extension)</TargetPath>
