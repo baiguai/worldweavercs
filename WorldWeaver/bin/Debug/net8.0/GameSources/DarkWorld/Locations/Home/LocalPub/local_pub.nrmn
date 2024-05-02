@@ -1,0 +1,7 @@
+{key=local_pub, type=room, name=Local Pub
+    {type=enter_message
+        output={@
+You are sitting in the local pub near the center of your village.
+        }
+    }
+}

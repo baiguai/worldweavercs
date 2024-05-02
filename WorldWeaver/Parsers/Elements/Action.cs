@@ -31,16 +31,19 @@ namespace WorldWeaver.Parsers.Elements
 
         internal void ParseMessageActions(Classes.Element currentElement)
         {
-            var tags = currentElement.Tags.Split('|');
-
-            if (tags.Contains("list", StringComparer.OrdinalIgnoreCase))
+            if (currentElement.Tags.TagsContain("list"))
             {
                 ParseTags_List(currentElement);
             }
 
-            if (tags.Contains("type", StringComparer.OrdinalIgnoreCase))
+            if (currentElement.Tags.TagsContain("type"))
             {
                 ParseTags_Type(currentElement, currentElement.Logic);
+            }
+
+            if (currentElement.Tags.TagsContain("key"))
+            {
+                ParseTags_Key(currentElement.Logic);
             }
 
             return;
@@ -131,7 +134,23 @@ namespace WorldWeaver.Parsers.Elements
                         }
                         else
                         {
-                            MainClass.output.OutputText += $"{child.Name}: {child.Output}{Environment.NewLine}";
+                            if (child.Tags.TagsContain("name"))
+                            {
+                                var elemDb = new DataManagement.GameLogic.Element();
+                                var tgtElem = elemDb.GetElementByKey(child.Output);
+                                if (!tgtElem.ElementKey.Equals(""))
+                                {
+                                    MainClass.output.OutputText += $"{child.Name}: {tgtElem.Name}{Environment.NewLine}";
+                                }
+                                else
+                                {
+                                    MainClass.output.OutputText += $"{child.Name}: {child.Output}{Environment.NewLine}";
+                                }
+                            }
+                            else
+                            {
+                                MainClass.output.OutputText += $"{child.Name}: {child.Output}{Environment.NewLine}";
+                            }
                         }
                         MainClass.output.MatchMade = true;
                     }
@@ -140,6 +159,47 @@ namespace WorldWeaver.Parsers.Elements
 
             return;
         }
+
+        private void ParseTags_Key(string logic)
+        {
+            var thekey = logic;
+            var outputSrc = "output";
+            var outputText = "";
+
+            var outList = Tools.LogicFunctions.GetParentAndField(logic, "(", ")");
+            if (outList.Count() == 2)
+            {
+                thekey = outList[0];
+                outputSrc = outList[1];
+            }
+
+            var elemDb = new DataManagement.GameLogic.Element();
+            var tgtElem = elemDb.GetElementByKey(thekey);
+            if (!tgtElem.ElementKey.Equals(""))
+            {
+                switch (outputSrc)
+                {
+                    case "name":
+                        outputText = tgtElem.Name;
+                        break;
+
+                    case "logic":
+                        outputText = tgtElem.Logic;
+                        break;
+
+                    default:
+                        outputText = tgtElem.Output;
+                        break;
+                }
+            }
+
+            if (!outputText.Equals(""))
+            {
+                MainClass.output.OutputText = outputText;
+                MainClass.output.MatchMade = true;
+            }
+        }
+
 
         private void ParseLogicActions(Classes.Element currentElement)
         {

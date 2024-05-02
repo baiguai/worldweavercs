@@ -1,4 +1,8 @@
 {key=global01, type=global, parent=root
+    {type=input, syntax=\b(title)\b
+        {type=action, logic=game_title, tags=key }
+    }
+
     {type=input, syntax=\b(stats)\b
         {type=action, logic=player((stats)), tags=list, output=Stats: }
     }
