@@ -14,10 +14,6 @@
 
 
   <ItemGroup>
-    <ContentWithTargetPath Include="Games\**">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <TargetPath>%(RecursiveDir)\Games\%(Filename)%(Extension)</TargetPath>
-    </ContentWithTargetPath>
     <ContentWithTargetPath Include="Config\ElementProcRules\ElementByType.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <TargetPath>%(RecursiveDir)\Config\ElementProcRules\%(Filename)%(Extension)</TargetPath>
