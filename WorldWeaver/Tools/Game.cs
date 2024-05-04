@@ -69,5 +69,13 @@ namespace WorldWeaver.Tools
             File.Delete(gameFile);
             MainClass.gameDb = "";
         }
+
+        internal static void ClearEverything()
+        {
+            Tools.CacheManager.ClearCache();
+            Tools.Game.RemoveInProgressGame();
+            MainClass.gameDb = "";
+            MainClass.output = new Classes.Output();
+        }
     }
 }

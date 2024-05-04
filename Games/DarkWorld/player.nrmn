@@ -1,13 +1,17 @@
 ﻿{key=player, name=, type=player, parent=local_pub
-    {name=Life, type=attribute, output=[rand:8|18], tags=stats|life }
+    {name=Life, type=attribute, output=[rand:17|35], tags=stats|life }
     {name=Armor Rating, type=attribute, output=[rand:4|10], tags=stats|armor }
     {name=Strength, type=attribute, output=[rand:8|18], tags=stats }
     {name=Intelligence, type=attribute, output=[rand:8|18], tags=stats }
     {name=Cunning, type=attribute, output=[rand:8|18], tags=stats }
     {name=Gold, type=attribute, output=[rand:20|40], tags=stats }
-    {key=player_armed, name=Armed Weapon, type=attribute, output=, tags=armed|stats|name }
+    {key=player_armed, name=Armed Weapon, type=attribute, output=long-sword_01, tags=armed|stats|name }
 
-    {key=longsword_01, name=Long Sword, type=object, syntax=\b(?:your\s+)?long\s+sword\b, tags=inventory
+    {key=heal_rounds, type=attribute, output=5 }
+    {key=heal_amount, type=attribute, output=2 }
+    {key=cur_heal_round, type=attribute, output=0 }
+
+    {key=long-sword_01, name=Long Sword, type=object, syntax=\b(?:your\s+)?long\s+sword\b, tags=inventory
         {name=Damage, type=attribute, logic=[rand:4|12], tags=damage }
         {type=attribute, output=a Long Sword, tags=title }
 

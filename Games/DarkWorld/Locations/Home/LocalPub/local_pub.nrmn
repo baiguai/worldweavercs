@@ -4,4 +4,19 @@
 You are sitting in the local pub near the center of your village.
         }
     }
+
+    {type=look
+        {type=message
+            output={@
+You look around. You are in a loud smokey pub.
+            }
+        }
+    }
+
+
+--------------------------------------------------------------------------------
+
+    {type=input, syntax=\b(look|l)\b
+        {type=action, logic=look, tags=type }
+    }
 }

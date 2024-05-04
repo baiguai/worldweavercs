@@ -50,6 +50,7 @@ namespace WorldWeaver.Parsers.Elements
                 }
             }
 
+            Cache.FightCache.Fight.PlayerHasAttacked = true;
 
             ProcessFightRound();
 
@@ -83,7 +84,7 @@ namespace WorldWeaver.Parsers.Elements
                     var attackRoll = Tools.ValueTools.Randomize(1, 20);
                     var enemyArmor = Cache.FightCache.Fight.Enemy.AttributeByTag("armor");
 
-                    MainClass.output.OutputText += $"Player attack roll: {attackRoll}{Environment.NewLine}Enemy's armor rating: {enemyArmor.Output}";
+                    MainClass.output.OutputText += $"Player attack roll: {attackRoll}{Environment.NewLine}Enemy's armor rating: {enemyArmor.Output}{Environment.NewLine}";
 
                     if (Convert.ToInt32(enemyArmor.Output) <= attackRoll)
                     {
@@ -109,6 +110,7 @@ namespace WorldWeaver.Parsers.Elements
                         }
 
                         gameLgc.SetElementField(enemyLife.ElementKey, "Output", newLifeValue.ToString());
+                        Tools.CacheManager.RefreshFightCache();
                     }
                     else
                     {

@@ -384,7 +384,7 @@ PRAGMA foreign_keys = on;
                         break;
 
                     case string s when line.ToLower().StartsWith("key=", StringComparison.OrdinalIgnoreCase):
-                        element.ElementKey = line.Replace("key=", "").SqlSafe();
+                        element.ElementKey = line.Replace("key=", "").Replace(' ', '_').SqlSafe();
                         break;
 
                     case string s when line.ToLower().StartsWith("name=", StringComparison.OrdinalIgnoreCase):
@@ -523,7 +523,7 @@ PRAGMA foreign_keys = on;
                     switch (pairArr[0].Trim().ToLower())
                     {
                         case "key":
-                            element.ElementKey = pairArr[1].Trim();
+                            element.ElementKey = pairArr[1].Trim().Replace(' ', '_');
                             break;
 
                         case "type":
