@@ -253,6 +253,13 @@ set player name <<NAME>>
             if (MainClass.output.MatchMade)
             {
                 MainClass.output.OutputText = MainClass.output.OutputText.OutputFormat();
+
+                if (Cache.FightCache.Fight != null && !Cache.FightCache.Fight.PlayerHasAttacked)
+                {
+                    var atkParse = new Parsers.Elements.Attack();
+                    Cache.FightCache.Fight.PlayersTurn = false;
+                    atkParse.ProcessFightRound();
+                }
             }
             return;
         }

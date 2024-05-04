@@ -31,13 +31,19 @@ namespace WorldWeaver.Tools
             Cache.EventCache.Event = eventElems;
         }
 
+        public static void RefreshFightCache()
+        {
+            var elemLogic = new DataManagement.GameLogic.Element();
+            Cache.FightCache.Fight.Enemy = elemLogic.GetElementByKey(Cache.FightCache.Fight.Enemy.ElementKey);
+            Tools.CacheManager.RefreshCache();
+        }
         internal static void ClearCache()
         {
             Cache.GameCache.Game = null;
             Cache.PlayerCache.Player = new Classes.Element();
             Cache.RoomCache.Room = new Classes.Element();
-            Cache.GlobalCache.Global.Clear();
-            Cache.EventCache.Event.Clear();
+            Cache.GlobalCache.Global = new List<Element>();
+            Cache.EventCache.Event = new List<Element>();
             Cache.FightCache.Fight = null;
         }
 

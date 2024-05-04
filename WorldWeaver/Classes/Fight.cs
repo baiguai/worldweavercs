@@ -5,5 +5,6 @@ namespace WorldWeaver.Classes
     {
         public bool PlayersTurn { get; set; } = true;
         public Classes.Element Enemy { get; set; } = new Classes.Element();
+        public bool PlayerHasAttacked { get; set; }
     }
 }
