@@ -60,14 +60,6 @@ namespace WorldWeaver.Parsers.Elements
 
         public void ProcessFightRound()
         {
-            var method = Tools.CommandFunctions.GetCommandMethod(MainClass.userInput, "FightParser");
-
-            if (method.Equals("DoFlee"))
-            {
-                MainClass.output.OutputText = Tools.AppSettingFunctions.GetConfigValue("messages", "flee_message") + Environment.NewLine;
-                Cache.FightCache.Fight.PlayersTurn = false;
-            }
-
             if (Cache.FightCache.Fight.PlayersTurn)
             {
                 var playerWeapon = Cache.PlayerCache.Player.AttributeByTag("armed");
@@ -127,6 +119,12 @@ namespace WorldWeaver.Parsers.Elements
             else
             {
                 MainClass.output.OutputText = "";
+
+                if (Cache.FightCache.Fight.PlayerFleeing)
+                {
+                    MainClass.output.OutputText = Tools.AppSettingFunctions.GetConfigValue("messages", "flee_message") + Environment.NewLine;
+                }
+
                 var enemyWeapon = Cache.FightCache.Fight.Enemy.AttributeByTag("armed");
                 if (enemyWeapon != null)
                 {
@@ -165,11 +163,6 @@ namespace WorldWeaver.Parsers.Elements
                 }
 
                 Cache.FightCache.Fight.PlayersTurn = true;
-            }
-
-            if (method.Equals("DoFlee"))
-            {
-                Cache.FightCache.Fight = null;
             }
 
             return;

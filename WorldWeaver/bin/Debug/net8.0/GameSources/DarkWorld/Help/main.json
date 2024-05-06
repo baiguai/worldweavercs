@@ -1,0 +1,18 @@
+{
+    "topics" : [
+        {
+            "pattern" : "\\b(help|\\?)\\b",
+            "title" : "DarkWorld Help",
+            "string" : "
+Welcome to the DarkWorld help system.
+
+If you are new to Interactive Fiction games use:
+help if
+
+
+If you are building games as opposed to playing them, use:
+_help
+"
+        }
+    ]
+}
