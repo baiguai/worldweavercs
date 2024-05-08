@@ -70,7 +70,6 @@ namespace WorldWeaver
                     Console.WriteLine($"Player Life: {playerLife}");
                     Console.WriteLine("");
 
-
                     if (Cache.FightCache.Fight != null && !Cache.FightCache.Fight.PlayersTurn)
                     {
                         Thread.Sleep(2000);
@@ -86,6 +85,13 @@ namespace WorldWeaver
                         Console.WriteLine($"Enemy Life: {enemyLife}");
                         Console.WriteLine($"Player Life: {playerLife}");
                         Console.WriteLine("");
+                    }
+                    else
+                    {
+                        if (Cache.FightCache.Fight.PlayerFleeing)
+                        {
+                            Cache.FightCache.Fight = null;
+                        }
                     }
                 }
             }

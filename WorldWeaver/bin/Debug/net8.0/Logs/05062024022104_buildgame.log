@@ -1,0 +1,191 @@
+New Element created: local_pub, Parent: root
+New Element created: , Parent: local_pub
+New Element created: , Parent: local_pub
+New Element created: , Parent: f7d9a2da-ff4c-499b-825f-2cf59f7bfb14
+Returning row-index: 12
+New Element created: , Parent: local_pub
+New Element created: , Parent: 6561ee4f-6c8f-4179-b5d6-1c5cc695a05c
+Returning row: 19
+Returning row-index: 20
+Element Type: enter_message, Key: 740adb6b-ddaf-4004-87d6-f0e964b805ad, Parent: local_pub
+Element Type: message, Key: 6ba811ac-406c-4764-8067-828a56cdd3a9, Parent: f7d9a2da-ff4c-499b-825f-2cf59f7bfb14
+Element Type: look, Key: f7d9a2da-ff4c-499b-825f-2cf59f7bfb14, Parent: local_pub
+Element Type: action, Key: 5b52a483-98fd-4179-9ea3-184dfceac775, Parent: 6561ee4f-6c8f-4179-b5d6-1c5cc695a05c
+Element Type: input, Key: 6561ee4f-6c8f-4179-b5d6-1c5cc695a05c, Parent: local_pub
+Element Type: room, Key: local_pub, Parent: root
+New Element created: thief_01, Parent: local_pub
+New Element created: , Parent: thief_01
+Returning row: 1
+New Element created: , Parent: thief_01
+Returning row: 2
+New Element created: , Parent: thief_01
+Returning row: 3
+New Element created: , Parent: thief_01
+Returning row: 4
+New Element created: , Parent: thief_01
+Returning row: 5
+New Element created: , Parent: thief_01
+Returning row: 6
+New Element created: , Parent: thief_01
+Returning row: 7
+New Element created: , Parent: thief_01
+Returning row: 8
+New Element created: , Parent: thief_01
+Returning row: 9
+New Element created: , Parent: thief_01
+Returning row: 10
+New Element created: thief_01_shortsword, Parent: thief_01
+New Element created: , Parent: thief_01_shortsword
+Returning row: 13
+New Element created: , Parent: thief_01_shortsword
+Returning row-index: 19
+New Element created: , Parent: thief_01
+New Element created: , Parent: thief_01
+New Element created: thief_01_travel, Parent: thief_01
+Returning row: 40
+New Element created: , Parent: thief_01
+New Element created: , Parent: 864cc4e4-f534-4efe-883c-23a621af39ae
+Returning row-index: 48
+New Element created: , Parent: thief_01
+New Element created: , Parent: ba8ed992-fac8-44ee-a753-6e47c2ca3493
+Returning row-index: 56
+New Element created: , Parent: thief_01
+New Element created: , Parent: e36c8587-d248-4be8-9a0a-033f77679de7
+Returning row: 60
+New Element created: , Parent: e36c8587-d248-4be8-9a0a-033f77679de7
+Returning row-index: 65
+New Element created: , Parent: thief_01
+New Element created: , Parent: 206ed8d4-59a9-4e40-a6f2-213e63b20400
+New Element created: , Parent: 8bf35b19-2d97-4ce4-a50d-69bb7c153e37
+Returning row: 71
+New Element created: , Parent: 8bf35b19-2d97-4ce4-a50d-69bb7c153e37
+Returning row: 72
+Returning row-index: 73
+Returning row-index: 74
+Element Type: attribute, Key: 70b242da-defd-4493-8730-2a8455d76a3d, Parent: thief_01
+Element Type: attribute, Key: d298d204-79c4-49d8-868f-bfecf50d6679, Parent: thief_01
+Element Type: attribute, Key: 458bee40-fbaa-4503-82cb-069e56282b30, Parent: thief_01
+Element Type: attribute, Key: 847461c3-354a-4ea1-9c94-691d3326f831, Parent: thief_01
+Element Type: attribute, Key: 7d540433-f806-47e5-9f0d-46e657252274, Parent: thief_01
+Element Type: attribute, Key: acdce4fa-5c76-4c16-b5ac-c0c467dbeb67, Parent: thief_01
+Element Type: attribute, Key: 600f677d-c84f-4f49-a7e6-9e39473807ec, Parent: thief_01
+Element Type: attribute, Key: f16a4670-9c67-48de-b771-92588a8e5e67, Parent: thief_01
+Element Type: attribute, Key: 11077fe1-fee9-4aca-874a-bf4cd7262cc7, Parent: thief_01
+Element Type: attribute, Key: 264cd405-4cd5-414b-821e-8a54ec6074d3, Parent: thief_01
+Element Type: attribute, Key: 586fc85a-0b8b-45d2-99c0-e456b4ecf808, Parent: thief_01_shortsword
+Element Type: hit, Key: b1ecf40e-6ccb-4977-8824-3f5a9117668e, Parent: thief_01_shortsword
+Element Type: object, Key: thief_01_shortsword, Parent: thief_01
+Element Type: damage_message, Key: a5efe5b6-06f2-49e4-8bf1-292af1c525e9, Parent: thief_01
+Element Type: miss_message, Key: 2292464d-c78d-4eef-b97d-83a0402d304e, Parent: thief_01
+Element Type: travel, Key: thief_01_travel, Parent: thief_01
+Element Type: message, Key: 845a3377-3ace-4012-9956-d1045d72367e, Parent: 864cc4e4-f534-4efe-883c-23a621af39ae
+Element Type: enter_message, Key: 864cc4e4-f534-4efe-883c-23a621af39ae, Parent: thief_01
+Element Type: message, Key: 636b8025-10ea-4a74-b4c1-8df43ff2eb6c, Parent: ba8ed992-fac8-44ee-a753-6e47c2ca3493
+Element Type: look, Key: ba8ed992-fac8-44ee-a753-6e47c2ca3493, Parent: thief_01
+Element Type: move, Key: 5f2777ae-c476-47ae-87cb-2566c8a9f30a, Parent: e36c8587-d248-4be8-9a0a-033f77679de7
+Element Type: message, Key: d9ca31c2-e2f8-41bf-bfe8-0624552a7943, Parent: e36c8587-d248-4be8-9a0a-033f77679de7
+Element Type: kill, Key: e36c8587-d248-4be8-9a0a-033f77679de7, Parent: thief_01
+Element Type: attribute, Key: 30b25283-311b-407a-a570-be3bbfdbb63e, Parent: 8bf35b19-2d97-4ce4-a50d-69bb7c153e37
+Element Type: attribute, Key: 81f061e2-5c90-4a9b-a18b-7761e7e04bfb, Parent: 8bf35b19-2d97-4ce4-a50d-69bb7c153e37
+Element Type: attack, Key: 8bf35b19-2d97-4ce4-a50d-69bb7c153e37, Parent: 206ed8d4-59a9-4e40-a6f2-213e63b20400
+Element Type: input, Key: 206ed8d4-59a9-4e40-a6f2-213e63b20400, Parent: thief_01
+Element Type: npc, Key: thief_01, Parent: local_pub
+New Element created: game, Parent: root
+New Element created: help_path, Parent: game
+Returning row: 5
+New Element created: game_title, Parent: game
+New Element created: die_message, Parent: game
+Returning row-index: 32
+Element Type: attribute, Key: help_path, Parent: game
+Element Type: enter_message, Key: game_title, Parent: game
+Element Type: , Key: die_message, Parent: game
+Element Type: game, Key: game, Parent: root
+New Element created: global01, Parent: root
+New Element created: , Parent: global01
+New Element created: , Parent: b817e5fb-a258-45f7-b770-0ffbd9aa1e4e
+Returning row: 2
+New Element created: , Parent: global01
+New Element created: , Parent: a81c4887-0045-4514-b598-9b67fdcffcee
+Returning row: 6
+New Element created: , Parent: global01
+New Element created: , Parent: c03346dc-7376-4ac5-86c7-140bb0703ba7
+Returning row: 9
+New Element created: , Parent: global01
+New Element created: , Parent: eb5acf64-c8fb-439b-8f7c-347806f4356b
+Returning row: 13
+New Element created: , Parent: eb5acf64-c8fb-439b-8f7c-347806f4356b
+Returning row-index: 18
+New Element created: day_string, Parent: global01
+New Element created: , Parent: day_string
+New Element created: , Parent: c9986265-692d-496a-afec-1a2cc8c17217
+New Element created: , Parent: c9986265-692d-496a-afec-1a2cc8c17217
+Returning row-index: 33
+New Element created: , Parent: day_string
+New Element created: , Parent: d2682946-bcff-4a37-8582-e966572f19b3
+New Element created: , Parent: d2682946-bcff-4a37-8582-e966572f19b3
+Returning row-index: 47
+Returning row-index: 48
+Returning row-index: 49
+Element Type: action, Key: dd7d174a-1c06-4ba7-94f7-9a03858bc98c, Parent: b817e5fb-a258-45f7-b770-0ffbd9aa1e4e
+Element Type: input, Key: b817e5fb-a258-45f7-b770-0ffbd9aa1e4e, Parent: global01
+Element Type: action, Key: f44cf309-fd0d-45e3-bb92-cc1c40037867, Parent: a81c4887-0045-4514-b598-9b67fdcffcee
+Element Type: input, Key: a81c4887-0045-4514-b598-9b67fdcffcee, Parent: global01
+Element Type: action, Key: d54e43a5-80c6-4a31-ab4a-f9cd5f495352, Parent: c03346dc-7376-4ac5-86c7-140bb0703ba7
+Element Type: input, Key: c03346dc-7376-4ac5-86c7-140bb0703ba7, Parent: global01
+Element Type: set, Key: 2213f002-c292-4a89-ac44-067fa3a67197, Parent: eb5acf64-c8fb-439b-8f7c-347806f4356b
+Element Type: message, Key: 490fe573-0480-43db-99dd-0335edaa0d74, Parent: eb5acf64-c8fb-439b-8f7c-347806f4356b
+Element Type: input, Key: eb5acf64-c8fb-439b-8f7c-347806f4356b, Parent: global01
+Element Type: logic, Key: 2ef1e2be-ae49-4395-a274-7ec8f884ce96, Parent: c9986265-692d-496a-afec-1a2cc8c17217
+Element Type: message, Key: 20845866-d71a-4cdc-8c75-dce62391f50d, Parent: c9986265-692d-496a-afec-1a2cc8c17217
+Element Type: action, Key: c9986265-692d-496a-afec-1a2cc8c17217, Parent: day_string
+Element Type: logic, Key: ac4c3ad9-2e89-4f0c-aedc-7c0132c6b9ca, Parent: d2682946-bcff-4a37-8582-e966572f19b3
+Element Type: message, Key: 22ae7ecd-a805-48fc-a910-b19e634cda1d, Parent: d2682946-bcff-4a37-8582-e966572f19b3
+Element Type: action, Key: d2682946-bcff-4a37-8582-e966572f19b3, Parent: day_string
+Element Type: , Key: day_string, Parent: global01
+Element Type: global, Key: global01, Parent: root
+New Element created: player, Parent: local_pub
+New Element created: , Parent: player
+Returning row: 1
+New Element created: , Parent: player
+Returning row: 2
+New Element created: , Parent: player
+Returning row: 3
+New Element created: , Parent: player
+Returning row: 4
+New Element created: , Parent: player
+Returning row: 5
+New Element created: , Parent: player
+Returning row: 6
+New Element created: player_armed, Parent: player
+Returning row: 7
+New Element created: heal_rounds, Parent: player
+Returning row: 9
+New Element created: heal_amount, Parent: player
+Returning row: 10
+New Element created: cur_heal_round, Parent: player
+Returning row: 11
+New Element created: long-sword_01, Parent: player
+New Element created: , Parent: long-sword_01
+Returning row: 14
+New Element created: , Parent: long-sword_01
+Returning row: 15
+New Element created: , Parent: long-sword_01
+New Element created: , Parent: long-sword_01
+Returning row-index: 27
+Returning row-index: 28
+Element Type: attribute, Key: 722e8ac9-b8af-4d00-b10b-6dafc002eb51, Parent: player
+Element Type: attribute, Key: f0b97612-ee49-4bc4-9e51-e5dc2bbc8276, Parent: player
+Element Type: attribute, Key: d67fe722-4ddb-4c79-81fb-b9b9a9e9e5e6, Parent: player
+Element Type: attribute, Key: 38a9ef9a-c2c4-4739-a314-dbe6adbfc1ed, Parent: player
+Element Type: attribute, Key: 916d2cd9-74df-473b-a696-dd451f7a7209, Parent: player
+Element Type: attribute, Key: 601af70b-09fe-43d2-b343-97d126813019, Parent: player
+Element Type: attribute, Key: player_armed, Parent: player
+Element Type: attribute, Key: heal_rounds, Parent: player
+Element Type: attribute, Key: heal_amount, Parent: player
+Element Type: attribute, Key: cur_heal_round, Parent: player
+Element Type: attribute, Key: c1c0f6a1-93cf-4150-91e7-d809ade5c6ab, Parent: long-sword_01
+Element Type: attribute, Key: 322ba809-fc8e-42f5-801b-084e0fd6306a, Parent: long-sword_01
+Element Type: hit, Key: 031a886b-6f85-4ba0-a7b3-e63d773c9b9e, Parent: long-sword_01
+Element Type: enter_message, Key: ceee7aa1-7acf-44bb-bb76-c9abb9f50ffb, Parent: long-sword_01
+Element Type: object, Key: long-sword_01, Parent: player
+Element Type: player, Key: player, Parent: local_pub

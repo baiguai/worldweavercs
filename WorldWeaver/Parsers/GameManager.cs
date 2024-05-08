@@ -55,6 +55,23 @@ namespace WorldWeaver.Parsers
                 rnd.ParseElement();
             }
 
+
+            if (Cache.FightCache.Fight != null)
+            {
+                var method = Tools.CommandFunctions.GetCommandMethod(MainClass.userInput, "FightParser");
+
+                if (method.Equals("DoFlee"))
+                {
+                    Cache.FightCache.Fight.PlayersTurn = false;
+                    Cache.FightCache.Fight.PlayerFleeing = true;
+
+                    var atkPars = new Parsers.Elements.Attack();
+                    atkPars.ProcessFightRound();
+                    return;
+                }
+            }
+
+
             var playerInv = elemDb.GetElementChildren(Cache.PlayerCache.Player.ElementKey);
             foreach (var child in playerInv)
             {

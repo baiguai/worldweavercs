@@ -126,5 +126,21 @@ namespace WorldWeaver.Tools
 
             return elems;
         }
+
+        public static bool GameInPlay()
+        {
+            if (Cache.GameCache.Game == null)
+            {
+                return false;
+            }
+
+            if (!Cache.GameCache.Game.ElementKey.Equals(""))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
     }
 }

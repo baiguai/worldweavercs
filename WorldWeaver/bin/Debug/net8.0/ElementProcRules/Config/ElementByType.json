@@ -177,6 +177,17 @@
         },
         {
             "types" : [
+                "round"
+            ],
+            "elements" : [
+                "logic",
+                "action",
+                "set"
+            ],
+            "repeat_options" : "false"
+        },
+        {
+            "types" : [
                 "set"
             ],
             "elements" : [

@@ -108,6 +108,48 @@ CREATE TABLE IF NOT EXISTS gamestate (
 );
 
 
+-- Table: help
+DROP TABLE IF EXISTS help;
+
+CREATE TABLE IF NOT EXISTS help (
+    HelpKey      TEXT (300) UNIQUE,
+    Syntax       TEXT (300) NOT NULL,
+    HelpTitle    BLOB       NOT NULL,
+    HelpContents BLOB       NOT NULL
+);
+
+
+-- Index: ix_help_HelpContents
+DROP INDEX IF EXISTS ix_help_HelpContents;
+
+CREATE INDEX IF NOT EXISTS ix_help_HelpContents ON help (
+    HelpContents
+);
+
+
+-- Index: ix_help_HelpKey
+DROP INDEX IF EXISTS ix_help_HelpKey;
+
+CREATE INDEX IF NOT EXISTS ix_help_HelpKey ON help (
+    HelpKey
+);
+
+
+-- Index: ix_help_HelpTitle
+DROP INDEX IF EXISTS ix_help_HelpTitle;
+
+CREATE INDEX IF NOT EXISTS ix_help_HelpTitle ON help (
+    HelpTitle
+);
+
+-- Index: ix_help_Syntax
+DROP INDEX IF EXISTS ix_help_Syntax;
+
+CREATE INDEX IF NOT EXISTS ix_help_Syntax ON help (
+    Syntax
+);
+
+
 INSERT INTO gamestate (
   GamestateId,
   GameStarted,
@@ -267,7 +309,14 @@ PRAGMA foreign_keys = on;
 
             foreach (var dir in Directory.GetDirectories(gameDirectory))
             {
-                LoadGameFiles(gameFile, dir);
+                if (dir.Contains("/Help") || dir.Contains("\\Help"))
+                {
+                    success = LoadHelp(gameFile, dir);
+                }
+                else
+                {
+                    LoadGameFiles(gameFile, dir);
+                }
             }
 
             foreach (string file in Directory.GetFiles(gameDirectory))
@@ -282,6 +331,78 @@ PRAGMA foreign_keys = on;
                     success = (ParseElement(connectionString, lines, "root", 0) > -1);
                 }
             }
+
+            return success;
+        }
+
+        private bool LoadHelp(string gameFile, string helpDir)
+        {
+            var success = false;
+            var connectionString = $"Data Source={gameFile};Cache=Shared;";
+
+            foreach (var f in Directory.GetFiles(helpDir))
+            {
+                if (!f.Contains(".json"))
+                {
+                    return true;
+                }
+
+                using (StreamReader r = new StreamReader(f))
+                {
+                    string json = r.ReadToEnd();
+                    var jsonObj = JObject.Parse(json);
+                    var links = new List<string>();
+                    foreach (var cmd in jsonObj["topics"])
+                    {
+                        var syntax = (string)cmd["pattern"];
+                        var title = (string)cmd["title"];
+                        var content = (string)cmd["string"];
+
+                        content = content.Replace("---", "--------------------------------------------------------------------------------");
+
+                        success = InsertHelpTopic(connectionString, syntax, title, content);
+                    }
+                }
+            }
+
+            return success;
+        }
+
+        private bool InsertHelpTopic(string connectionString, string? syntax, string? title, string content)
+        {
+            var success = false;
+
+            using (SqliteConnection connection = new SqliteConnection(connectionString))
+            {
+                connection.Open();
+
+                string createDbQuery = $@"
+INSERT INTO help (
+    HelpKey,
+    Syntax,
+    HelpTitle,
+    HelpContents
+)
+VALUES
+(
+    '{Guid.NewGuid}',
+    '{syntax}',
+    '{title}',
+    '{content}'
+);";
+
+                using (SqliteCommand command = new SqliteCommand(createDbQuery, connection))
+                {
+                    command.ExecuteNonQuery();
+                    command.Dispose();
+                }
+
+                connection.Close();
+                connection.Dispose();
+            }
+
+            success = true;
+            elementsToInsert.Clear();
 
             return success;
         }
