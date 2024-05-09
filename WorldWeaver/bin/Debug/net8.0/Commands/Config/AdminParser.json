@@ -9,6 +9,10 @@
             "method" : "DoBuildGame"
         },
         {
+            "pattern" : "\\b(_validategame|_vg|_val)\\b",
+            "method" : "DoValidateGame"
+        },
+        {
             "pattern" : "\\b(_help|_h)\\b",
             "method" : "DoAdminHelp"
         }
