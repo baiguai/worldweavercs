@@ -24,6 +24,11 @@ namespace WorldWeaver.Parsers
                     DoBuildGame();
                 }
 
+                if (!MainClass.output.MatchMade && method.Equals("DoValidateGame"))
+                {
+                    DoValidateGame();
+                }
+
                 if (!MainClass.output.MatchMade && method.Equals("DoAdminHelp"))
                 {
                     DoAdminHelp();
@@ -40,7 +45,6 @@ namespace WorldWeaver.Parsers
         public void DoBuildGame()
         {
             MainClass.output.OutputText = "Could not build the game database.";
-            DataManagement.Game.BuildGame builder = new DataManagement.Game.BuildGame();
 
             var success = LoadGameData(MainClass.userInput.GetInputParamSingle());
 
@@ -48,6 +52,19 @@ namespace WorldWeaver.Parsers
             {
                 MainClass.output.MatchMade = true;
                 MainClass.output.OutputText = "Game database successfully built.";
+            }
+        }
+
+        public void DoValidateGame()
+        {
+            MainClass.output.OutputText = "Could not validate the game database.";
+
+            ValidateGameData(MainClass.userInput.GetInputParamSingle());
+
+            if (MainClass.output.OutputText.Equals(""))
+            {
+                MainClass.output.MatchMade = true;
+                MainClass.output.OutputText = "Game validation was successful.";
             }
         }
 
@@ -59,6 +76,13 @@ namespace WorldWeaver.Parsers
             success = builder.LoadGame(gameKey);
 
             return success;
+        }
+
+        private void ValidateGameData(string gameKey)
+        {
+            DataManagement.Game.ValidateGame validator = new DataManagement.Game.ValidateGame();
+
+            validator.Validate(gameKey);
         }
 
         public void DoAdminHelp()

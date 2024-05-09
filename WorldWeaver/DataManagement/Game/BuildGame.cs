@@ -707,7 +707,7 @@ VALUES
             return output.SqlSafe();
         }
 
-        private bool ParsableRow(string dataRow)
+        public bool ParsableRow(string dataRow)
         {
             if (dataRow.Equals(""))
             {
