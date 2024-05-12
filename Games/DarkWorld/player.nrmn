@@ -1,5 +1,6 @@
 ﻿{key=player, name=, type=player, parent=local_pub
     {name=Life, type=attribute, output=[rand:17|35], tags=stats|life }
+    {type=attribute, output=player((life)), tags=maxlife }
     {name=Armor Rating, type=attribute, output=[rand:4|10], tags=stats|armor }
     {name=Strength, type=attribute, output=[rand:8|18], tags=stats }
     {name=Intelligence, type=attribute, output=[rand:8|18], tags=stats }
@@ -10,21 +11,4 @@
     {key=heal_rounds, type=attribute, output=5 }
     {key=heal_amount, type=attribute, output=2 }
     {key=cur_heal_round, type=attribute, output=0 }
-
-    {key=long-sword_01, name=Long Sword, type=object, syntax=\b(?:your\s+)?long\s+sword\b, tags=inventory
-        {name=Damage, type=attribute, logic=[rand:4|12], tags=damage }
-        {type=attribute, output=a Long Sword, tags=title }
-
-        {type=hit, tags=hit
-            output={@
-You have attacked [enemy.title]. You have caused [enemy.subject_pronoun] life to be reduced by [damage].
-            }
-        }
-
-        {type=enter_message
-            output={@
-You see a long sword.
-            }
-        }
-    }
 }

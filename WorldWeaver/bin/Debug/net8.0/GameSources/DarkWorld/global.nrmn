@@ -19,6 +19,19 @@ You are now armed with the [player_armed_weapon].
         }
     }
 
+    {type=action
+        {type=set, logic=cur_heal_round(output)++ }
+    }
+
+    {type=action
+        {type=logic
+            logic={@
+                ?cur_heal_round(output)>=heal_rounds(output)
+            }
+        }
+        {type=set, logic=player((life))++ }
+    }
+
     {key=day_string
         {type=action
             {type=logic

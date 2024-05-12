@@ -115,12 +115,13 @@ namespace WorldWeaver.Parsers.Elements
             var variableProcs = Tools.AppSettingFunctions.GetRootArray("Config/LogicVariableTypes.json");
             var subCondProcs = Tools.AppSettingFunctions.GetRootArray("Config/LogicSubConditions.json");
             var elemLog = new DataManagement.GameLogic.Element();
-            var arrSubCond = rawVariable.Split(".");
+            var arrSubCond = rawVariable.Split("(");
 
             Classes.Element varElement = null;
 
             if (arrSubCond.Length == 2)
             {
+                arrSubCond[1] = arrSubCond[1].Replace(")", "");
                 foreach (var proc in subCondProcs)
                 {
                     if (arrSubCond[1].Trim().ToLower().Equals(proc.ToLower()))

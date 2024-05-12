@@ -92,6 +92,16 @@ namespace WorldWeaver.Parsers.Elements
                     newValue = NewTagsValue(targetElement, newValue);
                 }
 
+                if (newValue.Equals("++"))
+                {
+                    switch (targetField)
+                    {
+                        case "output":
+                            newValue = (Convert.ToInt32(targetElement.Output) + 1).ToString();
+                            break;
+                    }
+                }
+
                 elemDb.SetElementField(targetElement.ElementKey, targetField, newValue);
 
                 MainClass.output.MatchMade = true;
