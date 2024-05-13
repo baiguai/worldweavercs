@@ -51,7 +51,7 @@ namespace WorldWeaver.Parsers.Elements
                 }
                 logic = logic.Replace("[input]", foundElems.First());
             }
-            logic = logParse.ParseSetLogic(logic, parentElement.Tags);
+            logic = logParse.ParseSetLogic(logic, parentElement.Tags); // @todo Need to do elements by tag here
 
             var arr = logic.Split('(');
             if (arr.Length == 2)
@@ -103,6 +103,7 @@ namespace WorldWeaver.Parsers.Elements
                 }
 
                 elemDb.SetElementField(targetElement.ElementKey, targetField, newValue);
+                CacheManager.RefreshCache();
 
                 MainClass.output.MatchMade = true;
             }
