@@ -9,6 +9,5 @@
     {key=player_armed, name=Armed Weapon, type=attribute, output=long-sword_01, tags=armed|stats|name }
 
     {key=heal_rounds, type=attribute, output=5 }
-    {key=heal_amount, type=attribute, output=2 }
     {key=cur_heal_round, type=attribute, output=0 }
 }

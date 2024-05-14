@@ -115,6 +115,25 @@ namespace WorldWeaver.Parsers.Elements
             var variableProcs = Tools.AppSettingFunctions.GetRootArray("Config/LogicVariableTypes.json");
             var subCondProcs = Tools.AppSettingFunctions.GetRootArray("Config/LogicSubConditions.json");
             var elemLog = new DataManagement.GameLogic.Element();
+
+            var arrSubTag = rawVariable.Split("((");
+            if (arrSubTag.Length == 2)
+            {
+                var key = arrSubTag[0].Trim();
+                var tag = arrSubTag[1].Trim().Replace("))", "");
+                var elemDb = new DataManagement.GameLogic.Element();
+                var targetElement = elemDb.GetElementByKey(key);
+                if (!targetElement.ElementKey.Equals(""))
+                {
+                    var selTag = targetElement.ChildByTag(tag);
+                    if (selTag != null)
+                    {
+                        variableOutput.Value = selTag.Output;
+                        return variableOutput;
+                    }
+                }
+            }
+
             var arrSubCond = rawVariable.Split("(");
 
             Classes.Element varElement = null;

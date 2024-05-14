@@ -11,9 +11,11 @@ namespace WorldWeaver.Parsers.Elements
             var logParse = new Parsers.Elements.Logic();
             var logic = currentElement.Logic;
             var targetKey = "";
+            var targetTag = "";
             var targetField = "";
             var newValue = "";
             var usingInput = false;
+            Classes.Element targetElement = null;
 
             MainClass.output.MatchMade = false;
 
@@ -51,70 +53,97 @@ namespace WorldWeaver.Parsers.Elements
                 }
                 logic = logic.Replace("[input]", foundElems.First());
             }
-            logic = logParse.ParseSetLogic(logic, parentElement.Tags); // @todo Need to do elements by tag here
+            logic = logParse.ParseSetLogic(logic, parentElement.Tags);
 
-            var arr = logic.Split('(');
+            string[] arr;
+
+            arr = logic.Split("((");
+            targetKey = "";
+            targetField = "";
+            newValue = "";
             if (arr.Length == 2)
             {
                 targetKey = arr[0].Trim();
-            }
 
-            arr = arr[1].Split(')');
-            if (arr.Length == 2)
-            {
-                targetField = arr[0].Trim();
-                newValue = arr[1].Trim();
-
-                if (targetKey.Equals("gamestate"))
+                arr = arr[1].Split("))");
+                if (arr.Length == 2)
                 {
-                    SetGameState(targetField, newValue);
-                    MainClass.output.MatchMade = true;
-                    return;
-                }
+                    targetTag = arr[0].Trim();
+                    newValue = arr[1].Trim();
+                    targetField = "output";
 
-                var targetElement = elemDb.GetElementByKey(targetKey);
-
-                if (targetElement.ElementKey.Equals(""))
-                {
-                    MainClass.output.OutputText += "An error occurred while setting a value.";
-                    MainClass.output.MatchMade = false;
-                    return;
-                }
-
-                if (!currentElement.Tags.Equals(""))
-                {
-                    // This allows the game to remove additional text if needed
-                    newValue = newValue.Replace(currentElement.Tags, "").Trim();
-                }
-
-                if (targetField.Equals("tags"))
-                {
-                    newValue = NewTagsValue(targetElement, newValue);
-                }
-
-                if (newValue.Equals("++"))
-                {
-                    switch (targetField)
+                    var tagElements = elemDb.GetElementChildren(targetKey).Where(c => c.Tags.TagsContain(targetTag)).ToList();
+                    foreach (var child in tagElements)
                     {
-                        case "output":
-                            newValue = (Convert.ToInt32(targetElement.Output) + 1).ToString();
-                            break;
+                        SetElementField(targetKey, child, targetField, newValue, currentElement);
                     }
                 }
-
-                elemDb.SetElementField(targetElement.ElementKey, targetField, newValue);
-                CacheManager.RefreshCache();
-
-                MainClass.output.MatchMade = true;
             }
-            else
+
+            arr = logic.Split('(');
+            if (arr.Length == 2)
             {
-                MainClass.output.OutputText += "An error has occured while setting a value.";
+                targetKey = arr[0].Trim();
+
+                arr = arr[1].Split(')');
+                if (arr.Length == 2)
+                {
+                    targetField = arr[0].Trim();
+                    newValue = arr[1].Trim();
+
+                    targetElement = elemDb.GetElementByKey(targetKey);
+
+                    SetElementField(targetKey, targetElement, targetField, newValue, currentElement);
+
+                }
+            }
+
+            return;
+        }
+
+        private void SetElementField(string? targetKey, Classes.Element targetElement, string? targetField, string? newValue, Classes.Element currentElement)
+        {
+            var elemDb = new DataManagement.GameLogic.Element();
+
+            if (targetKey.Equals("gamestate"))
+            {
+                SetGameState(targetField, newValue);
+                MainClass.output.MatchMade = true;
+                return;
+            }
+
+            if (targetElement.ElementKey.Equals(""))
+            {
+                MainClass.output.OutputText += "An error occurred while setting a value.";
                 MainClass.output.MatchMade = false;
                 return;
             }
 
-            return;
+            if (!currentElement.Tags.Equals(""))
+            {
+                // This allows the game to remove additional text if needed
+                newValue = newValue.Replace(currentElement.Tags, "").Trim();
+            }
+
+            if (targetField.Equals("tags"))
+            {
+                newValue = NewTagsValue(targetElement, newValue);
+            }
+
+            if (newValue.Equals("++"))
+            {
+                switch (targetField)
+                {
+                    case "output":
+                        newValue = (Convert.ToInt32(targetElement.Output) + 1).ToString();
+                        break;
+                }
+            }
+
+            elemDb.SetElementField(targetElement.ElementKey, targetField, newValue);
+            CacheManager.RefreshCache();
+
+            MainClass.output.MatchMade = true;
         }
 
         private void SetGameState(string targetField, string newValue)
