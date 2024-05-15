@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Formats.Asn1;
 using System.Globalization;
+using WorldWeaver.Cache;
 using WorldWeaver.Classes;
 using WorldWeaver.Tools;
 
@@ -55,6 +56,14 @@ namespace WorldWeaver.Parsers.Elements
             {
                 return;
             }
+
+            if (type.Equals("enter_message"))
+            {
+                var moveDb = new DataManagement.GameLogic.Move();
+                moveDb.MoveElement("", Cache.PlayerCache.Player.ElementKey, Cache.PlayerCache.Player.ParentKey);
+                return;
+            }
+
             var self = Tools.Elements.GetSelf(currentElement);
             var targets = Tools.Elements.GetElementsByType(Cache.RoomCache.Room, type);
             var elemDb = new DataManagement.GameLogic.Element();

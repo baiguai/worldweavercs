@@ -76,7 +76,7 @@ namespace WorldWeaver.Parsers.Elements
                     var attackRoll = Tools.ValueTools.Randomize(1, 20);
                     var enemyArmor = Cache.FightCache.Fight.Enemy.AttributeByTag("armor");
 
-                    MainClass.output.OutputText += $"Player attack roll: {attackRoll}{Environment.NewLine}Enemy's armor rating: {enemyArmor.Output}{Environment.NewLine}";
+                    MainClass.output.OutputText += $"Player attack roll: {attackRoll}{Environment.NewLine}Enemy's armor rating: {enemyArmor.Output}{Environment.NewLine}{Environment.NewLine}";
 
                     if (Convert.ToInt32(enemyArmor.Output) <= attackRoll)
                     {
@@ -89,7 +89,7 @@ namespace WorldWeaver.Parsers.Elements
 
                         if (damageMsg != null)
                         {
-                            var dmgMsg = ProcessEnemyDamageOutput(damageMsg.Output, damage);
+                            var dmgMsg = ProcessDamageOutput(damageMsg.Output, damage);
                             MainClass.output.OutputText += dmgMsg;
                         }
 
@@ -107,7 +107,7 @@ namespace WorldWeaver.Parsers.Elements
                     else
                     {
                         var missElem = Cache.FightCache.Fight.Enemy.ChildByType("miss_message");
-                        var missMsg = ProcessEnemyDamageOutput(missElem.Output, 0);
+                        var missMsg = ProcessDamageOutput(missElem.Output, 0);
                         MainClass.output.OutputText = missMsg;
                     }
 
@@ -132,7 +132,7 @@ namespace WorldWeaver.Parsers.Elements
                     var attackRoll = Tools.ValueTools.Randomize(1, 20);
                     var playerArmor = Cache.PlayerCache.Player.AttributeByTag("armor");
 
-                    MainClass.output.OutputText += $"Enemy attack roll: {attackRoll}{Environment.NewLine}Player's armor rating: {playerArmor.Output}{Environment.NewLine}";
+                    MainClass.output.OutputText += $"Enemy attack roll: {attackRoll}{Environment.NewLine}Player's armor rating: {playerArmor.Output}{Environment.NewLine}{Environment.NewLine}";
 
                     if (Convert.ToInt32(playerArmor.Output) <= attackRoll)
                     {
@@ -142,10 +142,10 @@ namespace WorldWeaver.Parsers.Elements
                         var damage = damageAttrib.Logic.RandomValue();
                         var newLifeValue = Convert.ToInt32(playerLife.Output) - damage;
 
-                        var damageOutput = enemyWeapon.ChildByTag("hit");
+                        var damageOutput = Cache.FightCache.Fight.Enemy.ChildByType("hit");
                         if (damageOutput != null)
                         {
-                            var dmgMsg = ProcessPlayerDamageOutput(damageOutput.Output, damage);
+                            var dmgMsg = ProcessDamageOutput(damageOutput.Output, damage);
                             MainClass.output.OutputText += dmgMsg;
                         }
 
@@ -160,6 +160,12 @@ namespace WorldWeaver.Parsers.Elements
 
                         MainClass.output.MatchMade = true;
                     }
+                    else
+                    {
+                        var missElem = Cache.FightCache.Fight.Enemy.ChildByType("miss");
+                        var missMsg = ProcessDamageOutput(missElem.Output, 0);
+                        MainClass.output.OutputText = missMsg;
+                    }
                 }
 
                 Cache.FightCache.Fight.PlayersTurn = true;
@@ -168,20 +174,9 @@ namespace WorldWeaver.Parsers.Elements
             return;
         }
 
-        private string ProcessEnemyDamageOutput(string damageOutput, int damage)
+        private string ProcessDamageOutput(string damageOutput, int damage)
         {
             var convOutput = damageOutput;
-            convOutput = convOutput.Replace("[enemy.title]", Cache.FightCache.Fight.Enemy.AttributeByTag("title").Output);
-            convOutput = convOutput.Replace("[enemy.subject_pronoun]", Cache.FightCache.Fight.Enemy.AttributeByTag("subject_pronoun").Output);
-            convOutput = convOutput.Replace("[damage]", damage.ToString());
-
-            return convOutput + Environment.NewLine;
-        }
-
-        private object ProcessPlayerDamageOutput(string damageOutput, int damage)
-        {
-            var convOutput = damageOutput;
-            convOutput = convOutput.Replace("[self.name]", Cache.FightCache.Fight.Enemy.Name);
             convOutput = convOutput.Replace("[damage]", damage.ToString());
 
             return convOutput + Environment.NewLine;

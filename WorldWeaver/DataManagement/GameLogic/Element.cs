@@ -248,6 +248,51 @@ ORDER BY
             return output;
         }
 
+        public Classes.Element GetElementChildByTag(string parent_key, string tag)
+        {
+            var cachedElem = Tools.CacheManager.GetCachedElement(parent_key);
+            if (cachedElem != null)
+            {
+                return cachedElem.Children.Where(c => c.Tags.TagsContain(tag)).FirstOrDefault();
+            }
+
+            var selectQuery = $@"
+SELECT
+    ElementType,
+    ElementKey,
+    Name,
+    ParentKey,
+    Syntax,
+    Logic,
+    Output,
+    Tags,
+    Repeat,
+    RepeatIndex,
+    Active,
+    Sort
+FROM
+    element
+WHERE 1=1
+    AND ParentKey = @parentkey
+    AND Active = 'true'
+ORDER BY
+    Sort
+;
+            ";
+
+            var parms = new List<DbParameter>();
+            parms.Add(new DbParameter()
+            {
+                ParamName = "@parentkey",
+                ParamValue = parent_key
+            });
+
+
+            var output = GetElements(selectQuery, MainClass.gameDb, parms).Where(c => c.Tags.TagsContain(tag)).First();
+
+            return output;
+        }
+
         public string GetElementField(string element_key, string element_field)
         {
             var output = "";
