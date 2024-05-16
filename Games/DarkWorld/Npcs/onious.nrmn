@@ -5,22 +5,28 @@
     {name=Intelligence, type=attribute, output=[rand:8|18], tags=stats }
     {name=Cunning, type=attribute, output=[rand:8|18], tags=stats }
     {name=Gold, type=attribute, output=[rand:20|40], tags=stats }
-    {name=Armed Weapon, type=attribute, output=thief_01_shortsword, tags=armed|stats|name }
+    {name=Armed Weapon, type=attribute, output=onious_shortsword, tags=armed|stats|name }
     {type=attribute, output=Onious, tags=title }
     {type=attribute, output=she, tags=pronoun }
     {type=attribute, output=her, tags=subject_pronoun }
 
-    {key=onious_01_shortsword, name=Short Sword, type=object, syntax=\b(short sword)\b, tags=inventory
+    {type=attribute, output=false, tags=known_name }
+
+    {key=onious_shortsword, name=Short Sword, type=object, syntax=\b(short sword)\b, tags=inventory
         {name=Damage, type=attribute, logic=[rand:4|8], tags=damage }
     }
 
 
-    {key=thief_01_travel, type=travel, logic=[follow|player], active=false }
+    {key=onious_travel, type=travel, logic=[follow|player], active=false }
 
     -- TODO: Update the inputs with logic:
     --  Only show the enter message if she's following him, and the player knows her name.
     --  Only follow the player if they know her name.
     {type=enter_message
+        {type=logic
+            logic={@
+                ?onious_travel.active=true
+            }
         {type=message
             output={@
 You see a thief sitting at the bar near you.

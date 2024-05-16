@@ -77,7 +77,7 @@ namespace WorldWeaver.Parsers.Elements
                     {
                         var variable1 = GetVariableValue(currentElement, arr[0].Trim());
                         var variable2 = GetVariableValue(currentElement, arr[1].Trim());
-                        curCheck = DoComparison(variable1.Value, variable2.Value, operand);
+                        curCheck = DoComparison(variable1, variable2, operand);
                     }
                 }
             }
@@ -104,173 +104,118 @@ namespace WorldWeaver.Parsers.Elements
             return "";
         }
 
-        private Classes.ConditionalVariable GetVariableValue(Classes.Element currentElement, string rawVariable)
+        private string GetVariableValue(Classes.Element currentElement, string rawVariable)
         {
             if (rawVariable.StartsWith("?"))
             {
                 rawVariable = rawVariable.Substring(1).Trim();
             }
 
-            var variableOutput = new Classes.ConditionalVariable();
-            var variableProcs = Tools.AppSettingFunctions.GetRootArray("Config/LogicVariableTypes.json");
-            var subCondProcs = Tools.AppSettingFunctions.GetRootArray("Config/LogicSubConditions.json");
-            var elemLog = new DataManagement.GameLogic.Element();
+            var varValue = "";
 
-            var arrSubTag = rawVariable.Split("((");
-            if (arrSubTag.Length == 2)
+            varValue = ParsePresetValues(currentElement, rawVariable);
+            if (!varValue.Equals(""))
             {
-                var key = arrSubTag[0].Trim();
-                var tag = arrSubTag[1].Trim().Replace("))", "");
-                var elemDb = new DataManagement.GameLogic.Element();
-                var targetElement = elemDb.GetElementByKey(key);
-                if (!targetElement.ElementKey.Equals(""))
+                return varValue;
+            }
+
+            if (rawVariable.StartsWith("ls("))
+            {
+                rawVariable = rawVariable.Replace("ls(", "(");
+                varValue = ListElementChildrenByTag(currentElement, rawVariable);
+                if (!varValue.Equals(""))
                 {
-                    var selTag = targetElement.ChildByTag(tag);
-                    if (selTag != null)
-                    {
-                        variableOutput.Value = selTag.Output;
-                        return variableOutput;
-                    }
+                    return varValue;
                 }
             }
 
-            var arrSubCond = rawVariable.Split("(");
-
-            Classes.Element varElement = null;
-
-            if (arrSubCond.Length == 2)
+            if (rawVariable.StartsWith("ls["))
             {
-                arrSubCond[1] = arrSubCond[1].Replace(")", "");
-                foreach (var proc in subCondProcs)
+                rawVariable = rawVariable.Replace("ls[", "[");
+                varValue = ListRelativeElementChildrenByTag(currentElement, rawVariable);
+                if (!varValue.Equals(""))
                 {
-                    if (arrSubCond[1].Trim().ToLower().Equals(proc.ToLower()))
-                    {
-                        variableOutput.SubCondition = arrSubCond[1].Trim().ToLower();
-                        break;
-                    }
-                }
-
-                variableOutput.Condition = arrSubCond[0].Trim();
-            }
-            else
-            {
-                variableOutput.Condition = rawVariable;
-            }
-
-            if (variableOutput.Condition.StartsWith("'"))
-            {
-                variableOutput.Value = variableOutput.Condition.Replace("'", "");
-                return variableOutput;
-            }
-
-            int test;
-            var isnumeric = int.TryParse(variableOutput.Condition, out test);
-            if (isnumeric)
-            {
-                variableOutput.Value = variableOutput.Condition;
-                return variableOutput;
-            }
-
-            if (variableOutput.Condition.ToLower().Equals("[room]"))
-            {
-                variableOutput.Condition = Cache.RoomCache.Room.ElementKey;
-            }
-
-            if (variableOutput.Condition.ToLower().Equals("[self]"))
-            {
-                variableOutput.Condition = Tools.Elements.GetSelf(currentElement).ElementKey;
-            }
-
-            if (variableOutput.Condition.ToLower().Equals("[isday]"))
-            {
-                variableOutput.Value = Tools.Game.IsDay().ToString().ToLower();
-                return variableOutput;
-            }
-
-            if (variableOutput.Condition.ToLower().Equals("[missiondays]"))
-            {
-                variableOutput.Value = Tools.Game.MissionDays().ToString().ToLower();
-                return variableOutput;
-            }
-
-            if (variableOutput.Condition.ToLower().Equals("[totaldays]"))
-            {
-                variableOutput.Value = Tools.Game.TotalDays().ToString().ToLower();
-                return variableOutput;
-            }
-
-            if (variableOutput.Condition.ToLower().Equals("[inventory]"))
-            {
-                variableOutput.Condition = "inventory";
-            }
-
-            foreach (var proc in variableProcs)
-            {
-                switch (proc)
-                {
-                    case "element_key":
-                        varElement = elemLog.GetElementByKey(variableOutput.Condition);
-                        if (varElement.ElementKey.Equals(""))
-                        {
-                            continue;
-                        }
-                        variableOutput.Type = "element";
-                        variableOutput.Element = varElement;
-                        switch (variableOutput.SubCondition)
-                        {
-                            case "location":
-                                variableOutput.Value = variableOutput.Element.ParentKey;
-                                return variableOutput;
-
-                            case "tags":
-                                variableOutput.Value = variableOutput.Element.Tags;
-                                return variableOutput;
-
-                            case "active":
-                                variableOutput.Value = variableOutput.Element.Active;
-                                return variableOutput;
-
-                            case "type":
-                                variableOutput.Value = variableOutput.Element.ElementType;
-                                return variableOutput;
-                        }
-                        break;
-
-                    case "element_attributes":
-                        varElement = elemLog.GetElementByKey(variableOutput.Condition);
-                        if (varElement.ElementKey.Equals(""))
-                        {
-                            continue;
-                        }
-                        variableOutput.Type = "attribute";
-                        variableOutput.Element = varElement;
-                        variableOutput.Value = varElement.Output;
-                        return variableOutput;
-
-                    case "inventory":
-                        if (!variableOutput.Condition.Equals("inventory"))
-                        {
-                            continue;
-                        }
-                        var varCount = 0;
-                        var invElems = elemLog.GetElementChildren("player");
-                        foreach (var elem in invElems)
-                        {
-                            if (variableOutput.SubCondition.Equals("count") && elem.Tags.Contains("inventory"))
-                            {
-                                varCount++;
-                            }
-                        }
-                        if (variableOutput.SubCondition.Equals("count"))
-                        {
-                            variableOutput.Value = varCount.ToString();
-                            return variableOutput;
-                        }
-                        break;
+                    return varValue;
                 }
             }
 
-            return variableOutput;
+            if (rawVariable.StartsWith("("))
+            {
+                varValue = ParseElementByKey(currentElement, rawVariable);
+                if (!varValue.Equals(""))
+                {
+                    return varValue;
+                }
+            }
+
+            if (rawVariable.StartsWith("["))
+            {
+                varValue = ParseRelativeElement(currentElement, rawVariable);
+                if (!varValue.Equals(""))
+                {
+                    return varValue;
+                }
+            }
+
+            return varValue;
+        }
+
+        private string ListElementChildrenByTag(Classes.Element currentElement, string rawVariable)
+        {
+            var propValue = "";
+            if (rawVariable.EndsWith("))"))
+            {
+                rawVariable = rawVariable += "output";
+            }
+
+            var arr = rawVariable.Split("))");
+            if (arr.Length != 2)
+            {
+                return propValue;
+            }
+
+            var prop = arr[1].Trim();
+            arr = arr[0].Split(")");
+            if (arr.Length != 2)
+            {
+                return propValue;
+            }
+
+            var tag = arr[1].Replace("((", "").Trim();
+            var key = arr[0].Replace("(", "").Trim();
+
+            var elemDb = new DataManagement.GameLogic.Element();
+
+            var elemChildren = elemDb.GetElementChildren(key).Where(c => c.Tags.TagsContain(tag));
+            foreach (var ch in elemChildren)
+            {
+                if (!propValue.Equals(""))
+                {
+                    propValue += "|";
+                    propValue += GetElementProperty(ch, prop);
+                }
+            }
+
+            return propValue;
+        }
+
+        private string ParsePresetValues(Classes.Element currentElement, string rawVariable)
+        {
+            var varValue = "";
+
+            switch (rawVariable)
+            {
+                case "[isday]":
+                    return Tools.Game.IsDay().ToString().ToLower();
+
+                case "[missiondays]":
+                    return Tools.Game.MissionDays().ToString().ToLower();
+
+                case "[totaldays]":
+                    return Tools.Game.TotalDays().ToString().ToLower();
+            }
+
+            return varValue;
         }
 
         public static bool DoComparison(string variable1, string variable2, string operand)
@@ -339,13 +284,13 @@ namespace WorldWeaver.Parsers.Elements
                     }
                     break;
                 case "in":
-                    if (variable2.Contains(variable1))
+                    if (variable2.ListContains(variable1))
                     {
                         success = true;
                     }
                     break;
                 case "!in":
-                    if (!variable2.Contains(variable1))
+                    if (!variable2.ListContains(variable1))
                     {
                         success = true;
                     }
