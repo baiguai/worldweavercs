@@ -4,6 +4,7 @@
         "room",
         "player",
         "npc",
-        "game"
+        "game",
+        "global"
     ]
 }

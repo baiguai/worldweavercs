@@ -24,7 +24,6 @@ namespace WorldWeaver.Parsers
             if (!method.Equals(""))
             {
                 playerInput = MainClass.userInput;
-                MainClass.output.MatchMade = true;
 
                 switch (method)
                 {
@@ -40,7 +39,7 @@ namespace WorldWeaver.Parsers
 
                     case "DoHelp":
                         // In game help systems are defined using global inputs, actions and custom element types
-                        if (Cache.GameCache.GameInitialized)
+                        if (!MainClass.gameDb.Equals(""))
                         {
                             return;
                         }

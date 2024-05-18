@@ -385,6 +385,19 @@ namespace WorldWeaver.Parsers.Elements
             var success = false;
             string[] arr;
 
+            if (variable1.Equals("") && variable2.Equals(""))
+            {
+                return true;
+            }
+
+            if (!operand.Equals("!=") && !operand.Equals("=="))
+            {
+                if (variable1.Equals("") || variable2.Equals(""))
+                {
+                    return true;
+                }
+            }
+
             switch (operand)
             {
                 case "!=":

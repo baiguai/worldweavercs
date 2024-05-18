@@ -65,7 +65,7 @@ namespace WorldWeaver.Parsers.Elements
             }
 
             var self = Tools.Elements.GetSelf(currentElement);
-            var targets = Tools.Elements.GetElementsByType(Cache.RoomCache.Room, type);
+            var targets = Tools.Elements.GetElementsByType(self, type);
             var elemDb = new DataManagement.GameLogic.Element();
 
             var elemParser = new Parsers.Elements.Element();
@@ -78,6 +78,10 @@ namespace WorldWeaver.Parsers.Elements
                     foreach (var proc in selfProcItems)
                     {
                         elemParser.ParseElement(elem, proc);
+                        if (self.ElementType.Equals("global") && MainClass.output.MatchMade)
+                        {
+                            return;
+                        }
                     }
                 }
             }
