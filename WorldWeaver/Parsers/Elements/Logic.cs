@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using SQLitePCL;
 using WorldWeaver.Classes;
@@ -111,6 +112,16 @@ namespace WorldWeaver.Parsers.Elements
                 rawVariable = rawVariable.Substring(1).Trim();
             }
 
+            if (rawVariable.StartsWith("'"))
+            {
+                return rawVariable.Replace("'", "");
+            }
+
+            if (Regex.IsMatch(rawVariable.Trim(), @"^\d+$"))
+            {
+                return rawVariable.Trim();
+            }
+
             var varValue = "";
 
             varValue = ParsePresetValues(currentElement, rawVariable);
@@ -186,7 +197,12 @@ namespace WorldWeaver.Parsers.Elements
 
             var elemDb = new DataManagement.GameLogic.Element();
 
-            var elemChildren = elemDb.GetElementChildren(key).Where(c => c.Tags.TagsContain(tag));
+            var curElement = elemDb.GetElementByKey(key);
+            if (curElement.ElementKey.Equals(""))
+            {
+                return "";
+            }
+            var elemChildren = curElement.Children.Where(c => c.Tags.TagsContain(tag));
             foreach (var ch in elemChildren)
             {
                 if (!propValue.Equals(""))
@@ -198,6 +214,101 @@ namespace WorldWeaver.Parsers.Elements
 
             return propValue;
         }
+
+        private string ListRelativeElementChildrenByTag(Classes.Element currentElement, string rawVariable)
+        {
+            var propValue = "";
+            if (rawVariable.EndsWith("))"))
+            {
+                rawVariable = rawVariable += "output";
+            }
+
+            var arr = rawVariable.Split("))");
+            if (arr.Length != 2)
+            {
+                return propValue;
+            }
+
+            var prop = arr[1].Trim();
+            arr = arr[0].Split(")");
+            if (arr.Length != 2)
+            {
+                return propValue;
+            }
+
+            var tag = arr[1].Replace("((", "").Trim();
+            var relCode = arr[0].Replace("(", "").Trim();
+
+            var elemDb = new DataManagement.GameLogic.Element();
+
+            var relElement = GetRelativeElement(currentElement, relCode);
+            if (relElement.ElementKey.Equals(""))
+            {
+                return "";
+            }
+            var elemChildren = relElement.Children.Where(c => c.Tags.TagsContain(tag));
+            foreach (var ch in elemChildren)
+            {
+                if (!propValue.Equals(""))
+                {
+                    propValue += "|";
+                    propValue += GetElementProperty(ch, prop);
+                }
+            }
+
+            return propValue;
+        }
+
+        private string ParseElementByKey(Classes.Element currentElement, string rawVariable)
+        {
+            if (rawVariable.EndsWith(")"))
+            {
+                rawVariable = rawVariable += "output";
+            }
+            var arr = rawVariable.Split(")");
+            if (arr.Length != 2)
+            {
+                return "";
+            }
+
+            var key = arr[0].Trim().Replace("(", "");
+            var prop = arr[1].Trim();
+
+            var elemDb = new DataManagement.GameLogic.Element();
+            var curElement = elemDb.GetElementByKey(key);
+            if (curElement.ElementKey.Equals(""))
+            {
+                return "";
+            }
+
+            return GetElementProperty(curElement, prop);
+        }
+
+        private string ParseRelativeElement(Classes.Element currentElement, string rawVariable)
+        {
+            if (rawVariable.EndsWith(")"))
+            {
+                rawVariable = rawVariable += "output";
+            }
+            var arr = rawVariable.Split(")");
+            if (arr.Length != 2)
+            {
+                return "";
+            }
+
+            var relCode = arr[0].Trim().Replace("(", "");
+            var prop = arr[1].Trim();
+
+            var elemDb = new DataManagement.GameLogic.Element();
+            var curElement = GetRelativeElement(currentElement, relCode);
+            if (curElement.ElementKey.Equals(""))
+            {
+                return "";
+            }
+
+            return GetElementProperty(curElement, prop);
+        }
+
 
         private string ParsePresetValues(Classes.Element currentElement, string rawVariable)
         {
@@ -216,6 +327,57 @@ namespace WorldWeaver.Parsers.Elements
             }
 
             return varValue;
+        }
+
+        private string GetElementProperty(Classes.Element curElement, string elementProperty)
+        {
+            switch (elementProperty.ToLower())
+            {
+                case "elementkey":
+                    return curElement.ElementKey;
+
+                case "elementtype":
+                    return curElement.ElementType;
+
+                case "parentkey":
+                    return curElement.ParentKey;
+
+                case "syntax":
+                    return curElement.Syntax;
+
+                case "logic":
+                    return curElement.Logic;
+
+                case "tags":
+                    return curElement.Tags;
+
+                case "active":
+                    return curElement.Active;
+
+                default:
+                    return curElement.Output;
+            }
+        }
+
+        private Classes.Element GetRelativeElement(Classes.Element currentElement, string relCode)
+        {
+            var elemDb = new DataManagement.GameLogic.Element();
+
+            switch (relCode.ToLower())
+            {
+                case "[self]":
+                    return Tools.Elements.GetSelf(currentElement);
+
+                case "[enemy]":
+                    if (Cache.FightCache.Fight == null)
+                    {
+                        return new Classes.Element();
+                    }
+                    return Cache.FightCache.Fight.Enemy;
+
+                default:
+                    return Cache.RoomCache.Room;
+            }
         }
 
         public static bool DoComparison(string variable1, string variable2, string operand)

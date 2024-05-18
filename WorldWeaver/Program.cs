@@ -13,6 +13,7 @@ namespace WorldWeaver
         public static Output output = new Output();
         public static string userInput;
         public static string gameDb = "";
+        public static string gameFile = "";
 
         public static void Main(string[] args)
         {

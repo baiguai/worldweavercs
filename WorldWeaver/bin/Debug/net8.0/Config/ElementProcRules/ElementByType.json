@@ -125,6 +125,7 @@
                 "npc"
             ],
             "elements" : [
+                "link",
                 "travel",
                 "enter_message",
                 "logic",
@@ -140,6 +141,7 @@
                 "object"
             ],
             "elements" : [
+                "link",
                 "travel",
                 "enter_message",
                 "logic",
@@ -154,6 +156,7 @@
                 "player"
             ],
             "elements" : [
+                "link",
                 "message",
                 "attack",
                 "input"
@@ -165,6 +168,7 @@
                 "room"
             ],
             "elements" : [
+                "link",
                 "action",
                 "enter_message",
                 "set",
@@ -180,6 +184,7 @@
                 "round"
             ],
             "elements" : [
+                "link",
                 "logic",
                 "action",
                 "set"

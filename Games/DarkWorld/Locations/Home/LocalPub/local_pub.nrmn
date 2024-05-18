@@ -18,6 +18,14 @@ You look around. You are in a loud smokey pub.
         }
     }
 
+    {type=look
+        {type=message
+            output={@
+Still looking...
+            }
+        }
+    }
+
 
 --------------------------------------------------------------------------------
 

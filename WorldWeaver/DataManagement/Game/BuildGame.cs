@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -105,48 +106,6 @@ CREATE TABLE IF NOT EXISTS gamestate (
                             NOT NULL,
     CreateDate  TEXT (10)  NOT NULL,
     UpdateDate  TEXT (10)  NOT NULL
-);
-
-
--- Table: help
-DROP TABLE IF EXISTS help;
-
-CREATE TABLE IF NOT EXISTS help (
-    HelpKey      TEXT (300) UNIQUE,
-    Syntax       TEXT (300) NOT NULL,
-    HelpTitle    BLOB       NOT NULL,
-    HelpContents BLOB       NOT NULL
-);
-
-
--- Index: ix_help_HelpContents
-DROP INDEX IF EXISTS ix_help_HelpContents;
-
-CREATE INDEX IF NOT EXISTS ix_help_HelpContents ON help (
-    HelpContents
-);
-
-
--- Index: ix_help_HelpKey
-DROP INDEX IF EXISTS ix_help_HelpKey;
-
-CREATE INDEX IF NOT EXISTS ix_help_HelpKey ON help (
-    HelpKey
-);
-
-
--- Index: ix_help_HelpTitle
-DROP INDEX IF EXISTS ix_help_HelpTitle;
-
-CREATE INDEX IF NOT EXISTS ix_help_HelpTitle ON help (
-    HelpTitle
-);
-
--- Index: ix_help_Syntax
-DROP INDEX IF EXISTS ix_help_Syntax;
-
-CREATE INDEX IF NOT EXISTS ix_help_Syntax ON help (
-    Syntax
 );
 
 
@@ -298,6 +257,7 @@ PRAGMA foreign_keys = on;
             CreateDatabase(game_key);
 
             success = LoadGameFiles(gameFile, gameDirectory);
+            success = FixLinkElements(gameFile);
 
             return success;
         }
@@ -309,14 +269,7 @@ PRAGMA foreign_keys = on;
 
             foreach (var dir in Directory.GetDirectories(gameDirectory))
             {
-                if (dir.Contains("/Help") || dir.Contains("\\Help"))
-                {
-                    success = LoadHelp(gameFile, dir);
-                }
-                else
-                {
-                    LoadGameFiles(gameFile, dir);
-                }
+                LoadGameFiles(gameFile, dir);
             }
 
             foreach (string file in Directory.GetFiles(gameDirectory))
@@ -331,78 +284,6 @@ PRAGMA foreign_keys = on;
                     success = (ParseElement(connectionString, lines, "root", 0) > -1);
                 }
             }
-
-            return success;
-        }
-
-        private bool LoadHelp(string gameFile, string helpDir)
-        {
-            var success = false;
-            var connectionString = $"Data Source={gameFile};Cache=Shared;";
-
-            foreach (var f in Directory.GetFiles(helpDir))
-            {
-                if (!f.Contains(".json"))
-                {
-                    return true;
-                }
-
-                using (StreamReader r = new StreamReader(f))
-                {
-                    string json = r.ReadToEnd();
-                    var jsonObj = JObject.Parse(json);
-                    var links = new List<string>();
-                    foreach (var cmd in jsonObj["topics"])
-                    {
-                        var syntax = (string)cmd["pattern"];
-                        var title = (string)cmd["title"];
-                        var content = (string)cmd["string"];
-
-                        content = content.Replace("---", "--------------------------------------------------------------------------------");
-
-                        success = InsertHelpTopic(connectionString, syntax, title, content);
-                    }
-                }
-            }
-
-            return success;
-        }
-
-        private bool InsertHelpTopic(string connectionString, string? syntax, string? title, string content)
-        {
-            var success = false;
-
-            using (SqliteConnection connection = new SqliteConnection(connectionString))
-            {
-                connection.Open();
-
-                string createDbQuery = $@"
-INSERT INTO help (
-    HelpKey,
-    Syntax,
-    HelpTitle,
-    HelpContents
-)
-VALUES
-(
-    '{Guid.NewGuid}',
-    '{syntax}',
-    '{title}',
-    '{content}'
-);";
-
-                using (SqliteCommand command = new SqliteCommand(createDbQuery, connection))
-                {
-                    command.ExecuteNonQuery();
-                    command.Dispose();
-                }
-
-                connection.Close();
-                connection.Dispose();
-            }
-
-            success = true;
-            elementsToInsert.Clear();
 
             return success;
         }
@@ -825,6 +706,95 @@ VALUES";
             elementsToInsert.Clear();
 
             return success;
+        }
+
+        private bool FixLinkElements(string gameFile)
+        {
+            var connectionString = $"Data Source={gameFile};Cache=Shared;";
+            var success = false;
+
+            success = UpdateLinkChildren(connectionString);
+            if (!success)
+            {
+                return false;
+            }
+            success = UpdateLinks(connectionString);
+
+            return success;
+        }
+
+        private bool UpdateLinks(string connectionString)
+        {
+            var updateQuery = $@"
+DELETE FROM
+    element
+WHERE 1=1
+    AND ElementType = 'link'
+;
+            ";
+
+            using (SqliteConnection connection = new SqliteConnection(connectionString))
+            {
+                connection.Open();
+
+                using (SqliteCommand command = new SqliteCommand(updateQuery, connection))
+                {
+                    command.ExecuteNonQuery();
+                    command.Dispose();
+                }
+
+                connection.Close();
+                connection.Dispose();
+            }
+
+            return true;
+        }
+
+        private bool UpdateLinkChildren(string connectionString)
+        {
+            var updateQuery = $@"
+UPDATE
+    element
+SET
+    ParentKey = 
+    (
+        SELECT
+            p.ParentKey
+        FROM
+            element p
+        WHERE 1=1
+            AND p.ElementType = 'link'
+            AND p.ElementKey = element.ParentKey
+    )
+WHERE
+    EXISTS
+    (
+        SELECT
+            1
+        FROM
+            element p
+        WHERE 1=1
+            AND p.ElementType = 'link'
+            AND p.ElementKey = element.ParentKey
+    )
+;
+            ";
+
+            using (SqliteConnection connection = new SqliteConnection(connectionString))
+            {
+                connection.Open();
+
+                using (SqliteCommand command = new SqliteCommand(updateQuery, connection))
+                {
+                    command.ExecuteNonQuery();
+                    command.Dispose();
+                }
+
+                connection.Close();
+                connection.Dispose();
+            }
+
+            return true;
         }
     }
 }
