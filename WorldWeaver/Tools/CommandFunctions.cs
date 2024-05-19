@@ -37,7 +37,7 @@ namespace WorldWeaver.Tools
         {
             var helpOutput = "";
 
-            helpOutput = ProcessHelpDirectory($"Help/{system}", input);
+            helpOutput = ProcessHelpDirectory(system, input);
 
             if (helpOutput.Equals(""))
             {

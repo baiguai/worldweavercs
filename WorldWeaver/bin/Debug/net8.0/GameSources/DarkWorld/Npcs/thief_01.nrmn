@@ -1,4 +1,4 @@
-{key=thief_01, name=Thief, type=npc, syntax=\b(?:*thief*)\b, parent=local_pub
+{key=thief_01, name=Thief, type=npc, syntax=\b(?:*thief*)\b, parent=limbo
     {name=Life, type=attribute, output=[rand:15|30], tags=stats|life }
     {name=Armor Rating, type=attribute, output=[rand:4|10], tags=stats|armor }
     {name=Strength, type=attribute, output=[rand:8|18], tags=stats }
@@ -12,33 +12,56 @@
 
     {key=thief_01_shortsword, name=Short Sword, type=object, syntax=\b(short sword)\b, tags=inventory
         {name=Damage, type=attribute, logic=[rand:4|8], tags=damage }
-
-        {type=hit, tags=hit
-            output={@
-You have been attacked by [self.name]. He has caused your life to be reduced by [damage].
-            }
-        }
     }
 
 
+    ---- FIGHTING MESSAGES ----
+    ----------------------------------------------------------------------------
+    {type=hit
+        output={@
+
+
+You have been attacked by the thief. He has caused your life to be reduced by [damage].
+        }
+    }
+
+    {type=miss
+        output={@
+
+The thief attempts to attack you but fails.
+        }
+    }
 
     {type=damage_message
         output={@
 
-You have attacked [enemy.title]. His life has been reduced by [damage].
+
+You have attacked the thief. His life has been reduced by [damage].
         }
     }
 
     {type=miss_message
         output={@
 
-You attack the [enemy.title]. But your attack failed.
+You attack the thief. But your attack failed.
         }
     }
 
+    {type=kill
+        {type=move, logic=[self], tags=limbo }
+        {type=message
+            output={@
 
 
-    {key=thief_01_travel, type=travel, logic=[follow|player], active=true }
+You have killed the thief.
+            }
+        }
+    }
+    ---------------------------------------------------------------------------
+
+
+
+    {key=thief_01_travel, type=travel, logic=[follow|player], active=false }
 
 
     {type=enter_message
@@ -56,16 +79,6 @@ You see a thief sitting at the bar near you.
             }
         }
     }
-
-    {type=kill
-        {type=move, logic=[self], tags=limbo }
-        {type=message
-            output={@
-You have killed the shady character.
-            }
-        }
-    }
-
 
     {type=input, syntax=\battack\b.*?\b(thief)\b
         {type=attack

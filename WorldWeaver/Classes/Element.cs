@@ -32,5 +32,10 @@ namespace WorldWeaver.Classes
                 elemPars.ParseElement(this, procs, isEntering);
             }
         }
+
+        public List<ElementProc> GetProcs()
+        {
+            return Tools.ProcFunctions.GetProcessStepsByType(this.ElementType);
+        }
     }
 }

@@ -13,6 +13,13 @@ namespace WorldWeaver.Tools
             return tgs.Contains(searchString);
         }
 
+        public static bool ListContains(this string listItems, string searchString)
+        {
+            List<string> lst = SplitTags(listItems);
+
+            return lst.Contains(searchString);
+        }
+
         public static string AddTag(this string tags, string newTag)
         {
             List<string> tgs = SplitTags(tags);

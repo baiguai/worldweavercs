@@ -86,6 +86,37 @@ ORDER BY
             return output;
         }
 
+        public List<Classes.Element> GetAttribWithReference()
+        {
+            var selectQuery = $@"
+SELECT
+    ElementType,
+    ElementKey,
+    Name,
+    ParentKey,
+    Syntax,
+    Logic,
+    Output,
+    Tags,
+    Repeat,
+    RepeatIndex,
+    Active,
+    Sort
+FROM
+    element
+WHERE 1=1
+    AND Output LIKE '%((%'
+    AND ElementType = 'attribute'
+    AND Active = 'true'
+ORDER BY
+    sort
+;
+            ";
+
+            var output = GetElements(selectQuery);
+            return output;
+        }
+
         internal bool SetElementParentKey(string key, string parentKey)
         {
             var setKeyOutput = false;
@@ -213,6 +244,51 @@ ORDER BY
 
 
             var output = GetElements(selectQuery, MainClass.gameDb, parms);
+
+            return output;
+        }
+
+        public Classes.Element GetElementChildByTag(string parent_key, string tag)
+        {
+            var cachedElem = Tools.CacheManager.GetCachedElement(parent_key);
+            if (cachedElem != null)
+            {
+                return cachedElem.Children.Where(c => c.Tags.TagsContain(tag)).FirstOrDefault();
+            }
+
+            var selectQuery = $@"
+SELECT
+    ElementType,
+    ElementKey,
+    Name,
+    ParentKey,
+    Syntax,
+    Logic,
+    Output,
+    Tags,
+    Repeat,
+    RepeatIndex,
+    Active,
+    Sort
+FROM
+    element
+WHERE 1=1
+    AND ParentKey = @parentkey
+    AND Active = 'true'
+ORDER BY
+    Sort
+;
+            ";
+
+            var parms = new List<DbParameter>();
+            parms.Add(new DbParameter()
+            {
+                ParamName = "@parentkey",
+                ParamValue = parent_key
+            });
+
+
+            var output = GetElements(selectQuery, MainClass.gameDb, parms).Where(c => c.Tags.TagsContain(tag)).First();
 
             return output;
         }
@@ -695,6 +771,33 @@ WHERE 1=1
 
                 connection.Close();
                 connection.Dispose();
+                Tools.CacheManager.RefreshCache();
+            }
+        }
+
+        internal void SetAttribReference()
+        {
+            var elems = GetAttribWithReference();
+
+            foreach (var elem in elems)
+            {
+                var attrArr = elem.Output.Split("((");
+                if (attrArr.Length == 2)
+                {
+                    var elemKey = attrArr[0].Trim();
+                    var elemAttr = attrArr[1].Replace("))", "").Trim();
+
+                    var selElem = GetElementByKey(elemKey);
+
+                    foreach (var elemChild in selElem.Children)
+                    {
+                        if (elemChild.Tags.TagsContain(elemAttr))
+                        {
+                            elem.Output = elemChild.Output;
+                            SetElementField(elem.ElementKey, "Output", elemChild.Output, true);
+                        }
+                    }
+                }
             }
         }
     }

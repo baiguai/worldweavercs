@@ -82,9 +82,10 @@ namespace WorldWeaver.Parsers.Elements
 
                             MainClass.output.MatchMade = false;
                             HandleMessage(currentElement, child, procObj.AllowRepeatOptions, isEntering);
-                            if (MainClass.output.MatchMade)
+                            if (MainClass.output.MatchMade || !MainClass.output.OutputText.Equals(""))
                             {
                                 handledMessage = true;
+                                MainClass.output.MatchMade = true;
                             }
                             break;
 

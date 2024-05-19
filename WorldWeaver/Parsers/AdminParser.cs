@@ -95,7 +95,7 @@ namespace WorldWeaver.Parsers
             }
 
             MainClass.output.MatchMade = true;
-            MainClass.output.OutputText = Tools.CommandFunctions.GetHelpTopic(parms, "Admin");
+            MainClass.output.OutputText = Tools.CommandFunctions.GetHelpTopic(parms, "Help/Admin");
         }
     }
 }

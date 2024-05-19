@@ -1,0 +1,11 @@
+﻿{
+    "topics" : [
+        {
+            "pattern" : "\\b(help|\\?)\\b",
+            "title" : "DarkWorld Help",
+            "string" : "
+Welcome to the DarkWorld help system.
+"
+        }
+    ]
+}

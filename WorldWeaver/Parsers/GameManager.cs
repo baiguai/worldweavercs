@@ -71,6 +71,10 @@ namespace WorldWeaver.Parsers
                 }
             }
 
+            foreach (var glob in Cache.GlobalCache.Global)
+            {
+                glob.ParseElement();
+            }
 
             var playerInv = elemDb.GetElementChildren(Cache.PlayerCache.Player.ElementKey);
             foreach (var child in playerInv)
@@ -78,11 +82,6 @@ namespace WorldWeaver.Parsers
                 child.ParseElement();
             }
             Cache.RoomCache.Room.ParseElement();
-
-            foreach (var glob in Cache.GlobalCache.Global)
-            {
-                glob.ParseElement();
-            }
 
             if (Cache.GameCache.Game == null)
             {

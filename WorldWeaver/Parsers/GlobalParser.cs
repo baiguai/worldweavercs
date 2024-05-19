@@ -24,7 +24,6 @@ namespace WorldWeaver.Parsers
             if (!method.Equals(""))
             {
                 playerInput = MainClass.userInput;
-                MainClass.output.MatchMade = true;
 
                 switch (method)
                 {
@@ -39,6 +38,11 @@ namespace WorldWeaver.Parsers
                         break;
 
                     case "DoHelp":
+                        // In game help systems are defined using global inputs, actions and custom element types
+                        if (!MainClass.gameDb.Equals(""))
+                        {
+                            return;
+                        }
                         MainClass.output.MatchMade = true;
                         MainClass.output.OutputText = DoHelp();
                         break;
@@ -66,7 +70,9 @@ namespace WorldWeaver.Parsers
                 parms = "help";
             }
 
-            var output = Tools.CommandFunctions.GetHelpTopic(parms, "General");
+            var helpPath = "Help/General";
+
+            var output = Tools.CommandFunctions.GetHelpTopic(parms, helpPath);
 
             return output;
         }
