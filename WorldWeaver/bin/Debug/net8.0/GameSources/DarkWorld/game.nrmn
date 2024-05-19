@@ -3,6 +3,8 @@
     type=game
     parent=root
 
+    {type=attribute, output=warbeiter, tags=adminpass }
+
     {type=enter_message, key=game_title
         output={@
 Something dark is happening throughout the continent of Aetherus.

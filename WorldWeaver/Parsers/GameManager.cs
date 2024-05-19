@@ -1,4 +1,5 @@
 ﻿using System;
+using WorldWeaver.Classes;
 using WorldWeaver.Tools;
 
 namespace WorldWeaver.Parsers
@@ -35,6 +36,7 @@ namespace WorldWeaver.Parsers
         private void ParseRunningGame()
         {
             var gameLogic = new DataManagement.GameLogic.Game();
+            var devParser = new DevToolsParser();
             var elemParser = new Elements.Element();
             var logic = new DataManagement.GameLogic.Element();
             var elemDb = new DataManagement.GameLogic.Element();
@@ -44,6 +46,12 @@ namespace WorldWeaver.Parsers
                 CacheManager.RefreshCache();
                 Cache.GameCache.Game.ParseElement();
                 Cache.GameCache.GameInitialized = true;
+            }
+
+            devParser.ParseInput();
+            if (MainClass.output.MatchMade)
+            {
+                return;
             }
 
             // Parse the system events

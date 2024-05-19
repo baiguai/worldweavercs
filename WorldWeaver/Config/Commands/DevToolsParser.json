@@ -1,0 +1,16 @@
+﻿{
+    "commands" : [
+        {
+            "pattern" : "\\b(_admin *)\\b",
+            "method" : "DoAdminLogin"
+        },
+        {
+            "pattern" : "\\b(_map)\\b",
+            "method" : "DoMap"
+        },
+        {
+            "pattern" : "\\b(_list)\\b",
+            "method" : "DoList"
+        }
+    ]
+}

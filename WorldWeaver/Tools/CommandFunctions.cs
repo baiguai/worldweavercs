@@ -33,6 +33,24 @@ namespace WorldWeaver.Tools
             return output;
         }
 
+        public static List<string> GetCommands(string parser)
+        {
+            var output = new List<string>();
+
+            using (StreamReader r = new StreamReader($"Config/Commands/{parser}.json"))
+            {
+                string json = r.ReadToEnd();
+                var jsonObj = JObject.Parse(json);
+                foreach (var cmd in jsonObj["commands"])
+                {
+                    var syntax = (string)cmd["pattern"];
+                    output.Add(syntax);
+                }
+            }
+
+            return output;
+        }
+
         public static string GetHelpTopic(string input, string system)
         {
             var helpOutput = "";

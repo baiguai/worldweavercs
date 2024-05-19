@@ -14,6 +14,7 @@ namespace WorldWeaver
         public static string userInput;
         public static string gameDb = "";
         public static string gameFile = "";
+        public static bool adminEnabled = false;
 
         public static void Main(string[] args)
         {
@@ -25,7 +26,7 @@ namespace WorldWeaver
         {
             if (initMsg.Equals(""))
             {
-                Console.Write(">> ");
+                Console.Write(GetCursor());
             }
             else
             {
@@ -98,6 +99,20 @@ namespace WorldWeaver
             }
 
             Listener("");
+        }
+
+        private static string GetCursor()
+        {
+            var curs = "";
+
+            if (adminEnabled)
+            {
+                curs += "!";
+            }
+
+            curs += ">> ";
+
+            return curs;
         }
     }
 }
