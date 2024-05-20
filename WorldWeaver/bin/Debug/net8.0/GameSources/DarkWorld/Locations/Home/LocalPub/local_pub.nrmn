@@ -12,8 +12,8 @@ She appears to be staring in your direction.
 
     {type=look
         {type=message
-            output={@
-You look around. You are in a loud smokey pub.
+            output={
+You look around.\bYou are in a loud smokey pub.
             }
         }
     }

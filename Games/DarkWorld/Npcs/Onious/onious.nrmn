@@ -10,8 +10,6 @@
     {type=attribute, output=she, tags=pronoun }
     {type=attribute, output=her, tags=subject_pronoun }
 
-    {type=attribute, output=false, tags=known_name }
-
     {key=onious_shortsword, name=Short Sword, type=object, syntax=\b(short sword)\b, tags=inventory
         {name=Damage, type=attribute, logic=[rand:4|8], tags=damage }
     }

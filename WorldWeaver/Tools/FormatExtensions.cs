@@ -13,8 +13,7 @@ namespace WorldWeaver.Tools
 
             formattedOutput = formattedOutput.Replace("---", "--------------------------------------------------------------------------------");
             formattedOutput = formattedOutput.Replace("''", "'");
-
-            formattedOutput = outParser.ParseOutput(formattedOutput);
+            formattedOutput = formattedOutput.Replace("\\b", $"{Environment.NewLine}");
 
             return formattedOutput;
         }

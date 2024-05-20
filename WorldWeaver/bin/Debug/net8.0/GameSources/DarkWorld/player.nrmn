@@ -1,4 +1,4 @@
-﻿{key=player, name=, type=player, parent=local_pub
+﻿{key=player, name=bob, type=player, parent=local_pub
     {name=Life, type=attribute, output=[rand:17|35], tags=stats|life }
     {type=attribute, output=player((life)), tags=maxlife }
     {name=Armor Rating, type=attribute, output=[rand:4|10], tags=stats|armor }
