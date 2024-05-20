@@ -248,6 +248,111 @@ ORDER BY
             return output;
         }
 
+        public List<Classes.Element> GetElementChildrenByType(string parent_key, string childType)
+        {
+            var cachedElem = Tools.CacheManager.GetCachedElement(parent_key);
+            if (cachedElem != null)
+            {
+                return cachedElem.Children;
+            }
+
+            var selectQuery = $@"
+SELECT
+    ElementType,
+    ElementKey,
+    Name,
+    ParentKey,
+    Syntax,
+    Logic,
+    Output,
+    Tags,
+    Repeat,
+    RepeatIndex,
+    Active,
+    Sort
+FROM
+    element
+WHERE 1=1
+    AND ParentKey = @parentkey
+    AND ElementType = @childtype
+    AND Active = 'true'
+ORDER BY
+    Sort
+;
+            ";
+
+            var parms = new List<DbParameter>();
+            parms.Add(new DbParameter()
+            {
+                ParamName = "@parentkey",
+                ParamValue = parent_key
+            });
+            parms.Add(new DbParameter()
+            {
+                ParamName = "@childtype",
+                ParamValue = childType
+            });
+
+            var output = GetElements(selectQuery, MainClass.gameDb, parms);
+
+            return output;
+        }
+        public List<Classes.Element> GetDoors(string parent_key)
+        {
+            var cachedElem = Tools.CacheManager.GetCachedElement(parent_key);
+            if (cachedElem != null)
+            {
+                return cachedElem.Children;
+            }
+
+            var selectQuery = $@"
+SELECT
+    mv.ElementType,
+    mv.ElementKey,
+    mv.Name,
+    mv.ParentKey,
+    mv.Syntax,
+    mv.Logic,
+    mv.Output,
+    mv.Tags,
+    mv.Repeat,
+    mv.RepeatIndex,
+    mv.Active,
+    mv.Sort
+FROM
+    element inp
+    INNER JOIN element mv
+         ON mv.ParentKey = inp.ElementKey
+WHERE 1=1
+    AND inp.ParentKey = @parentkey
+    AND inp.Active = 'true'
+    AND inp.ElementType = 'input'
+    AND mv.ElementType = 'move'
+    AND mv.Active = 'true'
+    AND mv.Tags LIKE '%[player]%'
+ORDER BY
+    inp.Sort
+;
+            ";
+
+            var parms = new List<DbParameter>();
+            parms.Add(new DbParameter()
+            {
+                ParamName = "@parentkey",
+                ParamValue = parent_key
+            });
+
+            var output = GetElements(selectQuery, MainClass.gameDb, parms);
+
+            foreach (var door in output)
+            {
+                var parent = GetElementByKey(door.ParentKey);
+                door.Syntax = parent.Syntax;
+            }
+
+            return output;
+        }
+
         public Classes.Element GetElementChildByTag(string parent_key, string tag)
         {
             var cachedElem = Tools.CacheManager.GetCachedElement(parent_key);

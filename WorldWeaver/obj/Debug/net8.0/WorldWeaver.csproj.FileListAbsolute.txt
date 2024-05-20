@@ -67,3 +67,5 @@
 /media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/bin/Debug/net8.0/Config/Commands/FightParser.json
 /media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/bin/Debug/net8.0/Admin/Help/AdminHelp.html
 /media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/bin/Debug/net8.0/Help/Admin/AdminHelp.html
+/media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/bin/Debug/net8.0/Commands/Config/DevToolsParser.json
+/media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/bin/Debug/net8.0/Config/Commands/DevToolsParser.json
