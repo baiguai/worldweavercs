@@ -38,6 +38,10 @@ namespace WorldWeaver.Parsers
                 {
                     DoMacroStop();
                 }
+                if (!MainClass.output.MatchMade && method.Equals("DoMacroList"))
+                {
+                    DoMacroList();
+                }
                 if (!MainClass.output.MatchMade && method.Equals("DoRunMacro"))
                 {
                     DoRunMacro();
@@ -146,29 +150,48 @@ namespace WorldWeaver.Parsers
 
         private void DoMacroStart()
         {
+            if (!MainClass.adminEnabled)
+            {
+                return;
+            }
             var macroName = MainClass.userInput.Replace("_recordon ", "");
+            if (MainClass.userInput.Equals("_recordon"))
+            {
+                macroName = "";
+            }
 
             if (macroName.Equals(""))
             {
+                MainClass.output.OutputText = $"Be sure to specify a single word (File friendly) name for your macro.{Environment.NewLine}The shorter the name the better.";
+                MainClass.output.MatchMade = true;
                 return;
             }
 
             MainClass.macro = new Classes.Macro()
             {
-                MacroName = macroName,
+                MacroName = macroName.FileSafe(),
                 IsRecording = true
             };
         }
 
         private void DoMacroStop()
         {
+            if (!MainClass.adminEnabled)
+            {
+                return;
+            }
             MainClass.macro.IsRecording = false;
             var gameDb = new DataManagement.GameLogic.Game();
             var macroContents = "";
+            var macroDir = $"Config/Macros/{MainClass.gameDb}";
+
+            EnsureMacroDir(macroDir);
+
+            var macroFile = $"{macroDir}/{MainClass.macro.MacroName}";
 
             try
             {
-                File.Delete($"Config/Macros/{MainClass.macro.MacroName}");
+                File.Delete(macroFile);
             }
             catch (Exception)
             { }
@@ -182,18 +205,29 @@ namespace WorldWeaver.Parsers
                 macroContents += st;
             }
 
-            File.WriteAllText($"Config/Macros/{MainClass.macro.MacroName}", macroContents);
+            File.WriteAllText(macroFile, macroContents);
+
+            MainClass.output.OutputText = $"The macro steps have been stored in: {macroFile}";
+            MainClass.output.MatchMade = true;
         }
 
         private void DoRunMacro()
         {
+            if (!MainClass.adminEnabled)
+            {
+                return;
+            }
+            var macroDir = $"Config/Macros/{MainClass.gameDb}";
+
+            EnsureMacroDir(macroDir);
+
             var macroName = MainClass.userInput.Replace("_macro ", "");
-            if (!File.Exists($"Config/Macros/{macroName}"))
+            if (!File.Exists($"{macroDir}/{macroName.FileSafe()}"))
             {
                 return;
             }
 
-            var lines = File.ReadAllLines($"Config/Macros/{macroName}").ToList();
+            var lines = File.ReadAllLines($"{macroDir}/{macroName}").ToList();
             foreach (var line in lines)
             {
                 MainClass.RunTheParsers(line);
@@ -201,6 +235,43 @@ namespace WorldWeaver.Parsers
                 {
                     MainClass.HandleTheFight();
                 }
+            }
+        }
+
+        private void DoMacroList()
+        {
+            if (!MainClass.adminEnabled)
+            {
+                return;
+            }
+            var macroDir = $"Config/Macros/{MainClass.gameDb}";
+
+            EnsureMacroDir(macroDir);
+
+            MainClass.output.OutputText = "";
+
+            foreach (var f in Directory.GetFiles(macroDir))
+            {
+                if (!MainClass.output.OutputText.Equals(""))
+                {
+                    MainClass.output.OutputText += Environment.NewLine;
+                }
+                MainClass.output.OutputText += Path.GetFileName(f);
+            }
+
+            if (MainClass.output.OutputText.Equals(""))
+            {
+                MainClass.output.OutputText = "No macros have been recorded yet.";
+            }
+
+            MainClass.output.MatchMade = true;
+        }
+
+        private void EnsureMacroDir(string macroDir)
+        {
+            if (!Directory.Exists(macroDir))
+            {
+                Directory.CreateDirectory(macroDir);
             }
         }
     }

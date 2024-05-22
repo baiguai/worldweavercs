@@ -21,6 +21,10 @@
             "method" : "DoMacroStop"
         },
         {
+            "pattern" : "\\b(_macrols)\\b",
+            "method" : "DoMacroList"
+        },
+        {
             "pattern" : "\\b(_macro *)\\b",
             "method" : "DoRunMacro"
         }

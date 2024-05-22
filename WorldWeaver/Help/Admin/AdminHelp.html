@@ -283,13 +283,9 @@ Error message and password prompt
 
 <li>$:/state/toc/toc-Building Games in WorldWeaver--232442599</li>
 
-<li>$:/state/toc/toc/Building Games in WorldWeaver-Elements--232442599</li>
+<li>$:/state/toc/toc/Building Games in WorldWeaver-Developer Tools--232442599</li>
 
-<li>$:/state/toc/toc/Building Games in WorldWeaver/Elements-Element Fields--232442599</li>
-
-<li>$:/state/toc/toc/Building Games in WorldWeaver/Elements/Element Fields-Output Field--232442599</li>
-
-<li>$:/state/toc/toc/Building Games in WorldWeaver/Elements/Element Fields/Output Field-Special Values in Output--232442599</li>
+<li>$:/state/toc/toc/Building Games in WorldWeaver/Developer Tools-Macros--232442599</li>
 
 <li>$:/status/IsAnonymous</li>
 
@@ -369,7 +365,17 @@ Error message and password prompt
 
 <li>Dev: List</li>
 
+<li>DEV: Listing the Existing Macros for the Current Game</li>
+
+<li>Dev: Macros Overview</li>
+
 <li>Dev: Map</li>
+
+<li>DEV: Recording a Macro</li>
+
+<li>DEV: Running a Macro</li>
+
+<li>DEV: Stopping a Macro's Recording</li>
 
 <li>Developer Tools</li>
 
@@ -454,6 +460,8 @@ Error message and password prompt
 <li>Logic Elements - Logic Explained</li>
 
 <li>Logic Syntax Explained</li>
+
+<li>Macros</li>
 
 <li>Main Bundle</li>
 
@@ -736,19 +744,15 @@ Error message and password prompt
 ,
 {"title":"$:/state/http-requests","text":"0","revision":"1","bag":"default"}
 ,
-{"created":"20240521033520009","title":"$:/state/openmenu--232442599","text":"close","modified":"20240521033520009","revision":"1","bag":"default"}
+{"created":"20240522085548746","title":"$:/state/openmenu--232442599","text":"close","modified":"20240522085548746","revision":"1","bag":"default"}
 ,
-{"created":"20240521032241172","title":"$:/state/showeditpreview","text":"yes","modified":"20240521032241172","revision":"1","bag":"default"}
+{"created":"20240522075732732","title":"$:/state/showeditpreview","text":"yes","modified":"20240522075732732","revision":"1","bag":"default"}
 ,
-{"created":"20240521024705191","title":"$:/state/toc/toc-Building Games in WorldWeaver--232442599","text":"close","modified":"20240521033520008","revision":"2","bag":"default"}
+{"created":"20240522075613745","title":"$:/state/toc/toc-Building Games in WorldWeaver--232442599","text":"close","modified":"20240522085548744","revision":"2","bag":"default"}
 ,
-{"created":"20240521024708257","title":"$:/state/toc/toc/Building Games in WorldWeaver-Elements--232442599","text":"close","modified":"20240521033520008","revision":"2","bag":"default"}
+{"created":"20240522075624833","title":"$:/state/toc/toc/Building Games in WorldWeaver-Developer Tools--232442599","text":"close","modified":"20240522085548745","revision":"4","bag":"default"}
 ,
-{"created":"20240521024710769","title":"$:/state/toc/toc/Building Games in WorldWeaver/Elements-Element Fields--232442599","text":"close","modified":"20240521033520009","revision":"2","bag":"default"}
-,
-{"created":"20240521024712114","title":"$:/state/toc/toc/Building Games in WorldWeaver/Elements/Element Fields-Output Field--232442599","text":"close","modified":"20240521033520009","revision":"2","bag":"default"}
-,
-{"created":"20240521024713440","title":"$:/state/toc/toc/Building Games in WorldWeaver/Elements/Element Fields/Output Field-Special Values in Output--232442599","text":"close","modified":"20240521033520009","revision":"2","bag":"default"}
+{"created":"20240522084230236","title":"$:/state/toc/toc/Building Games in WorldWeaver/Developer Tools-Macros--232442599","text":"close","modified":"20240522085548746","revision":"2","bag":"default"}
 ,
 {"title":"$:/status/IsAnonymous","text":"yes","revision":"1","bag":"default"}
 ,
@@ -760,7 +764,7 @@ Error message and password prompt
 ,
 {"title":"$:/status/UserName","text":"","revision":"1","bag":"default"}
 ,
-{"title":"$:/StoryList","created":"20240521024716978","text":"","list":"","modified":"20240521033512312","revision":"15","bag":"default"}
+{"title":"$:/StoryList","created":"20240522075640186","text":"","list":"","modified":"20240522084929702","revision":"50","bag":"default"}
 ,
 {"title":"$:/tags/ViewToolbar","created":"20240430080032449","list":"$:/core/ui/Buttons/more-tiddler-actions $:/core/ui/Buttons/info $:/core/ui/Buttons/new-here $:/core/ui/Buttons/new-journal-here $:/core/ui/Buttons/clone $:/core/ui/Buttons/export-tiddler $:/core/ui/Buttons/edit $:/core/ui/Buttons/delete $:/core/ui/Buttons/permalink $:/core/ui/Buttons/permaview $:/core/ui/Buttons/open-window $:/core/ui/Buttons/close-others $:/core/ui/Buttons/fold-others $:/core/ui/Buttons/fold $:/core/ui/Buttons/fold-bar $:/PSaT/button/copy-text $:/PSaT/button/copy-title $:/PSaT/button/copy-title-link $:/PSaT/button/copy-title-transclude $:/core/ui/Buttons/close","modified":"20240430080032449","type":"text/vnd.tiddlywiki","revision":"0","bag":"default"}
 ,
@@ -828,7 +832,17 @@ Error message and password prompt
 ,
 {"title":"Dev: List","text":"## Syntax\n```\n_list\n```\n\n\u003Cbr />\n\nThe _list command displays all of the syntax values for each developer tool currently available via the DevToolsParser config file.","type":"text/markdown","caption":"List","created":"20240519084148410","modified":"20240519084836979","tags":"[[Developer Tools]] databundle","revision":"0","bag":"default"}
 ,
+{"created":"20240522085233693","text":"","tags":"Macros databundle","title":"DEV: Listing the Existing Macros for the Current Game","modified":"20240522085304209","type":"text/markdown","caption":"Listing the Existing Macros for the Current Game","revision":"1","bag":"default"}
+,
+{"created":"20240522075714330","text":"Macros make the life of a game developer much less painful. If you are building a large game, you don't want to have to replay a long set of steps to get to the section of the game that you're testing.\n\nYou can instead record a macro.\n\nMacros are stored in files in the Macros directory, under the current game's DB name (Since the player is playing the game it is the game's name with a **_playing** suffix).\n\n> **NOTE** \\\nMacros can only be listed, recorded, stored, and utilized while a game is being played **and** the [admin features have been enabled](#Dev%20%3A%20Enabling%20Developer%20Tools).\n\n> **NOTE** \\\nRunning macros may take some time, each recorded step actually executes as though the player input that text. So if your macro has a lot of steps it will take longer. Macros are run this way to ensure they act **EXACTLY** as though the player entered all their commands.\n\nMacros are stored in files so that even when you recompile the game, they are still available to run against it.\n\n> **NOTE** \\\nIf your game has changed in a way that breaks your macros you will need to recreate them. If you use the same macro name it will override the old macro.","tags":"Macros databundle","title":"Dev: Macros Overview","modified":"20240522084914292","type":"text/markdown","caption":"Overview","revision":"3","bag":"default"}
+,
 {"title":"Dev: Map","text":"## Syntax\n```\n_map\n```\n\n\u003Cbr />\n\nThe map tool lists every room in your game as well as the doors in each room, the non-player characters (NPCs) currently in each room, as well as the objects currently in each room.","type":"text/markdown","caption":"Map","created":"20240519084036724","modified":"20240519084905349","tags":"[[Developer Tools]] databundle","revision":"0","bag":"default"}
+,
+{"created":"20240522084458096","text":"To record a macro you would issue a command using the following structure:\n```\n_recordon \u003Cmacro name>\n```\n\n> **NOTE** \\\nThe macro name should be a single word, and the shorter it is the easier it will be to call that macro.\n\nOnce you have started the recording, simply enter the input that you would input as the player.","tags":"Macros databundle","title":"DEV: Recording a Macro","modified":"20240522084733855","type":"text/markdown","caption":"Recording a Macro","revision":"2","bag":"default"}
+,
+{"created":"20240522085343476","text":"Once you have enabled the admin tools and you have recorded at least one macro, you can run a macro using:\n```\n_macro \u003Cmacro name>>\n```","tags":"Macros databundle","title":"DEV: Running a Macro","modified":"20240522085535497","type":"text/markdown","caption":"Running a Macro","revision":"2","bag":"default"}
+,
+{"created":"20240522084950904","text":"To stop a currently recording macro use the following:\n```\n_recordoff\n```\n\nThis will cause the stored macro steps to be stored within a macro file named after the macro name you gave it when you issued the **_recordon** command.","tags":"Macros databundle","title":"DEV: Stopping a Macro's Recording","modified":"20240522085218080","type":"text/markdown","caption":"Stopping a Macro's Recording","revision":"3","bag":"default"}
 ,
 {"title":"Developer Tools","created":"20240519071300508","modified":"20240519084018736","tags":"[[Building Games in WorldWeaver]] databundle _admin","type":"text/vnd.tiddlywiki","text":"The available developer tool commands are driven by the following config file:\n\n```\n~/Config/Commands/DevToolsParser.json\n```\n\nThe available DevTools commands are listed below:\n\n\u003C\u003Clist-links [all[current]tagging[]]>>","revision":"0","bag":"default"}
 ,
@@ -914,6 +928,8 @@ Error message and password prompt
 ,
 {"title":"Logic Syntax Explained","text":"## Element Logic vs Logic Element Logic\nEvery element has a logic field. However each element type processes its logic field differently. Namely the action element, the set elements, and the logic elements.\n\n> Note: \\\nIn the future other elements' logic fields might get their own processing logic, depenting on what their type is.\n\n---\n\n\u003C\u003Clist-links [all[current]tagging[]]>>","type":"text/markdown","created":"20240514083528203","modified":"20240514085826186","tags":"[[Logic Elements]] databundle","revision":"0","bag":"default"}
 ,
+{"created":"20240522075644854","text":"\u003C\u003Clist-links [all[current]tagging[]]>>","tags":"[[Developer Tools]] databundle","title":"Macros","modified":"20240522085321477","list":"[[Dev: Macros Overview]] [[DEV: Recording a Macro]] [[DEV: Stopping a Macro's Recording]] [[DEV: Listing the Existing Macros for the Current Game]]","revision":"2","bag":"default"}
+,
 {"title":"Main Bundle","created":"20231214082816262","description":"provide a meaningful description to display in AdvancedSearch: Filter!","filter":"bundle_main: [tag:[bundle01]]","modified":"20231214083413067","tags":"$:/tags/Filter bundle01","type":"text/vnd.tiddlywiki","text":"\u003Cpre>{{!!filter}}\u003C/pre>","revision":"0","bag":"default"}
 ,
 {"title":"Making NPCs or Objects Disappear or Die","text":"It is a good idea to choose a location - that doesn't actually exist in the game - that you can move objects or non player characters (NPCs) to when they are gone or dead.\n\nFor example, I personally use **limbo** for this purpose.","type":"text/markdown","created":"20240515094419341","modified":"20240515094602232","tags":"[[Tips and Tricks]] databundle","revision":"0","bag":"default"}
@@ -960,7 +976,7 @@ Error message and password prompt
 ,
 {"title":"Relative Element Children by Tag","text":"## Rule\n1. Identify an element using a relative code:\n\t* [room] *(The current room)*\n\t* [self] *(This walks up to the first 'self' configured element - see the SelfTypes.json file)*\n\t* [enemy] *(While fighting)*\n\t\n1. Specify the tag to identify children\n1. Specify the child elements property to return (Default is the output property).\n\n### ls[relative code]((children tag))children element property\n\n## Example\n```\n?[self]key in ls[room]((discoverable))key\n```","type":"text/markdown","created":"20240516090601986","modified":"20240516090837011","tags":"[[Logic Element Syntax Key]] databundle","revision":"0","bag":"default"}
 ,
-{"created":"20240521032135704","text":"You can insert the value of a relative element's property (The default property is output).\n\nThe relative values you can use are:\n\n* [room] (The room the player is currently in)\n* [self] (This walks up to the first 'self' configured element - see the SelfTypes.json file)\n* [enemy] (While fighting)\n\n```\n[relative code]element property\n```\n\nFor Example:\n```\nYou are in the \u003C\u003C[self]name>>.\n```","title":"Relative Element Property","type":"text/markdown","modified":"20240521032425104","tags":"[[Special Values in Output]] databundle","revision":"1","bag":"default"}
+{"title":"Relative Element Property","text":"You can insert the value of a relative element's property (The default property is output).\n\nThe relative values you can use are:\n\n* [room] (The room the player is currently in)\n* [self] (This walks up to the first 'self' configured element - see the SelfTypes.json file)\n* [enemy] (While fighting)\n\n```\n[relative code]element property\n```\n\nFor Example:\n```\nYou are in the \u003C\u003C[self]name>>.\n```","type":"text/markdown","created":"20240521032135704","modified":"20240521032425104","tags":"[[Special Values in Output]] databundle","revision":"0","bag":"default"}
 ,
 {"title":"Replaying the Enter Message","text":"Since the enter message might contain information that a **look** command may not (I personally make the look command a short message, only describing details like a quick description and list of doors etc.) it is a good idea to give the player a command such as **story** that will allow them to replay the enter message.","type":"text/markdown","created":"20240515094630010","modified":"20240515094831142","tags":"[[Tips and Tricks]] databundle","revision":"0","bag":"default"}
 ,
