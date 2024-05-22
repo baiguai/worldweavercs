@@ -108,7 +108,7 @@ namespace WorldWeaver.Parsers.Elements
                     {
                         var missElem = Cache.FightCache.Fight.Enemy.ChildByType("miss_message");
                         var missMsg = ProcessDamageOutput(missElem.Output, 0);
-                        MainClass.output.OutputText = missMsg;
+                        MainClass.output.OutputText = Tools.OutputProcessor.ProcessSpecialValues(missMsg, missElem);
                     }
 
                     MainClass.output.MatchMade = true;
@@ -164,7 +164,7 @@ namespace WorldWeaver.Parsers.Elements
                     {
                         var missElem = Cache.FightCache.Fight.Enemy.ChildByType("miss");
                         var missMsg = ProcessDamageOutput(missElem.Output, 0);
-                        MainClass.output.OutputText = missMsg;
+                        MainClass.output.OutputText = Tools.OutputProcessor.ProcessSpecialValues(missMsg, missElem);
                     }
                 }
 

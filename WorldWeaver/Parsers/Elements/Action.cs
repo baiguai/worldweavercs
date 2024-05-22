@@ -134,7 +134,7 @@ namespace WorldWeaver.Parsers.Elements
 
                 if (!currentElement.Output.Equals(""))
                 {
-                    MainClass.output.OutputText += $"{currentElement.Output}{Environment.NewLine}{Environment.NewLine}";
+                    MainClass.output.OutputText += $"{Tools.OutputProcessor.ProcessSpecialValues(currentElement.Output, currentElement)}{Environment.NewLine}{Environment.NewLine}";
                 }
 
                 foreach (var child in elem.Children)
@@ -208,7 +208,7 @@ namespace WorldWeaver.Parsers.Elements
 
             if (!outputText.Equals(""))
             {
-                MainClass.output.OutputText = outputText;
+                MainClass.output.OutputText = Tools.OutputProcessor.ProcessSpecialValues(outputText, tgtElem);
                 MainClass.output.MatchMade = true;
             }
         }

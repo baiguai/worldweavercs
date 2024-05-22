@@ -34,7 +34,7 @@ namespace WorldWeaver.Parsers.Elements
                     else
                     {
                         MainClass.output.FailedLogic = false;
-                        MainClass.output.OutputText += currentElement.Output;
+                        MainClass.output.OutputText += Tools.OutputProcessor.ProcessSpecialValues(currentElement.Output, currentElement);
                         return;
                     }
                 }
@@ -208,7 +208,7 @@ namespace WorldWeaver.Parsers.Elements
                 if (!propValue.Equals(""))
                 {
                     propValue += "|";
-                    propValue += GetElementProperty(ch, prop);
+                    propValue += Tools.Elements.GetElementProperty(ch, prop);
                 }
             }
 
@@ -241,7 +241,7 @@ namespace WorldWeaver.Parsers.Elements
 
             var elemDb = new DataManagement.GameLogic.Element();
 
-            var relElement = GetRelativeElement(currentElement, relCode);
+            var relElement = Tools.Elements.GetRelativeElement(currentElement, relCode);
             if (relElement.ElementKey.Equals(""))
             {
                 return "";
@@ -252,7 +252,7 @@ namespace WorldWeaver.Parsers.Elements
                 if (!propValue.Equals(""))
                 {
                     propValue += "|";
-                    propValue += GetElementProperty(ch, prop);
+                    propValue += Tools.Elements.GetElementProperty(ch, prop);
                 }
             }
 
@@ -281,7 +281,7 @@ namespace WorldWeaver.Parsers.Elements
                 return "";
             }
 
-            return GetElementProperty(curElement, prop);
+            return Tools.Elements.GetElementProperty(curElement, prop);
         }
 
         private string ParseRelativeElement(Classes.Element currentElement, string rawVariable)
@@ -300,13 +300,13 @@ namespace WorldWeaver.Parsers.Elements
             var prop = arr[1].Trim();
 
             var elemDb = new DataManagement.GameLogic.Element();
-            var curElement = GetRelativeElement(currentElement, relCode);
+            var curElement = Tools.Elements.GetRelativeElement(currentElement, relCode);
             if (curElement.ElementKey.Equals(""))
             {
                 return "";
             }
 
-            return GetElementProperty(curElement, prop);
+            return Tools.Elements.GetElementProperty(curElement, prop);
         }
 
 
@@ -327,57 +327,6 @@ namespace WorldWeaver.Parsers.Elements
             }
 
             return varValue;
-        }
-
-        private string GetElementProperty(Classes.Element curElement, string elementProperty)
-        {
-            switch (elementProperty.ToLower())
-            {
-                case "elementkey":
-                    return curElement.ElementKey;
-
-                case "elementtype":
-                    return curElement.ElementType;
-
-                case "parentkey":
-                    return curElement.ParentKey;
-
-                case "syntax":
-                    return curElement.Syntax;
-
-                case "logic":
-                    return curElement.Logic;
-
-                case "tags":
-                    return curElement.Tags;
-
-                case "active":
-                    return curElement.Active;
-
-                default:
-                    return curElement.Output;
-            }
-        }
-
-        private Classes.Element GetRelativeElement(Classes.Element currentElement, string relCode)
-        {
-            var elemDb = new DataManagement.GameLogic.Element();
-
-            switch (relCode.ToLower())
-            {
-                case "[self]":
-                    return Tools.Elements.GetSelf(currentElement);
-
-                case "[enemy]":
-                    if (Cache.FightCache.Fight == null)
-                    {
-                        return new Classes.Element();
-                    }
-                    return Cache.FightCache.Fight.Enemy;
-
-                default:
-                    return Cache.RoomCache.Room;
-            }
         }
 
         public static bool DoComparison(string variable1, string variable2, string operand)

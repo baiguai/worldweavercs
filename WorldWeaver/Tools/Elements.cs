@@ -52,5 +52,59 @@ namespace WorldWeaver.Tools
 
             return life;
         }
+
+        public static string GetElementProperty(Classes.Element curElement, string elementProperty)
+        {
+            switch (elementProperty.ToLower())
+            {
+                case "elementkey":
+                    return curElement.ElementKey;
+
+                case "elementtype":
+                    return curElement.ElementType;
+
+                case "parentkey":
+                    return curElement.ParentKey;
+
+                case "syntax":
+                    return curElement.Syntax;
+
+                case "logic":
+                    return curElement.Logic;
+
+                case "tags":
+                    return curElement.Tags;
+
+                case "active":
+                    return curElement.Active;
+
+                default:
+                    return curElement.Output;
+            }
+        }
+
+        public static Classes.Element GetRelativeElement(Classes.Element currentElement, string relCode)
+        {
+            var elemDb = new DataManagement.GameLogic.Element();
+
+            switch (relCode.ToLower())
+            {
+                case "[self]":
+                    return Tools.Elements.GetSelf(currentElement);
+
+                case "[room]":
+                    return Cache.RoomCache.Room;
+
+                case "[enemy]":
+                    if (Cache.FightCache.Fight == null)
+                    {
+                        return new Classes.Element();
+                    }
+                    return Cache.FightCache.Fight.Enemy;
+
+                default:
+                    return Cache.RoomCache.Room;
+            }
+        }
     }
 }

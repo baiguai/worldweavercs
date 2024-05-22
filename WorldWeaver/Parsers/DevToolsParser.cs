@@ -30,6 +30,18 @@ namespace WorldWeaver.Parsers
                 {
                     DoMap();
                 }
+                if (!MainClass.output.MatchMade && method.Equals("DoMacroStart"))
+                {
+                    DoMacroStart();
+                }
+                if (!MainClass.output.MatchMade && method.Equals("DoMacroStop"))
+                {
+                    DoMacroStop();
+                }
+                if (!MainClass.output.MatchMade && method.Equals("DoRunMacro"))
+                {
+                    DoRunMacro();
+                }
             }
         }
 
@@ -129,6 +141,66 @@ namespace WorldWeaver.Parsers
             {
                 MainClass.output.MatchMade = true;
                 MainClass.output.OutputText = cmdOutput;
+            }
+        }
+
+        private void DoMacroStart()
+        {
+            var macroName = MainClass.userInput.Replace("_recordon ", "");
+
+            if (macroName.Equals(""))
+            {
+                return;
+            }
+
+            MainClass.macro = new Classes.Macro()
+            {
+                MacroName = macroName,
+                IsRecording = true
+            };
+        }
+
+        private void DoMacroStop()
+        {
+            MainClass.macro.IsRecording = false;
+            var gameDb = new DataManagement.GameLogic.Game();
+            var macroContents = "";
+
+            try
+            {
+                File.Delete($"Config/Macros/{MainClass.macro.MacroName}");
+            }
+            catch (Exception)
+            { }
+
+            foreach (var st in MainClass.macro.MacroSteps)
+            {
+                if (!macroContents.Equals(""))
+                {
+                    macroContents += Environment.NewLine;
+                }
+                macroContents += st;
+            }
+
+            File.WriteAllText($"Config/Macros/{MainClass.macro.MacroName}", macroContents);
+        }
+
+        private void DoRunMacro()
+        {
+            var macroName = MainClass.userInput.Replace("_macro ", "");
+            if (!File.Exists($"Config/Macros/{macroName}"))
+            {
+                return;
+            }
+
+            var lines = File.ReadAllLines($"Config/Macros/{macroName}").ToList();
+            foreach (var line in lines)
+            {
+                MainClass.RunTheParsers(line);
+                if (MainClass.output.MatchMade)
+                {
+                    MainClass.HandleTheFight();
+                }
             }
         }
     }

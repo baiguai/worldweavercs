@@ -64,7 +64,6 @@ CREATE TABLE IF NOT EXISTS debuglog (
     UpdateDate TEXT (10)  NOT NULL
 );
 
-
 -- Table: element
 DROP TABLE IF EXISTS element;
 
