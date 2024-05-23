@@ -1,0 +1,20 @@
+{type=link, parent=onious
+    {type=attribute, output=offer, tags=topic }
+
+    {type=accept
+        output={@
+Oh great!
+        }
+    }
+
+
+
+    {type=input, syntax=\b(yes *|yep *|sure *)\b
+        {type=logic
+            logic={@
+                ?[self]((topic)) = 'offer'
+            }
+        }
+        {type=action, logic=accept, tags=type }
+    }
+}

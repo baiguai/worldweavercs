@@ -78,6 +78,9 @@ namespace WorldWeaver.Tools
                 case "active":
                     return curElement.Active;
 
+                case "name":
+                    return curElement.Name;
+
                 default:
                     return curElement.Output;
             }
@@ -94,6 +97,9 @@ namespace WorldWeaver.Tools
 
                 case "[room]":
                     return Cache.RoomCache.Room;
+
+                case "[player]":
+                    return Cache.PlayerCache.Player;
 
                 case "[enemy]":
                     if (Cache.FightCache.Fight == null)
