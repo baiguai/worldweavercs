@@ -290,7 +290,19 @@ namespace WorldWeaver.Parsers.Elements
             {
                 rawVariable = rawVariable += "output";
             }
-            var arr = rawVariable.Split(")");
+
+            var arr = rawVariable.Split("))");
+
+            if (arr.Length == 2)
+            {
+                var outputValue = ParseRelativeElementByTag(currentElement, rawVariable);
+                if (!outputValue.Equals(""))
+                {
+                    return outputValue;
+                }
+            }
+
+            arr = rawVariable.Split(")");
             if (arr.Length != 2)
             {
                 return "";
@@ -309,6 +321,32 @@ namespace WorldWeaver.Parsers.Elements
             return Tools.Elements.GetElementProperty(curElement, prop);
         }
 
+        private string ParseRelativeElementByTag(Classes.Element currentElement, string rawVariable)
+        {
+            if (rawVariable.EndsWith(")"))
+            {
+                rawVariable = rawVariable += "output";
+            }
+            var arr = rawVariable.Split("))");
+            var prop = "";
+            if (arr.Length == 2)
+            {
+                prop = arr[1].Trim();
+            }
+            arr = arr[0].Split("]");
+            if (arr.Length != 2)
+            {
+                return "";
+            }
+            var tag = arr[1].Trim().Replace("((", "");
+            var rel = arr[0].Trim().Replace("[", "");
+            rel = $"[{rel}]";
+
+            var curElement = Tools.Elements.GetRelativeElement(currentElement, rel);
+            var childElement = curElement.Children.Where(c => c.Tags.TagsContain(tag)).FirstOrDefault();
+
+            return Tools.Elements.GetElementProperty(childElement, prop);
+        }
 
         private string ParsePresetValues(Classes.Element currentElement, string rawVariable)
         {

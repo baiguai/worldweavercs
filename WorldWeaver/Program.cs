@@ -54,6 +54,7 @@ namespace WorldWeaver
                 Console.WriteLine(output.OutputText);
                 Console.WriteLine("");
                 Console.WriteLine("");
+                output.ExitFlow = false;
 
                 HandleTheFight();
             }
@@ -101,15 +102,21 @@ namespace WorldWeaver
         public static void RunTheParsers(string userInputIn)
         {
             userInput = userInputIn;
-            if (!output.MatchMade)
-            {
-                adminParser.ParseInput();
-            }
 
             globalParser.ParseInput();
             if (output.MatchMade && output.OutputText.Equals("DoExit"))
             {
                 Environment.Exit(0);
+            }
+
+            if (!output.MatchMade)
+            {
+                adminParser.ParseInput();
+            }
+
+            if (output.ExitFlow)
+            {
+                return;
             }
 
             if (!output.MatchMade)
