@@ -62,19 +62,19 @@ namespace WorldWeaver.Parsers
                         DoListGames();
                     }
 
-                    if (!MainClass.output.MatchMade && method.Equals("DoSetPlayerName"))
-                    {
-                        DoSetPlayerName();
-                    }
-
                     if (!MainClass.output.MatchMade && method.Equals("DoMenu"))
                     {
-                        MainClass.output.OutputText = Tools.InitFunctions.GetInitMessage(false);
+                        MainClass.output.OutputText = OutputProcessor.ProcessSpecialValues(Tools.InitFunctions.GetInitMessage(false), Cache.GameCache.Game);
                         MainClass.output.MatchMade = true;
                     }
                 }
                 if (DataManagement.GameLogic.Game.IsGameRunning() && duringGame)
                 {
+                    if (!MainClass.output.MatchMade && method.Equals("DoSetPlayerName"))
+                    {
+                        DoSetPlayerName();
+                    }
+
                     if (!MainClass.output.MatchMade && method.Equals("DoQuit"))
                     {
                         DoQuit();
@@ -109,7 +109,7 @@ namespace WorldWeaver.Parsers
         {
             Tools.CacheManager.ClearCache();
 
-            MainClass.output.OutputText = Tools.InitFunctions.GetInitMessage(false);
+            MainClass.output.OutputText = OutputProcessor.ProcessSpecialValues(Tools.InitFunctions.GetInitMessage(false), Cache.GameCache.Game);
             MainClass.output.MatchMade = true;
         }
 
@@ -206,6 +206,8 @@ namespace WorldWeaver.Parsers
                 return;
             }
             gameKey = MainClass.output.Value;
+
+            //
 
             // Primary game processor
             if (!MainClass.output.MatchMade)

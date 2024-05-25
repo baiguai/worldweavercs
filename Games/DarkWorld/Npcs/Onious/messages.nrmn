@@ -1,25 +1,24 @@
 {type=link, parent=onious
+    {type=attribute, output=cleric woman, tags=namealias }
+    {type=attribute, output=a cleric woman, tags=npclabel }
+
     -- TODO: Update the inputs with logic:
     --  Only show the enter message if she's following him, and the player knows her name.
     --  Only follow the player if they know her name.
     {type=enter_message
-        {type=logic
-            logic={@
-                ?onious_travel.active=true
-            }
-        }
         {type=message
             output={@
-Onious follows you.
+The <<[self]((namealias))>> follows you.
             }
         }
     }
+
 
     --   Only show her name if the player knows it.
     {type=look
         {type=message
             output={@
-                You see a Onious.
+                You see <<[self]((npclabel))>>.
             }
         }
     }

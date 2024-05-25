@@ -15,7 +15,7 @@ namespace WorldWeaver.Parsers.Elements
 
             if (!allowRepeatOptions)
             {
-                MainClass.output.OutputText += Environment.NewLine + msgElement.Output;
+                MainClass.output.OutputText += Tools.OutputProcessor.ProcessSpecialValues(Environment.NewLine + msgElement.Output, msgElement);
                 MainClass.output.MatchMade = true;
 
                 msgElement.ParseElement();
@@ -28,7 +28,7 @@ namespace WorldWeaver.Parsers.Elements
                 {
                     if (idx == currentIndex)
                     {
-                        MainClass.output.OutputText += Environment.NewLine + ProcessMessageText(msg.Output, msg.Tags);
+                        MainClass.output.OutputText += Tools.OutputProcessor.ProcessSpecialValues(Environment.NewLine + ProcessMessageText(msg.Output, msg.Tags), msg);
                         MainClass.output.MatchMade = true;
                         break;
                     }

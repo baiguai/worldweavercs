@@ -11,6 +11,22 @@
         {
             "pattern" : "\\b(_list)\\b",
             "method" : "DoList"
+        },
+        {
+            "pattern" : "\\b(_recordon *)\\b",
+            "method" : "DoMacroStart"
+        },
+        {
+            "pattern" : "\\b(_recordoff)\\b",
+            "method" : "DoMacroStop"
+        },
+        {
+            "pattern" : "\\b(_macrols)\\b",
+            "method" : "DoMacroList"
+        },
+        {
+            "pattern" : "\\b(_macro *)\\b",
+            "method" : "DoRunMacro"
         }
     ]
 }

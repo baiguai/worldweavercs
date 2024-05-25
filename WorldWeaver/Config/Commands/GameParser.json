@@ -18,7 +18,7 @@
         {
             "pattern" : "\\b(set player name *)\\b",
             "method" : "DoSetPlayerName",
-            "during_game" : "false"
+            "during_game" : "true"
         },
         {
             "pattern" : "\\b(time)\\b",

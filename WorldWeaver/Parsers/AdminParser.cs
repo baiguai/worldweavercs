@@ -44,6 +44,7 @@ namespace WorldWeaver.Parsers
 
         public void DoBuildGame()
         {
+            MainClass.output.ExitFlow = true;
             MainClass.output.OutputText = "Could not build the game database.";
 
             var success = LoadGameData(MainClass.userInput.GetInputParamSingle());

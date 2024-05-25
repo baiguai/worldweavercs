@@ -7,13 +7,19 @@ The pub is full tonight and loud boisterous conversations are going on all aroun
 
 You see a mysterious woman with a hood drawn over her head sitting at a table with a tall man who is holding a long spear upright.
 She appears to be staring in your direction.
+
+You order a drink and when it arrives the woman approaches you.
+
+"Good evening <<[player]name>>."
+You are taken aback that she knows your name.
+"Are you interested in assisting me in investigating dark goings-on in Aetherous? I can pay you handsomely, of course."
         }
     }
 
     {type=look
         {type=message
-            output={@
-You look around. You are in a loud smokey pub.
+            output={
+You look around.\bYou are in a loud smokey pub.
             }
         }
     }
@@ -25,6 +31,7 @@ Still looking...
             }
         }
     }
+
 
 
 --------------------------------------------------------------------------------

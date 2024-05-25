@@ -10,6 +10,8 @@ namespace WorldWeaver
         private static Parsers.GameParser gameParser = new Parsers.GameParser();
         public static Logger logger = new Logger() { LogDate = DateTime.Now };
 
+        public static Macro macro = new Macro();
+
         public static Output output = new Output();
         public static string userInput;
         public static string gameDb = "";
@@ -34,71 +36,93 @@ namespace WorldWeaver
             }
             userInput = Console.ReadLine();
 
-            globalParser.ParseInput();
-            if (output.MatchMade && output.OutputText.Equals("DoExit"))
+            if (macro.IsRecording && !userInput.Equals("_recordoff"))
             {
-                Environment.Exit(0);
+                macro.MacroSteps.Add(userInput);
             }
 
-
-            if (!output.MatchMade)
-            {
-                adminParser.ParseInput();
-            }
-
-            if (!output.MatchMade)
-            {
-                gameParser.ParseInput();
-            }
+            RunTheParsers(userInput);
 
             if (output.MatchMade)
             {
                 if (output.OutputText.Equals(""))
                 {
-                    output.OutputText = AppSettingFunctions.GetConfigValue("messages", "unknown_command");
+                    output.OutputText = AppSettingFunctions.GetConfigValue("messages", "unknown_command"); // @todo Enhance this
                 }
 
                 Console.Clear();
                 Console.WriteLine(output.OutputText);
                 Console.WriteLine("");
                 Console.WriteLine("");
+                output.ExitFlow = false;
 
-                if (Cache.FightCache.Fight != null)
-                {
-                    var elemDb = new DataManagement.GameLogic.Element();
-                    var playerLife = Tools.Elements.GetLife(Cache.PlayerCache.Player).ToString("N0");
-                    var enemyLife = Tools.Elements.GetLife(Cache.FightCache.Fight.Enemy).ToString("N0");
-                    Console.WriteLine($"Enemy Life: {enemyLife}");
-                    Console.WriteLine($"Player Life: {playerLife}");
-                    Console.WriteLine("");
-
-                    if (Cache.FightCache.Fight != null && !Cache.FightCache.Fight.PlayersTurn)
-                    {
-                        Thread.Sleep(2000);
-                        var attParser = new Parsers.Elements.Attack();
-                        attParser.ProcessFightRound();
-
-                        Console.WriteLine(output.OutputText);
-                        Console.WriteLine("");
-                        Console.WriteLine("");
-
-                        playerLife = Tools.Elements.GetLife(Cache.PlayerCache.Player).ToString("N0");
-                        enemyLife = Tools.Elements.GetLife(Cache.FightCache.Fight.Enemy).ToString("N0");
-                        Console.WriteLine($"Enemy Life: {enemyLife}");
-                        Console.WriteLine($"Player Life: {playerLife}");
-                        Console.WriteLine("");
-                    }
-                    else
-                    {
-                        if (Cache.FightCache.Fight.PlayerFleeing)
-                        {
-                            Cache.FightCache.Fight = null;
-                        }
-                    }
-                }
+                HandleTheFight();
             }
 
             Listener("");
+        }
+
+        public static void HandleTheFight()
+        {
+            if (Cache.FightCache.Fight != null)
+            {
+                var elemDb = new DataManagement.GameLogic.Element();
+                var playerLife = Tools.Elements.GetLife(Cache.PlayerCache.Player).ToString("N0");
+                var enemyLife = Tools.Elements.GetLife(Cache.FightCache.Fight.Enemy).ToString("N0");
+                Console.WriteLine($"Enemy Life: {enemyLife}");
+                Console.WriteLine($"Player Life: {playerLife}");
+                Console.WriteLine("");
+
+                if (Cache.FightCache.Fight != null && !Cache.FightCache.Fight.PlayersTurn)
+                {
+                    Thread.Sleep(2000);
+                    var attParser = new Parsers.Elements.Attack();
+                    attParser.ProcessFightRound();
+
+                    Console.WriteLine(output.OutputText);
+                    Console.WriteLine("");
+                    Console.WriteLine("");
+
+                    playerLife = Tools.Elements.GetLife(Cache.PlayerCache.Player).ToString("N0");
+                    enemyLife = Tools.Elements.GetLife(Cache.FightCache.Fight.Enemy).ToString("N0");
+                    Console.WriteLine($"Enemy Life: {enemyLife}");
+                    Console.WriteLine($"Player Life: {playerLife}");
+                    Console.WriteLine("");
+                }
+                else
+                {
+                    if (Cache.FightCache.Fight.PlayerFleeing)
+                    {
+                        Cache.FightCache.Fight = null;
+                    }
+                }
+            }
+        }
+
+        public static void RunTheParsers(string userInputIn)
+        {
+            userInput = userInputIn;
+
+            globalParser.ParseInput();
+            if (output.MatchMade && output.OutputText.Equals("DoExit"))
+            {
+                Environment.Exit(0);
+            }
+
+            if (!output.MatchMade)
+            {
+                adminParser.ParseInput();
+            }
+
+            if (output.ExitFlow)
+            {
+                return;
+            }
+
+            if (!output.MatchMade)
+            {
+                gameParser.ParseInput();
+            }
         }
 
         private static string GetCursor()
