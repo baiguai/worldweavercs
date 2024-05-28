@@ -133,11 +133,6 @@ namespace WorldWeaver.Parsers.Elements
                             break;
 
                         case "set":
-                            if (handledSet)
-                            {
-                                continue;
-                            }
-
                             var set = new Parsers.Elements.Set();
                             set.ParseSet(currentElement, child);
                             if (MainClass.output.MatchMade)

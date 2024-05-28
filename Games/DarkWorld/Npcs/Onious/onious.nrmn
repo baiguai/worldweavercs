@@ -15,5 +15,5 @@
     }
 
 
-    {key=onious_travel, type=travel, logic=[follow|player], active=false }
+    {type=travel, logic=[follow|player], active=false, tags=travel }
 }

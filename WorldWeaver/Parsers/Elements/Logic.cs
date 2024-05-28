@@ -34,7 +34,7 @@ namespace WorldWeaver.Parsers.Elements
                     else
                     {
                         MainClass.output.FailedLogic = false;
-                        MainClass.output.OutputText += Tools.OutputProcessor.ProcessSpecialValues(currentElement.Output, currentElement);
+                        MainClass.output.OutputText += Tools.OutputProcessor.ProcessOutputText(currentElement.Output, currentElement);
                         return;
                     }
                 }
@@ -45,7 +45,12 @@ namespace WorldWeaver.Parsers.Elements
             return;
         }
 
-        private bool ParseConditional(Classes.Element currentElement, string[] lines)
+        public bool ParseConditional(Classes.Element currentElement, string line)
+        {
+            string[] lines = { $"?{line}" };
+            return ParseConditional(currentElement, lines);
+        }
+        public bool ParseConditional(Classes.Element currentElement, string[] lines)
         {
             var passed = true;
             var curCheck = true;
@@ -115,6 +120,30 @@ namespace WorldWeaver.Parsers.Elements
             if (rawVariable.StartsWith("'"))
             {
                 return rawVariable.Replace("'", "");
+            }
+
+            if (rawVariable.Equals("[self]"))
+            {
+                return Tools.Elements.GetSelf(currentElement).ElementKey;
+            }
+
+            if (rawVariable.Equals("[room]"))
+            {
+                return Cache.RoomCache.Room.ElementKey;
+            }
+
+            if (rawVariable.Equals("[player]"))
+            {
+                return Cache.PlayerCache.Player.ElementKey;
+            }
+
+            if (rawVariable.Equals("[enemy]"))
+            {
+                if (Cache.FightCache.Fight == null)
+                {
+                    return "";
+                }
+                return Cache.FightCache.Fight.Enemy.ElementKey;
             }
 
             if (Regex.IsMatch(rawVariable.Trim(), @"^\d+$"))
@@ -259,7 +288,7 @@ namespace WorldWeaver.Parsers.Elements
             return propValue;
         }
 
-        private string ParseElementByKey(Classes.Element currentElement, string rawVariable)
+        public string ParseElementByKey(Classes.Element currentElement, string rawVariable)
         {
             if (rawVariable.EndsWith(")"))
             {

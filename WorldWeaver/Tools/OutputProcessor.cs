@@ -9,6 +9,15 @@ namespace WorldWeaver.Tools
 {
     public class OutputProcessor
     {
+        public static string ProcessOutputText(string output, Classes.Element currentElement)
+        {
+            output = ProcessSpecialValues(output, currentElement);
+            output = ProcessOutputLogic(output, currentElement);
+
+            return output;
+        }
+
+
         public static string ProcessSpecialValues(string output, Classes.Element currentElement)
         {
             var startPos = 0;
@@ -194,6 +203,42 @@ namespace WorldWeaver.Tools
             }
 
             return Tools.Elements.GetElementProperty(childElem, prop);
+        }
+
+
+        private static string ProcessOutputLogic(string output, Classes.Element currentElement)
+        {
+            var startPos = 0;
+            var endPos = 0;
+
+            startPos = output.IndexOf("<?");
+
+            while (startPos >= 0)
+            {
+                endPos = output.LastIndexOf("</?>") + 3;
+                var replaceBlock = output.SubstringByIndexes(startPos, endPos);
+                var lgcBlock = replaceBlock.SubstringByIndexes(2, replaceBlock.Length - 5);
+                var newValue = "";
+                var arr = lgcBlock.Split("?>", 2);
+                if (arr.Length != 2)
+                {
+                    output = output.Replace(lgcBlock, "!! SOMETHING WENT WRONG IN THE COMPARISON LOGIC !!");
+                }
+                var compareBlock = arr[0].Trim();
+                var contentBlock = arr[1];
+                var logicParse = new Parsers.Elements.Logic();
+
+                if (logicParse.ParseConditional(currentElement, compareBlock))
+                {
+                    newValue = contentBlock;
+                }
+
+                output = output.Replace(replaceBlock, newValue);
+
+                startPos = output.IndexOf("<?");
+            }
+
+            return output; 
         }
     }
 }

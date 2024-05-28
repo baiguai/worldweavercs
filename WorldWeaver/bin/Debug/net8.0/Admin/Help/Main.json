@@ -4,13 +4,12 @@
             "pattern" : "\\b(_help)\\b",
             "title" : "Admin Help",
             "string" : "
-Welcome to the Admin Help System.
+For help with modifying WorldWeaver or defining games you will want to view
+the AdminHelp.html file:
 
-To see a list of possible Admin commands use:
-_help commands
-
-For help with defining games use:
-_help create games
+~/Help/Admin/AdminHelp.html
+Or
+https://worldweaver-admin-help.tiddlyhost.com/
 "
         }
     ]

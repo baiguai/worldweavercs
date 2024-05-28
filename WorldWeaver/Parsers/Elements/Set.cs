@@ -109,7 +109,7 @@ namespace WorldWeaver.Parsers.Elements
             }
 
             var prop = arr[1].Trim();
-            var relCode = $"[{arr[0].Trim().Replace("[)", "").Replace("]", "")}]";
+            var relCode = $"[{arr[0].Trim().Replace("[", "").Replace("]", "")}]";
 
             var elem = Tools.Elements.GetRelativeElement(currentElement, relCode);
             if (elem.ElementKey.Equals(""))
