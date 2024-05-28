@@ -64,7 +64,7 @@ namespace WorldWeaver.Parsers
 
                     if (!MainClass.output.MatchMade && method.Equals("DoMenu"))
                     {
-                        MainClass.output.OutputText = OutputProcessor.ProcessSpecialValues(Tools.InitFunctions.GetInitMessage(false), Cache.GameCache.Game);
+                        MainClass.output.OutputText = OutputProcessor.ProcessOutputText(Tools.InitFunctions.GetInitMessage(false), Cache.GameCache.Game);
                         MainClass.output.MatchMade = true;
                     }
                 }
@@ -109,7 +109,7 @@ namespace WorldWeaver.Parsers
         {
             Tools.CacheManager.ClearCache();
 
-            MainClass.output.OutputText = OutputProcessor.ProcessSpecialValues(Tools.InitFunctions.GetInitMessage(false), Cache.GameCache.Game);
+            MainClass.output.OutputText = OutputProcessor.ProcessOutputText(Tools.InitFunctions.GetInitMessage(false), Cache.GameCache.Game);
             MainClass.output.MatchMade = true;
         }
 

@@ -105,7 +105,8 @@
             "elements" : [
                 "logic",
                 "action",
-                "message"
+                "message",
+                "set"
             ],
             "repeat_options" : "true"
         },
@@ -132,6 +133,7 @@
                 "input",
                 "action",
                 "attack",
+                "set",
                 "message"
             ],
             "repeat_options" : "false"

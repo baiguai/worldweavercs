@@ -620,6 +620,8 @@ WHERE 1=1
         {
             var output = false;
 
+            field = Tools.Elements.FixPropertyName(field);
+
             string connectionString = Connection.GetConnection();
 
             var updateQuery = $@"

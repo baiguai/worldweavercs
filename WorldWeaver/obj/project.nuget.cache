@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "5I+1W7U7aLMEpXY8ZvsqGQG23d0b0JC8bNhjAX/1owm1OoXfUaHyYmsUOAS6YBnGEyzjdTIu4cTMYdysKm4SkQ==",
+  "dgSpecHash": "m7tOzfcLXkc=",
   "success": true,
-  "projectFilePath": "/media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/WorldWeaver.csproj",
+  "projectFilePath": "/home/baiguai/documents/development/csharp/worldweaver/WorldWeaver/WorldWeaver.csproj",
   "expectedPackageFiles": [
     "/home/baiguai/.nuget/packages/microsoft.data.sqlite/8.0.2/microsoft.data.sqlite.8.0.2.nupkg.sha512",
     "/home/baiguai/.nuget/packages/microsoft.data.sqlite.core/8.0.2/microsoft.data.sqlite.core.8.0.2.nupkg.sha512",

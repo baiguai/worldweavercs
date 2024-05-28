@@ -55,6 +55,8 @@ namespace WorldWeaver.Tools
 
         public static string GetElementProperty(Classes.Element curElement, string elementProperty)
         {
+            elementProperty = Tools.Elements.FixPropertyName(elementProperty);
+
             switch (elementProperty.ToLower())
             {
                 case "elementkey":
@@ -84,6 +86,16 @@ namespace WorldWeaver.Tools
                 default:
                     return curElement.Output;
             }
+        }
+
+        public static string FixPropertyName(string elementProperty)
+        {
+            if (elementProperty.Equals("parent"))
+            {
+                elementProperty = "parentkey";
+            }
+
+            return elementProperty;
         }
 
         public static Classes.Element GetRelativeElement(Classes.Element currentElement, string relCode)

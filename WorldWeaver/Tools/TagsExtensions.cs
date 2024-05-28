@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace WorldWeaver.Tools
+﻿namespace WorldWeaver.Tools
 {
     public static class TagsExtensions
     {
