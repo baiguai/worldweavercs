@@ -143,7 +143,7 @@ namespace WorldWeaver.Parsers.Elements
                                     ParseElement(child, childProc);
                                     if (MainClass.output.MatchMade)
                                     {
-                                        return;
+                                        continue;
                                     }
                                 }
                             }
