@@ -229,7 +229,6 @@ FROM
     element
 WHERE 1=1
     AND ParentKey = @parentkey
-    AND Active = 'true'
 ORDER BY
     Sort
 ;

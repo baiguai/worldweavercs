@@ -5,7 +5,7 @@
     {name=Strength, type=attribute, output=[rand:8|18], tags=stats }
     {name=Intelligence, type=attribute, output=[rand:8|18], tags=stats }
     {name=Cunning, type=attribute, output=[rand:8|18], tags=stats }
-    {name=Gold, type=attribute, output=[rand:20|40], tags=stats }
+    {name=Gold, type=attribute, output=[rand:20|40], tags=stats|gold }
     {key=player_armed, name=Armed Weapon, type=attribute, output=long-sword_01, tags=armed|stats|name }
 
     {key=heal_rounds, type=attribute, output=5 }
