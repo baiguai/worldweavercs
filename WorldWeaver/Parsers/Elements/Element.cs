@@ -64,7 +64,7 @@ namespace WorldWeaver.Parsers.Elements
                                 input.ParseInput(currentElement, child);
                                 if (MainClass.output.MatchMade)
                                 {
-                                    return;
+                                    continue;
                                 }
                             }
                             break;
@@ -143,7 +143,7 @@ namespace WorldWeaver.Parsers.Elements
                                     ParseElement(child, childProc);
                                     if (MainClass.output.MatchMade)
                                     {
-                                        return;
+                                        continue;
                                     }
                                 }
                             }

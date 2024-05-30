@@ -17,6 +17,7 @@ Do you accept our offer? If so, I can provide you with further details.
             }
         }
         {type=set, logic=[self]((topic)), output=inform }
+        {type=set, logic=[player]((quest)), output=Investigate the Undead }
     }
 
     {type=decline

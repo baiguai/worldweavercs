@@ -10,4 +10,6 @@
 
     {key=heal_rounds, type=attribute, output=5 }
     {key=cur_heal_round, type=attribute, output=0 }
+
+    {name=Quest, type=attribute, output=, tags=stats|quest }
 }

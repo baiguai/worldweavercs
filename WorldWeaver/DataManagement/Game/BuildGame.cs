@@ -518,7 +518,7 @@ PRAGMA foreign_keys = on;
 
             foreach (var pair in arr)
             {
-                var pairArr = pair.Trim().Split('=');
+                var pairArr = pair.Trim().Split('=', 2);
                 if (pairArr.Length == 2)
                 {
                     switch (pairArr[0].Trim().ToLower())
