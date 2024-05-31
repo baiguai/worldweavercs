@@ -7,7 +7,11 @@ namespace WorldWeaver.Parsers.Elements
 {
     public class Element
     {
-        public void ParseElement(Classes.Element currentElement, Classes.ElementProc procObj, bool isEntering = false)
+        public void ParseElement(
+            Classes.Element currentElement,
+            Classes.ElementProc procObj,
+            bool isEntering = false
+        )
         {
             var input = new Parsers.Elements.Input();
             var msg = new Parsers.Elements.Message();
@@ -46,7 +50,10 @@ namespace WorldWeaver.Parsers.Elements
 
                             var attackParser = new Parsers.Elements.Attack();
                             attackParser.ParseAttack(currentElement, child);
-                            if (MainClass.output.MatchMade && !MainClass.output.OutputText.Equals(""))
+                            if (
+                                MainClass.output.MatchMade
+                                && !MainClass.output.OutputText.Equals("")
+                            )
                             {
                                 handledAttack = true;
                                 return;
@@ -54,7 +61,10 @@ namespace WorldWeaver.Parsers.Elements
                             break;
 
                         case "input":
-                            if (MainClass.output.MatchMade && !MainClass.output.OutputText.Equals(""))
+                            if (
+                                MainClass.output.MatchMade
+                                && !MainClass.output.OutputText.Equals("")
+                            )
                             {
                                 continue;
                             }
@@ -81,8 +91,16 @@ namespace WorldWeaver.Parsers.Elements
                             }
 
                             MainClass.output.MatchMade = false;
-                            HandleMessage(currentElement, child, procObj.AllowRepeatOptions, isEntering);
-                            if (MainClass.output.MatchMade || !MainClass.output.OutputText.Equals(""))
+                            HandleMessage(
+                                currentElement,
+                                child,
+                                procObj.AllowRepeatOptions,
+                                isEntering
+                            );
+                            if (
+                                MainClass.output.MatchMade
+                                || !MainClass.output.OutputText.Equals("")
+                            )
                             {
                                 handledMessage = true;
                                 MainClass.output.MatchMade = true;
@@ -137,7 +155,9 @@ namespace WorldWeaver.Parsers.Elements
                             set.ParseSet(currentElement, child);
                             if (MainClass.output.MatchMade)
                             {
-                                var setProcs = Tools.ProcFunctions.GetProcessStepsByType(child.ElementType);
+                                var setProcs = Tools.ProcFunctions.GetProcessStepsByType(
+                                    child.ElementType
+                                );
                                 foreach (var childProc in setProcs)
                                 {
                                     ParseElement(child, childProc);
@@ -170,7 +190,11 @@ namespace WorldWeaver.Parsers.Elements
             return;
         }
 
-        private int HandleRepeat(Classes.Element currentElement, List<Classes.Element> children, string rptType)
+        private int HandleRepeat(
+            Classes.Element currentElement,
+            List<Classes.Element> children,
+            string rptType
+        )
         {
             var repeatOutput = 0;
             DataManagement.GameLogic.Element dbElem = new DataManagement.GameLogic.Element();
@@ -240,11 +264,21 @@ namespace WorldWeaver.Parsers.Elements
             }
 
             currentElement.RepeatIndex = repeatOutput;
-            dbElem.SetElementField(currentElement.ElementKey, "RepeatIndex", repeatOutput.ToString(), false);
+            dbElem.SetElementField(
+                currentElement.ElementKey,
+                "RepeatIndex",
+                repeatOutput.ToString(),
+                false
+            );
             return repeatOutput;
         }
 
-        private void HandleMessage(Classes.Element currentElement, Classes.Element child, bool allowRepeatOptions, bool isEntering)
+        private void HandleMessage(
+            Classes.Element currentElement,
+            Classes.Element child,
+            bool allowRepeatOptions,
+            bool isEntering
+        )
         {
             var rptType = currentElement.Repeat;
 
@@ -257,8 +291,11 @@ namespace WorldWeaver.Parsers.Elements
             MainClass.output.MatchMade = false;
 
             // For certain elements, move in a level
-            if (Tools.AppSettingFunctions.GetRootArray("Config/NonMessageParentTypes.json").Contains(currentElement.ElementType) &&
-                child.Output.Equals(""))
+            if (
+                Tools
+                    .AppSettingFunctions.GetRootArray("Config/NonMessageParentTypes.json")
+                    .Contains(currentElement.ElementType) && child.Output.Equals("")
+            )
             {
                 msgParent = child;
                 allowRepeatOptions = true;
