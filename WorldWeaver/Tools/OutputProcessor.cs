@@ -17,7 +17,6 @@ namespace WorldWeaver.Tools
             return output;
         }
 
-
         public static string ProcessSpecialValues(string output, Classes.Element currentElement)
         {
             var startPos = 0;
@@ -134,7 +133,10 @@ namespace WorldWeaver.Tools
             var tag = arr[1].Trim();
 
             var elemDb = new DataManagement.GameLogic.Element();
-            var childElem = elemDb.GetElementChildren(parentKey).Where(t => t.Tags.TagsContain(tag)).FirstOrDefault();
+            var childElem = elemDb
+                .GetElementChildren(parentKey)
+                .Where(t => t.Tags.TagsContain(tag))
+                .FirstOrDefault();
             if (childElem == null || childElem.ElementKey.Equals(""))
             {
                 return specialString;
@@ -143,7 +145,10 @@ namespace WorldWeaver.Tools
             return Tools.Elements.GetElementProperty(childElem, prop);
         }
 
-        private static string GetRelativeElementProperty(Element currentElement, string specialString)
+        private static string GetRelativeElementProperty(
+            Element currentElement,
+            string specialString
+        )
         {
             if (!specialString.Contains("[") || !specialString.Contains("]"))
             {
@@ -168,7 +173,10 @@ namespace WorldWeaver.Tools
             return propValue;
         }
 
-        private static string GetRelativeElementChildByTag(Element currentElement, string specialString)
+        private static string GetRelativeElementChildByTag(
+            Element currentElement,
+            string specialString
+        )
         {
             if (!specialString.Contains("((") || !specialString.Contains("))"))
             {
@@ -188,7 +196,10 @@ namespace WorldWeaver.Tools
                 return specialString;
             }
             var parentRelCode = arr[0].Trim().Replace("[", "");
-            var parentElement = Tools.Elements.GetRelativeElement(currentElement, $"[{parentRelCode}]");
+            var parentElement = Tools.Elements.GetRelativeElement(
+                currentElement,
+                $"[{parentRelCode}]"
+            );
             if (parentElement == null || parentElement.ElementKey.Equals(""))
             {
                 return specialString;
@@ -196,7 +207,10 @@ namespace WorldWeaver.Tools
             var tag = arr[1].Trim();
 
             var elemDb = new DataManagement.GameLogic.Element();
-            var childElem = elemDb.GetElementChildren(parentElement.ElementKey).Where(t => t.Tags.TagsContain(tag)).FirstOrDefault();
+            var childElem = elemDb
+                .GetElementChildren(parentElement.ElementKey)
+                .Where(t => t.Tags.TagsContain(tag))
+                .FirstOrDefault();
             if (childElem == null || childElem.ElementKey.Equals(""))
             {
                 return specialString;
@@ -204,7 +218,6 @@ namespace WorldWeaver.Tools
 
             return Tools.Elements.GetElementProperty(childElem, prop);
         }
-
 
         private static string ProcessOutputLogic(string output, Classes.Element currentElement)
         {
@@ -215,14 +228,18 @@ namespace WorldWeaver.Tools
 
             while (startPos >= 0)
             {
-                endPos = output.LastIndexOf("</?>") + 3;
+                // endPos = output.LastIndexOf("</?>") + 3;
+                endPos = GetEndPos(output, startPos);
                 var replaceBlock = output.SubstringByIndexes(startPos, endPos);
                 var lgcBlock = replaceBlock.SubstringByIndexes(2, replaceBlock.Length - 5);
                 var newValue = "";
                 var arr = lgcBlock.Split("?>", 2);
                 if (arr.Length != 2)
                 {
-                    output = output.Replace(lgcBlock, "!! SOMETHING WENT WRONG IN THE COMPARISON LOGIC !!");
+                    output = output.Replace(
+                        lgcBlock,
+                        "!! SOMETHING WENT WRONG IN THE COMPARISON LOGIC !!"
+                    );
                 }
                 var compareBlock = arr[0].Trim();
                 var contentBlock = arr[1];
@@ -238,7 +255,45 @@ namespace WorldWeaver.Tools
                 startPos = output.IndexOf("<?");
             }
 
-            return output; 
+            return output;
+        }
+
+        private static int GetEndPos(string output, int startPos)
+        {
+            var endPosOut = 0;
+            var snippet = "";
+            var childCount = 0;
+            var startTmp = startPos + 2;
+
+            endPosOut = output.IndexOf("</?>");
+
+            while (startTmp < endPosOut)
+            {
+                snippet = output.SubstringByIndexes(startTmp + 2, endPosOut + 3);
+                if (snippet.Contains("<?"))
+                {
+                    childCount++;
+                    startTmp = output.IndexOf("<?", startTmp) + 2;
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            endPosOut = output.IndexOf("</?>");
+
+            if (childCount == 0)
+            {
+                return endPosOut;
+            }
+
+            for (var c = 0; c <= childCount; c++)
+            {
+                endPosOut = output.IndexOf("</?>", endPosOut) + 3;
+            }
+
+            return endPosOut;
         }
     }
 }
