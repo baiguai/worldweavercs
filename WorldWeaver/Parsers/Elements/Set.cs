@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics.Tracing;
 using WorldWeaver.Tools;
+
 namespace WorldWeaver.Parsers.Elements
 {
     public class Set
@@ -9,28 +10,58 @@ namespace WorldWeaver.Parsers.Elements
         {
             var setPerformed = false;
 
-            SetElementValue(currentElement, currentElement.Tags, currentElement.Logic, currentElement.Output);
+            SetElementValue(
+                currentElement,
+                currentElement.Tags,
+                currentElement.Logic,
+                currentElement.Output
+            );
             if (!setPerformed)
             {
-                setPerformed = SetElementChildValueByTag(currentElement, currentElement.Tags, currentElement.Logic, currentElement.Output);
+                setPerformed = SetElementChildValueByTag(
+                    currentElement,
+                    currentElement.Tags,
+                    currentElement.Logic,
+                    currentElement.Output
+                );
             }
             if (!setPerformed)
             {
-                setPerformed = SetRelativeElementChildValueByTag(currentElement, currentElement.Tags, currentElement.Logic, currentElement.Output);
+                setPerformed = SetRelativeElementChildValueByTag(
+                    currentElement,
+                    currentElement.Tags,
+                    currentElement.Logic,
+                    currentElement.Output
+                );
             }
             if (!setPerformed)
             {
-                setPerformed = SetRelativeElementChildrenValueByTag(currentElement, currentElement.Tags, currentElement.Logic, currentElement.Output);
+                setPerformed = SetRelativeElementChildrenValueByTag(
+                    currentElement,
+                    currentElement.Tags,
+                    currentElement.Logic,
+                    currentElement.Output
+                );
             }
             if (!setPerformed)
             {
-                setPerformed = SetRelativeElementValue(currentElement, currentElement.Tags, currentElement.Logic, currentElement.Output);
+                setPerformed = SetRelativeElementValue(
+                    currentElement,
+                    currentElement.Tags,
+                    currentElement.Logic,
+                    currentElement.Output
+                );
             }
 
             return;
         }
 
-        private bool SetElementValue(Classes.Element currentElement, string tags, string logic, string output)
+        private bool SetElementValue(
+            Classes.Element currentElement,
+            string tags,
+            string logic,
+            string output
+        )
         {
             if (!logic.Contains("(") || !logic.Contains(")"))
             {
@@ -62,7 +93,12 @@ namespace WorldWeaver.Parsers.Elements
             return true;
         }
 
-        private bool SetElementChildValueByTag(Classes.Element currentElement, string tags, string logic, string output)
+        private bool SetElementChildValueByTag(
+            Classes.Element currentElement,
+            string tags,
+            string logic,
+            string output
+        )
         {
             if (!logic.Contains("((") || !logic.Contains("))"))
             {
@@ -102,11 +138,20 @@ namespace WorldWeaver.Parsers.Elements
                 return false;
             }
 
-            elemDb.SetElementField(child.ElementKey, prop, ProcessOutput(output.Trim(), child.ElementKey));
+            elemDb.SetElementField(
+                child.ElementKey,
+                prop,
+                ProcessOutput(output.Trim(), child.ElementKey)
+            );
             return true;
         }
 
-        private bool SetRelativeElementValue(Classes.Element currentElement, string tags, string logic, string output)
+        private bool SetRelativeElementValue(
+            Classes.Element currentElement,
+            string tags,
+            string logic,
+            string output
+        )
         {
             if (!logic.Contains("[") || !logic.Contains("]"))
             {
@@ -134,13 +179,27 @@ namespace WorldWeaver.Parsers.Elements
             }
 
             var elemDb = new DataManagement.GameLogic.Element();
-            elemDb.SetElementField(elem.ElementKey, prop, ProcessOutput(output.Trim(), elem.ElementKey));
+            elemDb.SetElementField(
+                elem.ElementKey,
+                prop,
+                ProcessOutput(output.Trim(), elem.ElementKey)
+            );
             return true;
         }
 
-        private bool SetRelativeElementChildValueByTag(Classes.Element currentElement, string tags, string logic, string output)
+        private bool SetRelativeElementChildValueByTag(
+            Classes.Element currentElement,
+            string tags,
+            string logic,
+            string output
+        )
         {
-            if (!logic.Contains("((") || !logic.Contains("))") || !logic.Contains("[") || !logic.Contains("]"))
+            if (
+                !logic.Contains("((")
+                || !logic.Contains("))")
+                || !logic.Contains("[")
+                || !logic.Contains("]")
+            )
             {
                 return false;
             }
@@ -175,12 +234,22 @@ namespace WorldWeaver.Parsers.Elements
             {
                 return false;
             }
-            var targetElem = parentElem.Children.Where(c => c.Tags.TagsContain(tag)).First();
+            var targetElem = parentElem
+                .Children.Where(c => c.Tags.TagsContain(tag))
+                .FirstOrDefault();
             var elemDb = new DataManagement.GameLogic.Element();
-            elemDb.SetElementField(targetElem.ElementKey, prop, ProcessOutput(output.Trim(), targetElem.ElementKey));
-            return true;
-        }
+            if (targetElem != null)
+            {
+                elemDb.SetElementField(
+                    targetElem.ElementKey,
+                    prop,
+                    ProcessOutput(output.Trim(), targetElem.ElementKey)
+                );
+                return true;
+            }
 
+            return false;
+        }
 
         private string ProcessOutput(string outputValue, string targetElementKey)
         {
@@ -224,8 +293,8 @@ namespace WorldWeaver.Parsers.Elements
                     {
                         adj = Convert.ToInt32(outputValue.Replace("+=", ""));
                     }
-                    catch (Exception) {}
-                    var res = outInt+adj;
+                    catch (Exception) { }
+                    var res = outInt + adj;
                     return res.ToString();
                 }
                 catch (Exception)
@@ -243,8 +312,8 @@ namespace WorldWeaver.Parsers.Elements
                     {
                         adj = Convert.ToInt32(outputValue.Replace("-=", ""));
                     }
-                    catch (Exception) {}
-                    var res = outInt+(-adj);
+                    catch (Exception) { }
+                    var res = outInt + (-adj);
                     return res.ToString();
                 }
                 catch (Exception)
@@ -255,9 +324,20 @@ namespace WorldWeaver.Parsers.Elements
 
             return adjOutput;
         }
-        private bool SetRelativeElementChildrenValueByTag(Classes.Element currentElement, string tags, string logic, string output)
+
+        private bool SetRelativeElementChildrenValueByTag(
+            Classes.Element currentElement,
+            string tags,
+            string logic,
+            string output
+        )
         {
-            if (!logic.Contains("((") || !logic.Contains("))") || !logic.Contains("[") || !logic.Contains("]"))
+            if (
+                !logic.Contains("((")
+                || !logic.Contains("))")
+                || !logic.Contains("[")
+                || !logic.Contains("]")
+            )
             {
                 return false;
             }
