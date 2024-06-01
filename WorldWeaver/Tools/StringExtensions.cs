@@ -4,7 +4,18 @@ namespace WorldWeaver.Tools
     {
         public static string SubstringByIndexes(this string value, int startIndex, int endIndex)
         {
-            return value.Substring(startIndex, endIndex - startIndex + 1);
+            if (startIndex > endIndex)
+            {
+                return value;
+            }
+            var endDifference = endIndex - startIndex + 1;
+            if ((startIndex + endDifference) > value.Length)
+            {
+                endDifference = value.Length - startIndex;
+            }
+
+            var newValue = value.Substring(startIndex, endDifference);
+            return newValue;
         }
     }
 }

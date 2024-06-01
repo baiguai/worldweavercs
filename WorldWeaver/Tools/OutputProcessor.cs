@@ -229,7 +229,7 @@ namespace WorldWeaver.Tools
             while (startPos >= 0)
             {
                 // endPos = output.LastIndexOf("</?>") + 3;
-                endPos = GetEndPos(output, startPos);
+                endPos = GetEndPos(output, startPos) + 3;
                 var replaceBlock = output.SubstringByIndexes(startPos, endPos);
                 var lgcBlock = replaceBlock.SubstringByIndexes(2, replaceBlock.Length - 5);
                 var newValue = "";
@@ -269,7 +269,7 @@ namespace WorldWeaver.Tools
 
             while (startTmp < endPosOut)
             {
-                snippet = output.SubstringByIndexes(startTmp + 2, endPosOut + 3);
+                snippet = output.SubstringByIndexes(startTmp, endPosOut + 3);
                 if (snippet.Contains("<?"))
                 {
                     childCount++;
