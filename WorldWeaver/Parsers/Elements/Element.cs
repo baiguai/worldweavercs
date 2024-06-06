@@ -28,6 +28,11 @@ namespace WorldWeaver.Parsers.Elements
 
                 foreach (var child in currentElement.Children)
                 {
+                    if (child.ElementType.Equals("attribute"))
+                    {
+                        continue;
+                    }
+
                     if (Cache.GameCache.Game == null)
                     {
                         return;
@@ -151,6 +156,7 @@ namespace WorldWeaver.Parsers.Elements
                             break;
 
                         case "set":
+                        case "preset":
                             var set = new Parsers.Elements.Set();
                             set.ParseSet(currentElement, child);
                             if (MainClass.output.MatchMade)
