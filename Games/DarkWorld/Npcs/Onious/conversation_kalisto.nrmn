@@ -1,0 +1,81 @@
+{type=link, parent=onious
+    {type=attribute, output=offer, tags=topic }
+
+
+    {type=accept
+        {type=logic
+            logic={@
+                ?[self]((topic)) = 'offer'
+            }
+        }
+        {type=message
+            output={@
+Oh great!
+My superiors have been hearing rumors of undead activity throughout the land.
+This is very troubling. Unfortunately we lack the resources necessary to deal with this issue.
+However an adventurer like yourself could prove very useful to us.
+Do you accept our offer? If so, I can provide you with further details.
+            }
+        }
+        {type=set, logic=[player]((quest)), output=Investigate the Undead }
+    }
+
+
+    {type=details
+        {type=logic
+            logic={@
+                ?[self]((topic)) = 'inform'
+            }
+        }
+        {type=message
+            output={@
+She beckons you to her table. You follow her and sit down. A tall hooded man with a long staff
+silently approaches and sits next to the cleric woman.
+"My name is Onious." She informs you.
+She drops a coin purse onto the table.
+"Here's 100 gold pieces. At the conclusion of the mission I will give you much more than that."
+
+We have arranged a room for you. Our journey will begin in the morning. In the meantime, feel
+free to explore Kalisto. When you are ready to slumber for the night come back here, the rooms
+are upstairs and your particular room is 204.
+            }
+        }
+    }
+
+
+    {type=decline
+        {type=logic
+            logic={@
+                ?[self]((topic)) = 'offer'
+            }
+        }
+        {type=message
+            output={@
+I'm sorry to hear that. Cheers.
+
+The cleric woman exits the pub.
+            }
+        }
+        {type=set, logic=[self]parent, output=limbo }
+    }
+
+
+
+--------------------------------------------------------------------------------
+
+    {type=input, syntax=\b(yes *|yep *|sure *)\b
+        {type=action, logic=accept, tags=type }
+        {type=set, logic=[self]((topic)), output=inform }
+    }
+
+    {type=input, syntax=\b(yes *|yep *|sure *|i accept *|accept *)\b
+        {type=action, logic=details, tags=type }
+        {type=set, logic=[self]((topic)), output=kalisto }
+        {type=set, logic=[self]((label)), output=Onious }
+        {type=set, logic=[player]((gold)), output=+=100 }
+    }
+
+    {type=input, syntax=\b(no *|nope *)\b
+        {type=action, logic=decline, tags=type }
+    }
+}
