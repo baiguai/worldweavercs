@@ -6,9 +6,9 @@
     {name=Cunning, type=attribute, output=[rand:8|18], tags=stats }
     {name=Gold, type=attribute, output=[rand:20|40], tags=stats }
     {name=Armed Weapon, type=attribute, output=onious_shortsword, tags=armed|stats|name }
-    {type=attribute, output=Onious, tags=title }
-    {type=attribute, output=she, tags=pronoun }
-    {type=attribute, output=her, tags=subject_pronoun }
+    {type=attribute, output=a cleric woman, tags=npc_label_a|label }
+    {type=attribute, output=the cleric woman, tags=npc_label_the|label }
+    {type=attribute, output=The cleric woman, tags=npc_label_the_proper|label }
 
     {key=onious_shortsword, name=Short Sword, type=object, syntax=\b(short sword)\b, tags=inventory
         {name=Damage, type=attribute, logic=[rand:4|8], tags=damage }

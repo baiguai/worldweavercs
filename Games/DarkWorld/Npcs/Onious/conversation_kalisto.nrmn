@@ -30,7 +30,7 @@ Do you accept our offer? If so, I can provide you with further details.
         {type=message
             output={@
 She beckons you to her table. You follow her and sit down. A tall hooded man with a long staff
-silently approaches and sits next to the cleric woman.
+silently approaches and sits next to <<[self]((npc_label_the))>>.
 "My name is Onious." She informs you.
 She drops a coin purse onto the table.
 "Here's 100 gold pieces. At the conclusion of the mission I will give you much more than that."
@@ -53,7 +53,7 @@ are upstairs and your particular room is 204.
             output={@
 I'm sorry to hear that. Cheers.
 
-The cleric woman exits the pub.
+<<[self]((npc_label_the_proper))>> exits the pub.
             }
         }
         {type=set, logic=[self]parent, output=limbo }
@@ -73,6 +73,7 @@ The cleric woman exits the pub.
         {type=set, logic=[self]((topic)), output=kalisto }
         {type=set, logic=[self]((label)), output=Onious }
         {type=set, logic=[player]((gold)), output=+=100 }
+        {type=set, logic=[self]((travel))active, output=true }
     }
 
     {type=input, syntax=\b(no *|nope *)\b

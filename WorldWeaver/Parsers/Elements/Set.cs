@@ -132,17 +132,23 @@ namespace WorldWeaver.Parsers.Elements
             {
                 return false;
             }
-            var child = elem.Children.Where(c => c.Tags.TagsContain(tag)).FirstOrDefault();
-            if (child == null || child.ElementKey.Equals(""))
+            var children = elem.Children.Where(c => c.Tags.TagsContain(tag));
+            if (children.Count() < 1)
             {
                 return false;
             }
 
-            elemDb.SetElementField(
-                child.ElementKey,
-                prop,
-                ProcessOutput(output.Trim(), child.ElementKey)
-            );
+            foreach (var child in children)
+            {
+                if (!child.ElementKey.Equals(""))
+                {
+                    elemDb.SetElementField(
+                        child.ElementKey,
+                        prop,
+                        ProcessOutput(output.Trim(), child.ElementKey)
+                    );
+                }
+            }
             return true;
         }
 
