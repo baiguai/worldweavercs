@@ -16,7 +16,7 @@ namespace WorldWeaver.Parsers.Elements
             var input = new Parsers.Elements.Input();
             var msg = new Parsers.Elements.Message();
             var index = -1;
-            var handledInpput = false;
+            var handledInput = false;
             var handledMessage = false;
             var handledMove = false;
             var handledSet = false;
@@ -25,6 +25,7 @@ namespace WorldWeaver.Parsers.Elements
             foreach (var proc in procObj.ChildProcElements)
             {
                 handledMessage = false;
+                MainClass.output.FailedLogic = false;
 
                 foreach (var child in currentElement.Children)
                 {
@@ -71,10 +72,11 @@ namespace WorldWeaver.Parsers.Elements
                                 && !MainClass.output.OutputText.Equals("")
                             )
                             {
+                                handledInput = true;
                                 continue;
                             }
 
-                            if (!handledInpput)
+                            if (!handledInput)
                             {
                                 input.ParseInput(currentElement, child);
                                 if (MainClass.output.MatchMade)
@@ -124,16 +126,7 @@ namespace WorldWeaver.Parsers.Elements
                             var lgc = new Parsers.Elements.Logic();
 
                             lgc.ParseLogic(child);
-
-                            if (MainClass.output.FailedLogic)
-                            {
-                                MainClass.output.FailedLogic = false;
-                                return;
-                            }
-                            else
-                            {
-                                continue;
-                            }
+                            continue;
 
                         case "move":
                             if (MainClass.output.MatchMade)

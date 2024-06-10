@@ -11,7 +11,7 @@ namespace WorldWeaver.Parsers.Elements
         {
             MainClass.output.MatchMade = false;
             var elemParser = new Elements.Element();
-            var elemLogic = new DataManagement.GameLogic.Element();
+            var elemLogic = new Parsers.Elements.Logic();
 
             Regex rgx = new Regex(currentElement.Syntax, RegexOptions.IgnoreCase);
 
@@ -20,6 +20,17 @@ namespace WorldWeaver.Parsers.Elements
                 var procs = ProcFunctions.GetProcessStepsByType(currentElement.ElementType);
                 foreach (var proc in procs)
                 {
+                    if (proc.ChildProcElements.Contains("logic"))
+                    {
+                        foreach (var child in currentElement.Children.Where(c => c.ElementType.Equals("logic")))
+                        {
+                            elemLogic.ParseLogic(child);
+                            if (MainClass.output.FailedLogic)
+                            {
+                                return;
+                            }
+                        }
+                    }
                     elemParser.ParseElement(currentElement, proc, false);
 
                     foreach (var child in currentElement.Children)
@@ -27,7 +38,8 @@ namespace WorldWeaver.Parsers.Elements
                         var ChildProcs = ProcFunctions.GetProcessStepsByType(currentElement.ElementType);
                         foreach (var childProc in ChildProcs)
                         {
-                            elemParser.ParseElement(child, childProc);
+                            MainClass.output.MatchMade = false;
+                            elemParser.ParseElement(currentElement, childProc);
                             if (MainClass.output.MatchMade)
                             {
                                 return;
