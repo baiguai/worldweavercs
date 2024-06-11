@@ -12,17 +12,29 @@ namespace WorldWeaver.Parsers.Elements
         internal void ParseAction(Classes.Element currentElement)
         {
             var elem = new Parsers.Elements.Element();
+            var elemLogic = new Parsers.Elements.Logic();
             var procItems = Tools.ProcFunctions.GetProcessStepsByType(currentElement.ElementType);
 
-            foreach (var child in currentElement.Children)
+            foreach (var proc in procItems)
             {
-                foreach (var proc in procItems)
+                if (proc.ChildProcElements.Contains("logic"))
+                {
+                    foreach (var child in currentElement.Children.Where(c => c.ElementType.Equals("logic")))
+                    {
+                        elemLogic.ParseLogic(child);
+                        if (MainClass.output.FailedLogic)
+                        {
+                            return;
+                        }
+                    }
+                }
+                foreach (var child in currentElement.Children)
                 {
                     elem.ParseElement(currentElement, proc);
-                }
-                if (MainClass.output.MatchMade)
-                {
-                    break;
+                    if (MainClass.output.MatchMade)
+                    {
+                        break;
+                    }
                 }
             }
 

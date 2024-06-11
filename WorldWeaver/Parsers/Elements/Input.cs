@@ -17,7 +17,7 @@ namespace WorldWeaver.Parsers.Elements
 
             if (rgx.IsMatch(MainClass.userInput))
             {
-                var procs = ProcFunctions.GetProcessStepsByType(currentElement.ElementType);
+                var procs = ProcFunctions.GetProcessStepsByType(currentElement.ElementType); // @loc
                 foreach (var proc in procs)
                 {
                     if (proc.ChildProcElements.Contains("logic"))
@@ -32,20 +32,6 @@ namespace WorldWeaver.Parsers.Elements
                         }
                     }
                     elemParser.ParseElement(currentElement, proc, false);
-
-                    foreach (var child in currentElement.Children)
-                    {
-                        var ChildProcs = ProcFunctions.GetProcessStepsByType(currentElement.ElementType);
-                        foreach (var childProc in ChildProcs)
-                        {
-                            MainClass.output.MatchMade = false;
-                            elemParser.ParseElement(currentElement, childProc);
-                            if (MainClass.output.MatchMade)
-                            {
-                                return;
-                            }
-                        }
-                    }
                 }
             }
 

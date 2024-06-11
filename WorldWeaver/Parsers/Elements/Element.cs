@@ -219,14 +219,24 @@ namespace WorldWeaver.Parsers.Elements
                     break;
 
                 case "random":
-                    if (index == -1)
+                    var rnd = new Random(DateTime.Now.Millisecond);
+                    var cnt = children.Count;
+                    // If the child count is only 2 - rnd will always pick 0, so increase it and check that
+                    if (cnt == 2)
                     {
-                        var rnd = new Random((int)DateTime.Now.Ticks);
-                        repeatOutput = rnd.Next(0, children.Count - 1);
+                        cnt = 11;
                     }
-                    else
+                    repeatOutput = rnd.Next(cnt - 1);
+                    if (children.Count == 2)
                     {
-                        repeatOutput = index;
+                        if (repeatOutput < 5)
+                        {
+                            repeatOutput = 0;
+                        }
+                        else
+                        {
+                            repeatOutput = 1;
+                        }
                     }
                     break;
 
