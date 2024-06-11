@@ -13,7 +13,7 @@ namespace WorldWeaver.Parsers.Elements
     {
         public void ParseLogic(Classes.Element currentElement)
         {
-            MainClass.output.MatchMade = true;
+            MainClass.output.FailedLogic = false;
             var passed = true;
             var lines = currentElement.Logic.Split(
                 new string[] { Environment.NewLine },

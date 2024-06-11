@@ -17,15 +17,12 @@ You are taken aback that she knows your name.
         }
     }
 
-    {type=look
+    {type=look, repeat=random
         {type=message
             output={
 You look around.\bYou are in a loud smokey pub.
             }
         }
-    }
-
-    {type=look
         {type=message
             output={@
 Still looking...

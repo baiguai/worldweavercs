@@ -11,29 +11,27 @@ namespace WorldWeaver.Parsers.Elements
         {
             MainClass.output.MatchMade = false;
             var elemParser = new Elements.Element();
-            var elemLogic = new DataManagement.GameLogic.Element();
+            var elemLogic = new Parsers.Elements.Logic();
 
             Regex rgx = new Regex(currentElement.Syntax, RegexOptions.IgnoreCase);
 
             if (rgx.IsMatch(MainClass.userInput))
             {
-                var procs = ProcFunctions.GetProcessStepsByType(currentElement.ElementType);
+                var procs = ProcFunctions.GetProcessStepsByType(currentElement.ElementType); // @loc
                 foreach (var proc in procs)
                 {
-                    elemParser.ParseElement(currentElement, proc, false);
-
-                    foreach (var child in currentElement.Children)
+                    if (proc.ChildProcElements.Contains("logic"))
                     {
-                        var ChildProcs = ProcFunctions.GetProcessStepsByType(currentElement.ElementType);
-                        foreach (var childProc in ChildProcs)
+                        foreach (var child in currentElement.Children.Where(c => c.ElementType.Equals("logic")))
                         {
-                            elemParser.ParseElement(child, childProc);
-                            if (MainClass.output.MatchMade)
+                            elemLogic.ParseLogic(child);
+                            if (MainClass.output.FailedLogic)
                             {
                                 return;
                             }
                         }
                     }
+                    elemParser.ParseElement(currentElement, proc, false);
                 }
             }
 
