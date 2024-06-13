@@ -68,7 +68,8 @@ namespace WorldWeaver.Parsers.Elements
 
                         case "input":
                             if (
-                                MainClass.output.MatchMade
+                                currentElement.Active.Equals("true")
+                                && MainClass.output.MatchMade
                                 && !MainClass.output.OutputText.Equals("")
                             )
                             {
@@ -88,6 +89,11 @@ namespace WorldWeaver.Parsers.Elements
 
                         case "message":
                         case "enter_message":
+                            if (!currentElement.Active.Equals("true") ||
+                                !child.Active.Equals("true"))
+                            {
+                                continue;
+                            }
                             if (child.ElementType.Equals("enter_message") && !isEntering)
                             {
                                 continue;
@@ -115,6 +121,10 @@ namespace WorldWeaver.Parsers.Elements
                             break;
 
                         case "action":
+                            if (!currentElement.Active.Equals("true"))
+                            {
+                                continue;
+                            }
                             HandleAction(child);
                             if (Cache.GameCache.Game == null)
                             {
@@ -123,12 +133,20 @@ namespace WorldWeaver.Parsers.Elements
                             break;
 
                         case "logic":
+                            if (!currentElement.Active.Equals("true"))
+                            {
+                                continue;
+                            }
                             var lgc = new Parsers.Elements.Logic();
 
                             lgc.ParseLogic(child);
                             continue;
 
                         case "move":
+                            if (!currentElement.Active.Equals("true"))
+                            {
+                                continue;
+                            }
                             if (MainClass.output.MatchMade)
                             {
                                 continue;
@@ -150,6 +168,10 @@ namespace WorldWeaver.Parsers.Elements
 
                         case "set":
                         case "preset":
+                            if (!currentElement.Active.Equals("true"))
+                            {
+                                continue;
+                            }
                             var set = new Parsers.Elements.Set();
                             set.ParseSet(currentElement, child);
                             if (MainClass.output.MatchMade)
@@ -169,10 +191,18 @@ namespace WorldWeaver.Parsers.Elements
                             break;
 
                         case "object":
+                            if (!currentElement.Active.Equals("true"))
+                            {
+                                continue;
+                            }
                             child.ParseElement(isEntering);
                             break;
 
                         case "npc":
+                            if (!currentElement.Active.Equals("true"))
+                            {
+                                continue;
+                            }
                             child.ParseElement(isEntering);
                             break;
                     }
@@ -296,6 +326,7 @@ namespace WorldWeaver.Parsers.Elements
             var msgElem = child;
             var usingChild = false;
             var index = 0;
+            var elemLogic = new Parsers.Elements.Logic();
 
             MainClass.output.MatchMade = false;
 
@@ -310,6 +341,23 @@ namespace WorldWeaver.Parsers.Elements
                 allowRepeatOptions = true;
                 rptType = msgParent.Repeat;
                 usingChild = true;
+            }
+
+            var procItems = Tools.ProcFunctions.GetProcessStepsByType(msgParent.ElementType);
+            foreach (var proc in procItems)
+            {
+                if (proc.ChildProcElements.Contains("logic"))
+                {
+                    foreach (var msgChild in msgParent.Children.Where(c => c.ElementType.Equals("logic")))
+                    {
+                        elemLogic.ParseLogic(msgChild);
+                        if (MainClass.output.FailedLogic)
+                        {
+                            MainClass.output.MatchMade = true;
+                            return;
+                        }
+                    }
+                }
             }
 
             if (!msgParent.Repeat.Equals(""))

@@ -28,7 +28,10 @@ namespace WorldWeaver.Parsers.Elements
                     if (!passed)
                     {
                         MainClass.output.FailedLogic = true;
-                        MainClass.output.OutputText = currentElement.Output;
+                        if (!currentElement.Output.Equals(""))
+                        {
+                            MainClass.output.OutputText += Environment.NewLine + currentElement.Output;
+                        }
                         return;
                     }
                     else
