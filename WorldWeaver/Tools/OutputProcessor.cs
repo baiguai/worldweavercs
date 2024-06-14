@@ -46,11 +46,11 @@ namespace WorldWeaver.Tools
             updated = GetSpecialValue(currentElement, specialString);
             if (updated.Contains("<<"))
             {
-                updated = GetElementPropertyByKey(currentElement, specialString);
+                updated = GetElementChildByTag(currentElement, specialString);
             }
             if (updated.Contains("<<"))
             {
-                updated = GetElementChildByTag(currentElement, specialString);
+                updated = GetElementPropertyByKey(currentElement, specialString);
             }
             if (updated.Contains("<<"))
             {
