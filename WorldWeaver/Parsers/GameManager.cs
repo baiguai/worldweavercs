@@ -89,16 +89,16 @@ namespace WorldWeaver.Parsers
             {
                 child.ParseElement();
             }
+
+            var trvParser = new Parsers.Elements.Travel();
+            trvParser.ParseTravel();
+
             Cache.RoomCache.Room.ParseElement();
 
             if (Cache.GameCache.Game == null)
             {
                 return;
             }
-
-            var trvParser = new Parsers.Elements.Travel();
-            trvParser.ParseTravel();
         }
-
     }
 }

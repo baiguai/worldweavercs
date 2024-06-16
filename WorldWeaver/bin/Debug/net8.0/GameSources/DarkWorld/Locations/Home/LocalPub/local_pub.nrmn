@@ -38,7 +38,7 @@ You are sitting at <<(onious)((npc_label_the))>>'s table.
 
 --------------------------------------------------------------------------------
 
-    {type=navigation, tags=nav
+    {type=navigation
         output={@
 
 ---
@@ -53,7 +53,6 @@ To the south is the exit.
 
     {type=input, syntax=\b(look|l)\b
         {type=action, logic=look, tags=type }
-        {type=action, logic=navigation, tags=type }
     }
 
     {type=input, syntax=\b(story)\b

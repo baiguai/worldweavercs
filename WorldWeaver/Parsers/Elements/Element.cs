@@ -18,6 +18,7 @@ namespace WorldWeaver.Parsers.Elements
             var index = -1;
             var handledInput = false;
             var handledMessage = false;
+            var handledNavigation = false;
             var handledMove = false;
             var handledSet = false;
             var handledAttack = false;
@@ -25,10 +26,15 @@ namespace WorldWeaver.Parsers.Elements
             foreach (var proc in procObj.ChildProcElements)
             {
                 handledMessage = false;
+                handledNavigation = false;
                 MainClass.output.FailedLogic = false;
 
                 foreach (var child in currentElement.Children)
                 {
+                    if (currentElement.ElementType.Equals("room") && !Cache.RoomCache.Room.ElementKey.Equals(currentElement.ElementKey))
+                    {
+                        return;
+                    }
                     if (child.ElementType.Equals("attribute"))
                     {
                         continue;
@@ -99,6 +105,38 @@ namespace WorldWeaver.Parsers.Elements
                                 continue;
                             }
                             if (handledMessage)
+                            {
+                                continue;
+                            }
+
+                            MainClass.output.MatchMade = false;
+                            HandleMessage(
+                                currentElement,
+                                child,
+                                procObj.AllowRepeatOptions,
+                                isEntering
+                            );
+                            if (
+                                MainClass.output.MatchMade
+                                || !MainClass.output.OutputText.Equals("")
+                            )
+                            {
+                                handledMessage = true;
+                                MainClass.output.MatchMade = true;
+                            }
+                            break;
+
+                        case "navigation":
+                            if (!currentElement.Active.Equals("true") ||
+                                !child.Active.Equals("true"))
+                            {
+                                continue;
+                            }
+                            if (handledNavigation)
+                            {
+                                continue;
+                            }
+                            if (!currentElement.ElementType.Equals("room"))
                             {
                                 continue;
                             }
@@ -373,7 +411,7 @@ namespace WorldWeaver.Parsers.Elements
             {
                 foreach (var c in msgParent.Children)
                 {
-                    if (c.ElementType.Equals("message") || c.ElementType.Equals("enter_message"))
+                    if (c.ElementType.Equals("message") || c.ElementType.Equals("enter_message") || c.ElementType.Equals("navigation"))
                     {
                         msg.ParseMessage(msgParent, c, allowRepeatOptions, index);
                         if (MainClass.output.MatchMade)
