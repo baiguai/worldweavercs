@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Common;
-using WorldWeaver.Classes;
-
-namespace WorldWeaver.Parsers.Elements
+﻿namespace WorldWeaver.Parsers.Elements
 {
     public class Element
     {
@@ -20,7 +15,6 @@ namespace WorldWeaver.Parsers.Elements
             var handledMessage = false;
             var handledNavigation = false;
             var handledMove = false;
-            var handledSet = false;
             var handledAttack = false;
 
             foreach (var proc in procObj.ChildProcElements)
@@ -142,6 +136,7 @@ namespace WorldWeaver.Parsers.Elements
                             }
 
                             MainClass.output.MatchMade = false;
+                            MainClass.output.OutputText += $"{System.Environment.NewLine}{System.Environment.NewLine}";
                             HandleMessage(
                                 currentElement,
                                 child,
