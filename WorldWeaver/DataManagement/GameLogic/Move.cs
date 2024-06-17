@@ -26,18 +26,18 @@ namespace WorldWeaver.DataManagement.GameLogic
 
                 success = elemDb.SetElementParentKey(key, newParentKey);
 
+                if (success)
+                {
+                    Tools.CacheManager.RefreshCache();
+                    MainClass.output.OutputText += outputText;
+                    Cache.RoomCache.Room.ParseElement(true);
+                }
+
                 if (key.Equals(Cache.PlayerCache.Player.ElementKey))
                 {
                     var trvParser = new Parsers.Elements.Travel();
                     trvParser.ParseTravel();
                 }
-            }
-
-            if (success)
-            {
-                Tools.CacheManager.RefreshCache();
-                MainClass.output.OutputText += outputText;
-                Cache.RoomCache.Room.ParseElement(true);
             }
 
             return;

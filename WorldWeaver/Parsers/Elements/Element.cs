@@ -18,6 +18,7 @@ namespace WorldWeaver.Parsers.Elements
             var index = -1;
             var handledInput = false;
             var handledMessage = false;
+            var handledNavigation = false;
             var handledMove = false;
             var handledSet = false;
             var handledAttack = false;
@@ -25,10 +26,15 @@ namespace WorldWeaver.Parsers.Elements
             foreach (var proc in procObj.ChildProcElements)
             {
                 handledMessage = false;
+                handledNavigation = false;
                 MainClass.output.FailedLogic = false;
 
                 foreach (var child in currentElement.Children)
                 {
+                    if (currentElement.ElementType.Equals("room") && !Cache.RoomCache.Room.ElementKey.Equals(currentElement.ElementKey))
+                    {
+                        return;
+                    }
                     if (child.ElementType.Equals("attribute"))
                     {
                         continue;
@@ -68,7 +74,8 @@ namespace WorldWeaver.Parsers.Elements
 
                         case "input":
                             if (
-                                MainClass.output.MatchMade
+                                currentElement.Active.Equals("true")
+                                && MainClass.output.MatchMade
                                 && !MainClass.output.OutputText.Equals("")
                             )
                             {
@@ -88,6 +95,11 @@ namespace WorldWeaver.Parsers.Elements
 
                         case "message":
                         case "enter_message":
+                            if (!currentElement.Active.Equals("true") ||
+                                !child.Active.Equals("true"))
+                            {
+                                continue;
+                            }
                             if (child.ElementType.Equals("enter_message") && !isEntering)
                             {
                                 continue;
@@ -114,7 +126,43 @@ namespace WorldWeaver.Parsers.Elements
                             }
                             break;
 
+                        case "navigation":
+                            if (!currentElement.Active.Equals("true") ||
+                                !child.Active.Equals("true"))
+                            {
+                                continue;
+                            }
+                            if (handledNavigation)
+                            {
+                                continue;
+                            }
+                            if (!currentElement.ElementType.Equals("room"))
+                            {
+                                continue;
+                            }
+
+                            MainClass.output.MatchMade = false;
+                            HandleMessage(
+                                currentElement,
+                                child,
+                                procObj.AllowRepeatOptions,
+                                isEntering
+                            );
+                            if (
+                                MainClass.output.MatchMade
+                                || !MainClass.output.OutputText.Equals("")
+                            )
+                            {
+                                handledMessage = true;
+                                MainClass.output.MatchMade = true;
+                            }
+                            break;
+
                         case "action":
+                            if (!currentElement.Active.Equals("true"))
+                            {
+                                continue;
+                            }
                             HandleAction(child);
                             if (Cache.GameCache.Game == null)
                             {
@@ -123,12 +171,20 @@ namespace WorldWeaver.Parsers.Elements
                             break;
 
                         case "logic":
+                            if (!currentElement.Active.Equals("true"))
+                            {
+                                continue;
+                            }
                             var lgc = new Parsers.Elements.Logic();
 
                             lgc.ParseLogic(child);
                             continue;
 
                         case "move":
+                            if (!currentElement.Active.Equals("true"))
+                            {
+                                continue;
+                            }
                             if (MainClass.output.MatchMade)
                             {
                                 continue;
@@ -150,6 +206,10 @@ namespace WorldWeaver.Parsers.Elements
 
                         case "set":
                         case "preset":
+                            if (!currentElement.Active.Equals("true"))
+                            {
+                                continue;
+                            }
                             var set = new Parsers.Elements.Set();
                             set.ParseSet(currentElement, child);
                             if (MainClass.output.MatchMade)
@@ -169,10 +229,18 @@ namespace WorldWeaver.Parsers.Elements
                             break;
 
                         case "object":
+                            if (!currentElement.Active.Equals("true"))
+                            {
+                                continue;
+                            }
                             child.ParseElement(isEntering);
                             break;
 
                         case "npc":
+                            if (!currentElement.Active.Equals("true"))
+                            {
+                                continue;
+                            }
                             child.ParseElement(isEntering);
                             break;
                     }
@@ -296,6 +364,7 @@ namespace WorldWeaver.Parsers.Elements
             var msgElem = child;
             var usingChild = false;
             var index = 0;
+            var elemLogic = new Parsers.Elements.Logic();
 
             MainClass.output.MatchMade = false;
 
@@ -312,6 +381,23 @@ namespace WorldWeaver.Parsers.Elements
                 usingChild = true;
             }
 
+            var procItems = Tools.ProcFunctions.GetProcessStepsByType(msgParent.ElementType);
+            foreach (var proc in procItems)
+            {
+                if (proc.ChildProcElements.Contains("logic"))
+                {
+                    foreach (var msgChild in msgParent.Children.Where(c => c.ElementType.Equals("logic")))
+                    {
+                        elemLogic.ParseLogic(msgChild);
+                        if (MainClass.output.FailedLogic)
+                        {
+                            MainClass.output.MatchMade = true;
+                            return;
+                        }
+                    }
+                }
+            }
+
             if (!msgParent.Repeat.Equals(""))
             {
                 index = HandleRepeat(msgParent, msgParent.Children, rptType);
@@ -325,7 +411,7 @@ namespace WorldWeaver.Parsers.Elements
             {
                 foreach (var c in msgParent.Children)
                 {
-                    if (c.ElementType.Equals("message") || c.ElementType.Equals("enter_message"))
+                    if (c.ElementType.Equals("message") || c.ElementType.Equals("enter_message") || c.ElementType.Equals("navigation"))
                     {
                         msg.ParseMessage(msgParent, c, allowRepeatOptions, index);
                         if (MainClass.output.MatchMade)

@@ -6,6 +6,11 @@
             "during_game" : "false"
         },
         {
+            "pattern" : "\\b(menu)\\b",
+            "method" : "DoMenu",
+            "during_game" : "false"
+        },
+        {
             "pattern" : "\\b(play *)\\b",
             "method" : "DoPlayGame",
             "during_game" : "false"

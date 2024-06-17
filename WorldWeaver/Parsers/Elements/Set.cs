@@ -10,12 +10,6 @@ namespace WorldWeaver.Parsers.Elements
         {
             var setPerformed = false;
 
-            SetElementValue(
-                currentElement,
-                currentElement.Tags,
-                currentElement.Logic,
-                currentElement.Output
-            );
             if (!setPerformed)
             {
                 setPerformed = SetElementChildValueByTag(
@@ -25,6 +19,12 @@ namespace WorldWeaver.Parsers.Elements
                     currentElement.Output
                 );
             }
+            SetElementValue(
+                currentElement,
+                currentElement.Tags,
+                currentElement.Logic,
+                currentElement.Output
+            );
             if (!setPerformed)
             {
                 setPerformed = SetRelativeElementChildValueByTag(
@@ -240,17 +240,19 @@ namespace WorldWeaver.Parsers.Elements
             {
                 return false;
             }
-            var targetElem = parentElem
-                .Children.Where(c => c.Tags.TagsContain(tag))
-                .FirstOrDefault();
+            var targetElems = parentElem
+                .Children.Where(c => c.Tags.TagsContain(tag));
             var elemDb = new DataManagement.GameLogic.Element();
-            if (targetElem != null)
+            if (targetElems.Count() > 0)
             {
-                elemDb.SetElementField(
-                    targetElem.ElementKey,
-                    prop,
-                    ProcessOutput(output.Trim(), targetElem.ElementKey)
-                );
+                foreach (var targetElem in targetElems)
+                {
+                    elemDb.SetElementField(
+                        targetElem.ElementKey,
+                        prop,
+                        ProcessOutput(output.Trim(), targetElem.ElementKey)
+                    );
+                }
                 return true;
             }
 

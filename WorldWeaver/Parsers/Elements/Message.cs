@@ -28,6 +28,10 @@ namespace WorldWeaver.Parsers.Elements
                 {
                     if (idx == currentIndex)
                     {
+                        if (msg.ElementType.Equals("navigation"))
+                        {
+                            MainClass.output.OutputText += Environment.NewLine + Environment.NewLine;
+                        }
                         MainClass.output.OutputText += Tools.OutputProcessor.ProcessOutputText(Environment.NewLine + ProcessMessageText(msg.Output, msg.Tags), msg);
                         MainClass.output.MatchMade = true;
                         break;
