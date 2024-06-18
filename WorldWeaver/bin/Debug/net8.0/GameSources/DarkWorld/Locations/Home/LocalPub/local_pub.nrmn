@@ -16,8 +16,6 @@ You order a drink and when it arrives the woman approaches you.
 You are taken aback that she knows your name.
 "Are you interested in assisting me in investigating dark goings-on in Aetherous? I can pay you handsomely, of course."
 </?>
-
-<<[self]((nav))>>
         }
     }
 
