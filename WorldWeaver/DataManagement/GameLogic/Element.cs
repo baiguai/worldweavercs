@@ -75,7 +75,10 @@ SELECT
 FROM
     element
 WHERE 1=1
-    AND Output LIKE '[rand:%'
+    AND (
+        Output LIKE '[rand:%' OR
+        Output LIKE '[roll:%'
+    )
     AND Active = 'true'
 ORDER BY
     sort
@@ -854,7 +857,7 @@ WHERE 1=1
 
                 foreach (var elem in elems)
                 {
-                    elem.Output = elem.Output.Randomize();
+                    elem.Output = elem.Output.RandomValue().ToString();
 
                     var updateQuery = $@"
 UPDATE
