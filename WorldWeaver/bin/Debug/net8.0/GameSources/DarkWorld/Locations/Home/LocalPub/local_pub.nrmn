@@ -31,6 +31,13 @@ Still looking...
     }
 
 
+    {type=navigation
+        output={@
+North of where you are is a door.
+        }
+    }
+
+
 
 --------------------------------------------------------------------------------
 
