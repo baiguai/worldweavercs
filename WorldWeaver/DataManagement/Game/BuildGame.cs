@@ -656,7 +656,7 @@ INSERT INTO element (
 )
 VALUES";
 
-                if (elementsToInsert.Count < 1)
+                if (elementsToInsert == null || elementsToInsert.Count < 1)
                 {
                     return true;
                 }
@@ -686,6 +686,11 @@ VALUES";
                     else
                     {
                         createDbQuery += ",";
+                    }
+
+                    if (e.ElementType.Equals("player"))
+                    {
+                        MainClass.logger.WriteToLog("SQL:    " + createDbQuery, Logger.LogTypes.BuildGame);
                     }
 
                     MainClass.logger.WriteToLog($"Element Type: {e.ElementType}, Key: {e.ElementKey}, Parent: {e.ParentKey}", Logger.LogTypes.BuildGame);

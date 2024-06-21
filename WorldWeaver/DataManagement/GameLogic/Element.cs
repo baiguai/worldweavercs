@@ -75,8 +75,41 @@ SELECT
 FROM
     element
 WHERE 1=1
-    AND Output LIKE '[rand:%'
-    AND Active = 'true'
+    AND (
+        Output LIKE '[rand:%' OR
+        Output LIKE '[roll:%'
+    )
+ORDER BY
+    sort
+;
+            ";
+
+            var output = GetElements(selectQuery);
+            return output;
+        }
+
+        private List<Classes.Element> GetRandNameElements()
+        {
+            var selectQuery = $@"
+SELECT
+    ElementType,
+    ElementKey,
+    Name,
+    ParentKey,
+    Syntax,
+    Logic,
+    Output,
+    Tags,
+    Repeat,
+    RepeatIndex,
+    Active,
+    Sort
+FROM
+    element
+WHERE 1=1
+    AND (
+        Name LIKE '%||%'
+    )
 ORDER BY
     sort
 ;
@@ -854,7 +887,7 @@ WHERE 1=1
 
                 foreach (var elem in elems)
                 {
-                    elem.Output = elem.Output.Randomize();
+                    elem.Output = elem.Output.RandomValue().ToString();
 
                     var updateQuery = $@"
 UPDATE
@@ -863,7 +896,6 @@ SET
     Output = '{elem.Output}'
 WHERE 1=1
     AND ElementKey = '{elem.ElementKey}'
-    AND Active = 'true'
 ;
                     ";
 
@@ -904,6 +936,43 @@ WHERE 1=1
                         }
                     }
                 }
+            }
+        }
+
+        internal void SetRandNameElements()
+        {
+            var elems = GetRandNameElements();
+            string connectionString = Connection.GetConnection();
+
+            using (SqliteConnection connection = new SqliteConnection(connectionString))
+            {
+                connection.Open();
+
+                foreach (var elem in elems)
+                {
+                    elem.Output = elem.Name.RandomSplitValue();
+
+                    var updateQuery = $@"
+UPDATE
+    element
+SET
+    Name = '{elem.Name}'
+WHERE 1=1
+    AND ElementKey = '{elem.ElementKey}'
+;
+                    ";
+
+                    using (SqliteCommand command = new SqliteCommand(updateQuery, connection))
+                    {
+                        command.ExecuteNonQuery();
+
+                        command.Dispose();
+                    }
+                }
+
+                connection.Close();
+                connection.Dispose();
+                Tools.CacheManager.RefreshCache();
             }
         }
     }

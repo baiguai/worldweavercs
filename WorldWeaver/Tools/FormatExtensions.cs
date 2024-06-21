@@ -28,22 +28,14 @@ namespace WorldWeaver.Tools
             return output;
         }
 
-        public static string Randomize(this string value)
+        public static string RandomSplitValue(this string value)
         {
-            var output = "";
+            var arr = value.Split("||");
+            Random rnd = new Random((int)DateTime.Now.Ticks);
+            var rndIdx = rnd.Next(0, arr.Length-1);
+            var rndVal = arr[rndIdx];
 
-            if (value.Contains("[rand:"))
-            {
-                var tmp = value.Replace("[rand:", "").Replace("]", "");
-                var range = tmp.Split('|');
-                if (range.Length == 2)
-                {
-                    Random rnd = new Random((int)DateTime.Now.Ticks);
-                    output = rnd.Next(Convert.ToInt32(range[0]), Convert.ToInt32(range[1])).ToString();
-                }
-            }
-
-            return output;
+            return rndVal;
         }
 
         public static int RandomValue(this string value)
@@ -58,6 +50,45 @@ namespace WorldWeaver.Tools
                 {
                     Random rnd = new Random((int)DateTime.Now.Ticks);
                     rndVal = rnd.Next(Convert.ToInt32(range[0]), Convert.ToInt32(range[1]));
+                }
+            }
+            else
+            {
+                rndVal = RollDice(value);
+            }
+
+            return rndVal;
+        }
+
+        public static int RollDice(this string value)
+        {
+            var rndVal = -1;
+
+            if (value.Contains("[roll:"))
+            {
+                var tmp = value.Replace("[roll:", "").Replace("]", "").ToLower();
+                var diceSpec = tmp.Split('d');
+                try
+                {
+                    if (diceSpec.Length == 2)
+                    {
+                        Random rnd = new Random((int)DateTime.Now.Ticks);
+                        var numOfDice = Convert.ToInt32(diceSpec[0].Trim());
+                        var sides = Convert.ToInt32(diceSpec[1].Trim());
+                        var total = 0;
+
+                        for (int rolls = 0; rolls <= numOfDice; rolls++)
+                        {
+                            var rollVal = rnd.Next(1, sides + 1);
+                            total = total += rollVal;
+                        }
+
+                        rndVal = total;
+                    }
+                }
+                catch (Exception)
+                {
+                    return rndVal;
                 }
             }
 

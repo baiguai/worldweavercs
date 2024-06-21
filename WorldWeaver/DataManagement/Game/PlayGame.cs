@@ -38,12 +38,19 @@ namespace WorldWeaver.DataManagement.Game
 
         private void ProcessCustomStaticValues()
         {
+            ProcessRandomNames();
             ProcessRandomOutput();
             ProcessReferences();
 
             CacheManager.RefreshCache();
         }
 
+
+        private void ProcessRandomNames()
+        {
+            var elemDb = new DataManagement.GameLogic.Element();
+            elemDb.SetRandNameElements();
+        }
 
         private void ProcessRandomOutput()
         {

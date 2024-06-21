@@ -1,3 +1,4 @@
+
 namespace WorldWeaver.Tools
 {
     public class Elements
@@ -122,6 +123,57 @@ namespace WorldWeaver.Tools
 
                 default:
                     return Cache.RoomCache.Room;
+            }
+        }
+
+        internal static ConsoleColor GetColor(string colorString)
+        {
+            switch (colorString.ToLower())
+            {
+                case "blue":
+                    return ConsoleColor.Blue;
+
+                case "cyan":
+                    return ConsoleColor.Cyan;
+
+                case "darkblue":
+                    return ConsoleColor.DarkBlue;
+
+                case "darkcyan":
+                    return ConsoleColor.DarkCyan;
+
+                case "darkgray":
+                    return ConsoleColor.DarkGray;
+
+                case "darkgreen":
+                    return ConsoleColor.DarkGreen;
+
+                case "darkmagenta":
+                    return ConsoleColor.DarkMagenta;
+
+                case "darkred":
+                    return ConsoleColor.DarkRed;
+
+                case "darkyellow":
+                    return ConsoleColor.DarkYellow;
+
+                case "gray":
+                    return ConsoleColor.Gray;
+
+                case "green":
+                    return ConsoleColor.Green;
+
+                case "magenta":
+                    return ConsoleColor.Magenta;
+
+                case "red":
+                    return ConsoleColor.Red;
+
+                case "yellow":
+                    return ConsoleColor.Yellow;
+
+                default:
+                    return ConsoleColor.White;
             }
         }
     }
