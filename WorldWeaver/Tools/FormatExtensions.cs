@@ -28,6 +28,16 @@ namespace WorldWeaver.Tools
             return output;
         }
 
+        public static string RandomSplitValue(this string value)
+        {
+            var arr = value.Split("||");
+            Random rnd = new Random((int)DateTime.Now.Ticks);
+            var rndIdx = rnd.Next(0, arr.Length-1);
+            var rndVal = arr[rndIdx];
+
+            return rndVal;
+        }
+
         public static int RandomValue(this string value)
         {
             var rndVal = 0;
