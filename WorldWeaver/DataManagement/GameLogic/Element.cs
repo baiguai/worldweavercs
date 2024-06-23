@@ -975,5 +975,28 @@ WHERE 1=1
                 Tools.CacheManager.RefreshCache();
             }
         }
+
+        internal void SpawnTemplateElement(Classes.Element currentElement, string templateKey, string key)
+        {
+            DataManagement.Game.BuildGame gameDb = new DataManagement.Game.BuildGame();
+            DataManagement.GameLogic.Element elemDb = new DataManagement.GameLogic.Element();
+            if (key.Equals(""))
+            {
+                key = Guid.NewGuid().ToString();
+            }
+
+            var tmpltElement = elemDb.GetElementByKey(templateKey);
+
+            tmpltElement.ParentKey = Tools.Template.GetTemplateParent(currentElement, tmpltElement.ParentKey);
+            tmpltElement.Name = Tools.Template.GetTemplateName(currentElement, tmpltElement.Name);
+            tmpltElement.ElementKey = key;
+
+            gameDb.SaveElement(tmpltElement);
+
+            foreach (var child in tmpltElement.Children)
+            {
+                SpawnTemplateElement(tmpltElement, child.ElementKey, "");
+            }
+        }
     }
 }

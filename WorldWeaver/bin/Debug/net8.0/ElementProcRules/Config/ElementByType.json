@@ -5,6 +5,7 @@
                 "action"
             ],
             "elements" : [
+                "attribute",
                 "logic",
                 "input",
                 "action",
