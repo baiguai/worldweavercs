@@ -9,20 +9,32 @@ namespace WorldWeaver.Parsers.Elements
 {
     public class Spawn
     {
-        public string SpawnByTemplate(Classes.Element currentElement, string templateKey, string newElemKey)
+        public string SpawnByTemplate(Classes.Element currentElement)
         {
             DataManagement.GameLogic.Element elemDb = new DataManagement.GameLogic.Element();
 
-            var tmplElem = elemDb.GetElementByKey(templateKey);
-            var key = newElemKey;
-            if (key.Equals(""))
+            var tmplElem = elemDb.GetElementByKey(currentElement.Logic);
+            if (tmplElem.ElementKey.Equals(""))
             {
-                key = Guid.NewGuid().ToString();
+                return "";
+            }
+            var parentKey = Cache.RoomCache.Room.ElementKey;
+            if (tmplElem.ElementType.Equals("room"))
+            {
+                parentKey = "";
+            }
+            tmplElem.ParentKey = parentKey;
+            var key = Guid.NewGuid().ToString();
+            var newElemTags = Tools.OutputProcessor.ProcessOutputText(currentElement.Output, currentElement);
+            var doSpawn = Tools.RepeatProcessor.ProcessSpawnRepeat(currentElement);
+
+            if (doSpawn)
+            {
+                elemDb.SpawnTemplateElement(currentElement, currentElement.Logic, key, newElemTags);
+                return key;
             }
 
-            elemDb.SpawnTemplateElement(currentElement, templateKey, key);
-
-            return key;
+            return "";
         }
     }
 }

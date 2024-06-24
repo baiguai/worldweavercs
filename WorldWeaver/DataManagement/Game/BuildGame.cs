@@ -632,7 +632,8 @@ PRAGMA foreign_keys = on;
 
         public bool SaveElement(Classes.Element element)
         {
-            var connectionString = $"Data Source={MainClass.gameFile};Cache=Shared;";
+            var gameFile = $"Games/{MainClass.gameDb}.db";
+            var connectionString = $"Data Source={gameFile};Cache=Shared;";
             elementsToInsert.Clear();
             elementsToInsert.Add(element);
             var success = SaveElements(connectionString);

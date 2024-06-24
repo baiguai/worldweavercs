@@ -235,7 +235,7 @@ namespace WorldWeaver.Parsers.Elements
             var spawn = new Parsers.Elements.Spawn();
             if (!currentElement.Logic.Equals(""))
             {
-                var newKey = spawn.SpawnByTemplate(currentElement, currentElement.Logic, currentElement.Output);
+                spawn.SpawnByTemplate(currentElement);
             }
             else
             {}

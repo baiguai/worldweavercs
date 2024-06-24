@@ -976,7 +976,7 @@ WHERE 1=1
             }
         }
 
-        internal void SpawnTemplateElement(Classes.Element currentElement, string templateKey, string key)
+        internal void SpawnTemplateElement(Classes.Element currentElement, string templateKey, string key, string tags)
         {
             DataManagement.Game.BuildGame gameDb = new DataManagement.Game.BuildGame();
             DataManagement.GameLogic.Element elemDb = new DataManagement.GameLogic.Element();
@@ -990,12 +990,30 @@ WHERE 1=1
             tmpltElement.ParentKey = Tools.Template.GetTemplateParent(currentElement, tmpltElement.ParentKey);
             tmpltElement.Name = Tools.Template.GetTemplateName(currentElement, tmpltElement.Name);
             tmpltElement.ElementKey = key;
+            tmpltElement.Tags.AddTag(tags);
+            if (tmpltElement.Tags.Equals(""))
+            {
+                tmpltElement.Tags = tags;
+            }
 
             gameDb.SaveElement(tmpltElement);
 
             foreach (var child in tmpltElement.Children)
             {
-                SpawnTemplateElement(tmpltElement, child.ElementKey, "");
+                SpawnChildElement(tmpltElement, child);
+            }
+        }
+
+        internal void SpawnChildElement(Classes.Element parentElement, Classes.Element childElement)
+        {
+            DataManagement.Game.BuildGame gameDb = new DataManagement.Game.BuildGame();
+            childElement.ParentKey = parentElement.ElementKey;
+            childElement.ElementKey = Guid.NewGuid().ToString();
+            gameDb.SaveElement(childElement);
+
+            foreach (var child in childElement.Children)
+            {
+                SpawnChildElement(childElement, child);
             }
         }
     }

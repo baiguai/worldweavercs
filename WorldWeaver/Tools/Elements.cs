@@ -96,7 +96,35 @@ namespace WorldWeaver.Tools
                 elementProperty = "parentkey";
             }
 
-            return elementProperty;
+            switch (elementProperty.ToLower())
+            {
+                case "elementkey":
+                    return "ElementKey";
+
+                case "elementtype":
+                    return "ElementType";
+
+                case "parentkey":
+                    return "ParentKey";
+
+                case "syntax":
+                    return "Syntax";
+
+                case "logic":
+                    return "Logic";
+
+                case "tags":
+                    return "Tags";
+
+                case "active":
+                    return "Active";
+
+                case "name":
+                    return "Name";
+
+                default:
+                    return "Output";
+            }
         }
 
         public static Classes.Element GetRelativeElement(Classes.Element currentElement, string relCode)

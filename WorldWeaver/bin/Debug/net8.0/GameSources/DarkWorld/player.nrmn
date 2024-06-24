@@ -1,11 +1,11 @@
 ﻿{key=player, name=, type=player, parent=local_pub
-    {name=Life, type=attribute, output=[roll:5d8], tags=stats|life }
+    {name=Life, type=attribute, output=[rand:17|35], tags=stats|life }
     {type=attribute, output=player((life)), tags=maxlife }
-    {name=Armor Rating, type=attribute, output=[roll:4d4], tags=stats|armor }
-    {name=Strength, type=attribute, output=[roll:3d6], tags=stats }
-    {name=Intelligence, type=attribute, output=[roll:3d6], tags=stats }
-    {name=Cunning, type=attribute, output=[roll:3d6], tags=stats }
-    {name=Gold, type=attribute, output=[roll:5d8], tags=stats|gold }
+    {name=Armor Rating, type=attribute, output=[rand:4|10], tags=stats|armor }
+    {name=Strength, type=attribute, output=[rand:8|18], tags=stats }
+    {name=Intelligence, type=attribute, output=[rand:8|18], tags=stats }
+    {name=Cunning, type=attribute, output=[rand:8|18], tags=stats }
+    {name=Gold, type=attribute, output=[rand:20|40], tags=stats|gold }
     {key=player_armed, name=Armed Weapon, type=attribute, output=long-sword_01, tags=armed|stats|name }
 
     {key=heal_rounds, type=attribute, output=5 }
