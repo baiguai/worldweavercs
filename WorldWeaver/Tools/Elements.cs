@@ -122,9 +122,14 @@ namespace WorldWeaver.Tools
                 case "name":
                     return "Name";
 
-                default:
+                case "repeat":
+                    return "Repeat";
+
+                case "output":
                     return "Output";
             }
+
+            return elementProperty;
         }
 
         public static Classes.Element GetRelativeElement(Classes.Element currentElement, string relCode)

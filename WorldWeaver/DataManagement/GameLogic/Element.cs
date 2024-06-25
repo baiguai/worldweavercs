@@ -650,7 +650,7 @@ WHERE 1=1
 
         public bool SetElementField(string element_key, string field, string new_value, bool refreshCache = true)
         {
-            var output = false;
+            var success = false;
 
             field = Tools.Elements.FixPropertyName(field);
 
@@ -682,7 +682,7 @@ WHERE 1=1
 
                 connection.Close();
                 connection.Dispose();
-                output = true;
+                success = true;
             }
 
             if (refreshCache)
@@ -690,7 +690,7 @@ WHERE 1=1
                 CacheManager.RefreshCache();
             }
 
-            return output;
+            return success;
         }
 
         public int GetRepeatIndex(string element_key)
