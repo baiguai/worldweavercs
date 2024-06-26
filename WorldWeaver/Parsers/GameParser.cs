@@ -80,6 +80,16 @@ namespace WorldWeaver.Parsers
                         DoQuit();
                     }
 
+                    if (!MainClass.output.MatchMade && method.Equals("DoNoteAdd"))
+                    {
+                        DoAddNote();
+                    }
+
+                    if (!MainClass.output.MatchMade && method.Equals("DoNoteDelete"))
+                    {
+                        DoDeleteNote();
+                    }
+
                     if (!MainClass.output.MatchMade && method.Equals("DoTime"))
                     {
                         DoTime();
@@ -121,6 +131,32 @@ namespace WorldWeaver.Parsers
             gameObj.SetPlayerName(MainClass.userInput.Replace("set player name ", "set_player_name ").GetInputParams());
 
             DoResumeGame(true);
+        }
+
+        private void DoAddNote()
+        {
+            var noteInput = MainClass.userInput.Replace("note add ", "");
+            var arr = noteInput.Split('|');
+            if (arr.Length != 2)
+            {
+                MainClass.output.OutputText = $"To add a note use:{Environment.NewLine}add note <note key>|<note text>";
+                return;
+            }
+            var noteKey = arr[0].Trim();
+            var noteText = arr[1].Trim();
+
+            var elemDb = new DataManagement.GameLogic.Element();
+
+            elemDb.AddNote(noteKey, noteText);
+        }
+
+        private void DoDeleteNote()
+        {
+            var noteInput = MainClass.userInput.Replace("note delete ", "");
+
+            var elemDb = new DataManagement.GameLogic.Element();
+
+            elemDb.DeleteNote(noteInput);
         }
 
         public void DoPlayGame()

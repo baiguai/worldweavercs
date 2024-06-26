@@ -29,6 +29,26 @@
             "pattern" : "\\b(time)\\b",
             "method" : "DoTime",
             "during_game" : "true"
+        },
+        {
+            "pattern" : "\\b(note add *)\\b",
+            "method" : "DoNoteAdd",
+            "during_game" : "true"
+        },
+        {
+            "pattern" : "\\b(note delete *)\\b",
+            "method" : "DoNoteDelete",
+            "during_game" : "true"
+        },
+        {
+            "pattern" : "\\b(ls notes *)\\b",
+            "method" : "DoNotesList",
+            "during_game" : "true"
+        },
+        {
+            "pattern" : "\\b(view note *)\\b",
+            "method" : "DoViewNote",
+            "during_game" : "true"
         }
     ]
 }

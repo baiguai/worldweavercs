@@ -107,6 +107,16 @@ CREATE TABLE IF NOT EXISTS gamestate (
     UpdateDate  TEXT (10)  NOT NULL
 );
 
+-- Table: note
+DROP TABLE IF EXISTS note;
+
+CREATE TABLE note (
+    NoteKey  TEXT (255) PRIMARY KEY
+                        UNIQUE
+                        NOT NULL,
+    NoteText BLOB       NOT NULL
+);
+
 
 INSERT INTO gamestate (
   GamestateId,
@@ -219,6 +229,21 @@ DROP INDEX IF EXISTS ix_element_Tags;
 
 CREATE INDEX IF NOT EXISTS ix_element_Tags ON element (
     Tags
+);
+
+
+-- Index: ix_note_NoteKey
+DROP INDEX IF EXISTS ix_note_NoteKey;
+
+CREATE UNIQUE INDEX ix_note_NoteKey ON note (
+    NoteKey
+);
+
+-- Index: ix_note_NoteText
+DROP INDEX IF EXISTS ix_note_NoteText;
+
+CREATE INDEX ix_note_NoteText ON note (
+    NoteText
 );
 
 
