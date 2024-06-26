@@ -316,7 +316,7 @@
                     break;
 
                 case "attribute":
-                    if (!currentElement.Logic.Equals(""))
+                    if (!currentElement.Logic.Equals("")) // @todo Update this to mirror other logic processing
                     {
                         var attribElem = dbElem.GetElementByKey(currentElement.Logic);
                         try

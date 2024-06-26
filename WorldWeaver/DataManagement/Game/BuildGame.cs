@@ -117,7 +117,7 @@ INSERT INTO gamestate (
   UpdateDate
 )
 VALUES (
-  '{Guid.NewGuid()}',
+  '{Guid.NewGuid().ToString()}',
   0,
   '{Convert.ToInt32(Tools.AppSettingFunctions.GetConfigValue("time", "init_hour"))}',
   '{Convert.ToInt32(Tools.AppSettingFunctions.GetConfigValue("time", "init_minute"))}',
@@ -626,6 +626,17 @@ PRAGMA foreign_keys = on;
             {
                 elementsToInsert.Add(element);
             }
+
+            return success;
+        }
+
+        public bool SaveElement(Classes.Element element)
+        {
+            var gameFile = $"Games/{MainClass.gameDb}.db";
+            var connectionString = $"Data Source={gameFile};Cache=Shared;";
+            elementsToInsert.Clear();
+            elementsToInsert.Add(element);
+            var success = SaveElements(connectionString);
 
             return success;
         }

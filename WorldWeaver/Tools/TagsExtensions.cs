@@ -19,9 +19,14 @@
         public static string AddTag(this string tags, string newTag)
         {
             List<string> tgs = SplitTags(tags);
+            if (tgs.Count == 0 || (tgs.Count == 1 && tgs[0].Equals("")))
+            {
+                return newTag;
+            }
             tgs.Add(newTag);
 
-            return JoinTags(tgs);
+            tags = JoinTags(tgs);
+            return tags;
         }
 
         public static string RemoveTag(this string tags, string tagToRemove)

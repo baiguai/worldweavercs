@@ -59,6 +59,11 @@ namespace WorldWeaver.Parsers.Elements
                 ParseTags_Key(currentElement.Logic);
             }
 
+            if (currentElement.Tags.TagsContain("spawn"))
+            {
+                ParseTags_Spawn(currentElement);
+            }
+
             return;
         }
 
@@ -223,6 +228,17 @@ namespace WorldWeaver.Parsers.Elements
                 MainClass.output.OutputText = Tools.OutputProcessor.ProcessOutputText(outputText, tgtElem);
                 MainClass.output.MatchMade = true;
             }
+        }
+
+        private void ParseTags_Spawn(Classes.Element currentElement)
+        {
+            var spawn = new Parsers.Elements.Spawn();
+            if (!currentElement.Logic.Equals(""))
+            {
+                spawn.SpawnByTemplate(currentElement);
+            }
+            else
+            {}
         }
 
 

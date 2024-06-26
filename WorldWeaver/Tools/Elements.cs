@@ -96,6 +96,39 @@ namespace WorldWeaver.Tools
                 elementProperty = "parentkey";
             }
 
+            switch (elementProperty.ToLower())
+            {
+                case "elementkey":
+                    return "ElementKey";
+
+                case "elementtype":
+                    return "ElementType";
+
+                case "parentkey":
+                    return "ParentKey";
+
+                case "syntax":
+                    return "Syntax";
+
+                case "logic":
+                    return "Logic";
+
+                case "tags":
+                    return "Tags";
+
+                case "active":
+                    return "Active";
+
+                case "name":
+                    return "Name";
+
+                case "repeat":
+                    return "Repeat";
+
+                case "output":
+                    return "Output";
+            }
+
             return elementProperty;
         }
 

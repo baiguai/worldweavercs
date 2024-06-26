@@ -650,7 +650,7 @@ WHERE 1=1
 
         public bool SetElementField(string element_key, string field, string new_value, bool refreshCache = true)
         {
-            var output = false;
+            var success = false;
 
             field = Tools.Elements.FixPropertyName(field);
 
@@ -682,7 +682,7 @@ WHERE 1=1
 
                 connection.Close();
                 connection.Dispose();
-                output = true;
+                success = true;
             }
 
             if (refreshCache)
@@ -690,7 +690,7 @@ WHERE 1=1
                 CacheManager.RefreshCache();
             }
 
-            return output;
+            return success;
         }
 
         public int GetRepeatIndex(string element_key)
@@ -973,6 +973,47 @@ WHERE 1=1
                 connection.Close();
                 connection.Dispose();
                 Tools.CacheManager.RefreshCache();
+            }
+        }
+
+        internal void SpawnTemplateElement(Classes.Element currentElement, string templateKey, string key, string tags)
+        {
+            DataManagement.Game.BuildGame gameDb = new DataManagement.Game.BuildGame();
+            DataManagement.GameLogic.Element elemDb = new DataManagement.GameLogic.Element();
+            if (key.Equals(""))
+            {
+                key = Guid.NewGuid().ToString();
+            }
+
+            var tmpltElement = elemDb.GetElementByKey(templateKey);
+
+            tmpltElement.ParentKey = Tools.Template.GetTemplateParent(currentElement, tmpltElement.ParentKey);
+            tmpltElement.Name = Tools.Template.GetTemplateName(currentElement, tmpltElement.Name);
+            tmpltElement.ElementKey = key;
+            tmpltElement.Tags.AddTag(tags);
+            if (tmpltElement.Tags.Equals(""))
+            {
+                tmpltElement.Tags = tags;
+            }
+
+            gameDb.SaveElement(tmpltElement);
+
+            foreach (var child in tmpltElement.Children)
+            {
+                SpawnChildElement(tmpltElement, child);
+            }
+        }
+
+        internal void SpawnChildElement(Classes.Element parentElement, Classes.Element childElement)
+        {
+            DataManagement.Game.BuildGame gameDb = new DataManagement.Game.BuildGame();
+            childElement.ParentKey = parentElement.ElementKey;
+            childElement.ElementKey = Guid.NewGuid().ToString();
+            gameDb.SaveElement(childElement);
+
+            foreach (var child in childElement.Children)
+            {
+                SpawnChildElement(childElement, child);
             }
         }
     }
