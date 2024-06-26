@@ -25,14 +25,6 @@ You look around.\bYou are in a loud smokey pub.
         }
     }
 
-    {type=look
-        {type=message
-            output={@
-Still looking...
-            }
-        }
-    }
-
 
 
 --------------------------------------------------------------------------------
@@ -53,3 +45,4 @@ You get up and walk into the north room.
         }
     }
 }
+
