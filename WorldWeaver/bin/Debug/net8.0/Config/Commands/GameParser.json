@@ -31,23 +31,23 @@
             "during_game" : "true"
         },
         {
-            "pattern" : "\\b(note add *)\\b",
+            "pattern" : "\\b(noteadd *)\\b",
             "method" : "DoNoteAdd",
             "during_game" : "true"
         },
         {
-            "pattern" : "\\b(note delete *)\\b",
+            "pattern" : "\\b(notedelete *)\\b",
             "method" : "DoNoteDelete",
             "during_game" : "true"
         },
         {
-            "pattern" : "\\b(ls notes *)\\b",
+            "pattern" : "\\b(list notes)\\b",
             "method" : "DoNotesList",
             "during_game" : "true"
         },
         {
-            "pattern" : "\\b(view note *)\\b",
-            "method" : "DoViewNote",
+            "pattern" : "\\b(note *)\\b",
+            "method" : "DoNoteView",
             "during_game" : "true"
         }
     ]

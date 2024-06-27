@@ -68,6 +68,7 @@ namespace WorldWeaver.Parsers
                         MainClass.output.MatchMade = true;
                     }
                 }
+                // @todo Update the methods to NOT hardcode the input, so that the syntax can be changed in the config
                 if (DataManagement.GameLogic.Game.IsGameRunning() && duringGame)
                 {
                     if (!MainClass.output.MatchMade && method.Equals("DoSetPlayerName"))
@@ -88,6 +89,16 @@ namespace WorldWeaver.Parsers
                     if (!MainClass.output.MatchMade && method.Equals("DoNoteDelete"))
                     {
                         DoDeleteNote();
+                    }
+
+                    if (!MainClass.output.MatchMade && method.Equals("DoNotesList"))
+                    {
+                        DoListNotes();
+                    }
+
+                    if (!MainClass.output.MatchMade && method.Equals("DoNoteView"))
+                    {
+                        DoViewNote();
                     }
 
                     if (!MainClass.output.MatchMade && method.Equals("DoTime"))
@@ -135,7 +146,7 @@ namespace WorldWeaver.Parsers
 
         private void DoAddNote()
         {
-            var noteInput = MainClass.userInput.Replace("note add ", "");
+            var noteInput = MainClass.userInput.Replace("noteadd ", "");
             var arr = noteInput.Split('|');
             if (arr.Length != 2)
             {
@@ -152,11 +163,47 @@ namespace WorldWeaver.Parsers
 
         private void DoDeleteNote()
         {
-            var noteInput = MainClass.userInput.Replace("note delete ", "");
+            var noteInput = MainClass.userInput.Replace("notedelete ", "");
 
             var elemDb = new DataManagement.GameLogic.Element();
 
             elemDb.DeleteNote(noteInput);
+        }
+
+        private void DoListNotes()
+        {
+            var elemDb = new DataManagement.GameLogic.Element();
+
+            var notes = elemDb.ListNotes();
+
+            MainClass.output.OutputText = $"Notes:";
+            if (notes.Count > 0)
+            {
+                foreach (var nt in notes)
+                {
+                    MainClass.output.OutputText += $"{Environment.NewLine}{nt}";
+                }
+            }
+            else
+            {
+                MainClass.output.OutputText += $"{Environment.NewLine}There are no saved notes";
+            }
+            MainClass.output.MatchMade = true;
+        }
+
+        private void DoViewNote()
+        {
+            var noteInput = MainClass.userInput.Replace("note ", "");
+
+            var elemDb = new DataManagement.GameLogic.Element();
+
+            var noteTxt = elemDb.ViewNote(noteInput);
+
+            if (!noteTxt.Equals(""))
+            {
+                MainClass.output.OutputText = noteTxt;
+                MainClass.output.MatchMade = true;
+            }
         }
 
         public void DoPlayGame()

@@ -1157,5 +1157,90 @@ WHERE 1=1
 
             return exists;
         }
+
+        internal List<string> ListNotes()
+        {
+            var notesList = new List<string>();
+            string connectionString = Connection.GetConnection();
+
+            var updateQuery = $@"
+SELECT
+    NoteKey
+FROM
+    note
+Order By
+    NoteKey
+;
+            ";
+
+            using (SqliteConnection connection = new SqliteConnection(connectionString))
+            {
+                connection.Open();
+
+                using (SqliteCommand command = new SqliteCommand(updateQuery, connection))
+                {
+                    using (SqliteDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            var lbl = reader.GetString(reader.GetOrdinal("NoteKey"));
+                            if (!lbl.Equals(""))
+                            {
+                                notesList.Add(lbl);
+                            }
+                        }
+                    }
+
+                    command.Dispose();
+                }
+
+                connection.Close();
+                connection.Dispose();
+            }
+
+            return notesList;
+        }
+
+        internal string ViewNote(string noteKey)
+        {
+            var noteTxt = "";
+            string connectionString = Connection.GetConnection();
+
+            var updateQuery = $@"
+SELECT
+    NoteText
+FROM
+    note
+WHERE
+    NoteKey = @notekey
+;
+            ";
+
+            using (SqliteConnection connection = new SqliteConnection(connectionString))
+            {
+                connection.Open();
+
+                using (SqliteCommand command = new SqliteCommand(updateQuery, connection))
+                {
+                    command.Parameters.AddWithValue("@notekey", noteKey);
+
+                    using (SqliteDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            noteTxt = reader.GetString(reader.GetOrdinal("NoteText"));
+                            break;
+                        }
+                    }
+
+                    command.Dispose();
+                }
+
+                connection.Close();
+                connection.Dispose();
+            }
+
+            return noteTxt;
+        }
     }
 }
