@@ -1,4 +1,4 @@
-{key=onious, name=Onious, type=npc, syntax=\b(?:*cleric*|*onious*)\b, parent=local_pub
+{key=onious, name=Onious, type=npc, syntax=\b(?:*cleric*|*onious*)\b, parent=limbo
     {name=Life, type=attribute, output=[rand:15|30], tags=stats|life }
     {name=Armor Rating, type=attribute, output=[rand:4|10], tags=stats|armor }
     {name=Strength, type=attribute, output=[rand:8|18], tags=stats }

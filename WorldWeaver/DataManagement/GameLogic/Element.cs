@@ -1016,5 +1016,231 @@ WHERE 1=1
                 SpawnChildElement(childElement, child);
             }
         }
+
+        internal bool AddNote(string noteKey, string noteText)
+        {
+            var success = false;
+
+            if (NoteKeyExists(noteKey))
+            {
+                MainClass.output.OutputText = "Note key already exists. Note keys must be unique.";
+                MainClass.output.MatchMade = true;
+                return success;
+            }
+
+            string connectionString = Connection.GetConnection();
+
+            var updateQuery = $@"
+INSERT INTO
+    note ( NoteKey, NoteText )
+Values (
+    @noteKey,
+    @noteText
+);
+            ";
+
+            using (SqliteConnection connection = new SqliteConnection(connectionString))
+            {
+                connection.Open();
+
+                using (SqliteCommand command = new SqliteCommand(updateQuery, connection))
+                {
+                    command.Parameters.AddWithValue("@noteKey", noteKey);
+                    command.Parameters.AddWithValue("@noteText", noteText);
+
+                    command.ExecuteNonQuery();
+
+                    command.Dispose();
+                }
+
+                connection.Close();
+                connection.Dispose();
+                success = true;
+            }
+
+            success = true;
+            MainClass.output.OutputText = "Note successfully added.";
+            MainClass.output.MatchMade = true;
+
+            return success;
+        }
+
+        internal bool DeleteNote(string noteKey)
+        {
+            var success = false;
+
+            if (!NoteKeyExists(noteKey))
+            {
+                MainClass.output.OutputText = "Note key doesn't exist. Specify an existing note key.";
+                MainClass.output.MatchMade = true;
+                return success;
+            }
+
+            string connectionString = Connection.GetConnection();
+
+            var updateQuery = $@"
+DELETE FROM
+    note
+WHERE 1=1
+    AND NoteKey = @noteKey
+;
+            ";
+
+            using (SqliteConnection connection = new SqliteConnection(connectionString))
+            {
+                connection.Open();
+
+                using (SqliteCommand command = new SqliteCommand(updateQuery, connection))
+                {
+                    command.Parameters.AddWithValue("@noteKey", noteKey);
+
+                    command.ExecuteNonQuery();
+
+                    command.Dispose();
+                }
+
+                connection.Close();
+                connection.Dispose();
+                success = true;
+            }
+
+            success = true;
+            MainClass.output.OutputText = "Note successfully deleted.";
+            MainClass.output.MatchMade = true;
+
+            return success;
+        }
+
+        internal bool NoteKeyExists(string noteKey)
+        {
+            var exists = false;
+
+            string connectionString = Connection.GetConnection();
+
+            var updateQuery = $@"
+SELECT
+    COUNT(*) AS NoteCount
+FROM
+    note
+WHERE 1=1
+    AND NoteKey = @notekey
+;
+            ";
+
+            using (SqliteConnection connection = new SqliteConnection(connectionString))
+            {
+                connection.Open();
+
+                using (SqliteCommand command = new SqliteCommand(updateQuery, connection))
+                {
+                    command.Parameters.AddWithValue("@notekey", noteKey);
+
+                    using (SqliteDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            var noteCount = reader.GetInt32(reader.GetOrdinal("NoteCount"));
+                            if (noteCount > 0)
+                            {
+                                exists = true;
+                            }
+                            break;
+                        }
+                    }
+
+                    command.Dispose();
+                }
+
+                connection.Close();
+                connection.Dispose();
+            }
+
+            return exists;
+        }
+
+        internal List<string> ListNotes()
+        {
+            var notesList = new List<string>();
+            string connectionString = Connection.GetConnection();
+
+            var updateQuery = $@"
+SELECT
+    NoteKey
+FROM
+    note
+Order By
+    NoteKey
+;
+            ";
+
+            using (SqliteConnection connection = new SqliteConnection(connectionString))
+            {
+                connection.Open();
+
+                using (SqliteCommand command = new SqliteCommand(updateQuery, connection))
+                {
+                    using (SqliteDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            var lbl = reader.GetString(reader.GetOrdinal("NoteKey"));
+                            if (!lbl.Equals(""))
+                            {
+                                notesList.Add(lbl);
+                            }
+                        }
+                    }
+
+                    command.Dispose();
+                }
+
+                connection.Close();
+                connection.Dispose();
+            }
+
+            return notesList;
+        }
+
+        internal string ViewNote(string noteKey)
+        {
+            var noteTxt = "";
+            string connectionString = Connection.GetConnection();
+
+            var updateQuery = $@"
+SELECT
+    NoteText
+FROM
+    note
+WHERE
+    NoteKey = @notekey
+;
+            ";
+
+            using (SqliteConnection connection = new SqliteConnection(connectionString))
+            {
+                connection.Open();
+
+                using (SqliteCommand command = new SqliteCommand(updateQuery, connection))
+                {
+                    command.Parameters.AddWithValue("@notekey", noteKey);
+
+                    using (SqliteDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            noteTxt = reader.GetString(reader.GetOrdinal("NoteText"));
+                            break;
+                        }
+                    }
+
+                    command.Dispose();
+                }
+
+                connection.Close();
+                connection.Dispose();
+            }
+
+            return noteTxt;
+        }
     }
 }

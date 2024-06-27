@@ -1,0 +1,20 @@
+{key=old_oak_inn, type=room, name=The Old Oak Inn
+    {type=enter_message
+        output={@
+You are in The Old Oak Inn.
+        }
+    }
+
+    {type=look
+        output={@
+You look around.
+        }
+    }
+
+
+--------------------------------------------------------------------------------
+
+    {type=input, syntax=\b(look|l)\b
+        {action, logic=look, tags=type }
+    }
+}
