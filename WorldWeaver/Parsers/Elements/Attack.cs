@@ -84,7 +84,7 @@ namespace WorldWeaver.Parsers.Elements
                         var gameLgc = new DataManagement.GameLogic.Element();
                         var enemyLife = Cache.FightCache.Fight.Enemy.AttributeByTag("life");
                         var damageAttrib = playerWeapon.AttributeByTag("damage");
-                        var damage = damageAttrib.Logic.RandomValue();
+                        var damage = damageAttrib.Logic.RandomValue(damageAttrib);
                         var newLifeValue = Convert.ToInt32(enemyLife.Output) - damage;
 
                         if (damageMsg != null)
@@ -139,7 +139,7 @@ namespace WorldWeaver.Parsers.Elements
                         var gameLgc = new DataManagement.GameLogic.Element();
                         var playerLife = Cache.PlayerCache.Player.AttributeByTag("life");
                         var damageAttrib = enemyWeapon.AttributeByTag("damage");
-                        var damage = damageAttrib.Logic.RandomValue();
+                        var damage = damageAttrib.Logic.RandomValue(damageAttrib);
                         var newLifeValue = Convert.ToInt32(playerLife.Output) - damage;
 
                         var damageOutput = Cache.FightCache.Fight.Enemy.ChildByType("hit");

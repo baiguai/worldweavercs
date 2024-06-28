@@ -887,7 +887,7 @@ WHERE 1=1
 
                 foreach (var elem in elems)
                 {
-                    elem.Output = elem.Output.RandomValue().ToString();
+                    elem.Output = elem.Output.RandomValue(elem).ToString();
 
                     var updateQuery = $@"
 UPDATE

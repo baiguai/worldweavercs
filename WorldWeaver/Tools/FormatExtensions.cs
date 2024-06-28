@@ -1,5 +1,6 @@
 ﻿using System;
 using WorldWeaver.Cache;
+using WorldWeaver.Classes;
 using WorldWeaver.Parsers;
 namespace WorldWeaver.Tools
 {
@@ -38,7 +39,7 @@ namespace WorldWeaver.Tools
             return rndVal;
         }
 
-        public static int RandomValue(this string value)
+        public static int RandomValue(this string value, Classes.Element currentElement)
         {
             var rndVal = 0;
 
@@ -54,19 +55,56 @@ namespace WorldWeaver.Tools
             }
             else
             {
-                rndVal = RollDice(value);
+                rndVal = RollDice(value, currentElement);
             }
 
             return rndVal;
         }
 
-        public static int RollDice(this string value)
+        public static int RollDice(this string value, Classes.Element currentElement)
         {
             var rndVal = -1;
+            var rollVals = new List<int>();
+            var totalNumOfDice = 0;
+            var modValue = 0;
 
             if (value.Contains("[roll:"))
             {
                 var tmp = value.Replace("[roll:", "").Replace("]", "").ToLower();
+
+                if (tmp.Contains("+") || tmp.Contains("-"))
+                {
+                    var delimiter = "+";
+                    if (tmp.Contains("-"))
+                    {
+                        delimiter = "-";
+                    }
+                    modValue = ProcessModifier(currentElement, delimiter, tmp);
+                    var arr = tmp.Split(delimiter);
+                    if (arr.Length == 2)
+                    {
+                        tmp = arr[0].Trim();
+                    }
+                }
+
+                if (value.Contains("(") && value.Contains(")"))
+                {
+                    var arr = value.Split(')');
+                    if (arr.Length == 2)
+                    {
+                        value = arr[1].Trim();
+                        arr[0] = arr[0].Replace("(", "");
+                        try
+                        {
+                            totalNumOfDice = Convert.ToInt32(arr[0]);
+                        }
+                        catch (Exception)
+                        {
+                            totalNumOfDice = 0;
+                        }
+                    }
+                }
+
                 var diceSpec = tmp.Split('d');
                 try
                 {
@@ -76,14 +114,30 @@ namespace WorldWeaver.Tools
                         var numOfDice = Convert.ToInt32(diceSpec[0].Trim());
                         var sides = Convert.ToInt32(diceSpec[1].Trim());
                         var total = 0;
+                        var rollNum = numOfDice;
+                        if (totalNumOfDice > numOfDice)
+                        {
+                            rollNum = totalNumOfDice;
+                        }
 
-                        for (int rolls = 0; rolls <= numOfDice; rolls++)
+                        for (int rolls = 0; rolls <= rollNum; rolls++)
                         {
                             var rollVal = rnd.Next(1, sides + 1);
-                            total = total += rollVal;
+                            rollVals.Add(rollVal);
+                        }
+
+                        if (totalNumOfDice > numOfDice)
+                        {
+                            var taken = (from i in rollVals orderby i descending select i).Take(numOfDice);
+                            total = taken.Sum();
+                        }
+                        else {
+                            total = rollVals.Sum();
                         }
 
                         rndVal = total;
+
+                        total = total + modValue;
                     }
                 }
                 catch (Exception)
@@ -93,6 +147,31 @@ namespace WorldWeaver.Tools
             }
 
             return rndVal;
+        }
+
+        private static int ProcessModifier(Element currentElement, string delimiter, string value)
+        {
+            var arr = value.Split(delimiter);
+            var modifier = 0;
+
+            if (arr.Length != 2)
+            {
+                return 0;
+            }
+
+            try{
+                modifier = Convert.ToInt32(Tools.OutputProcessor.ProcessSpecialValues(arr[1].Trim(), currentElement));
+                if (delimiter.Equals("-"))
+                {
+                    modifier = -(modifier);
+                }
+            }
+            catch (Exception)
+            {
+                return 0;
+            }
+
+            return modifier;
         }
     }
 }
