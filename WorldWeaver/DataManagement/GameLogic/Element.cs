@@ -197,7 +197,7 @@ WHERE 1=1
         public Classes.Element GetElementByKey(string element_key)
         {
             var cachedElem = CacheManager.GetCachedElement(element_key);
-            if (cachedElem != null)
+            if (cachedElem != null && !cachedElem.ElementKey.Equals(""))
             {
                 return cachedElem;
             }
@@ -884,10 +884,11 @@ WHERE 1=1
             using (SqliteConnection connection = new SqliteConnection(connectionString))
             {
                 connection.Open();
+                var primContainers = AppSettingFunctions.GetRootArray("Config/PrimaryContainers.json");
 
                 foreach (var elem in elems)
                 {
-                    elem.Output = elem.Output.RandomValue().ToString();
+                    elem.Output = elem.Output.RandomValue(elem).ToString();
 
                     var updateQuery = $@"
 UPDATE
@@ -902,8 +903,12 @@ WHERE 1=1
                     using (SqliteCommand command = new SqliteCommand(updateQuery, connection))
                     {
                         command.ExecuteNonQuery();
-
                         command.Dispose();
+
+                        if (primContainers.Contains(Tools.Elements.GetSelf(elem).ElementType))
+                        {
+                            Tools.CacheManager.RefreshCache();
+                        }
                     }
                 }
 
