@@ -45,12 +45,18 @@ namespace WorldWeaver.Tools
 
             if (value.Contains("[rand:"))
             {
-                var tmp = value.Replace("[rand:", "").Replace("]", "");
+                var tmp = value.Replace("[rand:", "");
+                if (tmp.Length > 0)
+                {
+                    tmp = tmp.Substring(0, tmp.Length-1).ToLower();
+                }
                 var range = tmp.Split('|');
                 if (range.Length == 2)
                 {
+                    var min = Tools.OutputProcessor.ProcessOutputText(range[0], currentElement);
+                    var max = Tools.OutputProcessor.ProcessOutputText(range[1], currentElement);
                     Random rnd = new Random((int)DateTime.Now.Ticks);
-                    rndVal = rnd.Next(Convert.ToInt32(range[0]), Convert.ToInt32(range[1]));
+                    rndVal = rnd.Next(Convert.ToInt32(min), Convert.ToInt32(max));
                 }
             }
             else
@@ -70,7 +76,9 @@ namespace WorldWeaver.Tools
 
             if (value.Contains("[roll:"))
             {
-                var tmp = value.Replace("[roll:", "").Replace("]", "").ToLower();
+                var tmp = value.Replace("[roll:", "");
+                tmp = tmp.Substring(0, tmp.Length-1).ToLower();
+                tmp = Tools.OutputProcessor.ProcessOutputText(tmp, currentElement);
 
                 if (tmp.Contains("+") || tmp.Contains("-"))
                 {
@@ -87,12 +95,12 @@ namespace WorldWeaver.Tools
                     }
                 }
 
-                if (value.Contains("(") && value.Contains(")"))
+                if (tmp.Contains("(") && tmp.Contains(")"))
                 {
-                    var arr = value.Split(')');
+                    var arr = tmp.Split(')');
                     if (arr.Length == 2)
                     {
-                        value = arr[1].Trim();
+                        tmp = arr[1].Trim();
                         arr[0] = arr[0].Replace("(", "");
                         try
                         {
@@ -120,7 +128,7 @@ namespace WorldWeaver.Tools
                             rollNum = totalNumOfDice;
                         }
 
-                        for (int rolls = 0; rolls <= rollNum; rolls++)
+                        for (int rolls = 0; rolls <= rollNum - 1; rolls++)
                         {
                             var rollVal = rnd.Next(1, sides + 1);
                             rollVals.Add(rollVal);
