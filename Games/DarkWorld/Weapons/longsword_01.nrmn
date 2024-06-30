@@ -1,14 +1,14 @@
-{key=long-sword_01, name=Long Sword, type=object, syntax=\b(?:your\s+)?long\s+sword\b, tags=inventory, parent=player
-    {name=Damage, type=attribute, logic=[rand:4|12], tags=damage }
-    {type=attribute, output=a Long Sword, tags=title }
+{object, key=long-sword_01, name=Long Sword, syntax=\b(?:your\s+)?long\s+sword\b, tags=inventory, parent=player
+    {attribute, name=Damage, logic=[rand:4|12], tags=damage }
+    {attribute, output=a Long Sword, tags=title }
 
-    {type=hit, tags=hit
+    {hit, tags=hit
         output={@
 You have attacked [enemy.title]. You have caused [enemy.subject_pronoun] life to be reduced by [damage].
         }
     }
 
-    {type=enter_message
+    {enter_message
         output={@
 You see a long sword.
         }

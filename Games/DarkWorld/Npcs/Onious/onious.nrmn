@@ -1,19 +1,30 @@
-{key=onious, name=Onious, type=npc, syntax=\b(?:*cleric*|*onious*)\b, parent=limbo
-    {name=Life, type=attribute, output=[rand:15|30], tags=stats|life }
-    {name=Armor Rating, type=attribute, output=[rand:4|10], tags=stats|armor }
-    {name=Strength, type=attribute, output=[rand:8|18], tags=stats }
-    {name=Intelligence, type=attribute, output=[rand:8|18], tags=stats }
-    {name=Cunning, type=attribute, output=[rand:8|18], tags=stats }
-    {name=Gold, type=attribute, output=[rand:20|40], tags=stats }
-    {name=Armed Weapon, type=attribute, output=onious_shortsword, tags=armed|stats|name }
-    {type=attribute, output=a cleric woman, tags=npc_label_a|label }
-    {type=attribute, output=the cleric woman, tags=npc_label_the|label }
-    {type=attribute, output=The cleric woman, tags=npc_label_the_proper|label }
+{npc, key=onious, name=Onious, syntax=\b(?:*cleric*|*onious*)\b, parent=limbo
+    {attribute, output=[rand:3|5], tags=stats_dice }
+    {attribute, output=[rand:4|6], tags=money_dice }
 
-    {key=onious_shortsword, name=Short Sword, type=object, syntax=\b(short sword)\b, tags=inventory
-        {name=Damage, type=attribute, logic=[rand:4|8], tags=damage }
+    {attribute, output=[rand:<<[self]((stats_dice))>>|6], tags=life_dice }
+    {attribute, output=[rand:<<[self]((stats_dice))>>|6], tags=armor_dice }
+    {attribute, output=[rand:<<[self]((stats_dice))>>|5], tags=strength_dice }
+    {attribute, output=[rand:<<[self]((stats_dice))>>|5], tags=int_dice }
+    {attribute, output=[rand:<<[self]((stats_dice))>>|5], tags=cunning_dice }
+    {attribute, output=[rand:<<[self]((money_dice))>>|9], tags=gold_dice }
+
+    {attribute, name=Life, output=[roll:(8)<<[self]((life_dice))>>d6], tags=stats|life }
+    {attribute, output=player((life)), tags=maxlife }
+    {attribute, name=Armor Rating, output=[roll:(6)<<[self]((armor_dice))>>d6+3], tags=stats|armor }
+    {attribute, name=Strength, output=[roll:(6)<<[self]((strength_dice))>>d6], tags=stats }
+    {attribute, name=Intelligence, output=[roll:(6)<<[self]((int_dice))>>d6], tags=stats }
+    {attribute, name=Cunning, output=[roll:(6)<<[self]((cunning_dice))>>d6], tags=stats }
+    {attribute, name=Gold, output=[roll:<<[self]((gold_dice))>>d8], tags=stats|gold }
+    {attribute, name=Armed Weapon, output=onious_shortsword, tags=armed|stats|name }
+    {attribute, output=a cleric woman, tags=npc_label_a|label }
+    {attribute, output=the cleric woman, tags=npc_label_the|label }
+    {attribute, output=The cleric woman, tags=npc_label_the_proper|label }
+
+    {object, key=onious_shortsword, name=Short Sword, syntax=\b(short sword)\b, tags=inventory
+        {attribute, name=Damage, logic=[rand:4|8], tags=damage }
     }
 
 
-    {type=travel, logic=[follow|player], active=false, tags=travel }
+    {travel, logic=[follow|player], active=false, tags=travel }
 }

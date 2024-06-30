@@ -198,6 +198,22 @@
         },
         {
             "types" : [
+                "ruleset"
+            ],
+            "elements" : [
+                "rule"
+            ]
+        },
+        {
+            "types" : [
+                "rule"
+            ],
+            "elements" : [
+                "rule"
+            ]
+        },
+        {
+            "types" : [
                 "set"
             ],
             "elements" : [

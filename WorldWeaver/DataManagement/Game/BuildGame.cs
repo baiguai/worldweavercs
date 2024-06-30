@@ -541,9 +541,17 @@ PRAGMA foreign_keys = on;
             dataRow = dataRow.Replace("{", "");
             var arr = dataRow.Split(',');
 
+            // The first field can be the 'type' shorthand
+            // {action, logic="...", tags="..." }
+            if (!arr[0].Contains("="))
+            {
+                element.ElementType = arr[0].Trim();
+            }
+
             foreach (var pair in arr)
             {
                 var pairArr = pair.Trim().Split('=', 2);
+
                 if (pairArr.Length == 2)
                 {
                     switch (pairArr[0].Trim().ToLower())
