@@ -1,16 +1,16 @@
-{key=global01, type=global, parent=root
-    {type=input, syntax=\b(title)\b
+{global, key=global01, parent=root
+    {input, syntax=\b(title)\b
         {type=action, logic=game_title, tags=key }
     }
 
-    {type=input, syntax=\b(stats)\b
+    {input, syntax=\b(stats)\b
         {type=action, logic=player((stats)), tags=list, output=Stats: }
     }
-    {type=input, syntax=\b(inventory|inv)\b
+    {input, syntax=\b(inventory|inv)\b
         {type=action, logic=player((inventory)), tags=list, output=Inventory: }
     }
 
-    {type=input, syntax=\b(arm *)\b
+    {input, syntax=\b(arm *)\b
         {type=set, logic=player_armed(output)[input], tags=arm|[player] }
         {type=message
             output={@
@@ -19,38 +19,38 @@ You are now armed with the [player_armed_weapon].
         }
     }
 
-    {type=action
-        {type=set, logic=cur_heal_round(output)++ }
+    {action
+        {set, logic=cur_heal_round(output)++ }
     }
 
-    {type=action
-        {type=logic
+    {action
+        {logic
             logic={@
                 ?cur_heal_round(output)>=heal_rounds(output)
                 and
                 ?player((life))<player((maxlife))
             }
         }
-        {type=set, logic=player((life))++ }
+        {set, logic=player((life))++ }
     }
 
-    {type=action
-        {type=logic
+    {action
+        {logic
             logic={@
                 ?cur_heal_round(output)>heal_rounds(output)
             }
         }
-        {type=set, logic=cur_heal_round(output)0 }
+        {set, logic=cur_heal_round(output)0 }
     }
 
     {key=day_string
-        {type=action
-            {type=logic
+        {action
+            {logic
                 logic={@
                     ?[isday] = 'false'
                 }
             }
-            {type=message
+            {message
                 output={@
 It is night.
 
@@ -58,13 +58,13 @@ It is night.
             }
         }
 
-        {type=action
-            {type=logic
+        {action
+            {logic
                 logic={@
                     ?[isday] = 'true'
                 }
             }
-            {type=message
+            {message
                 output={@
 It is day.
 

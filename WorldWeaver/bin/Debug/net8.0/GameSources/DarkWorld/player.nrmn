@@ -1,25 +1,25 @@
-﻿{key=player, name=, type=player, parent=old_oak_inn
-    {type=attribute, output=[rand:3|5], tags=stats_dice }
-    {type=attribute, output=[rand:4|6], tags=money_dice }
+﻿{player, key=player, name=, parent=old_oak_inn
+    {attribute, output=[rand:3|5], tags=stats_dice }
+    {attribute, output=[rand:4|6], tags=money_dice }
 
-    {type=attribute, output=[rand:<<[self]((stats_dice))>>|6], tags=life_dice }
-    {type=attribute, output=[rand:<<[self]((stats_dice))>>|6], tags=armor_dice }
-    {type=attribute, output=[rand:<<[self]((stats_dice))>>|5], tags=strength_dice }
-    {type=attribute, output=[rand:<<[self]((stats_dice))>>|5], tags=int_dice }
-    {type=attribute, output=[rand:<<[self]((stats_dice))>>|5], tags=cunning_dice }
-    {type=attribute, output=[rand:<<[self]((money_dice))>>|9], tags=gold_dice }
+    {attribute, output=[rand:<<[self]((stats_dice))>>|6], tags=life_dice }
+    {attribute, output=[rand:<<[self]((stats_dice))>>|6], tags=armor_dice }
+    {attribute, output=[rand:<<[self]((stats_dice))>>|5], tags=strength_dice }
+    {attribute, output=[rand:<<[self]((stats_dice))>>|5], tags=int_dice }
+    {attribute, output=[rand:<<[self]((stats_dice))>>|5], tags=cunning_dice }
+    {attribute, output=[rand:<<[self]((money_dice))>>|9], tags=gold_dice }
 
-    {name=Life, type=attribute, output=[roll:(8)<<[self]((life_dice))>>d6], tags=stats|life }
-    {type=attribute, output=player((life)), tags=maxlife }
-    {name=Armor Rating, type=attribute, output=[roll:<<[self]((armor_dice))>>d6+3], tags=stats|armor }
-    {name=Strength, type=attribute, output=[roll:<<[self]((strength_dice))>>d6], tags=stats }
-    {name=Intelligence, type=attribute, output=[roll:<<[self]((int_dice))>>d6], tags=stats }
-    {name=Cunning, type=attribute, output=[roll:<<[self]((cunning_dice))>>d6], tags=stats }
-    {name=Gold, type=attribute, output=[roll:<<[self]((gold_dice))>>d8], tags=stats|gold }
-    {key=player_armed, name=Armed Weapon, type=attribute, output=long-sword_01, tags=armed|stats|name }
+    {attribute, name=Life, output=[roll:(8)<<[self]((life_dice))>>d6], tags=stats|life }
+    {attribute, output=player((life)), tags=maxlife }
+    {attribute, name=Armor Rating, output=[roll:(6)<<[self]((armor_dice))>>d6+3], tags=stats|armor }
+    {attribute, name=Strength, output=[roll:(6)<<[self]((strength_dice))>>d6], tags=stats }
+    {attribute, name=Intelligence, output=[roll:(6)<<[self]((int_dice))>>d6], tags=stats }
+    {attribute, name=Cunning, output=[roll:(6)<<[self]((cunning_dice))>>d6], tags=stats }
+    {attribute, name=Gold, output=[roll:<<[self]((gold_dice))>>d8], tags=stats|gold }
+    {attribute, key=player_armed, name=Armed Weapon, output=long-sword_01, tags=armed|stats|name }
 
-    {key=heal_rounds, type=attribute, output=5 }
-    {key=cur_heal_round, type=attribute, output=0 }
+    {attribute, key=heal_rounds, output=5 }
+    {attribute, key=cur_heal_round, output=0 }
 
-    {name=Quest, type=attribute, output=, tags=stats|quest }
+    {attribute, name=Quest, output=, tags=stats|quest }
 }
