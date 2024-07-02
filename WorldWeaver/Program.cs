@@ -19,6 +19,8 @@ namespace WorldWeaver
         public static string gameFile = "";
         public static bool adminEnabled = false;
 
+        public static bool handledNavigation = false;
+
         public static void Main(string[] args)
         {
             Console.SetWindowSize(Console.LargestWindowWidth, Console.LargestWindowHeight);
@@ -42,6 +44,7 @@ namespace WorldWeaver
                 macro.MacroSteps.Add(userInput);
             }
 
+            handledNavigation = false;
             RunTheParsers(userInput);
 
             if (output.MatchMade)

@@ -1,4 +1,6 @@
-﻿namespace WorldWeaver.Parsers.Elements
+﻿using WorldWeaver.Tools;
+
+namespace WorldWeaver.Parsers.Elements
 {
     public class Element
     {
@@ -104,39 +106,6 @@
                             }
 
                             MainClass.output.MatchMade = false;
-                            HandleMessage(
-                                currentElement,
-                                child,
-                                procObj.AllowRepeatOptions,
-                                isEntering
-                            );
-                            if (
-                                MainClass.output.MatchMade
-                                || !MainClass.output.OutputText.Equals("")
-                            )
-                            {
-                                handledMessage = true;
-                                MainClass.output.MatchMade = true;
-                            }
-                            break;
-
-                        case "navigation":
-                            if (!currentElement.Active.Equals("true") ||
-                                !child.Active.Equals("true"))
-                            {
-                                continue;
-                            }
-                            if (handledNavigation)
-                            {
-                                continue;
-                            }
-                            if (!currentElement.ElementType.Equals("room"))
-                            {
-                                continue;
-                            }
-
-                            MainClass.output.MatchMade = false;
-                            MainClass.output.OutputText += $"{System.Environment.NewLine}{System.Environment.NewLine}";
                             HandleMessage(
                                 currentElement,
                                 child,

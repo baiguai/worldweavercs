@@ -200,7 +200,57 @@ namespace WorldWeaver.Parsers.Elements
                 }
             }
 
+            varValue = ParseElementChildByTag(currentElement, rawVariable);
+            if (!varValue.Equals(""))
+            {
+                return varValue;
+            }
+
             return varValue;
+        }
+
+        private string ParseElementChildByTag(Classes.Element currentElement, string rawVariable)
+        {
+            var propValue = "";
+            if (rawVariable.EndsWith("))"))
+            {
+                rawVariable = rawVariable += "output";
+            }
+
+            var arr = rawVariable.Split("))");
+            if (arr.Length != 2)
+            {
+                return propValue;
+            }
+
+            var prop = arr[1].Trim();
+            arr = arr[0].Split(")");
+            if (arr.Length != 2)
+            {
+                return propValue;
+            }
+
+            var tag = arr[1].Replace("((", "").Trim();
+            var key = arr[0].Replace("(", "").Trim();
+
+            var elemDb = new DataManagement.GameLogic.Element();
+
+            var curElement = elemDb.GetElementByKey(key);
+            if (curElement.ElementKey.Equals(""))
+            {
+                return "";
+            }
+            var elemChildren = curElement.Children.Where(c => c.Tags.TagsContain(tag));
+            foreach (var ch in elemChildren)
+            {
+                if (!propValue.Equals(""))
+                {
+                    propValue += "|";
+                }
+                propValue += Tools.Elements.GetElementProperty(ch, prop);
+            }
+
+            return propValue;
         }
 
         private string ListElementChildrenByTag(Classes.Element currentElement, string rawVariable)
@@ -409,7 +459,7 @@ namespace WorldWeaver.Parsers.Elements
                 return true;
             }
 
-            if (!operand.Equals("!=") && !operand.Equals("=="))
+            if (!operand.Equals("!=") && !operand.Equals("="))
             {
                 if (variable1.Equals("") || variable2.Equals(""))
                 {
