@@ -207,6 +207,16 @@ namespace WorldWeaver.Parsers.Elements
                             }
                             child.ParseElement(isEntering);
                             break;
+
+                        case "devnote":
+                            if (!MainClass.adminEnabled || !child.ElementType.Equals("devnote"))
+                            {
+                                continue;
+                            }
+
+                            var devnote = new Parsers.Elements.DevNote();
+                            devnote.ParseDevNote(child);
+                            break;
                     }
                 }
             }

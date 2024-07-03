@@ -44,11 +44,6 @@ are upstairs and your particular room is 204.
 
 
     {decline
-        {logic
-            logic={@
-                ?[self]((topic)) = 'offer'
-            }
-        }
         {message
             output={@
 I'm sorry to hear that. Cheers.

@@ -246,7 +246,6 @@ CREATE INDEX ix_note_NoteText ON note (
     NoteText
 );
 
-
 COMMIT TRANSACTION;
 PRAGMA foreign_keys = on;
                 ";

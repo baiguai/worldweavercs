@@ -181,7 +181,8 @@
                 "message",
                 "input",
                 "npc",
-                "navigation"
+                "navigation",
+                "devnote"
             ],
             "repeat_options" : "false"
         },

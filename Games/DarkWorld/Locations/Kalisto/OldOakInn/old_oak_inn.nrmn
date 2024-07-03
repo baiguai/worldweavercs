@@ -6,9 +6,11 @@ The bar is full this night. A bard is belting out an old tune about something ca
 However the crowd is not enjoying it and is booing him and throwing food at him.
 
 <?(onious)((topic)) = 'offer'?>
+<?(onious)parent = 'old_oak_inn'?>
 As you glance around you notice <<(onious)((npc_label_a))>>.
 She is staring at you. After a moment she approaches you and sits down at the bar.
 "You are here for high adventure and wealth?"
+</?>
 </?>
         }
     }
@@ -34,5 +36,13 @@ Set into the south wall is the door that leads out to the main street.
 
     {input, syntax=\b(look|l)\b
         {action, logic=look, tags=type }
+    }
+
+    {input, syntax=\b(go*north*east|north*east|ne|up*stairs|go*up*stairs|up)\b
+        {move, logic=ooi_upstairs, tags=[player]
+            output={@
+You ascend the stairs to the second floor.
+            }
+        }
     }
 }
