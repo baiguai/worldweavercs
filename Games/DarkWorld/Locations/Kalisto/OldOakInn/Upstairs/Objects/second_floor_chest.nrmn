@@ -1,0 +1,16 @@
+{object, name=chest, parent=ooi_upstairs
+    {examine
+        {message
+            output={@
+You examine the chest...
+            }
+        }
+    }
+
+
+--------------------------------------------------------------------------------
+
+    {input, syntax=\b(examine*chest|x*chest)\b
+        {action, logic=examine, tags=type }
+    }
+}

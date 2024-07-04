@@ -21,6 +21,8 @@ namespace WorldWeaver
 
         public static bool handledNavigation = false;
 
+        public static List<string> devNotesSearchResults = new List<string>();
+
         public static void Main(string[] args)
         {
             Console.SetWindowSize(Console.LargestWindowWidth, Console.LargestWindowHeight);
