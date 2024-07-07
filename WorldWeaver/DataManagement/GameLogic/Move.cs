@@ -6,7 +6,7 @@ namespace WorldWeaver.DataManagement.GameLogic
 {
     public class Move
     {
-        internal void MoveElement(string outputText, string subject, string newParentKey)
+        internal void MoveElement(Classes.Element currentElement, string outputText, string subject, string newParentKey)
         {
             var tagList = subject.Split('|');
             var elemDb = new DataManagement.GameLogic.Element();
@@ -22,6 +22,11 @@ namespace WorldWeaver.DataManagement.GameLogic
                 if (key.Equals("[player]"))
                 {
                     key = Cache.PlayerCache.Player.ElementKey;
+                }
+
+                if (key.Equals("[self]"))
+                {
+                    key = currentElement.ElementKey;
                 }
 
                 success = elemDb.SetElementParentKey(key, newParentKey);
@@ -49,6 +54,9 @@ namespace WorldWeaver.DataManagement.GameLogic
             {
                 case "[room]":
                     return Cache.RoomCache.Room.ElementKey;
+
+                case "[player]":
+                    return Cache.PlayerCache.Player.ElementKey;
             }
 
             return newParentKey;

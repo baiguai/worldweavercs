@@ -77,7 +77,7 @@ namespace WorldWeaver.Parsers.Elements
             if (type.Equals("enter_message"))
             {
                 var moveDb = new DataManagement.GameLogic.Move();
-                moveDb.MoveElement("", Cache.PlayerCache.Player.ElementKey, Cache.PlayerCache.Player.ParentKey);
+                moveDb.MoveElement(currentElement, "", Cache.PlayerCache.Player.ElementKey, Cache.PlayerCache.Player.ParentKey);
                 return;
             }
 

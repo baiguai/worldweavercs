@@ -12,7 +12,7 @@ namespace WorldWeaver.Parsers.Elements
                 currentElement.Logic = Tools.Elements.GetSelf(currentElement).ElementKey;
             }
 
-            moveDb.MoveElement(currentElement.Output, currentElement.Tags, currentElement.Logic);
+            moveDb.MoveElement(currentElement, currentElement.Output, currentElement.Tags, currentElement.Logic);
 
             return;
         }

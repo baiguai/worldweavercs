@@ -149,10 +149,10 @@ namespace WorldWeaver.Parsers.Elements
                             {
                                 continue;
                             }
-                            if (MainClass.output.MatchMade)
-                            {
-                                continue;
-                            }
+                            // if (MainClass.output.MatchMade)
+                            // {
+                            //     continue;
+                            // }
 
                             if (handledMove)
                             {
@@ -198,6 +198,20 @@ namespace WorldWeaver.Parsers.Elements
                                 continue;
                             }
                             child.ParseElement(isEntering);
+
+                            if (MainClass.output.OutputText.Equals(""))
+                            {
+                                var elemDb = new DataManagement.GameLogic.Element();
+                                var objChildren = elemDb.GetElementByKey(child.ElementKey);
+                                foreach (var c in objChildren.Children)
+                                {
+                                    c.ParseElement(isEntering);
+                                    if (!MainClass.output.OutputText.Equals(""))
+                                    {
+                                        break;
+                                    }
+                                }
+                            }
                             break;
 
                         case "npc":
