@@ -32,6 +32,10 @@
         public static string RemoveTag(this string tags, string tagToRemove)
         {
             List<string> tgs = SplitTags(tags);
+            if (tgs.Count == 0)
+            {
+                return "";
+            }
             tgs.Remove(tagToRemove);
 
             return JoinTags(tgs);

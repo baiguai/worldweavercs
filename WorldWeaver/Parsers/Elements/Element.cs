@@ -205,10 +205,13 @@ namespace WorldWeaver.Parsers.Elements
                                 var objChildren = elemDb.GetElementByKey(child.ElementKey);
                                 foreach (var c in objChildren.Children)
                                 {
-                                    c.ParseElement(isEntering);
-                                    if (!MainClass.output.OutputText.Equals(""))
+                                    if (c.ElementType.Equals("object"))
                                     {
-                                        break;
+                                        c.ParseElement(isEntering);
+                                        if (!MainClass.output.OutputText.Equals(""))
+                                        {
+                                            break;
+                                        }
                                     }
                                 }
                             }

@@ -27,7 +27,7 @@ You open the chest.
 
 --------------------------------------------------------------------------------
 
-    {input, syntax=\b(examine chest|examine the chest|x chest|x the chest)\b
+    {input, syntax=(examine(.*)chest|x(.*)chest)
         {action, logic=examine, tags=type }
     }
 

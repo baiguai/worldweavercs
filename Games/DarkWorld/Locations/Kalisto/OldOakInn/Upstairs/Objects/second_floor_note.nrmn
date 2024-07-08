@@ -10,6 +10,27 @@ It says simply: "Death Map"
         }
     }
 
+    {look
+        {message
+            output={@
+You see a note.
+            }
+        }
+        {logic
+            logic={@
+                ?[self]parent = [room]
+            }
+        }
+    }
+
+    {examine
+        {messsge
+            output={@
+You examine the note.
+            }
+        }
+    }
+
     {take
         {message
             output={@
@@ -29,15 +50,19 @@ You drop the note.
 
 --------------------------------------------------------------------------------
 
+    {input, syntax=(examine(.*)note|x(.*)note)
+        {action, logic=examine, tags=type }
+    }
+
     {input, syntax=\b(take note|take the note)\b
         {move, logic=[player], tags=[self] }
-        {set, logic=[player]((stats)), tags=[self]key }
-        {set, logic=[self]tags, output=inventory }
+        {set, logic=[self]tags, output=+inventory }
         {action, logic=take, tags=type }
     }
 
     {input, syntax=\b(drop note|drop the note)\b
-        {move, logic=[self], tags=[room] }
+        {move, logic=[room], tags=[self] }
+        {set, logic=[self]tags, output=-inventory }
         {action, logic=drop, tags=type }
     }
 }

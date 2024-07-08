@@ -13,21 +13,12 @@ namespace WorldWeaver.DataManagement.GameLogic
             var elem = new Parsers.Elements.Element();
             var success = false;
 
-            newParentKey = HandleSpecialLocations(newParentKey);
-
             foreach (var tag in tagList)
             {
                 var key = tag;
 
-                if (key.Equals("[player]"))
-                {
-                    key = Cache.PlayerCache.Player.ElementKey;
-                }
-
-                if (key.Equals("[self]"))
-                {
-                    key = currentElement.ElementKey;
-                }
+                key = Tools.Elements.GetRelativeElementKey(currentElement, key, key);
+                newParentKey = Tools.Elements.GetRelativeElementKey(currentElement, newParentKey, newParentKey);
 
                 success = elemDb.SetElementParentKey(key, newParentKey);
 
