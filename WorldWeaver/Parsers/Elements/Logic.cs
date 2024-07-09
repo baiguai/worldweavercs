@@ -368,7 +368,7 @@ namespace WorldWeaver.Parsers.Elements
 
         private string ParseRelativeElement(Classes.Element currentElement, string rawVariable)
         {
-            if (rawVariable.EndsWith(")"))
+            if (rawVariable.EndsWith("]"))
             {
                 rawVariable = rawVariable += "output";
             }
@@ -384,13 +384,13 @@ namespace WorldWeaver.Parsers.Elements
                 }
             }
 
-            arr = rawVariable.Split(")");
+            arr = rawVariable.Split("]");
             if (arr.Length != 2)
             {
                 return "";
             }
 
-            var relCode = arr[0].Trim().Replace("(", "");
+            var relCode = $"{arr[0].Trim()}]";
             var prop = arr[1].Trim();
 
             var elemDb = new DataManagement.GameLogic.Element();

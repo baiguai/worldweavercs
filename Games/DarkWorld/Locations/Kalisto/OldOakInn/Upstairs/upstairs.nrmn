@@ -1,4 +1,6 @@
 {room, key=ooi_upstairs, name=Old Oak Inn Second Floor
+    {attribute, output=true, tags=notehidden }
+
     {enter_message
         output={@
 You are in the hallway on the second floor of The Old Oak Inn.

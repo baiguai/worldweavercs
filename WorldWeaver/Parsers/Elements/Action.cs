@@ -89,16 +89,13 @@ namespace WorldWeaver.Parsers.Elements
 
             foreach (var elem in targets)
             {
-                if (elem.ParentKey == self.ElementKey)
+                var selfProcItems = Tools.ProcFunctions.GetProcessStepsByType(elem.ElementType);
+                foreach (var proc in selfProcItems)
                 {
-                    var selfProcItems = Tools.ProcFunctions.GetProcessStepsByType(elem.ElementType);
-                    foreach (var proc in selfProcItems)
+                    elemParser.ParseElement(elem, proc);
+                    if (self.ElementType.Equals("global") && MainClass.output.MatchMade)
                     {
-                        elemParser.ParseElement(elem, proc);
-                        if (self.ElementType.Equals("global") && MainClass.output.MatchMade)
-                        {
-                            return;
-                        }
+                        return;
                     }
                 }
             }
@@ -121,7 +118,7 @@ namespace WorldWeaver.Parsers.Elements
                 }
             }
 
-            if (MainClass.output.OutputText.Equals(""))
+            if (MainClass.output.OutputText.Equals("") && !currentElement.ElementKey.Equals(Cache.RoomCache.Room.ElementKey))
             {
                 ParseTags_Type(Cache.RoomCache.Room, type);
             }

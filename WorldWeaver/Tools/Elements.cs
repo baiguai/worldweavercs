@@ -97,6 +97,14 @@ namespace WorldWeaver.Tools
             {
                 elementProperty = "parentkey";
             }
+            if (elementProperty.Equals("type"))
+            {
+                elementProperty = "elementtype";
+            }
+            if (elementProperty.Equals("key"))
+            {
+                elementProperty = "elementkey";
+            }
 
             switch (elementProperty.ToLower())
             {
