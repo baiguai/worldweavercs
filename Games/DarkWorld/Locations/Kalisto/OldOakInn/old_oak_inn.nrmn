@@ -35,7 +35,7 @@ Set into the south wall is the door that leads out to the main street.
 --------------------------------------------------------------------------------
 
     {input, syntax=\b(look|l)\b
-        {action, logic=look, tags=type }
+        {action, logic=look, tags=type|room }
     }
 
     {input, syntax=\b(go*north*east|north*east|ne|up*stairs|go*up*stairs|up)\b

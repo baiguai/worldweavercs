@@ -59,12 +59,12 @@ I'm sorry to hear that. Cheers.
 --------------------------------------------------------------------------------
 
     {input, syntax=\b(yes*|yep *|sure *)\b
-        {action, logic=accept, tags=type }
+        {action, logic=accept, tags=type|self }
         {set, logic=[self]((topic)), output=inform }
     }
 
     {input, syntax=\b(yes*|yep *|sure *|i accept *|accept *)\b
-        {action, logic=details, tags=type }
+        {action, logic=details, tags=type|self }
         {set, logic=[self]((topic)), output=kalisto }
         {set, logic=[self]((label)), output=Onious }
         {set, logic=[player]((gold)), output=+=100 }
@@ -72,6 +72,6 @@ I'm sorry to hear that. Cheers.
     }
 
     {input, syntax=\b(no*|nope *)\b
-        {action, logic=decline, tags=type }
+        {action, logic=decline, tags=type|self }
     }
 }

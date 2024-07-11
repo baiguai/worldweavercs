@@ -33,11 +33,12 @@ You open the chest.
 --------------------------------------------------------------------------------
 
     {input, syntax=(examine(.*)chest|x(.*)chest)
-        {action, logic=examinechest, tags=type }
+        {action, logic=examinechest, tags=type|self }
     }
 
     {input, syntax=\b(open chest|open the chest|look in*chest|in chest)\b
         {set, logic=[self]((isopen)), output=true }
-        {action, logic=open, tags=type }
+        {set, logic=[room]((notehidden)), output=false }
+        {action, logic=open, tags=type|self }
     }
 }

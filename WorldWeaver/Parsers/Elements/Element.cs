@@ -10,6 +10,10 @@ namespace WorldWeaver.Parsers.Elements
             bool isEntering = false
         )
         {
+            if (currentElement.ElementType.Equals("attribute"))
+            {
+                return;
+            }
             var input = new Parsers.Elements.Input();
             var msg = new Parsers.Elements.Message();
             var index = -1;
@@ -25,7 +29,7 @@ namespace WorldWeaver.Parsers.Elements
                 handledNavigation = false;
                 MainClass.output.FailedLogic = false;
 
-                foreach (var child in currentElement.Children)
+                foreach (var child in currentElement.Children.Where(c => c.ElementType != "attribute"))
                 {
                     if (currentElement.ElementType.Equals("room") && !Cache.RoomCache.Room.ElementKey.Equals(currentElement.ElementKey))
                     {

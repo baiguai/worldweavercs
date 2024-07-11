@@ -31,7 +31,7 @@ You see a note.
     }
 
     {examinenote
-        {messsge
+        {message
             output={@
 You examine the note.
             }
@@ -63,19 +63,19 @@ You drop the note.
 --------------------------------------------------------------------------------
 
     {input, syntax=(examine(.*)note|x(.*)note)
-        {action, logic=examinenote, tags=type }
+        {action, logic=examinenote, tags=type|self }
     }
 
     {input, syntax=\b(take note|take the note)\b
         {move, logic=[player], tags=[self] }
         {set, logic=[self]tags, output=+inventory }
         {set, logic=[self]((moved)), output=true }
-        {action, logic=take, tags=type }
+        {action, logic=take, tags=type|self }
     }
 
     {input, syntax=\b(drop note|drop the note)\b
         {move, logic=[room], tags=[self] }
         {set, logic=[self]tags, output=-inventory }
-        {action, logic=drop, tags=type }
+        {action, logic=drop, tags=type|self }
     }
 }

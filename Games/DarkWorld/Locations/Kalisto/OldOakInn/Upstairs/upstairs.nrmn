@@ -22,7 +22,7 @@ There are numbered rooms on either side of it and a small chest with a glowing o
 --------------------------------------------------------------------------------
 
     {input, syntax=\b(look|l)\b
-        {action, logic=look, tags=type }
+        {action, logic=look, tags=type|room }
     }
 
     {input, syntax=\b(go*down*stairs|down*stairs|down)\b

@@ -51,7 +51,7 @@ namespace WorldWeaver.Parsers.Elements
 
             if (currentElement.Tags.TagsContain("type"))
             {
-                ParseTags_Type(currentElement, currentElement.Logic);
+                ParseTags_Type(currentElement, currentElement.Logic, currentElement.Tags);
             }
 
             if (currentElement.Tags.TagsContain("key"))
@@ -67,8 +67,10 @@ namespace WorldWeaver.Parsers.Elements
             return;
         }
 
-        private void ParseTags_Type(Classes.Element currentElement, string type)
+        private void ParseTags_Type(Classes.Element currentElement, string type, string tags)
         {
+            var level = GetTypeLevel(tags);
+
             if (Cache.RoomCache.Room == null || MainClass.output.MatchMade)
             {
                 return;
@@ -81,10 +83,35 @@ namespace WorldWeaver.Parsers.Elements
                 return;
             }
 
-            var self = Tools.Elements.GetSelf(currentElement);
-            var targets = Tools.Elements.GetElementsByType(self, type);
-            var elemDb = new DataManagement.GameLogic.Element();
+            var currOutput = MainClass.output.OutputText;
+            ParsePlayer_Type(type);
+            if (!MainClass.output.OutputText.Equals(currOutput))
+            {
+                return;
+            }
 
+            switch (level)
+            {
+                case "self":
+                    ParseSelf_Type(currentElement, type);
+                    return;
+
+                case "room":
+                    ParseRoom_Type(currentElement, type);
+                    return;
+
+                case "global":
+                    ParseGlobal_Type(currentElement, type);
+                    return;
+            }
+            
+            return;
+        }
+
+        private void ParsePlayer_Type(string type)
+        {
+            var selfElem = Cache.PlayerCache.Player;
+            var targets = Tools.Elements.GetElementsByType(selfElem, type);
             var elemParser = new Parsers.Elements.Element();
 
             foreach (var elem in targets)
@@ -93,37 +120,87 @@ namespace WorldWeaver.Parsers.Elements
                 foreach (var proc in selfProcItems)
                 {
                     elemParser.ParseElement(elem, proc);
-                    if (self.ElementType.Equals("global") && MainClass.output.MatchMade)
-                    {
-                        return;
-                    }
                 }
             }
+        }
+
+        private void ParseSelf_Type(Classes.Element currentElement, string type)
+        {
+            var selfElem = Tools.Elements.GetSelf(currentElement);
+            var targets = Tools.Elements.GetElementsByType(selfElem, type);
+            var elemParser = new Parsers.Elements.Element();
 
             foreach (var elem in targets)
             {
-                if (elem.ParentKey != self.ElementKey)
+                var selfProcItems = Tools.ProcFunctions.GetProcessStepsByType(elem.ElementType);
+                foreach (var proc in selfProcItems)
                 {
-                    if ((!elem.Tags.TagsContain("inventory") &&
-                        !Tools.Elements.GetSelf(elem).Tags.TagsContain("inventory")) ||
-                        elem.Tags.TagsContain("inspect"))
-                    {
-                        var parent = elemDb.GetElementByKey(elem.ParentKey);
-                        var procItems = Tools.ProcFunctions.GetProcessStepsByType(elem.ElementType);
-                        foreach (var proc in procItems)
-                        {
-                            elemParser.ParseElement(elem, proc);
-                        }
-                    }
+                    elemParser.ParseElement(elem, proc);
+                }
+            }
+        }
+
+        private void ParseRoom_Type(Classes.Element currentElement, string type)
+        {
+            var roomElem = Cache.RoomCache.Room;
+            var targets = Tools.Elements.GetElementsByType(roomElem, type);
+            var elemParser = new Parsers.Elements.Element();
+
+            foreach (var elem in targets)
+            {
+                var selfProcItems = Tools.ProcFunctions.GetProcessStepsByType(elem.ElementType);
+                foreach (var proc in selfProcItems)
+                {
+                    elemParser.ParseElement(elem, proc);
                 }
             }
 
-            if (MainClass.output.OutputText.Equals("") && !currentElement.ElementKey.Equals(Cache.RoomCache.Room.ElementKey))
+            foreach (var child in currentElement.Children)
             {
-                ParseTags_Type(Cache.RoomCache.Room, type);
+                ParseSelf_Type(child, type);
+            }
+        }
+
+        private void ParseGlobal_Type(Classes.Element currentElement, string type)
+        {
+            var elemDb = new DataManagement.GameLogic.Element();
+            var globalElems = elemDb.GetElementsByType("global");
+
+            foreach (var globalElem in globalElems)
+            {
+                var targets = Tools.Elements.GetElementsByType(globalElem, type);
+                var elemParser = new Parsers.Elements.Element();
+
+                foreach (var elem in targets)
+                {
+                    var selfProcItems = Tools.ProcFunctions.GetProcessStepsByType(elem.ElementType);
+                    foreach (var proc in selfProcItems)
+                    {
+                        elemParser.ParseElement(elem, proc);
+                    }
+                }
+
+                foreach (var child in currentElement.Children)
+                {
+                    ParseRoom_Type(child, type);
+                }
+            }
+        }
+
+        private object GetTypeLevel(string tags)
+        {
+            var level = "room";
+
+            if (tags.TagsContain("global"))
+            {
+                return "global";
+            }
+            if (tags.TagsContain("self"))
+            {
+                return "self";
             }
 
-            return;
+            return level;
         }
 
         private void ParseTags_List(Classes.Element currentElement)
