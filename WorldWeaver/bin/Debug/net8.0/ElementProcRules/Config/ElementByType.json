@@ -40,9 +40,9 @@
                 "enter_message"
             ],
             "elements" : [
+                "logic",
                 "message",
-                "action",
-                "logic"
+                "action"
             ],
             "repeat_options" : "true"
         },
@@ -108,7 +108,8 @@
                 "logic",
                 "action",
                 "message",
-                "set"
+                "set",
+                "navigation"
             ],
             "repeat_options" : "true"
         },
@@ -180,7 +181,8 @@
                 "message",
                 "input",
                 "npc",
-                "navigation"
+                "navigation",
+                "devnote"
             ],
             "repeat_options" : "false"
         },

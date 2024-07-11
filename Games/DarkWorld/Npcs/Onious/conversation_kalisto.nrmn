@@ -1,14 +1,14 @@
-{type=link, parent=onious
-    {type=attribute, output=offer, tags=topic }
+{link, parent=onious
+    {attribute, output=offer, tags=topic }
 
 
-    {type=accept
-        {type=logic
+    {accept
+        {logic
             logic={@
                 ?[self]((topic)) = 'offer'
             }
         }
-        {type=message
+        {message
             output={@
 Oh great!
 My superiors have been hearing rumors of undead activity throughout the land.
@@ -17,17 +17,17 @@ However an adventurer like yourself could prove very useful to us.
 Do you accept our offer? If so, I can provide you with further details.
             }
         }
-        {type=set, logic=[player]((quest)), output=Investigate the Undead }
+        {set, logic=[player]((quest)), output=Investigate the Undead }
     }
 
 
-    {type=details
-        {type=logic
+    {details
+        {logic
             logic={@
                 ?[self]((topic)) = 'inform'
             }
         }
-        {type=message
+        {message
             output={@
 She beckons you to her table. You follow her and sit down. A tall hooded man with a long staff
 silently approaches and sits next to <<[self]((npc_label_the))>>.
@@ -43,40 +43,35 @@ are upstairs and your particular room is 204.
     }
 
 
-    {type=decline
-        {type=logic
-            logic={@
-                ?[self]((topic)) = 'offer'
-            }
-        }
-        {type=message
+    {decline
+        {message
             output={@
 I'm sorry to hear that. Cheers.
 
 <<[self]((npc_label_the_proper))>> exits the pub.
             }
         }
-        {type=set, logic=[self]parent, output=limbo }
+        {set, logic=[self]parent, output=limbo }
     }
 
 
 
 --------------------------------------------------------------------------------
 
-    {type=input, syntax=\b(yes *|yep *|sure *)\b
-        {type=action, logic=accept, tags=type }
-        {type=set, logic=[self]((topic)), output=inform }
+    {input, syntax=\b(yes*|yep *|sure *)\b
+        {action, logic=accept, tags=type|self }
+        {set, logic=[self]((topic)), output=inform }
     }
 
-    {type=input, syntax=\b(yes *|yep *|sure *|i accept *|accept *)\b
-        {type=action, logic=details, tags=type }
-        {type=set, logic=[self]((topic)), output=kalisto }
-        {type=set, logic=[self]((label)), output=Onious }
-        {type=set, logic=[player]((gold)), output=+=100 }
-        {type=set, logic=[self]((travel))active, output=true }
+    {input, syntax=\b(yes*|yep *|sure *|i accept *|accept *)\b
+        {action, logic=details, tags=type|self }
+        {set, logic=[self]((topic)), output=kalisto }
+        {set, logic=[self]((label)), output=Onious }
+        {set, logic=[player]((gold)), output=+=100 }
+        {set, logic=[self]((travel))active, output=true }
     }
 
-    {type=input, syntax=\b(no *|nope *)\b
-        {type=action, logic=decline, tags=type }
+    {input, syntax=\b(no*|nope *)\b
+        {action, logic=decline, tags=type|self }
     }
 }

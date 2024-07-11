@@ -1,0 +1,44 @@
+{object, key=ooi_second_floor_chest, name=chest, parent=ooi_upstairs
+    {attribute, output=false, tags=isopen }
+
+    {examinechest
+        {message
+            output={@
+You examine the chest.
+It is old and the wood is quite distressed.
+<?[self]((isopen)) = 'false'?>
+It doesn't appear to be locked.
+</?>
+<?[self]((isopen)) = 'true'?>
+The chest is open.
+</?>
+            }
+        }
+    }
+
+    {open
+        {message
+            output={@
+You open the chest.
+            }
+        }
+        {logic
+            logic={@
+                ?[self]((isopen)) = 'false'
+            }
+        }
+    }
+
+
+--------------------------------------------------------------------------------
+
+    {input, syntax=(examine(.*)chest|x(.*)chest)
+        {action, logic=examinechest, tags=type|self }
+    }
+
+    {input, syntax=\b(open chest|open the chest|look in*chest|in chest)\b
+        {set, logic=[self]((isopen)), output=true }
+        {set, logic=[room]((notehidden)), output=false }
+        {action, logic=open, tags=type|self }
+    }
+}

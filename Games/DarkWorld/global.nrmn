@@ -1,18 +1,18 @@
 {global, key=global01, parent=root
     {input, syntax=\b(title)\b
-        {type=action, logic=game_title, tags=key }
+        {action, logic=game_title, tags=key }
     }
 
     {input, syntax=\b(stats)\b
-        {type=action, logic=player((stats)), tags=list, output=Stats: }
+        {action, logic=player((stats)), tags=list, output=Stats: }
     }
     {input, syntax=\b(inventory|inv)\b
-        {type=action, logic=player((inventory)), tags=list, output=Inventory: }
+        {action, logic=player((inventory)), tags=list, output=Inventory: }
     }
 
     {input, syntax=\b(arm *)\b
-        {type=set, logic=player_armed(output)[input], tags=arm|[player] }
-        {type=message
+        {set, logic=player_armed(output)[input], tags=arm|[player] }
+        {message
             output={@
 You are now armed with the [player_armed_weapon].
             }

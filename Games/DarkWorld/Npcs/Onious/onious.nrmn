@@ -1,4 +1,4 @@
-{npc, key=onious, name=Onious, syntax=\b(?:*cleric*|*onious*)\b, parent=limbo
+{npc, key=onious, name=Onious, syntax=\b(?:*cleric*|*onious*)\b, parent=old_oak_inn
     {attribute, output=[rand:3|5], tags=stats_dice }
     {attribute, output=[rand:4|6], tags=money_dice }
 

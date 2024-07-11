@@ -1,0 +1,42 @@
+{room, key=ooi_upstairs, name=Old Oak Inn Second Floor
+    {attribute, output=true, tags=notehidden }
+
+    {enter_message
+        output={@
+You are in the hallway on the second floor of The Old Oak Inn.
+You see numbered rooms on either side of the hall.
+At the end of the hall is a small chest with an oil lamp set on top of it, filling the hallway with a dim warm glow.
+        }
+    }
+
+    {look
+        {message
+            output={@
+You are standing in the hallway on the second floor of the inn.
+There are numbered rooms on either side of it and a small chest with a glowing oil lamp set on top of it.
+            }
+        }
+    }
+
+
+--------------------------------------------------------------------------------
+
+    {input, syntax=\b(look|l)\b
+        {action, logic=look, tags=type|room }
+    }
+
+    {input, syntax=\b(go*down*stairs|down*stairs|down)\b
+        {move, logic=old_oak_inn, tags=[player]
+            output={@
+You descend the stairs to the main floor.
+            }
+        }
+    }
+
+
+    {devnote, logic=n, tags=todo
+        output={@
+Define the chest and room actions.
+        }
+    }
+}

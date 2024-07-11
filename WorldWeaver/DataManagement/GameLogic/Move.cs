@@ -6,23 +6,19 @@ namespace WorldWeaver.DataManagement.GameLogic
 {
     public class Move
     {
-        internal void MoveElement(string outputText, string subject, string newParentKey)
+        internal void MoveElement(Classes.Element currentElement, string outputText, string subject, string newParentKey)
         {
             var tagList = subject.Split('|');
             var elemDb = new DataManagement.GameLogic.Element();
             var elem = new Parsers.Elements.Element();
             var success = false;
 
-            newParentKey = HandleSpecialLocations(newParentKey);
-
             foreach (var tag in tagList)
             {
                 var key = tag;
 
-                if (key.Equals("[player]"))
-                {
-                    key = Cache.PlayerCache.Player.ElementKey;
-                }
+                key = Tools.Elements.GetRelativeElementKey(currentElement, key, key);
+                newParentKey = Tools.Elements.GetRelativeElementKey(currentElement, newParentKey, newParentKey);
 
                 success = elemDb.SetElementParentKey(key, newParentKey);
 
@@ -49,6 +45,9 @@ namespace WorldWeaver.DataManagement.GameLogic
             {
                 case "[room]":
                     return Cache.RoomCache.Room.ElementKey;
+
+                case "[player]":
+                    return Cache.PlayerCache.Player.ElementKey;
             }
 
             return newParentKey;

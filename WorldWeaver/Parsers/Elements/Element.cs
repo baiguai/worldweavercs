@@ -1,4 +1,6 @@
-﻿namespace WorldWeaver.Parsers.Elements
+﻿using WorldWeaver.Tools;
+
+namespace WorldWeaver.Parsers.Elements
 {
     public class Element
     {
@@ -8,6 +10,10 @@
             bool isEntering = false
         )
         {
+            if (currentElement.ElementType.Equals("attribute"))
+            {
+                return;
+            }
             var input = new Parsers.Elements.Input();
             var msg = new Parsers.Elements.Message();
             var index = -1;
@@ -23,7 +29,7 @@
                 handledNavigation = false;
                 MainClass.output.FailedLogic = false;
 
-                foreach (var child in currentElement.Children)
+                foreach (var child in currentElement.Children.Where(c => c.ElementType != "attribute"))
                 {
                     if (currentElement.ElementType.Equals("room") && !Cache.RoomCache.Room.ElementKey.Equals(currentElement.ElementKey))
                     {
@@ -120,39 +126,6 @@
                             }
                             break;
 
-                        case "navigation":
-                            if (!currentElement.Active.Equals("true") ||
-                                !child.Active.Equals("true"))
-                            {
-                                continue;
-                            }
-                            if (handledNavigation)
-                            {
-                                continue;
-                            }
-                            if (!currentElement.ElementType.Equals("room"))
-                            {
-                                continue;
-                            }
-
-                            MainClass.output.MatchMade = false;
-                            MainClass.output.OutputText += $"{System.Environment.NewLine}{System.Environment.NewLine}";
-                            HandleMessage(
-                                currentElement,
-                                child,
-                                procObj.AllowRepeatOptions,
-                                isEntering
-                            );
-                            if (
-                                MainClass.output.MatchMade
-                                || !MainClass.output.OutputText.Equals("")
-                            )
-                            {
-                                handledMessage = true;
-                                MainClass.output.MatchMade = true;
-                            }
-                            break;
-
                         case "action":
                             if (!currentElement.Active.Equals("true"))
                             {
@@ -180,10 +153,10 @@
                             {
                                 continue;
                             }
-                            if (MainClass.output.MatchMade)
-                            {
-                                continue;
-                            }
+                            // if (MainClass.output.MatchMade)
+                            // {
+                            //     continue;
+                            // }
 
                             if (handledMove)
                             {
@@ -229,6 +202,23 @@
                                 continue;
                             }
                             child.ParseElement(isEntering);
+
+                            if (MainClass.output.OutputText.Equals(""))
+                            {
+                                var elemDb = new DataManagement.GameLogic.Element();
+                                var objChildren = elemDb.GetElementByKey(child.ElementKey);
+                                foreach (var c in objChildren.Children)
+                                {
+                                    if (c.ElementType.Equals("object"))
+                                    {
+                                        c.ParseElement(isEntering);
+                                        if (!MainClass.output.OutputText.Equals(""))
+                                        {
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
                             break;
 
                         case "npc":
@@ -237,6 +227,16 @@
                                 continue;
                             }
                             child.ParseElement(isEntering);
+                            break;
+
+                        case "devnote":
+                            if (!MainClass.adminEnabled || !child.ElementType.Equals("devnote"))
+                            {
+                                continue;
+                            }
+
+                            var devnote = new Parsers.Elements.DevNote();
+                            devnote.ParseDevNote(child);
                             break;
                     }
                 }

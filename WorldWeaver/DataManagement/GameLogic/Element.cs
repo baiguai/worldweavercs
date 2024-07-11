@@ -654,6 +654,11 @@ WHERE 1=1
 
             field = Tools.Elements.FixPropertyName(field);
 
+            if (field.Equals("tags", StringComparison.CurrentCultureIgnoreCase))
+            {
+                new_value = Tools.Elements.FixTagsUpdateValue(element_key, new_value);
+            }
+
             string connectionString = Connection.GetConnection();
 
             var updateQuery = $@"

@@ -32,6 +32,10 @@ namespace WorldWeaver.Tools
         public static List<Classes.ElementProc> GetProcessStepsByType(string type)
         {
             var output = new List<Classes.ElementProc>();
+            if (type.Equals("attribute"))
+            {
+                return output;
+            }
 
             if (type.Equals("enter_message"))
             {

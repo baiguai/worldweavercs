@@ -1,4 +1,6 @@
 
+using WorldWeaver.Classes;
+
 namespace WorldWeaver.Tools
 {
     public class Elements
@@ -95,6 +97,14 @@ namespace WorldWeaver.Tools
             {
                 elementProperty = "parentkey";
             }
+            if (elementProperty.Equals("type"))
+            {
+                elementProperty = "elementtype";
+            }
+            if (elementProperty.Equals("key"))
+            {
+                elementProperty = "elementkey";
+            }
 
             switch (elementProperty.ToLower())
             {
@@ -159,6 +169,33 @@ namespace WorldWeaver.Tools
             }
         }
 
+        internal static string GetRelativeElementKey(Element currentElement, string relCode, string defaultValue)
+        {
+            var elemDb = new DataManagement.GameLogic.Element();
+
+            switch (relCode.ToLower())
+            {
+                case "[self]":
+                    return Tools.Elements.GetSelf(currentElement).ElementKey;
+
+                case "[room]":
+                    return Cache.RoomCache.Room.ElementKey;
+
+                case "[player]":
+                    return Cache.PlayerCache.Player.ElementKey;
+
+                case "[enemy]":
+                    if (Cache.FightCache.Fight == null)
+                    {
+                        return defaultValue;
+                    }
+                    return Cache.FightCache.Fight.Enemy.ElementKey;
+
+                default:
+                    return defaultValue;
+            }
+        }
+
         internal static ConsoleColor GetColor(string colorString)
         {
             switch (colorString.ToLower())
@@ -208,6 +245,31 @@ namespace WorldWeaver.Tools
                 default:
                     return ConsoleColor.White;
             }
+        }
+
+        internal static string FixTagsUpdateValue(string element_key, string new_value)
+        {
+            var elemDb = new DataManagement.GameLogic.Element();
+            var elem = elemDb.GetElementByKey(element_key);
+
+            if (new_value.Equals(""))
+            {
+                return new_value;
+            }
+
+            if (new_value.StartsWith('+'))
+            {
+                new_value = new_value.Substring(1);
+                return elem.Tags.AddTag(new_value);
+            }
+
+            if (new_value.StartsWith('-'))
+            {
+                new_value = new_value.Substring(1);
+                return elem.Tags.RemoveTag(new_value);
+            }
+
+            return new_value;
         }
     }
 }
