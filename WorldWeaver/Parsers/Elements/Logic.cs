@@ -427,6 +427,11 @@ namespace WorldWeaver.Parsers.Elements
             var curElement = Tools.Elements.GetRelativeElement(currentElement, rel);
             var childElement = curElement.Children.Where(c => c.Tags.TagsContain(tag)).FirstOrDefault();
 
+            if (childElement == null)
+            {
+                return "";
+            }
+
             return Tools.Elements.GetElementProperty(childElement, prop);
         }
 

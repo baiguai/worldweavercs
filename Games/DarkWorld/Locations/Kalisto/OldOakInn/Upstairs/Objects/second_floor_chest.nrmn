@@ -26,6 +26,9 @@ You open the chest.
             logic={@
                 ?[self]((isopen)) = 'false'
             }
+            output={@
+The chest is already open.
+            }
         }
     }
 

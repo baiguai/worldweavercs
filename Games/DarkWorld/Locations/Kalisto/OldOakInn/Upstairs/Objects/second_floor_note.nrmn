@@ -34,6 +34,10 @@ You see a note.
         {message
             output={@
 You examine the note.
+
+Sketched on the parchment is a tree in the center of a village.
+There is some text scrawled on it that points to a spot below the tree.
+It says simply: "Death Map"
             }
         }
         {logic
