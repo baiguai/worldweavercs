@@ -23,7 +23,7 @@ namespace WorldWeaver.Parsers.Elements
             }
             else
             {
-                var msgs = Tools.Elements.GetElementsByType(parentElement, "message");
+                var msgs = Tools.Elements.GetElementsByType(parentElement, "message", true);
                 var idx = 0;
                 foreach (var msg in msgs)
                 {

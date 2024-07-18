@@ -5,7 +5,7 @@ namespace WorldWeaver.Tools
 {
     public class Elements
     {
-        public static List<Classes.Element> GetElementsByType(Classes.Element currentElement, string type)
+        public static List<Classes.Element> GetElementsByType(Classes.Element currentElement, string type, bool includeChildren)
         {
             var output = new List<Classes.Element>();
 
@@ -16,7 +16,10 @@ namespace WorldWeaver.Tools
                     output.Add(child);
                 }
 
-                output.AddRange(GetElementsByType(child, type));
+                if (includeChildren)
+                {
+                    output.AddRange(GetElementsByType(child, type, includeChildren));
+                }
             }
 
             return output;

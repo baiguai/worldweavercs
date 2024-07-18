@@ -31,6 +31,10 @@ namespace WorldWeaver.Parsers.Elements
 
                 foreach (var child in currentElement.Children.Where(c => c.ElementType != "attribute"))
                 {
+                    if (child.ElementType.Equals("attribute"))
+                    {
+                        continue;
+                    }
                     if (MainClass.output.FailedLogic)
                     {
                         continue;
@@ -39,10 +43,6 @@ namespace WorldWeaver.Parsers.Elements
                     if (currentElement.ElementType.Equals("room") && !Cache.RoomCache.Room.ElementKey.Equals(currentElement.ElementKey))
                     {
                         return;
-                    }
-                    if (child.ElementType.Equals("attribute"))
-                    {
-                        continue;
                     }
 
                     if (Cache.GameCache.Game == null)

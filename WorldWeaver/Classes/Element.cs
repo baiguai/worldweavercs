@@ -37,5 +37,25 @@ namespace WorldWeaver.Classes
         {
             return Tools.ProcFunctions.GetProcessStepsByType(this.ElementType);
         }
+
+        internal List<Classes.Element> GetChildren(bool includeAttributes = false)
+        {
+            if (this.Children.Count < 1)
+            {
+                var elemDb = new DataManagement.GameLogic.Element();
+                this.Children = elemDb.GetElementChildren(this.ElementKey);
+
+                if (!includeAttributes)
+                {
+                    this.Children = this.Children.Where(c => c.ElementType != "attribute").ToList();
+                }
+
+                return this.Children;
+            }
+            else
+            {
+                return this.Children;
+            }
+        }
     }
 }
