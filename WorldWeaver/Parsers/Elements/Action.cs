@@ -70,6 +70,7 @@ namespace WorldWeaver.Parsers.Elements
         private void ParseTags_Type(Classes.Element currentElement, string type, string tags)
         {
             var level = GetTypeLevel(tags);
+            var lvlOrder = AppSettingFunctions.GetRootArray("Config/ActionLevelOrder.json");
 
             if (Cache.RoomCache.Room == null || MainClass.output.MatchMade)
             {
@@ -96,23 +97,29 @@ namespace WorldWeaver.Parsers.Elements
                 }
             }
 
-            switch (level)
+            foreach (var lvl in lvlOrder)
             {
-                case "self":
-                    ParseSelf_Type(currentElement, type);
-                    return;
+                if (lvl.Equals(level))
+                {
+                    switch (level)
+                    {
+                        case "room":
+                            ParseRoom_Type(currentElement, type);
+                            return;
 
-                case "room":
-                    ParseRoom_Type(currentElement, type);
-                    return;
+                        case "self":
+                            ParseSelf_Type(currentElement, type);
+                            return;
 
-                case "player":
-                    ParsePlayer_Type(type);
-                    return;
+                        case "player":
+                            ParsePlayer_Type(type);
+                            return;
 
-                case "global":
-                    ParseGlobal_Type(currentElement, type);
-                    return;
+                        case "global":
+                            ParseGlobal_Type(currentElement, type);
+                            return;
+                    }
+                }
             }
 
             return;
@@ -131,12 +138,12 @@ namespace WorldWeaver.Parsers.Elements
                 {
                     elemParser.ParseElement(elem, proc);
                 }
-
-                foreach (var child in selfElem.GetChildren())
-                {
-                    ParseChildren(child, type);
-                }
             }
+
+            // foreach (var child in selfElem.GetChildren())
+            // {
+            //     ParseChildren(child, type);
+            // }
         }
 
         private void ParseSelf_Type(Classes.Element currentElement, string type)
@@ -152,12 +159,12 @@ namespace WorldWeaver.Parsers.Elements
                 {
                     elemParser.ParseElement(elem, proc);
                 }
-
-                foreach (var child in selfElem.GetChildren())
-                {
-                    ParseChildren(child, type);
-                }
             }
+
+            // foreach (var child in selfElem.GetChildren())
+            // {
+            //     ParseChildren(child, type);
+            // }
         }
 
         private void ParseRoom_Type(Classes.Element currentElement, string type)
