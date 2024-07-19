@@ -61,6 +61,21 @@ namespace WorldWeaver.Tools
 
         public static string GetElementProperty(Classes.Element curElement, string elementProperty)
         {
+            var arr = elementProperty.Split('|');
+            var action = "";
+            if (arr.Length == 2)
+            {
+                action = arr[0].Trim();
+                elementProperty = arr[1].Trim();
+            }
+
+            if (action.Equals("link"))
+            {
+                var elemDb = new DataManagement.GameLogic.Element();
+                var elem = elemDb.GetElementByKey(curElement.Output);
+                curElement = elem;
+            }
+
             elementProperty = Tools.Elements.FixPropertyName(elementProperty);
 
             switch (elementProperty.ToLower())

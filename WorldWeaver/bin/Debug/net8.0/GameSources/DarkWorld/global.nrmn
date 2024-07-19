@@ -14,7 +14,7 @@
         {set, logic=player_armed(output)[input], tags=arm|[player] }
         {message
             output={@
-You are now armed with the [player_armed_weapon].
+You are now armed with the <<[player]((armed))link|name>>.
             }
         }
     }
