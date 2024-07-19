@@ -31,13 +31,18 @@ namespace WorldWeaver.Parsers.Elements
 
                 foreach (var child in currentElement.Children.Where(c => c.ElementType != "attribute"))
                 {
-                    if (currentElement.ElementType.Equals("room") && !Cache.RoomCache.Room.ElementKey.Equals(currentElement.ElementKey))
-                    {
-                        return;
-                    }
                     if (child.ElementType.Equals("attribute"))
                     {
                         continue;
+                    }
+                    if (MainClass.output.FailedLogic)
+                    {
+                        continue;
+                    }
+
+                    if (currentElement.ElementType.Equals("room") && !Cache.RoomCache.Room.ElementKey.Equals(currentElement.ElementKey))
+                    {
+                        return;
                     }
 
                     if (Cache.GameCache.Game == null)
@@ -86,7 +91,7 @@ namespace WorldWeaver.Parsers.Elements
                             if (!handledInput)
                             {
                                 input.ParseInput(currentElement, child);
-                                if (MainClass.output.MatchMade)
+                                if (MainClass.output.MatchMade || MainClass.output.FailedLogic)
                                 {
                                     continue;
                                 }
@@ -146,6 +151,11 @@ namespace WorldWeaver.Parsers.Elements
                             var lgc = new Parsers.Elements.Logic();
 
                             lgc.ParseLogic(child);
+
+                            if (MainClass.output.FailedLogic)
+                            {
+                                continue;
+                            }
                             continue;
 
                         case "move":
@@ -376,22 +386,22 @@ namespace WorldWeaver.Parsers.Elements
                 usingChild = true;
             }
 
-            var procItems = Tools.ProcFunctions.GetProcessStepsByType(msgParent.ElementType);
-            foreach (var proc in procItems)
-            {
-                if (proc.ChildProcElements.Contains("logic"))
-                {
-                    foreach (var msgChild in msgParent.Children.Where(c => c.ElementType.Equals("logic")))
-                    {
-                        elemLogic.ParseLogic(msgChild);
-                        if (MainClass.output.FailedLogic)
-                        {
-                            MainClass.output.MatchMade = true;
-                            return;
-                        }
-                    }
-                }
-            }
+            // var procItems = Tools.ProcFunctions.GetProcessStepsByType(msgParent.ElementType);
+            // foreach (var proc in procItems)
+            // {
+            //     if (proc.ChildProcElements.Contains("logic"))
+            //     {
+            //         foreach (var msgChild in msgParent.Children.Where(c => c.ElementType.Equals("logic")))
+            //         {
+            //             elemLogic.ParseLogic(msgChild);
+            //             if (MainClass.output.FailedLogic)
+            //             {
+            //                 MainClass.output.MatchMade = true;
+            //                 return;
+            //             }
+            //         }
+            //     }
+            // }
 
             if (!msgParent.Repeat.Equals(""))
             {

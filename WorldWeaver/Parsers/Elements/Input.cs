@@ -27,6 +27,7 @@ namespace WorldWeaver.Parsers.Elements
                             elemLogic.ParseLogic(child);
                             if (MainClass.output.FailedLogic)
                             {
+                                MainClass.output.MatchMade = true;
                                 return;
                             }
                         }
