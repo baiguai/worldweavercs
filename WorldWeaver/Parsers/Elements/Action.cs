@@ -70,6 +70,7 @@ namespace WorldWeaver.Parsers.Elements
         private void ParseTags_Type(Classes.Element currentElement, string type, string tags)
         {
             var level = GetTypeLevel(tags);
+            var lvlOrder = AppSettingFunctions.GetRootArray("Config/ActionLevelOrder.json");
 
             if (Cache.RoomCache.Room == null || MainClass.output.MatchMade)
             {
@@ -83,35 +84,51 @@ namespace WorldWeaver.Parsers.Elements
                 return;
             }
 
-            var currOutput = MainClass.output.OutputText;
-            ParsePlayer_Type(type);
-            if (!MainClass.output.OutputText.Equals(currOutput))
+            // @todo This might need to be handled differently
+            if (level.Equals("self"))
             {
-                return;
+                if (Tools.Elements.GetSelf(currentElement).ParentKey.Equals(PlayerCache.Player.ElementKey))
+                {
+                    level = "player";
+                }
+                if (Tools.Elements.GetSelf(currentElement).ParentKey.Equals(RoomCache.Room.ElementKey))
+                {
+                    level = "room";
+                }
             }
 
-            switch (level)
+            foreach (var lvl in lvlOrder)
             {
-                case "self":
-                    ParseSelf_Type(currentElement, type);
-                    return;
+                if (lvl.Equals(level))
+                {
+                    switch (level)
+                    {
+                        case "room":
+                            ParseRoom_Type(currentElement, type);
+                            return;
 
-                case "room":
-                    ParseRoom_Type(currentElement, type);
-                    return;
+                        case "self":
+                            ParseSelf_Type(currentElement, type);
+                            return;
 
-                case "global":
-                    ParseGlobal_Type(currentElement, type);
-                    return;
+                        case "player":
+                            ParsePlayer_Type(type);
+                            return;
+
+                        case "global":
+                            ParseGlobal_Type(currentElement, type);
+                            return;
+                    }
+                }
             }
-            
+
             return;
         }
 
         private void ParsePlayer_Type(string type)
         {
             var selfElem = Cache.PlayerCache.Player;
-            var targets = Tools.Elements.GetElementsByType(selfElem, type);
+            var targets = Tools.Elements.GetElementsByType(selfElem, type, true);
             var elemParser = new Parsers.Elements.Element();
 
             foreach (var elem in targets)
@@ -122,12 +139,17 @@ namespace WorldWeaver.Parsers.Elements
                     elemParser.ParseElement(elem, proc);
                 }
             }
+
+            // foreach (var child in selfElem.GetChildren())
+            // {
+            //     ParseChildren(child, type);
+            // }
         }
 
         private void ParseSelf_Type(Classes.Element currentElement, string type)
         {
             var selfElem = Tools.Elements.GetSelf(currentElement);
-            var targets = Tools.Elements.GetElementsByType(selfElem, type);
+            var targets = Tools.Elements.GetElementsByType(selfElem, type, true);
             var elemParser = new Parsers.Elements.Element();
 
             foreach (var elem in targets)
@@ -138,27 +160,16 @@ namespace WorldWeaver.Parsers.Elements
                     elemParser.ParseElement(elem, proc);
                 }
             }
+
+            // foreach (var child in selfElem.GetChildren())
+            // {
+            //     ParseChildren(child, type);
+            // }
         }
 
         private void ParseRoom_Type(Classes.Element currentElement, string type)
         {
-            var roomElem = Cache.RoomCache.Room;
-            var targets = Tools.Elements.GetElementsByType(roomElem, type);
-            var elemParser = new Parsers.Elements.Element();
-
-            foreach (var elem in targets)
-            {
-                var selfProcItems = Tools.ProcFunctions.GetProcessStepsByType(elem.ElementType);
-                foreach (var proc in selfProcItems)
-                {
-                    elemParser.ParseElement(elem, proc);
-                }
-            }
-
-            foreach (var child in currentElement.Children)
-            {
-                ParseSelf_Type(child, type);
-            }
+            ParseChildren(RoomCache.Room, type, true);
         }
 
         private void ParseGlobal_Type(Classes.Element currentElement, string type)
@@ -168,7 +179,7 @@ namespace WorldWeaver.Parsers.Elements
 
             foreach (var globalElem in globalElems)
             {
-                var targets = Tools.Elements.GetElementsByType(globalElem, type);
+                var targets = Tools.Elements.GetElementsByType(globalElem, type, true);
                 var elemParser = new Parsers.Elements.Element();
 
                 foreach (var elem in targets)
@@ -180,9 +191,31 @@ namespace WorldWeaver.Parsers.Elements
                     }
                 }
 
-                foreach (var child in currentElement.Children)
+                foreach (var child in currentElement.GetChildren())
                 {
-                    ParseRoom_Type(child, type);
+                    ParseChildren(child, type);
+                }
+            }
+        }
+
+        private void ParseChildren(Classes.Element parentElement, string type, bool isRoom = false)
+        {
+            var targets = Tools.Elements.GetElementsByType(parentElement, type, false);  // @todo
+            foreach (var target in targets)
+            {
+                var targetProcs = Tools.ProcFunctions.GetProcessStepsByType(parentElement.ElementType);
+                foreach (var proc in targetProcs)
+                {
+                    var elemParser = new Parsers.Elements.Element();
+                    elemParser.ParseElement(target, proc);
+                }
+            }
+
+            foreach (var child in parentElement.GetChildren())
+            {
+                if (isRoom && !child.ParentKey.Equals(Cache.PlayerCache.Player.ElementKey))
+                {
+                    ParseChildren(child, type);
                 }
             }
         }
@@ -312,7 +345,7 @@ namespace WorldWeaver.Parsers.Elements
                 spawn.SpawnByTemplate(currentElement);
             }
             else
-            {}
+            { }
         }
 
 

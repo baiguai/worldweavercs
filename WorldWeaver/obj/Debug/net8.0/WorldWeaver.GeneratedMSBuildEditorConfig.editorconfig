@@ -8,6 +8,6 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = WorldWeaver
-build_property.ProjectDir = /home/baiguai/documents/development/csharp/worldweaver/WorldWeaver/
+build_property.ProjectDir = /media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 

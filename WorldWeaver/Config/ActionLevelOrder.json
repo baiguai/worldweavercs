@@ -1,0 +1,8 @@
+{
+    "items" : [
+        "global",
+        "room",
+        "self",
+        "player"
+    ]
+}
