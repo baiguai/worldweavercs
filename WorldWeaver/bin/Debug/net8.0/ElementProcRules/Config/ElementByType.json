@@ -137,7 +137,8 @@
                 "action",
                 "attack",
                 "set",
-                "message"
+                "message",
+                "devnote"
             ],
             "repeat_options" : "false"
         },
@@ -152,7 +153,8 @@
                 "logic",
                 "action",
                 "message",
-                "input"
+                "input",
+                "devnote"
             ],
             "repeat_options" : "false"
         },
@@ -164,7 +166,8 @@
                 "link",
                 "message",
                 "attack",
-                "input"
+                "input",
+                "devnote"
             ],
             "repeat_options" : "false"
         },
@@ -240,6 +243,7 @@
                 "weapon"
             ],
             "elements" : [
+                "devnote"
             ],
             "repeat_options" : "false"
         }
