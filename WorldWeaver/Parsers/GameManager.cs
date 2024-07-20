@@ -84,13 +84,11 @@ namespace WorldWeaver.Parsers
                 glob.ParseElement();
             }
 
-            Cache.PlayerCache.Player.ParseElement();
-
-            // var playerInv = elemDb.GetElementChildren(Cache.PlayerCache.Player.ElementKey, false);
-            // foreach (var child in playerInv)
-            // {
-            //     child.ParseElement();
-            // }
+            var playerInv = elemDb.GetElementChildren(Cache.PlayerCache.Player.ElementKey, false);
+            foreach (var child in playerInv)
+            {
+                child.ParseElement();
+            }
 
             var trvParser = new Parsers.Elements.Travel();
             trvParser.ParseTravel();
@@ -100,6 +98,11 @@ namespace WorldWeaver.Parsers
             if (Cache.GameCache.Game == null)
             {
                 return;
+            }
+
+            if (MainClass.adminEnabled)
+            {
+                Cache.PlayerCache.Player.ParseElement();
             }
         }
     }

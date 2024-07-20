@@ -1,4 +1,5 @@
-﻿using WorldWeaver.Tools;
+﻿using System.Runtime.InteropServices.Marshalling;
+using WorldWeaver.Tools;
 
 namespace WorldWeaver.Parsers.Elements
 {
@@ -28,6 +29,7 @@ namespace WorldWeaver.Parsers.Elements
                 handledMessage = false;
                 handledNavigation = false;
                 MainClass.output.FailedLogic = false;
+                var curType = "";
 
                 foreach (var child in currentElement.Children.Where(c => c.ElementType != "attribute"))
                 {
@@ -35,7 +37,7 @@ namespace WorldWeaver.Parsers.Elements
                     {
                         continue;
                     }
-                    if (MainClass.output.FailedLogic)
+                    if (MainClass.output.FailedLogic && (!curType.Equals(child.ElementType) || child.ElementType.Equals("set")))
                     {
                         continue;
                     }
@@ -93,6 +95,7 @@ namespace WorldWeaver.Parsers.Elements
                                 input.ParseInput(currentElement, child);
                                 if (MainClass.output.MatchMade || MainClass.output.FailedLogic)
                                 {
+                                    curType = child.ElementType;
                                     continue;
                                 }
                             }
@@ -154,6 +157,7 @@ namespace WorldWeaver.Parsers.Elements
 
                             if (MainClass.output.FailedLogic)
                             {
+                                curType = child.ElementType;
                                 continue;
                             }
                             continue;
