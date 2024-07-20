@@ -448,7 +448,14 @@ PRAGMA foreign_keys = on;
                         break;
 
                     case string s when line.ToLower().StartsWith("sort=", StringComparison.OrdinalIgnoreCase):
-                        element.Sort = Convert.ToInt32(line.Replace("sort=", ""));
+                        if (element.ElementType.Equals("devnote"))
+                        {
+                            element.Sort = 9999;
+                        }
+                        else
+                        {
+                            element.Sort = Convert.ToInt32(line.Replace("sort=", ""));
+                        }
                         break;
 
                     case "}":
@@ -596,7 +603,14 @@ PRAGMA foreign_keys = on;
                             break;
 
                         case "sort":
-                            element.Sort = Convert.ToInt32(pairArr[1].Trim());
+                            if (element.ElementType.Equals("devnote"))
+                            {
+                                element.Sort = 9999;
+                            }
+                            else
+                            {
+                                element.Sort = Convert.ToInt32(pairArr[1].Trim());
+                            }
                             break;
                     }
                 }

@@ -30,7 +30,7 @@ namespace WorldWeaver.Parsers
                 glob.ParseElement();
             }
             Cache.PlayerCache.Player.ParseElement();
-            Cache.RoomCache.Room.ParseElement();
+            Cache.RoomCache.Room.ParseElement(true);
         }
 
         private void ParseRunningGame()
@@ -84,11 +84,13 @@ namespace WorldWeaver.Parsers
                 glob.ParseElement();
             }
 
-            var playerInv = elemDb.GetElementChildren(Cache.PlayerCache.Player.ElementKey);
-            foreach (var child in playerInv)
-            {
-                child.ParseElement();
-            }
+            Cache.PlayerCache.Player.ParseElement();
+
+            // var playerInv = elemDb.GetElementChildren(Cache.PlayerCache.Player.ElementKey, false);
+            // foreach (var child in playerInv)
+            // {
+            //     child.ParseElement();
+            // }
 
             var trvParser = new Parsers.Elements.Travel();
             trvParser.ParseTravel();

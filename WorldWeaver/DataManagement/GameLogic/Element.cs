@@ -241,6 +241,10 @@ WHERE 1=1
             var cachedElem = Tools.CacheManager.GetCachedElement(parent_key);
             if (cachedElem != null)
             {
+                if (!includeAttributes)
+                {
+                    return cachedElem.Children.Where(c => c.ElementType != "attribute").ToList();
+                }
                 return cachedElem.Children;
             }
 
