@@ -22,4 +22,12 @@
     {attribute, key=cur_heal_round, output=0 }
 
     {attribute, name=Quest, output=, tags=stats|quest }
+
+
+    {devnote, logic=n, tags=todo
+        output={@
+Quest values list in rough order:
+- accepted
+        }
+    }
 }
