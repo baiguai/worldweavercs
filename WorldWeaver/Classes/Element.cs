@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using WorldWeaver.Tools;
+﻿using WorldWeaver.Tools;
 
 namespace WorldWeaver.Classes
 {
-    public class Element
+    public class Element : ElementProcessingProps
     {
         public string ElementType { get; set; } = "";
         public string ElementKey { get; set; } = "";
@@ -21,16 +19,6 @@ namespace WorldWeaver.Classes
         public int Sort { get; set; } = 1;
         public string CreateDate { get; set; } = DateTime.Now.FormatDate();
         public string UpdateDate { get; set; } = DateTime.Now.FormatDate();
-
-        // Processing tools
-        public bool FailedLogicCheck { get; set; } = false;
-        public bool ExitChildLoop { get; set; } = false;
-        public bool ExitProcLoop { get; set; } = false;
-        public bool ExitAllLoops { get; set; } = false;
-        public bool LoopThroughChildren { get; set; } = true;
-        public bool HasChanges { get; set; } = false;
-
-        public bool ReturnMessage { get; set; } = true;
 
 
         public void ParseElement(bool isEntering = false)
