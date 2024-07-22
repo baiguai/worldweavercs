@@ -22,6 +22,14 @@ namespace WorldWeaver.Classes
         public string CreateDate { get; set; } = DateTime.Now.FormatDate();
         public string UpdateDate { get; set; } = DateTime.Now.FormatDate();
 
+        // Processing tools
+        public bool ExitChildLoop {get; set; } = false;
+        public bool ExitProcLoop { get; set; } = false;
+        public bool ExitAllLoops { get; set; } = false;
+        public bool LoopThroughChildren { get; set; } = true;
+
+        public bool ReturnMessage { get; set; } = true;
+
 
         public void ParseElement(bool isEntering = false)
         {

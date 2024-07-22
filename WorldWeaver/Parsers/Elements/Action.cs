@@ -200,7 +200,7 @@ namespace WorldWeaver.Parsers.Elements
 
         private void ParseChildren(Classes.Element parentElement, string type, bool isRoom = false)
         {
-            var targets = Tools.Elements.GetElementsByType(parentElement, type, false);  // @todo
+            var targets = Tools.Elements.GetElementsByType(parentElement, type, false);  // @todo Debugging ParseChildren
             foreach (var target in targets)
             {
                 var targetProcs = Tools.ProcFunctions.GetProcessStepsByType(parentElement.ElementType);
