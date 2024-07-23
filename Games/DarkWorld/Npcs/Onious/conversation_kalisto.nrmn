@@ -54,7 +54,7 @@ I'm sorry to hear that. Cheers.
                 ?[self]((topic)) = 'offer'
             }
         }
-        {action, logic=accept, tags=type|self }
+        {action, logic=accept, tags=type|room }
         {set, logic=[self]((topic)), output=inform }
     }
 
@@ -64,7 +64,7 @@ I'm sorry to hear that. Cheers.
                 ?[self]((topic)) = 'inform'
             }
         }
-        {action, logic=details, tags=type|self }
+        {action, logic=details, tags=type|room }
         {set, logic=[self]((topic)), output=kalisto }
         {set, logic=[self]((label)), output=Onious }
         {set, logic=[player]((gold)), output=+=100 }

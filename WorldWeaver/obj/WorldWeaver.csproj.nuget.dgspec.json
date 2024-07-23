@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/WorldWeaver.csproj": {}
+    "/home/baiguai/documents/development/csharp/worldweaver/WorldWeaver/WorldWeaver.csproj": {}
   },
   "projects": {
-    "/media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/WorldWeaver.csproj": {
+    "/home/baiguai/documents/development/csharp/worldweaver/WorldWeaver/WorldWeaver.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/WorldWeaver.csproj",
+        "projectUniqueName": "/home/baiguai/documents/development/csharp/worldweaver/WorldWeaver/WorldWeaver.csproj",
         "projectName": "WorldWeaver",
-        "projectPath": "/media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/WorldWeaver.csproj",
+        "projectPath": "/home/baiguai/documents/development/csharp/worldweaver/WorldWeaver/WorldWeaver.csproj",
         "packagesPath": "/home/baiguai/.nuget/packages/",
-        "outputPath": "/media/baiguai/MainDrive/documents/development/CSharp/worldweaver/WorldWeaver/obj/",
+        "outputPath": "/home/baiguai/documents/development/csharp/worldweaver/WorldWeaver/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/baiguai/.nuget/NuGet/NuGet.Config"

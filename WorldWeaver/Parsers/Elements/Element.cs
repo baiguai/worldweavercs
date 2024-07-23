@@ -37,7 +37,7 @@ namespace WorldWeaver.Parsers.Elements
                     {
                         continue;
                     }
-                    if (MainClass.output.FailedLogic)
+                    if (MainClass.output.FailedLogic && (!curType.Equals(child.ElementType) || child.ElementType.Equals("set")))
                     {
                         continue;
                     }
@@ -157,6 +157,7 @@ namespace WorldWeaver.Parsers.Elements
 
                             if (MainClass.output.FailedLogic)
                             {
+                                curType = child.ElementType;
                                 continue;
                             }
                             continue;
