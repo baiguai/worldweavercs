@@ -91,10 +91,6 @@ namespace WorldWeaver.Parsers.Elements
                 {
                     level = "player";
                 }
-                if (Tools.Elements.GetSelf(currentElement).ParentKey.Equals(RoomCache.Room.ElementKey))
-                {
-                    level = "room";
-                }
             }
 
             foreach (var lvl in lvlOrder)
@@ -139,11 +135,6 @@ namespace WorldWeaver.Parsers.Elements
                     elemParser.ParseElement(elem, proc);
                 }
             }
-
-            // foreach (var child in selfElem.GetChildren())
-            // {
-            //     ParseChildren(child, type);
-            // }
         }
 
         private void ParseSelf_Type(Classes.Element currentElement, string type)
@@ -160,11 +151,6 @@ namespace WorldWeaver.Parsers.Elements
                     elemParser.ParseElement(elem, proc);
                 }
             }
-
-            // foreach (var child in selfElem.GetChildren())
-            // {
-            //     ParseChildren(child, type);
-            // }
         }
 
         private void ParseRoom_Type(Classes.Element currentElement, string type)

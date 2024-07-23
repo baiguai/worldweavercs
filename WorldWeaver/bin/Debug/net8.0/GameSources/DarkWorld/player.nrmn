@@ -16,7 +16,7 @@
     {attribute, name=Intelligence, output=[roll:(6)<<[self]((int_dice))>>d6], tags=stats }
     {attribute, name=Cunning, output=[roll:(6)<<[self]((cunning_dice))>>d6], tags=stats }
     {attribute, name=Gold, output=[roll:<<[self]((gold_dice))>>d8], tags=stats|gold }
-    {attribute, name=Armed Weapon, output=long-sword_01, tags=armed|stats|name }
+    {attribute, key=player_armed, name=Armed Weapon, output=long-sword_01, tags=armed|stats|name }
 
     {attribute, key=heal_rounds, output=5 }
     {attribute, key=cur_heal_round, output=0 }
