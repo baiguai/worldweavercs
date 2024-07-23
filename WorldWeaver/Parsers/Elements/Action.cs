@@ -91,10 +91,10 @@ namespace WorldWeaver.Parsers.Elements
                 {
                     level = "player";
                 }
-                // if (Tools.Elements.GetSelf(currentElement).ParentKey.Equals(RoomCache.Room.ElementKey))
-                // {
-                //     level = "room";
-                // }
+                if (Tools.Elements.GetSelf(currentElement).ParentKey.Equals(RoomCache.Room.ElementKey))
+                {
+                    level = "room";
+                }
             }
 
             foreach (var lvl in lvlOrder)
@@ -200,7 +200,7 @@ namespace WorldWeaver.Parsers.Elements
 
         private void ParseChildren(Classes.Element parentElement, string type, bool isRoom = false)
         {
-            var targets = Tools.Elements.GetElementsByType(parentElement, type, false);  // @todo Debugging ParseChildren
+            var targets = Tools.Elements.GetElementsByType(parentElement, type, false);  // @todo
             foreach (var target in targets)
             {
                 var targetProcs = Tools.ProcFunctions.GetProcessStepsByType(parentElement.ElementType);
