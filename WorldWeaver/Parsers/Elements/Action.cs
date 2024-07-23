@@ -91,10 +91,10 @@ namespace WorldWeaver.Parsers.Elements
                 {
                     level = "player";
                 }
-                if (Tools.Elements.GetSelf(currentElement).ParentKey.Equals(RoomCache.Room.ElementKey))
-                {
-                    level = "room";
-                }
+                // if (Tools.Elements.GetSelf(currentElement).ParentKey.Equals(RoomCache.Room.ElementKey))
+                // {
+                //     level = "room";
+                // }
             }
 
             foreach (var lvl in lvlOrder)
