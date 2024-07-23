@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using WorldWeaver.Tools;
+﻿using WorldWeaver.Tools;
 
 namespace WorldWeaver.Classes
 {
-    public class Element
+    public class Element : ElementProcessingProps
     {
         public string ElementType { get; set; } = "";
         public string ElementKey { get; set; } = "";

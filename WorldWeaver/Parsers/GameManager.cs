@@ -30,7 +30,7 @@ namespace WorldWeaver.Parsers
                 glob.ParseElement();
             }
             Cache.PlayerCache.Player.ParseElement();
-            Cache.RoomCache.Room.ParseElement();
+            Cache.RoomCache.Room.ParseElement(true);
         }
 
         private void ParseRunningGame()
@@ -84,7 +84,7 @@ namespace WorldWeaver.Parsers
                 glob.ParseElement();
             }
 
-            var playerInv = elemDb.GetElementChildren(Cache.PlayerCache.Player.ElementKey);
+            var playerInv = elemDb.GetElementChildren(Cache.PlayerCache.Player.ElementKey, false);
             foreach (var child in playerInv)
             {
                 child.ParseElement();
@@ -98,6 +98,11 @@ namespace WorldWeaver.Parsers
             if (Cache.GameCache.Game == null)
             {
                 return;
+            }
+
+            if (MainClass.adminEnabled)
+            {
+                Cache.PlayerCache.Player.ParseElement();
             }
         }
     }

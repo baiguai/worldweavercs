@@ -3,11 +3,6 @@
 
 
     {accept
-        {logic
-            logic={@
-                ?[self]((topic)) = 'offer'
-            }
-        }
         {message
             output={@
 Oh great!
@@ -22,11 +17,6 @@ Do you accept our offer? If so, I can provide you with further details.
 
 
     {details
-        {logic
-            logic={@
-                ?[self]((topic)) = 'inform'
-            }
-        }
         {message
             output={@
 She beckons you to her table. You follow her and sit down. A tall hooded man with a long staff
@@ -59,16 +49,26 @@ I'm sorry to hear that. Cheers.
 --------------------------------------------------------------------------------
 
     {input, syntax=\b(yes*|yep *|sure *)\b
+        {logic
+            logic={@
+                ?[self]((topic)) = 'offer'
+            }
+        }
         {action, logic=accept, tags=type|self }
         {set, logic=[self]((topic)), output=inform }
     }
 
     {input, syntax=\b(yes*|yep *|sure *|i accept *|accept *)\b
+        {logic
+            logic={@
+                ?[self]((topic)) = 'inform'
+            }
+        }
         {action, logic=details, tags=type|self }
         {set, logic=[self]((topic)), output=kalisto }
         {set, logic=[self]((label)), output=Onious }
         {set, logic=[player]((gold)), output=+=100 }
-        {set, logic=[self]((travel))active, output=true }
+        {set, logic=[player]((quest)), output=accepted }
     }
 
     {input, syntax=\b(no*|nope *)\b

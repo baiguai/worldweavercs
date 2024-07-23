@@ -236,11 +236,15 @@ WHERE 1=1
             return output;
         }
 
-        public List<Classes.Element> GetElementChildren(string parent_key)
+        public List<Classes.Element> GetElementChildren(string parent_key, bool includeAttributes = true)
         {
             var cachedElem = Tools.CacheManager.GetCachedElement(parent_key);
             if (cachedElem != null)
             {
+                if (!includeAttributes)
+                {
+                    return cachedElem.Children.Where(c => c.ElementType != "attribute").ToList();
+                }
                 return cachedElem.Children;
             }
 
@@ -276,6 +280,10 @@ ORDER BY
 
 
             var output = GetElements(selectQuery, MainClass.gameDb, parms);
+            if (!includeAttributes)
+            {
+                output = output.Where(c => c.ElementType != "attribute").ToList();
+            }
 
             return output;
         }

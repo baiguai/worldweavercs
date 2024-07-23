@@ -596,7 +596,14 @@ PRAGMA foreign_keys = on;
                             break;
 
                         case "sort":
-                            element.Sort = Convert.ToInt32(pairArr[1].Trim());
+                            if (element.ElementType.Equals("devnote"))
+                            {
+                                element.Sort = 9999;
+                            }
+                            else
+                            {
+                                element.Sort = Convert.ToInt32(pairArr[1].Trim());
+                            }
                             break;
                     }
                 }
