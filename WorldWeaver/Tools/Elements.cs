@@ -27,7 +27,7 @@ namespace WorldWeaver.Tools
 
         public static Classes.Element GetSelf(Classes.Element currentElement)
         {
-            var self = new Classes.Element(); // @todo DEBUGGING HERE
+            var self = new Classes.Element();
             var types = Tools.AppSettingFunctions.GetRootArray("Config/SelfTypes.json");
             var dbElem = new DataManagement.GameLogic.Element();
 

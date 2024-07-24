@@ -7,7 +7,7 @@ namespace WorldWeaver.Parsers.Elements
 {
     public class Travel
     {
-        public void ParseTravel()// @todo Build all the other travel types.
+        public void ParseTravel()
         {
             var elemParser = new Elements.Element();
             var elemLogic = new DataManagement.GameLogic.Element();

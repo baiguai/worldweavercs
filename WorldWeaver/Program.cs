@@ -53,7 +53,7 @@ namespace WorldWeaver
             {
                 if (output.OutputText.Equals(""))
                 {
-                    output.OutputText = AppSettingFunctions.GetConfigValue("messages", "unknown_command"); // @todo Enhance this
+                    output.OutputText = AppSettingFunctions.GetConfigValue("messages", "unknown_command");
                 }
 
                 Console.Clear();

@@ -28,7 +28,7 @@ namespace WorldWeaver.Parsers.Elements
             {
                 handledMessage = false;
                 handledNavigation = false;
-                MainClass.output.FailedLogic = false;
+                MainClass.output.FailedLogic = false; // @todo update how failed logic is processed.
                 var curType = "";
 
                 foreach (var child in currentElement.Children.Where(c => c.ElementType != "attribute"))
@@ -318,6 +318,10 @@ namespace WorldWeaver.Parsers.Elements
                     break;
 
                 case "repeat":
+                    if (children.Count == 1)
+                    {
+                        return 0;
+                    }
                     if (index >= children.Count - 1)
                     {
                         repeatOutput = 0;
@@ -330,7 +334,7 @@ namespace WorldWeaver.Parsers.Elements
                     break;
 
                 case "attribute":
-                    if (!currentElement.Logic.Equals("")) // @todo Update this to mirror other logic processing
+                    if (!currentElement.Logic.Equals(""))
                     {
                         var attribElem = dbElem.GetElementByKey(currentElement.Logic);
                         try
@@ -409,7 +413,7 @@ namespace WorldWeaver.Parsers.Elements
 
             if (!msgParent.Repeat.Equals(""))
             {
-                index = HandleRepeat(msgParent, msgParent.Children, rptType);
+                index = HandleRepeat(msgParent, msgParent.Children.Where(c => c.ElementType.Equals("message")).ToList(), rptType);
             }
             else
             {

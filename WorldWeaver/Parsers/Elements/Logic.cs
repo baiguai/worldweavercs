@@ -13,6 +13,12 @@ namespace WorldWeaver.Parsers.Elements
     {
         public void ParseLogic(Classes.Element currentElement)
         {
+            var curOutput = "";
+            if (MainClass.output.FailedLogic)
+            {
+                curOutput = MainClass.output.OutputText;
+            }
+
             MainClass.output.FailedLogic = false;
             var passed = true;
             var lines = currentElement.Logic.Split(
@@ -30,7 +36,14 @@ namespace WorldWeaver.Parsers.Elements
                         MainClass.output.FailedLogic = true;
                         if (!currentElement.Output.Equals(""))
                         {
-                            MainClass.output.OutputText += Environment.NewLine + currentElement.Output;
+                            if (!curOutput.Equals(""))
+                            {
+                                MainClass.output.OutputText = curOutput + Environment.NewLine + currentElement.Output;
+                            }
+                            else
+                            {
+                                MainClass.output.OutputText = currentElement.Output;
+                            }
                         }
                         return;
                     }
