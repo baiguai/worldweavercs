@@ -37,7 +37,6 @@ namespace WorldWeaver.Parsers.Elements
                     else
                     {
                         MainClass.output.FailedLogic = false;
-                        MainClass.output.OutputText += Tools.OutputProcessor.ProcessOutputText(currentElement.Output, currentElement);
                         return;
                     }
                 }
