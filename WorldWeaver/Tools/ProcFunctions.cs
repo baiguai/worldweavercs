@@ -11,7 +11,7 @@ namespace WorldWeaver.Tools
     {
         public static List<string> GetTypes()
         {
-            var output = new List<string>();
+            var typesOutput = new List<string>();
 
             using (StreamReader r = new StreamReader($"Config/ElementProcRules/ElementByType.json"))
             {
@@ -21,12 +21,37 @@ namespace WorldWeaver.Tools
                 {
                     foreach (var types in tp["types"].Values())
                     {
-                        output = (List<string>)tp["elements"].Values();
+                        typesOutput = (List<string>)tp["elements"].Values();
                     }
                 }
             }
 
-            return output;
+            return typesOutput;
+        }
+
+        public static List<string> GetElementTypes()
+        {
+            var elementTypes = new List<string>();
+
+            using (StreamReader r = new StreamReader($"Config/ElementProcRules/ElementByType.json"))
+            {
+                string json = r.ReadToEnd();
+                var jsonObj = JObject.Parse(json);
+                foreach (var tp in jsonObj["elements"].Children())
+                {
+                    var tps = JArray.Parse(tp["types"].ToString());
+                    List<string> types = tps.ToObject<List<string>>();
+                    foreach (var type in types)
+                    {
+                        if (!elementTypes.Contains(type))
+                        {
+                            elementTypes.Add(type);
+                        }
+                    }
+                }
+            }
+
+            return elementTypes;
         }
 
         public static List<Classes.ElementProc> GetProcessStepsByType(string type)

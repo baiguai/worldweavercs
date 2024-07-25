@@ -84,7 +84,6 @@ namespace WorldWeaver.Parsers.Elements
                 return;
             }
 
-            // @todo This might need to be handled differently
             if (level.Equals("self"))
             {
                 if (Tools.Elements.GetSelf(currentElement).ParentKey.Equals(PlayerCache.Player.ElementKey))
@@ -186,7 +185,7 @@ namespace WorldWeaver.Parsers.Elements
 
         private void ParseChildren(Classes.Element parentElement, string type, bool isRoom = false)
         {
-            var targets = Tools.Elements.GetElementsByType(parentElement, type, false);  // @todo
+            var targets = Tools.Elements.GetElementsByType(parentElement, type, false);
             foreach (var target in targets)
             {
                 var targetProcs = Tools.ProcFunctions.GetProcessStepsByType(parentElement.ElementType);
@@ -347,7 +346,7 @@ namespace WorldWeaver.Parsers.Elements
             return;
         }
 
-        public void DoDie() // @todo Figure out how to get this to be less buggy.
+        public void DoDie()
         {
             var msgParser = new Parsers.Elements.Message();
             var elemDb = new DataManagement.GameLogic.Element();

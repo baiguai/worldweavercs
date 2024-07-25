@@ -26,18 +26,25 @@ namespace WorldWeaver.Parsers.Elements
 
             foreach (var proc in procObj.ChildProcElements)
             {
+                if (MainClass.output.FailedLogic)
+                {
+                    return;
+                }
                 handledMessage = false;
                 handledNavigation = false;
-                MainClass.output.FailedLogic = false;
-                var curType = "";
+                MainClass.output.FailedLogic = false; // @todo update how failed logic is processed.
 
                 foreach (var child in currentElement.Children.Where(c => c.ElementType != "attribute"))
                 {
-                    if (child.ElementType.Equals("attribute"))
+                    if (Tools.Elements.FailedLogicResetTypes().Contains(child.ElementType))
+                    {
+                        MainClass.output.FailedLogic = false;
+                    }
+                    if (MainClass.output.FailedLogic)
                     {
                         continue;
                     }
-                    if (MainClass.output.FailedLogic && (!curType.Equals(child.ElementType) || child.ElementType.Equals("set")))
+                    if (child.ElementType.Equals("attribute"))
                     {
                         continue;
                     }
@@ -95,7 +102,6 @@ namespace WorldWeaver.Parsers.Elements
                                 input.ParseInput(currentElement, child);
                                 if (MainClass.output.MatchMade || MainClass.output.FailedLogic)
                                 {
-                                    curType = child.ElementType;
                                     continue;
                                 }
                             }
@@ -157,7 +163,7 @@ namespace WorldWeaver.Parsers.Elements
 
                             if (MainClass.output.FailedLogic)
                             {
-                                curType = child.ElementType;
+                                MainClass.output.MatchMade = true;
                                 continue;
                             }
                             continue;
@@ -318,6 +324,10 @@ namespace WorldWeaver.Parsers.Elements
                     break;
 
                 case "repeat":
+                    if (children.Count == 1)
+                    {
+                        return 0;
+                    }
                     if (index >= children.Count - 1)
                     {
                         repeatOutput = 0;
@@ -330,7 +340,7 @@ namespace WorldWeaver.Parsers.Elements
                     break;
 
                 case "attribute":
-                    if (!currentElement.Logic.Equals("")) // @todo Update this to mirror other logic processing
+                    if (!currentElement.Logic.Equals(""))
                     {
                         var attribElem = dbElem.GetElementByKey(currentElement.Logic);
                         try
@@ -409,7 +419,7 @@ namespace WorldWeaver.Parsers.Elements
 
             if (!msgParent.Repeat.Equals(""))
             {
-                index = HandleRepeat(msgParent, msgParent.Children, rptType);
+                index = HandleRepeat(msgParent, msgParent.Children.Where(c => c.ElementType.Equals("message")).ToList(), rptType);
             }
             else
             {

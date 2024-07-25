@@ -17,7 +17,7 @@ namespace WorldWeaver.Parsers.Elements
 
             if (rgx.IsMatch(MainClass.userInput))
             {
-                var procs = ProcFunctions.GetProcessStepsByType(currentElement.ElementType); // @loc
+                var procs = ProcFunctions.GetProcessStepsByType(currentElement.ElementType);
                 foreach (var proc in procs)
                 {
                     if (proc.ChildProcElements.Contains("logic"))

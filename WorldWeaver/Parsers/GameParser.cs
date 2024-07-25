@@ -68,7 +68,7 @@ namespace WorldWeaver.Parsers
                         MainClass.output.MatchMade = true;
                     }
                 }
-                // @todo Update the methods to NOT hardcode the input, so that the syntax can be changed in the config
+
                 if (DataManagement.GameLogic.Game.IsGameRunning() && duringGame)
                 {
                     if (!MainClass.output.MatchMade && method.Equals("DoSetPlayerName"))

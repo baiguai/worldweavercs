@@ -48,6 +48,7 @@ namespace WorldWeaver.Parsers
                 Cache.GameCache.GameInitialized = true;
             }
 
+            MainClass.output.FailedLogic = false;
             devParser.ParseInput();
             if (MainClass.output.MatchMade)
             {
@@ -87,6 +88,7 @@ namespace WorldWeaver.Parsers
             var playerInv = elemDb.GetElementChildren(Cache.PlayerCache.Player.ElementKey, false);
             foreach (var child in playerInv)
             {
+                MainClass.output.FailedLogic = false;
                 child.ParseElement();
             }
 
@@ -102,6 +104,7 @@ namespace WorldWeaver.Parsers
 
             if (MainClass.adminEnabled)
             {
+                MainClass.output.FailedLogic = false;
                 Cache.PlayerCache.Player.ParseElement();
             }
         }
