@@ -26,18 +26,25 @@ namespace WorldWeaver.Parsers.Elements
 
             foreach (var proc in procObj.ChildProcElements)
             {
+                if (MainClass.output.FailedLogic)
+                {
+                    return;
+                }
                 handledMessage = false;
                 handledNavigation = false;
                 MainClass.output.FailedLogic = false; // @todo update how failed logic is processed.
-                var curType = "";
 
                 foreach (var child in currentElement.Children.Where(c => c.ElementType != "attribute"))
                 {
-                    if (child.ElementType.Equals("attribute"))
+                    if (Tools.Elements.FailedLogicResetTypes().Contains(child.ElementType))
+                    {
+                        MainClass.output.FailedLogic = false;
+                    }
+                    if (MainClass.output.FailedLogic)
                     {
                         continue;
                     }
-                    if (MainClass.output.FailedLogic && (!curType.Equals(child.ElementType) || child.ElementType.Equals("set")))
+                    if (child.ElementType.Equals("attribute"))
                     {
                         continue;
                     }
@@ -95,7 +102,6 @@ namespace WorldWeaver.Parsers.Elements
                                 input.ParseInput(currentElement, child);
                                 if (MainClass.output.MatchMade || MainClass.output.FailedLogic)
                                 {
-                                    curType = child.ElementType;
                                     continue;
                                 }
                             }
@@ -157,7 +163,7 @@ namespace WorldWeaver.Parsers.Elements
 
                             if (MainClass.output.FailedLogic)
                             {
-                                curType = child.ElementType;
+                                MainClass.output.MatchMade = true;
                                 continue;
                             }
                             continue;

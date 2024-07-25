@@ -1,7 +1,7 @@
 {object, key=ooi_second_floor_chest, name=chest, parent=ooi_upstairs
     {attribute, output=false, tags=isopen }
 
-    {examinechest
+    {examine
         {message
             output={@
 You examine the chest.
@@ -36,7 +36,7 @@ The chest is already open.
 --------------------------------------------------------------------------------
 
     {input, syntax=(examine(.*)chest|x(.*)chest)
-        {action, logic=examinechest, tags=type|self }
+        {action, logic=examine, tags=type|self }
     }
 
     {input, syntax=\b(open chest|open the chest|look in*chest|in chest)\b

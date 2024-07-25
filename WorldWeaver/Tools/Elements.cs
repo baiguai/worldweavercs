@@ -289,5 +289,20 @@ namespace WorldWeaver.Tools
 
             return new_value;
         }
+
+        internal static bool IsCustomType(string elementType)
+        {
+            if (!Tools.ProcFunctions.GetElementTypes().Contains(elementType))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        internal static List<string> FailedLogicResetTypes()
+        {
+            return Tools.AppSettingFunctions.GetRootArray("Config/ResetFailedTypes.json");
+        }
     }
 }

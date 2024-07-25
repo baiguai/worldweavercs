@@ -23,6 +23,11 @@ namespace WorldWeaver.Classes
 
         public void ParseElement(bool isEntering = false)
         {
+            var resetTypes = Tools.Elements.FailedLogicResetTypes();
+            if (resetTypes.Contains(this.ElementType) || Tools.Elements.IsCustomType(this.ElementType))
+            {
+                MainClass.output.FailedLogic = false;
+            }
             var elemPars = new Parsers.Elements.Element();
             var procsList = Tools.ProcFunctions.GetProcessStepsByType(this.ElementType);
             foreach (var procs in procsList)
