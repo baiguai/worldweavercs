@@ -229,6 +229,15 @@
         },
         {
             "types" : [
+                "test"
+            ],
+            "elements" : [
+                "teststep"
+            ],
+            "repeat_options" : "false"
+        },
+        {
+            "types" : [
                 "travel"
             ],
             "elements" : [
