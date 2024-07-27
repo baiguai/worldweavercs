@@ -23,6 +23,8 @@ namespace WorldWeaver
 
         public static List<string> devNotesSearchResults = new List<string>();
 
+        public static List<string> history = new List<string>();
+
         public static void Main(string[] args)
         {
             Console.SetWindowSize(Console.LargestWindowWidth, Console.LargestWindowHeight);

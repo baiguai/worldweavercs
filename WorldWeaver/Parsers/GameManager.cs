@@ -40,6 +40,9 @@ namespace WorldWeaver.Parsers
             var elemParser = new Elements.Element();
             var logic = new DataManagement.GameLogic.Element();
             var elemDb = new DataManagement.GameLogic.Element();
+            var histCount = Convert.ToInt32(AppSettingFunctions.GetConfigValue("history", "count"));
+
+            Tools.History.AddHistoryItem(MainClass.userInput, histCount);
 
             if (!Cache.PlayerCache.Player.Name.Equals("") && !Cache.GameCache.GameInitialized)
             {
