@@ -45,4 +45,12 @@ You ascend the stairs to the second floor.
             }
         }
     }
+
+    {input, syntax=\b(go*south|south|s)\b
+        {move, logic=kalisto_main_street, tags=[player]
+            output={@
+You leave the Old Oak Inn.
+            }
+        }
+    }
 }

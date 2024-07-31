@@ -1,0 +1,22 @@
+{room, key=kalisto_main_street, name=Main Street
+    {enter_message
+        output={@
+You are on the main street that cuts through Kalisto.
+        }
+    }
+
+    {look
+        {message
+            output={@
+You are on the main street of Kalisto.
+            }
+        }
+    }
+
+
+--------------------------------------------------------------------------------
+
+    {input, syntax=\b(look|l)\b
+        {action, logic=look, tags=type|room }
+    }
+}
