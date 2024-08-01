@@ -27,6 +27,10 @@
         {
             "pattern" : "\\b(_macro *)\\b",
             "method" : "DoRunMacro"
+        },
+        {
+            "pattern" : "\\b(_notesearch *)\\b",
+            "method" : "DoNoteSearch"
         }
     ]
 }

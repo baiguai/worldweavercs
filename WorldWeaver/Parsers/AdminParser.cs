@@ -19,6 +19,7 @@ namespace WorldWeaver.Parsers
                 {
                     DoValidate();
                 }
+
                 if (!MainClass.output.MatchMade && method.Equals("DoBuildGame"))
                 {
                     DoBuildGame();

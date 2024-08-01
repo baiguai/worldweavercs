@@ -46,7 +46,22 @@ namespace WorldWeaver.Parsers
                 {
                     DoRunMacro();
                 }
+                if (!MainClass.output.MatchMade && method.Equals("DoNoteSearch"))
+                {
+                    DoNoteSearch();
+                }
             }
+        }
+
+        private void DoNoteSearch()
+        {
+            if (!MainClass.adminEnabled)
+            {
+                return;
+            }
+
+            var searchString = MainClass.userInput.Replace("_notesearch ", "");
+            var elemDb = new DataManagement.GameLogic.Element();
         }
 
         private void DoAdminLogin(string userInput)
