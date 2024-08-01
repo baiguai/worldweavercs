@@ -1260,5 +1260,27 @@ WHERE
 
             return noteTxt;
         }
+
+        internal List<NoteSearch> SearchAdminNotes(string searchString)
+        {
+            var notes = GetElementsByType("devnote");
+
+            var found = notes.Where(n => n.Tags.Contains(searchString)).ToList();
+            found.AddRange(notes.Where(n => n.Output.Contains(searchString)).ToList());
+
+            List<NoteSearch> srchOutput = new List<NoteSearch>();
+
+            foreach (var itm in found)
+            {
+                var parent = GetElementByKey(itm.ParentKey);
+                var i = new NoteSearch() {
+                    Parent = parent.Name,
+                    Output = itm.Output
+                };
+                srchOutput.Add(i);
+            }
+
+            return srchOutput;
+        }
     }
 }

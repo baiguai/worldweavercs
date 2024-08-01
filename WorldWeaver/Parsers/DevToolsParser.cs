@@ -62,6 +62,27 @@ namespace WorldWeaver.Parsers
 
             var searchString = MainClass.userInput.Replace("_notesearch ", "");
             var elemDb = new DataManagement.GameLogic.Element();
+
+            var res = elemDb.SearchAdminNotes(searchString);
+
+            foreach (var itm in res)
+            {
+                if (!MainClass.output.OutputText.Equals(""))
+                {
+                    MainClass.output.OutputText += Environment.NewLine;
+                }
+                MainClass.output.OutputText += $"[{itm.Parent}]:{Environment.NewLine}{itm.Output}{Environment.NewLine}";
+            }
+
+            if (!MainClass.output.OutputText.Equals(""))
+            {
+                MainClass.output.MatchMade = true;
+            }
+            else
+            {
+                MainClass.output.OutputText = $"No notes found for search string: {searchString}";
+                MainClass.output.MatchMade = true;
+            }
         }
 
         private void DoAdminLogin(string userInput)
