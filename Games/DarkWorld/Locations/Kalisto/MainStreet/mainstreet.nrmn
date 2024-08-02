@@ -2,6 +2,8 @@
     {enter_message
         output={@
 You are on the main street that cuts through Kalisto.
+The road leads from east to west through the village.
+You entered Kalisto from the west and east of you, it leads to the center of the village.
         }
     }
 
@@ -13,10 +15,40 @@ You are on the main street of Kalisto.
         }
     }
 
+    {navigation, tags=look
+        output={@
+North of where you are is the Old Oak Inn.
+East leads to the center of the village.
+West leaves Kalisto.
+        }
+    }
+
 
 --------------------------------------------------------------------------------
 
     {input, syntax=\b(look|l)\b
         {action, logic=look, tags=type|room }
+    }
+
+    {input, syntax=\b(go*north|north|n)\b
+        {move, logic=old_oak_inn, tags=[player]
+            output={@
+You enter the Old Oak Inn.
+            }
+        }
+    }
+
+    {input, syntax=\b(go*east|east|e)\b
+        {move, logic=kalisto_ms_east, tags=[player]
+            output={@
+You travel east along the main road.
+            }
+        }
+    }
+
+    {devnote, logic=n, tags=todo
+        output={@
+Build the western travel, out of Kalisto.
+        }
     }
 }
