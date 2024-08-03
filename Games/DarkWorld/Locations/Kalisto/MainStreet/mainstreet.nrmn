@@ -16,10 +16,12 @@ You are on the main street of Kalisto.
     }
 
     {navigation, tags=look
-        output={@
+        {message
+            output={@
 North of where you are is the Old Oak Inn.
 East leads to the center of the village.
 West leaves Kalisto.
+            }
         }
     }
 

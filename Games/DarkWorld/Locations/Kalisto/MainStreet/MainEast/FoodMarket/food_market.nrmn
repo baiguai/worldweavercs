@@ -1,0 +1,28 @@
+{room, key=kalisto_food_market, name=Food Market
+    {enter_message
+        output={@
+You are in the food market.
+        }
+    }
+
+    {navigation, tags=enter_message|look
+        {message
+            output={@
+
+North of you is the main street of Kalisto.
+
+            }
+        }
+    }
+
+
+--------------------------------------------------------------------------------
+
+    {input, syntax=\b(go*north|north|n)\b
+        {move, logic=kalisto_ms_east, tags=[player]
+            output={@
+You go north, returning to the main street.
+            }
+        }
+    }
+}

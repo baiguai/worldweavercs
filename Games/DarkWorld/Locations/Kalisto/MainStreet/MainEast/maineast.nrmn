@@ -18,9 +18,13 @@ You are in the east end of the main road of Kalisto.
     }
 
     {navigation, tags=enter_message|look
-        output={@
+        {message
+            output={@
 Further east leads to the village square.
 West leads to the western end of the main road.
+North of you is the "Grande Armory" and
+south of you is the "Food Market".
+            }
         }
     }
 
@@ -29,5 +33,29 @@ West leads to the western end of the main road.
 
     {input, syntax=\b(look|l)\b
         {action, logic=look, tags=type|room }
+    }
+
+    {input, syntax=\b(go*west|west|w)\b
+        {move, logic=kalisto_main_street, tags=[player]
+            output={@
+You travel west along the main road.
+            }
+        }
+    }
+
+    {input, syntax=\b(go*north|north|n)\b
+        {move, logic=kalisto_grande_armory, tags=[player]
+            output={@
+You go north towards The Grande Armory.
+            }
+        }
+    }
+
+    {input, syntax=\b(go*south|south|s)\b
+        {move, logic=kalisto_food_market, tags=[player]
+            output={@
+You go south towards the Food Market.
+            }
+        }
     }
 }

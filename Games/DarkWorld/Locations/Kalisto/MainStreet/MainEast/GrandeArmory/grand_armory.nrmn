@@ -1,0 +1,26 @@
+{room, key=kalisto_grande_armory, name=The Grande Armory
+    {enter_message
+        output={@
+You are in the Grande Armory.
+        }
+    }
+
+    {navigation, tags=enter_message|look
+        {message
+            output={@
+South of you is the main street of Kalisto.
+            }
+        }
+    }
+
+
+--------------------------------------------------------------------------------
+
+    {input, syntax=\b(go*south|south|s)\b
+        {move, logic=kalisto_ms_east, tags=[player]
+            output={@
+You go south, returning to the main street.
+            }
+        }
+    }
+}

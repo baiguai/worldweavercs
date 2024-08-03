@@ -25,9 +25,11 @@ The Inn is full of loud boisterous patrons.
     }
 
     {navigation, tags=look
-        output={@
+        {message
+            output={@
 In the north east corner of the Inn is a staircase leading up.
 Set into the south wall is the door that leads out to the main street.
+            }
         }
     }
 
