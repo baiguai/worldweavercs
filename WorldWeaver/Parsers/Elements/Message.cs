@@ -14,10 +14,20 @@ namespace WorldWeaver.Parsers.Elements
                 return;
             }
 
+            if (parentElement.ElementType.Equals("navigation"))
+            {
+                MainClass.output.OutputText += Environment.NewLine;
+            }
+
             if (!allowRepeatOptions)
             {
                 MainClass.output.OutputText += Tools.OutputProcessor.ProcessOutputText(Environment.NewLine + msgElement.Output, msgElement);
                 MainClass.output.MatchMade = true;
+
+                if (parentElement.ElementType.Equals("navigation"))
+                {
+                    MainClass.output.OutputText += Environment.NewLine;
+                }
 
                 msgElement.ParseElement();
             }
@@ -31,6 +41,11 @@ namespace WorldWeaver.Parsers.Elements
                     {
                         MainClass.output.OutputText += Tools.OutputProcessor.ProcessOutputText(Environment.NewLine + ProcessMessageText(msg.Output, msg.Tags), msg);
                         MainClass.output.MatchMade = true;
+
+                        if (parentElement.ElementType.Equals("navigation"))
+                        {
+                            MainClass.output.OutputText += Environment.NewLine;
+                        }
                         break;
                     }
                     else

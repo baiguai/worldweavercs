@@ -791,3 +791,15 @@
 /home/baiguai/documents/development/csharp/worldweaver/WorldWeaver/bin/Debug/net8.0/AdminHelp.html_backup/Help/Admin/AdminHelp.20240801084525241.html
 /home/baiguai/documents/development/csharp/worldweaver/WorldWeaver/bin/Debug/net8.0/AdminHelp.html_backup/Help/Admin/AdminHelp.20240801084642331.html
 /home/baiguai/documents/development/csharp/worldweaver/WorldWeaver/bin/Debug/net8.0/AdminHelp.html_backup/Help/Admin/AdminHelp.20240801085910148.html
+/home/baiguai/documents/development/csharp/worldweaver/WorldWeaver/bin/Debug/net8.0/Admin/AdminHelp.html_backup/Help/AdminHelp.20240801085924168.html
+/home/baiguai/documents/development/csharp/worldweaver/WorldWeaver/bin/Debug/net8.0/Admin/AdminHelp.html_backup/Help/AdminHelp.20240801094205607.html
+/home/baiguai/documents/development/csharp/worldweaver/WorldWeaver/bin/Debug/net8.0/Admin/AdminHelp.html_backup/Help/AdminHelp.20240802085231309.html
+/home/baiguai/documents/development/csharp/worldweaver/WorldWeaver/bin/Debug/net8.0/Admin/AdminHelp.html_backup/Help/AdminHelp.20240802090744087.html
+/home/baiguai/documents/development/csharp/worldweaver/WorldWeaver/bin/Debug/net8.0/Admin/AdminHelp.html_backup/Help/AdminHelp.20240802090826558.html
+/home/baiguai/documents/development/csharp/worldweaver/WorldWeaver/bin/Debug/net8.0/Admin/AdminHelp.html_backup/Help/AdminHelp.20240802090829174.html
+/home/baiguai/documents/development/csharp/worldweaver/WorldWeaver/bin/Debug/net8.0/AdminHelp.html_backup/Help/Admin/AdminHelp.20240801085924168.html
+/home/baiguai/documents/development/csharp/worldweaver/WorldWeaver/bin/Debug/net8.0/AdminHelp.html_backup/Help/Admin/AdminHelp.20240801094205607.html
+/home/baiguai/documents/development/csharp/worldweaver/WorldWeaver/bin/Debug/net8.0/AdminHelp.html_backup/Help/Admin/AdminHelp.20240802085231309.html
+/home/baiguai/documents/development/csharp/worldweaver/WorldWeaver/bin/Debug/net8.0/AdminHelp.html_backup/Help/Admin/AdminHelp.20240802090744087.html
+/home/baiguai/documents/development/csharp/worldweaver/WorldWeaver/bin/Debug/net8.0/AdminHelp.html_backup/Help/Admin/AdminHelp.20240802090826558.html
+/home/baiguai/documents/development/csharp/worldweaver/WorldWeaver/bin/Debug/net8.0/AdminHelp.html_backup/Help/Admin/AdminHelp.20240802090829174.html

@@ -430,7 +430,7 @@ namespace WorldWeaver.Parsers.Elements
             {
                 foreach (var c in msgParent.Children)
                 {
-                    if (c.ElementType.Equals("message") || c.ElementType.Equals("enter_message") || c.ElementType.Equals("navigation"))
+                    if (c.ElementType.Equals("message") || c.ElementType.Equals("enter_message"))
                     {
                         msg.ParseMessage(msgParent, c, allowRepeatOptions, index);
                         if (MainClass.output.MatchMade)
@@ -443,6 +443,17 @@ namespace WorldWeaver.Parsers.Elements
             else
             {
                 msg.ParseMessage(msgParent, msgElem, allowRepeatOptions, index);
+            }
+
+            foreach (var c in msgParent.Children)
+            {
+                if (c.ElementType.Equals("navigation"))
+                {
+                    foreach (var msgChild in c.Children.Where(c => c.ElementType.Equals("message")))
+                    {
+                        msg.ParseMessage(c, msgChild, allowRepeatOptions, index);
+                    }
+                }
             }
 
             return;
