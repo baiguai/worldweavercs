@@ -196,13 +196,13 @@ namespace WorldWeaver.Parsers.Elements
                 }
             }
 
-            foreach (var child in parentElement.GetChildren())
-            {
-                if (isRoom && !child.ParentKey.Equals(Cache.PlayerCache.Player.ElementKey))
-                {
-                    ParseChildren(child, type);
-                }
-            }
+            // foreach (var child in parentElement.GetChildren())
+            // {
+            //     if (isRoom && !child.ParentKey.Equals(Cache.PlayerCache.Player.ElementKey))
+            //     {
+            //         ParseChildren(child, type);
+            //     }
+            // }
         }
 
         private object GetTypeLevel(string tags)
