@@ -65,11 +65,11 @@ namespace WorldWeaver.Parsers.Elements
             {
                 if (nav.Tags.TagsContain(parentElement.ElementType))
                 {
-                    MainClass.output.OutputText += Environment.NewLine + Environment.NewLine;
                     ParseMessage(Cache.RoomCache.Room, nav, false, 0);
-                    MainClass.output.OutputText += Environment.NewLine + Environment.NewLine;
                     if (MainClass.output.MatchMade)
                     {
+                        MainClass.output.OutputText = Environment.NewLine + Environment.NewLine + MainClass.output.OutputText;
+                        MainClass.output.OutputText += Environment.NewLine + Environment.NewLine;
                         MainClass.handledNavigation = true;
                         return;
                     }
