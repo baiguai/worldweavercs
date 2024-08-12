@@ -994,18 +994,17 @@ WHERE 1=1
             }
         }
 
-        internal void SpawnTemplateElement(Classes.Element currentElement, string templateKey, string key, string tags)
+        internal string SpawnTemplateElement(Classes.Element currentElement, string templateKey, string tags)
         {
             DataManagement.Game.BuildGame gameDb = new DataManagement.Game.BuildGame();
             DataManagement.GameLogic.Element elemDb = new DataManagement.GameLogic.Element();
-            if (key.Equals(""))
-            {
-                key = Guid.NewGuid().ToString();
-            }
+            var key = Guid.NewGuid().ToString();
 
             var tmpltElement = elemDb.GetElementByKey(templateKey);
 
-            tmpltElement.ParentKey = Tools.Template.GetTemplateParent(currentElement, tmpltElement.ParentKey);
+            var parentAttr = tmpltElement.AttributeByTag("parent");
+            var pKey = Tools.Elements.GetRelativeElement(currentElement, parentAttr.Output).ElementKey;
+            tmpltElement.ParentKey = pKey;
             tmpltElement.Name = Tools.Template.GetTemplateName(currentElement, tmpltElement.Name);
             tmpltElement.ElementKey = key;
             tmpltElement.Tags.AddTag(tags);
@@ -1020,6 +1019,8 @@ WHERE 1=1
             {
                 SpawnChildElement(tmpltElement, child);
             }
+
+            return key;
         }
 
         internal void SpawnChildElement(Classes.Element parentElement, Classes.Element childElement)

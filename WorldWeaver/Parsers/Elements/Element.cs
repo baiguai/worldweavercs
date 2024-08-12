@@ -32,6 +32,7 @@ namespace WorldWeaver.Parsers.Elements
                 }
                 handledMessage = false;
                 handledNavigation = false;
+                handledMove = false;
                 MainClass.output.FailedLogic = false; // @todo update how failed logic is processed.
 
                 foreach (var child in currentElement.Children.Where(c => c.ElementType != "attribute"))
@@ -40,7 +41,8 @@ namespace WorldWeaver.Parsers.Elements
                     {
                         MainClass.output.FailedLogic = false;
                     }
-                    if (MainClass.output.FailedLogic)
+                    if (MainClass.output.FailedLogic ||
+                        handledMove)
                     {
                         continue;
                     }
@@ -59,7 +61,6 @@ namespace WorldWeaver.Parsers.Elements
                         return;
                     }
 
-                    handledMove = false;
 
                     if (!child.ElementType.Equals(proc))
                     {
@@ -170,15 +171,6 @@ namespace WorldWeaver.Parsers.Elements
 
                         case "move":
                             if (!currentElement.Active.Equals("true"))
-                            {
-                                continue;
-                            }
-                            // if (MainClass.output.MatchMade)
-                            // {
-                            //     continue;
-                            // }
-
-                            if (handledMove)
                             {
                                 continue;
                             }

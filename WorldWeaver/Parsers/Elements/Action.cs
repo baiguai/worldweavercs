@@ -185,7 +185,7 @@ namespace WorldWeaver.Parsers.Elements
 
         private void ParseChildren(Classes.Element parentElement, string type, bool isRoom = false)
         {
-            var targets = Tools.Elements.GetElementsByType(parentElement, type, false);
+            var targets = Tools.Elements.GetElementsByType(parentElement, type, true);
             foreach (var target in targets)
             {
                 var targetProcs = Tools.ProcFunctions.GetProcessStepsByType(parentElement.ElementType);
@@ -196,13 +196,13 @@ namespace WorldWeaver.Parsers.Elements
                 }
             }
 
-            foreach (var child in parentElement.GetChildren())
-            {
-                if (isRoom && !child.ParentKey.Equals(Cache.PlayerCache.Player.ElementKey))
-                {
-                    ParseChildren(child, type);
-                }
-            }
+            // foreach (var child in parentElement.GetChildren())
+            // {
+            //     if (isRoom && !child.ParentKey.Equals(Cache.PlayerCache.Player.ElementKey))
+            //     {
+            //         ParseChildren(child, type);
+            //     }
+            // }
         }
 
         private object GetTypeLevel(string tags)

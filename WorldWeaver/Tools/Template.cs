@@ -47,7 +47,7 @@ namespace WorldWeaver.Tools
 
         internal static string GetTemplateName(Element currentElement, string name)
         {
-            var newName = "";
+            var newName = name;
 
             if (name.Contains("|"))
             {

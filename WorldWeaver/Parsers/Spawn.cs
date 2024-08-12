@@ -24,13 +24,12 @@ namespace WorldWeaver.Parsers.Elements
                 parentKey = "";
             }
             tmplElem.ParentKey = parentKey;
-            var key = Guid.NewGuid().ToString();
             var newElemTags = Tools.OutputProcessor.ProcessOutputText(currentElement.Output, currentElement);
             var doSpawn = Tools.RepeatProcessor.ProcessSpawnRepeat(currentElement);
 
             if (doSpawn)
             {
-                elemDb.SpawnTemplateElement(currentElement, currentElement.Logic, key, newElemTags);
+                var key = elemDb.SpawnTemplateElement(currentElement, currentElement.Logic, newElemTags);
                 return key;
             }
 
