@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reflection;
 using WorldWeaver.Tools;
+using TextCopy;
 
 namespace WorldWeaver.Parsers
 {
@@ -33,6 +34,11 @@ namespace WorldWeaver.Parsers
                 if (!MainClass.output.MatchMade && method.Equals("DoAdminHelp"))
                 {
                     DoAdminHelp();
+                }
+
+                if (!MainClass.output.MatchMade && method.Equals("DoSnip"))
+                {
+                    DoSnip();
                 }
             }
         }
@@ -98,6 +104,61 @@ namespace WorldWeaver.Parsers
 
             MainClass.output.MatchMade = true;
             MainClass.output.OutputText = Tools.CommandFunctions.GetHelpTopic(parms, "Help/Admin");
+        }
+
+        private void DoSnip()
+        {
+            var snip = MainClass.userInput.GetInputParamSingle();
+
+            if (snip.Equals(""))
+            {
+                ListSnippets();
+            }
+            else
+            {
+                LoadSnippet(snip);
+            }
+
+            MainClass.output.MatchMade = true;
+        }
+
+        private void ListSnippets()
+        {
+            foreach (string file in Directory.GetFiles("Snippets"))
+            {
+                if (Path.GetExtension(file).Equals(".snp"))
+                {
+                    if (!MainClass.output.Equals(""))
+                    {
+                        MainClass.output.OutputText += Environment.NewLine;
+                    }
+
+                    MainClass.output.OutputText += Path.GetFileNameWithoutExtension(file);
+                }
+            }
+
+            return;
+        }
+
+        private void LoadSnippet(string snip)
+        {
+            foreach (string file in Directory.GetFiles("Snippets"))
+            {
+                if (Path.GetExtension(file).Equals(".snp") && Path.GetFileNameWithoutExtension(file).Equals(snip))
+                {
+                    var contents = File.ReadAllLines(file);
+
+                    foreach (var line in contents)
+                    {
+                        if (!MainClass.output.OutputText.Equals(""))
+                        {
+                            MainClass.output.OutputText += Environment.NewLine;
+                        }
+
+                        MainClass.output.OutputText += line;
+                    }
+                }
+            }
         }
     }
 }
