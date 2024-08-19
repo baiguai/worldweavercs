@@ -1,0 +1,93 @@
+{type=object, key=kal-vege, name=Fruits and Vegetables, parent=kalisto_food_market, sort=997
+    {attribute, value=false, tags=purchased }
+
+    {type=look
+        {type=message
+            output={@
+<?[self]parent = [room]?>You see some dried fruits and vegetables.</?>
+            }
+        }
+    }
+
+    {examinevege
+        {message
+            output={@
+You examine the dried fruits and vegetables. They consist of various leafy greens and fruits.
+These will not keep very long.
+A bundle of vegetables costs 1 gold piece.
+            }
+        }
+    }
+
+    {buyvege
+        {message
+            output={@
+You purchase some fruits and vegetables.
+            }
+        }
+    }
+
+    {takevege
+        {message
+            output={@
+You take some fruits and vegetables.
+            } } }
+
+    {dropvege
+        {message
+            output={@
+You drop some fruits and vegetables.
+            }
+        }
+    }
+
+
+--------------------------------------------------------------------------------
+
+    {input, syntax=\b(buy fruit*|buy the fruit*|buy vegetabl*|buy the vegetabl*)\b
+        {logic
+            output={@
+You've already purchased the vegetables and fruit.
+            }
+            logic={@
+                ?[self]((purchased)) = false
+            }
+        }
+        {logic
+            output={@
+You don't have enough gold to purchase some fruits and vegetables.
+            }
+            logic={@
+                ?[player]((gold)) >= 1
+            }
+        }
+        {set, logic=[player]((gold)), output=-=1 }
+        {move, logic=[player], tags=[self] }
+        {set, logic=[self]tags, output=+inventory }
+        {set, logic=[self]((purchased)), output=true }
+        {action, logic=buyvege, tags=type|self }
+    }
+    {input, syntax=\b(take fruit*|take the fruit*|buy fruit*|buy the fruit*|take vegetabl*|take the vegetabl*|buy vegetabl*|buy the vegetabl*)\b
+        {logic
+            output={@
+You haven't purchased the fruits and vegetables, so you cannot take them.
+            }
+            logic={@
+                ?[self]((purchased)) = true
+            }
+        }
+        {move, logic=[player], tags=[self] }
+        {set, logic=[self]tags, output=+inventory }
+        {action, logic=takevege, tags=type|self }
+    }
+
+    {input, syntax=\b(drop fruits*|drop the fruits*|drop vege*|drop the vege*)\b
+        {move, logic=[room], tags=[self] }
+        {set, logic=[self]tags, output=-inventory }
+        {action, logic=dropvege, tags=type|self }
+    }
+
+    {input, syntax=(examine(.*)fruit*|x(.*)fruit*|examine(.*)vege*|x(.*)vege*)
+        {action, logic=examinevege, tags=type|room }
+    }
+}

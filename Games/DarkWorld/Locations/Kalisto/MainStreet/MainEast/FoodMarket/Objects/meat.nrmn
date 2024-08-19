@@ -1,0 +1,64 @@
+{type=object, key=kal-meat, name=Dried Meat, parent=kalisto_food_market, sort=999
+    {type=look
+        {type=message
+            output={@
+<?[self]parent = [room]?>You see some dried meat.</?>
+            }
+        }
+    }
+
+    {examinemeat
+        {message
+            output={@
+You examine the meat. It is dried and salted, perfect for adventuring.
+Kalisto is located at the southern entrance to the continent of Aetherous
+so most of the items in the village are geared toward travellers, such as yourself.
+A packet of meat costs 2 gold pieces.
+            }
+        }
+    }
+
+    {take
+        {message
+            output={@
+You purchase some meat.
+            }
+        }
+    }
+
+    {drop
+        {message
+            output={@
+You drop a packet of meat.
+            }
+        }
+    }
+
+
+--------------------------------------------------------------------------------
+
+    {input, syntax=\b(take meat*|take the meat*|buy meat*|buy the meat*)\b
+        {logic
+            output={@
+You don't have enough gold to purchase some meat.
+            }
+            logic={@
+                ?[player]((gold)) >= 2
+            }
+        }
+        {move, logic=[player], tags=[self] }
+        {set, logic=[player]((gold)), output=-=2 }
+        {set, logic=[self]tags, output=+inventory }
+        {action, logic=take, tags=type|self }
+    }
+
+    {input, syntax=\b(drop meat|drop the meat)\b
+        {move, logic=[room], tags=[self] }
+        {set, logic=[self]tags, output=-inventory }
+        {action, logic=drop, tags=type|self }
+    }
+
+    {input, syntax=(examine(.*)meat|x(.*)meat)
+        {action, logic=examinemeat, tags=type|room }
+    }
+}
