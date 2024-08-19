@@ -1,0 +1,64 @@
+{room, key=[[KEY]], name=[[NAME]]
+    {enter_message
+        output={@
+[[MESSAGE]]        
+        }
+    }
+
+    {look
+        {message
+            output={@
+[[LOOK]]            
+            }
+        }
+    }
+
+    {navigation, tags=enter_message|look
+        {message
+            output={@
+
+[[NAVIGATION]]
+
+            }
+        }
+    }
+
+
+--------------------------------------------------------------------------------
+
+    {input, syntax=\b(look|l)\b
+        {action, logic=look, tags=type|room }
+    }
+
+    {input, syntax=\b(go*north|north|n)\b
+        {move, logic=[[ROOM KEY]]_east, tags=[player]
+            output={@
+[[NORTH]]
+            }
+        }
+    }
+
+    {input, syntax=\b(go*east|east|e)\b
+        {move, logic=[[ROOM KEY]]_east, tags=[player]
+            output={@
+[[EAST]]
+            }
+        }
+    }
+
+    {input, syntax=\b(go*south|south|s)\b
+        {move, logic=[[ROOM KEY]]_south, tags=[player]
+            output={@
+[[SOUTH]]
+            }
+        }
+    }
+
+    {input, syntax=\b(go*west|west|w)\b
+        {move, logic=[[ROOM KEY]]_west, tags=[player]
+            output={@
+[[WEST]]
+            }
+        }
+    }
+}

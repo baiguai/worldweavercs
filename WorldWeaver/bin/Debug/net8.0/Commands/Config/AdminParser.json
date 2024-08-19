@@ -15,6 +15,10 @@
         {
             "pattern" : "\\b(_help|_h)\\b",
             "method" : "DoAdminHelp"
+        },
+        {
+            "pattern" : "\\b(_snip|_s)\\b",
+            "method" : "DoSnip"
         }
     ]
 }
