@@ -11,6 +11,7 @@
 
     {attribute, name=Life, output=[roll:(8)<<[self]((life_dice))>>d6], tags=stats|life }
     {attribute, output=player((life)), tags=maxlife }
+    {attribute, name=Armor, output=Natural, tags=stats }
     {attribute, name=Armor Rating, output=[roll:(6)<<[self]((armor_dice))>>d6+3], tags=stats|armor }
     {attribute, name=Strength, output=[roll:(6)<<[self]((strength_dice))>>d6], tags=stats }
     {attribute, name=Intelligence, output=[roll:(6)<<[self]((int_dice))>>d6], tags=stats }
