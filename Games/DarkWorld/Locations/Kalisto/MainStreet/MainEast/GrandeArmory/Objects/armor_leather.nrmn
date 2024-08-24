@@ -1,0 +1,61 @@
+{type=object, key=kalisto_leather_armor, name=Leather Armor, parent=kalisto_grande_armory, sort=998
+    {type=look
+        {type=message
+            output={@
+You see a set of leather armor.
+            }
+        }
+    }
+
+    {examine_leather_armor
+        {message
+            output={@
+You examine the leather armor.
+            }
+        }
+    }
+
+    {take
+        {message
+            output={@
+You purchase the leather armor.
+            }
+        }
+    }
+
+    {drop
+        {message
+            output={@
+You drop the leather armor.
+            }
+        }
+    }
+
+
+--------------------------------------------------------------------------------
+
+    {input, syntax=\b(take [[ITEM]]*|take the [[ITEM]]*|buy [[ITEM]]*|buy the [[ITEM]]*)\b
+        {logic
+            output={@
+[[NOT ENOUGH MONEY]]
+            }
+            logic={@
+                ?[player]((gold)) >= 10
+            }
+        }
+        {move, logic=[player], tags=[self] }
+        {set, logic=[player]((gold)), output=-=10 }
+        {set, logic=[self]tags, output=+inventory }
+        {action, logic=take, tags=type|self }
+    }
+
+    {input, syntax=\b(drop [[ITEM]]|drop the [[ITEM]])\b
+        {move, logic=[room], tags=[self] }
+        {set, logic=[self]tags, output=-inventory }
+        {action, logic=drop, tags=type|self }
+    }
+
+    {input, syntax=(examine(.*)[[ITEM]]|x(.*)[[ITEM]])
+        {action, logic=examine[[ITEM]], tags=type|room }
+    }
+}
