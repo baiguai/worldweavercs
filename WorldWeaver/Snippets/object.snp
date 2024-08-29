@@ -1,0 +1,61 @@
+{type=object, key=[[KEY]], name=[[NAME]], parent=[[PARENT]], sort=[[SORT]]
+    {type=look
+        {type=message
+            output={@
+[[MESSAGE]]
+            }
+        }
+    }
+
+    {examine[[ITEM]]
+        {message
+            output={@
+[[EXAMINE]]            
+            }
+        }
+    }
+
+    {take
+        {message
+            output={@
+[[TAKE]]
+            }
+        }
+    }
+
+    {drop
+        {message
+            output={@
+[[DROP]]
+            }
+        }
+    }
+
+
+--------------------------------------------------------------------------------
+
+    {input, syntax=\b(take [[ITEM]]*|take the [[ITEM]]*|buy [[ITEM]]*|buy the [[ITEM]]*)\b
+        {logic
+            output={@
+[[NOT ENOUGH MONEY]]
+            }
+            logic={@
+                ?[player]((gold)) >= 1
+            }
+        }
+        {move, logic=[player], tags=[self] }
+        {set, logic=[player]((gold)), output=-=1 }
+        {set, logic=[self]tags, output=+inventory }
+        {action, logic=take, tags=type|self }
+    }
+
+    {input, syntax=\b(drop [[ITEM]]|drop the [[ITEM]])\b
+        {move, logic=[room], tags=[self] }
+        {set, logic=[self]tags, output=-inventory }
+        {action, logic=drop, tags=type|self }
+    }
+
+    {input, syntax=(examine(.*)[[ITEM]]|x(.*)[[ITEM]])
+        {action, logic=examine[[ITEM]], tags=type|room }
+    }
+}
