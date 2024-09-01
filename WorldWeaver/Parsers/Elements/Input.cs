@@ -12,8 +12,9 @@ namespace WorldWeaver.Parsers.Elements
             MainClass.output.MatchMade = false;
             var elemParser = new Elements.Element();
             var elemLogic = new Parsers.Elements.Logic();
+            var syntax = Tools.OutputProcessor.GetNewValue(currentElement, currentElement.Syntax);
 
-            Regex rgx = new Regex(currentElement.Syntax, RegexOptions.IgnoreCase);
+            Regex rgx = new Regex(syntax, RegexOptions.IgnoreCase);
 
             if (rgx.IsMatch(MainClass.userInput))
             {
