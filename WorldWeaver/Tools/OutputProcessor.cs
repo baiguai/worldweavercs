@@ -39,26 +39,34 @@ namespace WorldWeaver.Tools
             return output;
         }
 
-        private static string GetNewValue(Element currentElement, string specialString)
+        public static string GetNewValue(Element currentElement, string specialString)
         {
             var updated = specialString;
 
             updated = GetSpecialValue(currentElement, specialString);
-            if (updated.Contains("<<"))
+            if (!updated.Equals(specialString))
             {
-                updated = GetElementChildByTag(currentElement, specialString);
+                return updated;
             }
-            if (updated.Contains("<<"))
+            updated = GetElementChildByTag(currentElement, specialString);
+            if (!updated.Equals(specialString))
             {
-                updated = GetElementPropertyByKey(currentElement, specialString);
+                return updated;
             }
-            if (updated.Contains("<<"))
+            updated = GetElementPropertyByKey(currentElement, specialString);
+            if (!updated.Equals(specialString))
             {
-                updated = GetRelativeElementChildByTag(currentElement, specialString);
+                return updated;
             }
-            if (updated.Contains("<<"))
+            updated = GetRelativeElementChildByTag(currentElement, specialString);
+            if (!updated.Equals(specialString))
             {
-                updated = GetRelativeElementProperty(currentElement, specialString);
+                return updated;
+            }
+            updated = GetRelativeElementProperty(currentElement, specialString);
+            if (!updated.Equals(specialString))
+            {
+                return updated;
             }
 
             return updated.Replace("<<", "").Replace(">>", "");
