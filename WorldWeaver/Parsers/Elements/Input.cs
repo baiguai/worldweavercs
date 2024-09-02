@@ -13,6 +13,10 @@ namespace WorldWeaver.Parsers.Elements
             var elemParser = new Elements.Element();
             var elemLogic = new Parsers.Elements.Logic();
             var syntax = Tools.OutputProcessor.GetNewValue(currentElement, currentElement.Syntax);
+            if (syntax.Equals(""))
+            {
+                return;
+            }
 
             Regex rgx = new Regex(syntax, RegexOptions.IgnoreCase);
 
