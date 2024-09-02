@@ -282,6 +282,7 @@ PRAGMA foreign_keys = on;
 
             success = LoadGameFiles(gameFile, gameDirectory);
             success = FixLinkElements(gameFile);
+            success = FixTemplateReferences(gameFile);
 
             return success;
         }
@@ -444,6 +445,10 @@ PRAGMA foreign_keys = on;
                         ix = GetFieldValue(element, lines, "tags", ix);
                         break;
 
+                    case string s when line.ToLower().StartsWith("template=", StringComparison.OrdinalIgnoreCase):
+                        ix = GetFieldValue(element, lines, "template", ix);
+                        break;
+
                     case string s when line.ToLower().StartsWith("active=", StringComparison.OrdinalIgnoreCase):
                         element.Active = line.Replace("active=", "");
                         break;
@@ -592,6 +597,10 @@ PRAGMA foreign_keys = on;
                             element.Tags = pairArr[1].Trim();
                             break;
 
+                        case "template":
+                            element.Template = pairArr[1].Trim();
+                            break;
+
                         case "active":
                             element.Active = pairArr[1].Trim();
                             break;
@@ -699,6 +708,7 @@ INSERT INTO element (
     Logic,
     Output,
     Tags,
+    Template,
     Repeat,
     Active,
     Sort,
@@ -724,6 +734,7 @@ VALUES";
 '{e.Logic}',
 '{e.Output}',
 '{e.Tags}',
+'{e.Template}',
 '{e.Repeat}',
 '{e.Active}',
 '{e.Sort}',
@@ -832,6 +843,116 @@ WHERE
             AND p.ElementType = 'link'
             AND p.ElementKey = element.ParentKey
     )
+;
+            ";
+
+            using (SqliteConnection connection = new SqliteConnection(connectionString))
+            {
+                connection.Open();
+
+                using (SqliteCommand command = new SqliteCommand(updateQuery, connection))
+                {
+                    command.ExecuteNonQuery();
+                    command.Dispose();
+                }
+
+                connection.Close();
+                connection.Dispose();
+            }
+
+            return true;
+        }
+
+        private bool FixTemplateReferences(string gameFile)
+        {
+            var connectionString = $"Data Source={gameFile};Cache=Shared;";
+            var success = false;
+            var templatedElems = new List<List<string>>();
+            var elementKeyIndex = 0;
+            var templateKeyIndex = 1;
+
+            using (SqliteConnection connection = new SqliteConnection(connectionString))
+            {
+                connection.Open();
+                var selectQuery = $@"
+SELECT
+    e.ElementKey,
+    e.Template
+FROM
+    element e
+WHERE 1=1   
+    AND e.Template IS NOT NULL
+;
+                ";
+
+                using (SqliteCommand command = new SqliteCommand(selectQuery, connection))
+                {
+                    using (SqliteDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            var newItm = new List<string>();
+                            newItm.Add(reader.GetString(reader.GetOrdinal("ElementKey")));
+                            newItm.Add(reader.GetString(reader.GetOrdinal("Template")));
+                            templatedElems.Add(newItm);
+                        }
+                    }
+
+                    command.Dispose();
+                }
+
+                connection.Close();
+                connection.Dispose();
+            }
+
+            foreach (var elem in templatedElems)
+            {
+                if (elem.Count == 2)
+                {
+                    success = FixTemplateReference(connectionString, elem[elementKeyIndex], elem[templateKeyIndex]);
+                    success = RemoveTemplateElement(connectionString, elem[templateKeyIndex]);
+                }
+            }
+
+            return true;
+        }
+
+        private bool FixTemplateReference(string connectionString, string currentElementKey, string templateElementKey)
+        {
+            var updateQuery = $@"
+UPDATE
+    element
+SET
+    ParentKey = '{currentElementKey}'
+WHERE
+    ParentKey = '{templateElementKey}'
+;
+            ";
+
+            using (SqliteConnection connection = new SqliteConnection(connectionString))
+            {
+                connection.Open();
+
+                using (SqliteCommand command = new SqliteCommand(updateQuery, connection))
+                {
+                    command.ExecuteNonQuery();
+                    command.Dispose();
+                }
+
+                connection.Close();
+                connection.Dispose();
+            }
+
+            return true;
+        }
+
+        private bool RemoveTemplateElement(string connectionString, string templateElementKey)
+        {
+            var updateQuery = $@"
+DELETE FROM
+    element
+WHERE
+    ElementKey = '{templateElementKey}'
 ;
             ";
 
