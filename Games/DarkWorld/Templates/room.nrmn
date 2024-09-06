@@ -1,0 +1,37 @@
+{template, key=room_template
+    {input, syntax=[self]((syntax_look))
+        {action, logic=look, tags=type|room }
+    }
+
+    {input, syntax=[self]((syntax_n))
+        {move, logic=[self]((go_n)), tags=[player], output=[self]((message_n)) }
+    }
+
+    {input, syntax=[self]((syntax_ne))
+        {move, logic=[self]((go_ne)), tags=[player], output=[self]((message_ne)) }
+    }
+
+    {input, syntax=[self]((syntax_e))
+        {move, logic=[self]((go_e)), tags=[player], output=[self]((message_e)) }
+    }
+
+    {input, syntax=[self]((syntax_se))
+        {move, logic=[self]((go_se)), tags=[player], output=[self]((message_se)) }
+    }
+
+    {input, syntax=[self]((syntax_s))
+        {move, logic=[self]((go_s)), tags=[player], output=[self]((message_s)) }
+    }
+
+    {input, syntax=[self]((syntax_sw))
+        {move, logic=[self]((go_sw)), tags=[player], output=[self]((message_sw)) }
+    }
+
+    {input, syntax=[self]((syntax_w))
+        {move, logic=[self]((go_w)), tags=[player], output=[self]((message_w)) }
+    }
+
+    {input, syntax=[self]((syntax_nw))
+        {move, logic=[self]((go_nw)), tags=[player], output=[self]((message_nw)) }
+    }
+}

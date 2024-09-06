@@ -1,4 +1,20 @@
-{room, key=old_oak_inn, name=The Old Oak Inn
+{room, key=old_oak_inn, name=The Old Oak Inn, template=room_template
+    {attribute, tags=syntax_look, output=\b(look|l)\b }
+    {attribute, tags=syntax_ne, output=\b(go*north*east|north*east|ne|up*stairs|go*up*stairs|up)\b }
+    {attribute, tags=go_ne, output=ooi_upstairs }
+    {attribute, tags=message_ne
+        output={@
+You ascend the stairs to the second floor.
+        }
+    }
+    {attribute, tags=syntax_s, output=\b(go*south|south|s)\b }
+    {attribute, tags=go_s, output=kalisto_main_street }
+    {attribute, tags=message_s
+        output={@
+You leave the Old Oak Inn.
+        }
+    }
+
     {enter_message
         output={@
 
@@ -29,29 +45,6 @@ The Inn is full of loud boisterous patrons.
             output={@
 In the north east corner of the Inn is a staircase leading up.
 Set into the south wall is the door that leads out to the main street.
-            }
-        }
-    }
-
-
---------------------------------------------------------------------------------
-
-    {input, syntax=\b(look|l)\b
-        {action, logic=look, tags=type|room }
-    }
-
-    {input, syntax=\b(go*north*east|north*east|ne|up*stairs|go*up*stairs|up)\b
-        {move, logic=ooi_upstairs, tags=[player]
-            output={@
-You ascend the stairs to the second floor.
-            }
-        }
-    }
-
-    {input, syntax=\b(go*south|south|s)\b
-        {move, logic=kalisto_main_street, tags=[player]
-            output={@
-You leave the Old Oak Inn.
             }
         }
     }
