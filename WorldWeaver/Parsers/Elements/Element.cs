@@ -332,6 +332,7 @@ namespace WorldWeaver.Parsers.Elements
                     break;
 
                 case "attribute":
+                case "attrib":
                     if (!currentElement.Logic.Equals(""))
                     {
                         var attribElem = dbElem.GetElementByKey(currentElement.Logic);
