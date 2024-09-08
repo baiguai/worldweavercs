@@ -110,6 +110,7 @@ namespace WorldWeaver.Parsers.Elements
 
                         case "message":
                         case "enter_message":
+                        case "navigation":
                             if (!currentElement.Active.Equals("true") ||
                                 !child.Active.Equals("true"))
                             {

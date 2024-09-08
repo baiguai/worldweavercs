@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using WorldWeaver.Cache;
 using WorldWeaver.Tools;
 
@@ -29,6 +25,10 @@ namespace WorldWeaver.Parsers
                 if (!MainClass.output.MatchMade && method.Equals("DoMap"))
                 {
                     DoMap();
+                }
+                if (!MainClass.output.MatchMade && method.Equals("DoRoom"))
+                {
+                    DoRoom();
                 }
                 if (!MainClass.output.MatchMade && method.Equals("DoMacroStart"))
                 {
@@ -112,50 +112,64 @@ namespace WorldWeaver.Parsers
             var elemDb = new DataManagement.GameLogic.Element();
             var rooms = elemDb.GetElementsByType("room");
             var map = "";
+
+            foreach (var room in rooms)
+            {
+                map += DoRoom(room, map);
+            }
+        }
+
+        private void DoRoom()
+        {
+            DoRoom(Cache.RoomCache.Room, "");
+        }
+        private string DoRoom(Classes.Element room, string map)
+        {
+            var elemDb = new DataManagement.GameLogic.Element();
             var nl = Environment.NewLine;
             var space = $"{Environment.NewLine}{Environment.NewLine}";
             var indent = "   ";
 
-            foreach (var room in rooms)
+            if (!map.Equals(""))
             {
-                if (!map.Equals(""))
-                {
-                    map += space;
-                }
-
-                map += $"Room: {room.Name} ({room.ElementKey}){nl}";
-                var doors = elemDb.GetDoors(room.ElementKey);
-
-                foreach (var door in doors)
-                {
-                    map += $"{indent}Door: {door.ElementKey}{nl}";
-                    map += $"{indent}{indent}Syntax: {Tools.RegexTools.RegexScrub(door.Syntax)}{nl}";
-                    map += $"{indent}{indent}Target: {door.Logic}{nl}";
-                    map += nl;
-                }
-
-                var npcs = elemDb.GetElementChildrenByType(room.ElementKey, "npc");
-
-                foreach (var npc in npcs)
-                {
-                    map += $"{indent}NPC: {npc.Name} ({npc.ElementKey}){nl}";
-                    map += nl;
-                }
-
-                var objects = elemDb.GetElementChildrenByType(room.ElementKey, "object");
-
-                foreach (var obj in objects)
-                {
-                    map += $"{indent}Object: {obj.Name} ({obj.ElementKey}){nl}";
-                    map += nl;
-                }
+                map += space;
             }
+
+            map += $"Room: {room.Name} ({room.ElementKey}){nl}";
+            var doors = elemDb.GetDoors(room.ElementKey);
+
+            foreach (var door in doors)
+            {
+                map += $"{indent}Door: {door.ElementKey}{nl}";
+                map += $"{indent}{indent}Syntax: {Tools.RegexTools.RegexScrub(door.Syntax)}{nl}";
+                map += $"{indent}{indent}Target: {door.Logic}{nl}";
+                map += nl;
+            }
+
+            var npcs = elemDb.GetElementChildrenByType(room.ElementKey, "npc");
+
+            foreach (var npc in npcs)
+            {
+                map += $"{indent}NPC: {npc.Name} ({npc.ElementKey}){nl}";
+                map += nl;
+            }
+
+            var objects = elemDb.GetElementChildrenByType(room.ElementKey, "object");
+
+            foreach (var obj in objects)
+            {
+                map += $"{indent}Object: {obj.Name} ({obj.ElementKey}){nl}";
+                map += nl;
+            }
+
 
             if (!map.Equals(""))
             {
                 MainClass.output.OutputText = map;
                 MainClass.output.MatchMade = true;
             }
+
+            return map;
         }
 
         private void DoList()

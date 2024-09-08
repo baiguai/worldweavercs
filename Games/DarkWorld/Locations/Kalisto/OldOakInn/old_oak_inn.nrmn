@@ -1,13 +1,10 @@
 {room, key=old_oak_inn, name=The Old Oak Inn, template=room_template
-    {attribute, tags=syntax_look, output=\b(look|l)\b }
-    {attribute, tags=syntax_ne, output=\b(go*north*east|north*east|ne|up*stairs|go*up*stairs|up)\b }
     {attribute, tags=go_ne, output=ooi_upstairs }
     {attribute, tags=message_ne
         output={@
 You ascend the stairs to the second floor.
         }
     }
-    {attribute, tags=syntax_s, output=\b(go*south|south|s)\b }
     {attribute, tags=go_s, output=kalisto_main_street }
     {attribute, tags=message_s
         output={@
@@ -47,5 +44,11 @@ In the north east corner of the Inn is a staircase leading up.
 Set into the south wall is the door that leads out to the main street.
             }
         }
+    }
+
+
+    -- Custom Navigation Syntax
+    {input, syntax=\b(up*stairs|go*up*stairs|up)\b
+        {move, logic=[self]((go_ne)), tags=[player], output=[self]((message_ne)) }
     }
 }

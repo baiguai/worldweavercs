@@ -9,6 +9,10 @@
             "method" : "DoMap"
         },
         {
+            "pattern" : "\\b(_room)\\b",
+            "method" : "DoRoom"
+        },
+        {
             "pattern" : "\\b(_list)\\b",
             "method" : "DoList"
         },
