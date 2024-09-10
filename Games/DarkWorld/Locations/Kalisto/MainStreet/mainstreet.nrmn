@@ -1,4 +1,17 @@
-{room, key=kalisto_main_street, name=Main Street
+{room, key=kalisto_main_street, name=Main Street, template=room_template
+    {attribute, tags=go_n, output=old_oak_inn }
+    {attribute, tags=message_n
+        output={@
+You enter the Old Oak Inn.
+        }
+    }
+    {attribute, tags=go_e, output=kalisto_ms_east }
+    {attribute, tags=message_e
+        output={@
+You travel east along the main road.
+        }
+    }
+
     {enter_message
         output={@
 You are on the main street that cuts through Kalisto.
@@ -28,25 +41,6 @@ West leaves Kalisto.
 
 --------------------------------------------------------------------------------
 
-    {input, syntax=\b(look|l)\b
-        {action, logic=look, tags=type|room }
-    }
-
-    {input, syntax=\b(go*north|north|n)\b
-        {move, logic=old_oak_inn, tags=[player]
-            output={@
-You enter the Old Oak Inn.
-            }
-        }
-    }
-
-    {input, syntax=\b(go*east|east|e)\b
-        {move, logic=kalisto_ms_east, tags=[player]
-            output={@
-You travel east along the main road.
-            }
-        }
-    }
 
     {devnote, logic=n, tags=todo
         output={@
