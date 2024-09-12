@@ -283,6 +283,7 @@ PRAGMA foreign_keys = on;
             success = LoadGameFiles(gameFile, gameDirectory);
             success = FixLinkElements(gameFile);
             success = FixTemplateReferences(gameFile);
+            success = RemoveTemplates(gameFile);
 
             return success;
         }
@@ -909,33 +910,43 @@ WHERE 1=1
             {
                 if (elem.Count == 2)
                 {
-                    success = FixTemplateReference(connectionString, elem[elementKeyIndex], elem[templateKeyIndex]);
-                    success = RemoveTemplateElement(connectionString, elem[templateKeyIndex]);
+                    success = GetTemplateChildren(connectionString, elem[elementKeyIndex], elem[templateKeyIndex]);
                 }
             }
 
             return true;
         }
 
-        private bool FixTemplateReference(string connectionString, string currentElementKey, string templateElementKey)
+        private bool GetTemplateChildren(string connectionString, string newParentKey, string currentParentKey)
         {
-            var updateQuery = $@"
-UPDATE
-    element
-SET
-    ParentKey = '{currentElementKey}'
-WHERE
-    ParentKey = '{templateElementKey}'
-;
-            ";
+            var success = false;
+            var templateChildElems = new List<string>();
+            var elementKeyIndex = 0;
+            var templateKeyIndex = 1;
 
             using (SqliteConnection connection = new SqliteConnection(connectionString))
             {
                 connection.Open();
+                var selectQuery = $@"
+SELECT
+    e.ElementKey
+FROM
+    element e
+WHERE 1=1   
+    AND e.ParentElementKey = '{currentParentKey}'
+;
+                ";
 
-                using (SqliteCommand command = new SqliteCommand(updateQuery, connection))
+                using (SqliteCommand command = new SqliteCommand(selectQuery, connection))
                 {
-                    command.ExecuteNonQuery();
+                    using (SqliteDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            templateChildElems.Add(reader.GetString(reader.GetOrdinal("ElementKey")));
+                        }
+                    }
+
                     command.Dispose();
                 }
 
@@ -943,16 +954,26 @@ WHERE
                 connection.Dispose();
             }
 
+            foreach (var elem in templatedElems)
+            {
+                if (elem.Count == 2)
+                {
+                    success = GetTemplateChildren(connectionString, elem[elementKeyIndex], elem[templateKeyIndex]);
+                }
+            }
+
             return true;
         }
 
-        private bool RemoveTemplateElement(string connectionString, string templateElementKey)
+        private bool RemoveTemplates(string gameFile)
         {
+            var connectionString = $"Data Source={gameFile};Cache=Shared;";
+
             var updateQuery = $@"
 DELETE FROM
     element
 WHERE
-    ElementKey = '{templateElementKey}'
+    ElementType = 'template'
 ;
             ";
 
