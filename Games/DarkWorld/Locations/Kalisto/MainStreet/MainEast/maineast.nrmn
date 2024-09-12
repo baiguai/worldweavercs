@@ -1,4 +1,23 @@
-{room, key=kalisto_ms_east, name=Main Street East
+{room, key=kalisto_ms_east, name=Main Street East, template=room_template
+    {attribute, tags=go_n, output=kalisto_grande_armory }
+    {attribute, tags=message_n
+        output={@
+You go north towards The Grande Armory.
+        }
+    }
+    {attribute, tags=go_s, output=kalisto_food_market }
+    {attribute, tags=message_s
+        output={@
+You go south towards the Food Market.
+        }
+    }
+    {attribute, tags=go_w, output=kalisto_main_street }
+    {attribute, tags=message_w
+        output={@
+You travel west along the main road.
+        }
+    }
+
     {enter_message
         output={@
 You are in the eastern end of the main street that cuts through Kalisto.
@@ -24,37 +43,6 @@ Further east leads to the village square.
 West leads to the western end of the main road.
 North of you is the "Grande Armory" and
 south of you is the "Food Market".
-            }
-        }
-    }
-
-
---------------------------------------------------------------------------------
-
-    {input, syntax=\b(look|l)\b
-        {action, logic=look, tags=type|room }
-    }
-
-    {input, syntax=\b(go*west|west|w)\b
-        {move, logic=kalisto_main_street, tags=[player]
-            output={@
-You travel west along the main road.
-            }
-        }
-    }
-
-    {input, syntax=\b(go*north|north|n)\b
-        {move, logic=kalisto_grande_armory, tags=[player]
-            output={@
-You go north towards The Grande Armory.
-            }
-        }
-    }
-
-    {input, syntax=\b(go*south|south|s)\b
-        {move, logic=kalisto_food_market, tags=[player]
-            output={@
-You go south towards the Food Market.
             }
         }
     }
