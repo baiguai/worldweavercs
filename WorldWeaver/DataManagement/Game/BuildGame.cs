@@ -910,14 +910,14 @@ WHERE 1=1
             {
                 if (elem.Count == 2)
                 {
-                    success = GetTemplateChildren(connectionString, elem[elementKeyIndex], elem[templateKeyIndex]);
+                    success = FixTemplateChildren(connectionString, elem[elementKeyIndex], elem[templateKeyIndex]);
                 }
             }
 
             return true;
         }
 
-        private bool GetTemplateChildren(string connectionString, string newParentKey, string currentParentKey)
+        private bool FixTemplateChildren(string connectionString, string newParentKey, string currentParentKey)
         {
             var success = false;
             var templateChildElems = new List<string>();
@@ -954,12 +954,16 @@ WHERE 1=1
                 connection.Dispose();
             }
 
-            foreach (var elem in templatedElems)
+            var elemDb = new DataManagement.GameLogic.Element();
+            foreach (var elem in templateChildElems)
             {
-                if (elem.Count == 2)
-                {
-                    success = GetTemplateChildren(connectionString, elem[elementKeyIndex], elem[templateKeyIndex]);
-                }
+                var childElem = elemDb.GetElementByKey(connectionString, elem);
+                var newKey = Guid.NewGuid().ToString();
+                childElem.ParentKey = newParentKey;
+                var curChildKey = childElem.ElementKey;
+                childElem.ElementKey = newKey;
+                SaveElement(childElem);
+                FixTemplateChildren(connectionString, newKey, curChildKey);
             }
 
             return true;

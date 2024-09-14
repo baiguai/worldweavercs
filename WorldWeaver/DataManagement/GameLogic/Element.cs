@@ -196,6 +196,10 @@ WHERE 1=1
 
         public Classes.Element GetElementByKey(string element_key)
         {
+            return GetElementByKey("", element_key);
+        }
+        public Classes.Element GetElementByKey(string connectionString, string element_key)
+        {
             var cachedElem = CacheManager.GetCachedElement(element_key);
             if (cachedElem != null && !cachedElem.ElementKey.Equals(""))
             {
@@ -231,7 +235,16 @@ WHERE 1=1
             });
 
 
-            var output = GetElement(selectQuery, parms);
+            Classes.Element output = null;
+
+            if (connectionString.Equals(""))
+            {
+                GetElement(selectQuery, parms);
+            }
+            else
+            {
+                GetElement(connectionString, selectQuery, parms);
+            }
 
             return output;
         }
@@ -494,9 +507,13 @@ WHERE 1=1
 
         public Classes.Element GetElement(string selectQuery, List<DbParameter> parms)
         {
+            string connectionString = Connection.GetConnection();
+            return GetElement(connectionString, selectQuery, parms);
+        }
+        public Classes.Element GetElement(string connectionString, string selectQuery, List<DbParameter> parms)
+        {
             var elementOutput = new Classes.Element();
 
-            string connectionString = Connection.GetConnection();
             if (connectionString.Equals(""))
             {
                 return elementOutput;
