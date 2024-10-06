@@ -12,6 +12,7 @@ namespace WorldWeaver.DataManagement.GameLogic
     {
         public List<Classes.Element> GetElementsByType(string type)
         {
+            string connectionString = Connection.GetConnection(MainClass.gameDb);
             var cachedElems = Tools.CacheManager.GetCachedElementByType(type);
             if (cachedElems.Count > 0)
             {
@@ -52,12 +53,13 @@ ORDER BY
                 ParamValue = type
             });
 
-            var output = GetElements(selectQuery, MainClass.gameDb, parms);
+            var output = GetElements(connectionString, selectQuery, parms);
             return output;
         }
 
         public List<Classes.Element> GetRandOutputElements()
         {
+            string connectionString = Connection.GetConnection(MainClass.gameDb);
             var selectQuery = $@"
 SELECT
     ElementType,
@@ -84,12 +86,13 @@ ORDER BY
 ;
             ";
 
-            var output = GetElements(selectQuery);
+            var output = GetElements(connectionString, selectQuery);
             return output;
         }
 
         private List<Classes.Element> GetRandNameElements()
         {
+            string connectionString = Connection.GetConnection(MainClass.gameDb);
             var selectQuery = $@"
 SELECT
     ElementType,
@@ -115,12 +118,13 @@ ORDER BY
 ;
             ";
 
-            var output = GetElements(selectQuery);
+            var output = GetElements(connectionString, selectQuery);
             return output;
         }
 
         public List<Classes.Element> GetAttribWithReference()
         {
+            var connectionString = Connection.GetConnection(MainClass.gameDb);
             var selectQuery = $@"
 SELECT
     ElementType,
@@ -146,7 +150,7 @@ ORDER BY
 ;
             ";
 
-            var output = GetElements(selectQuery);
+            var output = GetElements(connectionString, selectQuery);
             return output;
         }
 
@@ -200,6 +204,10 @@ WHERE 1=1
         }
         public Classes.Element GetElementByKey(string connectionString, string element_key)
         {
+            if (connectionString.Equals(""))
+            {
+                connectionString = Connection.GetConnection();
+            }
             var cachedElem = CacheManager.GetCachedElement(element_key);
             if (cachedElem != null && !cachedElem.ElementKey.Equals(""))
             {
@@ -239,19 +247,30 @@ WHERE 1=1
 
             if (connectionString.Equals(""))
             {
-                GetElement(selectQuery, parms);
+                output = GetElement(connectionString, selectQuery, parms);
             }
             else
             {
-                GetElement(connectionString, selectQuery, parms);
+                output = GetElement(connectionString, selectQuery, parms);
             }
 
             return output;
         }
 
+
         public List<Classes.Element> GetElementChildren(string parent_key, bool includeAttributes = true)
         {
+            return GetElementChildren("", parent_key, includeAttributes);
+        }
+
+        public List<Classes.Element> GetElementChildren(string connectionString, string parent_key, bool includeAttributes = true)
+        {
             var cachedElem = Tools.CacheManager.GetCachedElement(parent_key);
+            if (connectionString.Equals(""))
+            {
+                connectionString = Connection.GetConnection(MainClass.gameDb);
+            }
+
             if (cachedElem != null)
             {
                 if (!includeAttributes)
@@ -292,7 +311,7 @@ ORDER BY
             });
 
 
-            var output = GetElements(selectQuery, MainClass.gameDb, parms);
+            var output = GetElements(connectionString, selectQuery, parms);
             if (!includeAttributes)
             {
                 output = output.Where(c => c.ElementType != "attribute").ToList();
@@ -304,6 +323,7 @@ ORDER BY
         public List<Classes.Element> GetElementChildrenByType(string parent_key, string childType)
         {
             var cachedElem = Tools.CacheManager.GetCachedElement(parent_key);
+            string connectionString = Connection.GetConnection(MainClass.gameDb);
             if (cachedElem != null)
             {
                 return cachedElem.Children;
@@ -346,13 +366,14 @@ ORDER BY
                 ParamValue = childType
             });
 
-            var output = GetElements(selectQuery, MainClass.gameDb, parms);
+            var output = GetElements(connectionString, selectQuery, parms);
 
             return output;
         }
         public List<Classes.Element> GetDoors(string parent_key)
         {
             var cachedElem = Tools.CacheManager.GetCachedElement(parent_key);
+            var connectionString = Connection.GetConnection(MainClass.gameDb);
             if (cachedElem != null)
             {
                 return cachedElem.Children;
@@ -395,7 +416,7 @@ ORDER BY
                 ParamValue = parent_key
             });
 
-            var output = GetElements(selectQuery, MainClass.gameDb, parms);
+            var output = GetElements(connectionString, selectQuery, parms);
 
             foreach (var door in output)
             {
@@ -409,6 +430,7 @@ ORDER BY
         public Classes.Element GetElementChildByTag(string parent_key, string tag)
         {
             var cachedElem = Tools.CacheManager.GetCachedElement(parent_key);
+            var connectionString = Connection.GetConnection(MainClass.gameDb);
             if (cachedElem != null)
             {
                 return cachedElem.Children.Where(c => c.Tags.TagsContain(tag)).FirstOrDefault();
@@ -446,7 +468,7 @@ ORDER BY
             });
 
 
-            var output = GetElements(selectQuery, MainClass.gameDb, parms).Where(c => c.Tags.TagsContain(tag)).First();
+            var output = GetElements(connectionString, selectQuery, parms).Where(c => c.Tags.TagsContain(tag)).First();
 
             return output;
         }
@@ -548,7 +570,7 @@ WHERE 1=1
                             e.RepeatIndex = reader.GetInt32(reader.GetOrdinal("RepeatIndex"));
                             e.Active = reader.GetString(reader.GetOrdinal("Active"));
                             e.Sort = reader.GetInt32(reader.GetOrdinal("Sort"));
-                            e.Children = GetElementChildren(reader.GetString(reader.GetOrdinal("ElementKey")));
+                            e.Children = GetElementChildren(connectionString, reader.GetString(reader.GetOrdinal("ElementKey")));
 
                             elementOutput = e;
                             break;
@@ -565,15 +587,14 @@ WHERE 1=1
             return elementOutput;
         }
 
-        public List<Classes.Element> GetElements(string selectQuery)
+        public List<Classes.Element> GetElements(string connectionString, string selectQuery)
         {
-            return GetElements(selectQuery, MainClass.gameDb, new List<DbParameter>());
+            return GetElements(connectionString, selectQuery, new List<DbParameter>());
         }
-        public List<Classes.Element> GetElements(string selectQuery, string gameDb, List<DbParameter> parms)
+        public List<Classes.Element> GetElements(string connectionString, string selectQuery, List<DbParameter> parms)
         {
             var elementsOutput = new List<Classes.Element>();
 
-            string connectionString = Connection.GetConnection(gameDb);
             if (connectionString.Equals(""))
             {
                 return elementsOutput;
@@ -608,7 +629,7 @@ WHERE 1=1
                             e.RepeatIndex = reader.GetInt32(reader.GetOrdinal("RepeatIndex"));
                             e.Active = reader.GetString(reader.GetOrdinal("Active"));
                             e.Sort = reader.GetInt32(reader.GetOrdinal("Sort"));
-                            e.Children = GetElementChildren(reader.GetString(reader.GetOrdinal("ElementKey")));
+                            e.Children = GetElementChildren(connectionString, reader.GetString(reader.GetOrdinal("ElementKey")));
 
                             elementsOutput.Add(e);
                         }

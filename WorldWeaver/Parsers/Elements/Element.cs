@@ -31,7 +31,6 @@ namespace WorldWeaver.Parsers.Elements
                     return;
                 }
                 handledMessage = false;
-                handledNavigation = false;
                 handledMove = false;
                 MainClass.output.FailedLogic = false; // @todo update how failed logic is processed.
 
@@ -120,6 +119,10 @@ namespace WorldWeaver.Parsers.Elements
                             {
                                 continue;
                             }
+                            if (child.ElementType.Equals("navigation") && handledNavigation)
+                            {
+                                continue;
+                            }
                             if (handledMessage)
                             {
                                 continue;
@@ -139,6 +142,10 @@ namespace WorldWeaver.Parsers.Elements
                             {
                                 handledMessage = true;
                                 MainClass.output.MatchMade = true;
+                                if (child.ElementType.Equals("navigation"))
+                                {
+                                    handledNavigation = true;
+                                }
                             }
                             break;
 

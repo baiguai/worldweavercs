@@ -108,8 +108,7 @@
                 "logic",
                 "action",
                 "message",
-                "set",
-                "navigation"
+                "set"
             ],
             "repeat_options" : "true"
         },

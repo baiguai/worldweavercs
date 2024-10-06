@@ -684,6 +684,10 @@ PRAGMA foreign_keys = on;
         {
             var gameFile = $"Games/{MainClass.gameDb}.db";
             var connectionString = $"Data Source={gameFile};Cache=Shared;";
+            return SaveElement(connectionString, element);
+        }
+        public bool SaveElement(string connectionString, Classes.Element element)
+        {
             elementsToInsert.Clear();
             elementsToInsert.Add(element);
             var success = SaveElements(connectionString);
@@ -933,7 +937,7 @@ SELECT
 FROM
     element e
 WHERE 1=1   
-    AND e.ParentElementKey = '{currentParentKey}'
+    AND e.ParentKey = '{currentParentKey}'
 ;
                 ";
 
@@ -962,7 +966,7 @@ WHERE 1=1
                 childElem.ParentKey = newParentKey;
                 var curChildKey = childElem.ElementKey;
                 childElem.ElementKey = newKey;
-                SaveElement(childElem);
+                SaveElement(connectionString, childElem);
                 FixTemplateChildren(connectionString, newKey, curChildKey);
             }
 
