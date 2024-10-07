@@ -5,11 +5,6 @@
                 ?(onious)((travel))active = 'true'
             }
         }
-        {message
-            output={@
-<<[self]((npc_label_the_proper))>> follows you.
-            }
-        }
     }
 
 

@@ -26,5 +26,11 @@
     }
 
 
-    {travel, logic=[follow|player], active=false, tags=travel }
+    {travel, logic=[follow|player], active=false, tags=travel
+        {message
+            output={@
+<<[self]((npc_label_the_proper))>> follows you.
+            }
+        }
+    }
 }

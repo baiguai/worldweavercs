@@ -236,6 +236,7 @@ namespace WorldWeaver.Parsers
                     MainClass.output.OutputText = "Game file not found. Game names are case sensitive, so be sure it matches the game's case.";
                     MainClass.output.MatchMade = true;
                     MainClass.output.Error = true;
+                    return;
                 }
             }
 
