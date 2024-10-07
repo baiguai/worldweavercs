@@ -20,7 +20,6 @@ namespace WorldWeaver.Parsers.Elements
             var index = -1;
             var handledInput = false;
             var handledMessage = false;
-            var handledNavigation = false;
             var handledMove = false;
             var handledAttack = false;
 
@@ -109,17 +108,12 @@ namespace WorldWeaver.Parsers.Elements
 
                         case "message":
                         case "enter_message":
-                        case "navigation":
                             if (!currentElement.Active.Equals("true") ||
                                 !child.Active.Equals("true"))
                             {
                                 continue;
                             }
                             if (child.ElementType.Equals("enter_message") && !isEntering)
-                            {
-                                continue;
-                            }
-                            if (child.ElementType.Equals("navigation") && handledNavigation)
                             {
                                 continue;
                             }
@@ -142,10 +136,6 @@ namespace WorldWeaver.Parsers.Elements
                             {
                                 handledMessage = true;
                                 MainClass.output.MatchMade = true;
-                                if (child.ElementType.Equals("navigation"))
-                                {
-                                    handledNavigation = true;
-                                }
                             }
                             break;
 
