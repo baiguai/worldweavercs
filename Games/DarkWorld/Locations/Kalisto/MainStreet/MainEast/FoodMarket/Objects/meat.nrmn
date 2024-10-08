@@ -1,4 +1,36 @@
-{type=object, key=kal-meat, name=Dried Meat, parent=kalisto_food_market, sort=999
+{type=object, key=kal-meat, name=Dried Meat, parent=kalisto_food_market, sort=999, template=goods
+    {attribute, tags=syn_take, output=\b(take meat*|take the meat*|buy meat*|buy the meat*)\b }
+    {attribute, tags=cost, output=2 }
+    {attribute, tags=fail_take
+        output={@
+You don't have enough gold to purchase the meat.
+        }
+    }
+    {attribute, tags=already_purchased
+        output={@
+You've already purchased the meat.
+        }
+    }
+    {attribute, tags=msg_take
+        output={@
+You purchase the meat.
+        }
+    }
+    {attribute, tags=lgc_take
+        output={@
+            ?[player]((gold)) >= 2
+        }
+    }
+    {attribute, tags=adj_take, output=-=2 }
+
+    {attribute, tags=syn_drop, output=\b(drop meat|drop the meat)\b }
+    {attribute, tags=msg_drop
+        output={@
+You drop the meat.
+        }
+    }
+
+
     {type=look
         {type=message
             output={@
@@ -18,45 +50,8 @@ A packet of meat costs 2 gold pieces.
         }
     }
 
-    {take
-        {message
-            output={@
-You purchase some meat.
-            }
-        }
-    }
-
-    {drop
-        {message
-            output={@
-You drop a packet of meat.
-            }
-        }
-    }
-
 
 --------------------------------------------------------------------------------
-
-    {input, syntax=\b(take meat*|take the meat*|buy meat*|buy the meat*)\b
-        {logic
-            output={@
-You don't have enough gold to purchase some meat.
-            }
-            logic={@
-                ?[player]((gold)) >= 2
-            }
-        }
-        {move, logic=[player], tags=[self] }
-        {set, logic=[player]((gold)), output=-=2 }
-        {set, logic=[self]tags, output=+inventory }
-        {action, logic=take, tags=type|self }
-    }
-
-    {input, syntax=\b(drop meat|drop the meat)\b
-        {move, logic=[room], tags=[self] }
-        {set, logic=[self]tags, output=-inventory }
-        {action, logic=drop, tags=type|self }
-    }
 
     {input, syntax=(examine(.*)meat|x(.*)meat)
         {action, logic=examinemeat, tags=type|room }

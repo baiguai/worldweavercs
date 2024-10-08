@@ -966,9 +966,11 @@ WHERE 1=1
                 childElem.ParentKey = newParentKey;
                 var curChildKey = childElem.ElementKey;
                 childElem.ElementKey = newKey;
-                SaveElement(connectionString, childElem);
+                LoadElement(connectionString, childElem);
                 FixTemplateChildren(connectionString, newKey, curChildKey);
             }
+
+            SaveElements(connectionString);
 
             return true;
         }

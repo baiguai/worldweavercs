@@ -38,11 +38,11 @@ namespace WorldWeaver.Parsers.Elements
                         {
                             if (!curOutput.Equals(""))
                             {
-                                MainClass.output.OutputText = curOutput + Environment.NewLine + currentElement.Output;
+                                MainClass.output.OutputText = curOutput + Environment.NewLine + ParseRelativeElementByTag(currentElement, currentElement.Output);
                             }
                             else
                             {
-                                MainClass.output.OutputText = currentElement.Output;
+                                MainClass.output.OutputText = ParseRelativeElementByTag(currentElement, currentElement.Output);
                             }
                         }
                         return;

@@ -1,0 +1,29 @@
+{template, key=goods
+    {attribute, value=false, tags=purchased }
+
+    {input, syntax=[self]((syn_take))
+        {logic, output=[self]((already_purchased))
+            logic={@
+                ?[self]((purchased)) = false
+            }
+        }
+        {logic, output=[self]((fail_take))
+            logic={@
+                ?[player]((gold)) >= [self]((gold))
+            }
+        }
+        {move, logic=[player], tags=[self], output=[self]((msg_take)) }
+        {set, logic=[player]((gold)), output=[self]((adj_take)) }
+        {set, logic=[self]tags, output=+inventory }
+        {set, logic=[self]((purchased)), output=true }
+    }
+
+    {input, syntax=[self]((syn_drop))
+        {move, logic=[room], tags=[self]
+            output={@
+You drop the bread.
+            }
+        }
+        {set, logic=[self]tags, output=-inventory }
+    }
+}
