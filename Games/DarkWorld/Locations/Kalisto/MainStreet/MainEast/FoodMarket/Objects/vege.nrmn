@@ -1,4 +1,4 @@
-{type=object, key=kal-vege, name=Fruits and Vegetables, parent=kalisto_food_market, sort=999, template=goods
+{type=object, key=kal-vege, name=Fruits and Vegetables, parent=kalisto_food_market, sort=992, template=goods
     {attribute, tags=syn_take, output=\b(take vege*|take the vege*|buy vege*|buy the vege*)\b }
     {attribute, tags=cost, output=1 }
     {attribute, tags=fail_take
