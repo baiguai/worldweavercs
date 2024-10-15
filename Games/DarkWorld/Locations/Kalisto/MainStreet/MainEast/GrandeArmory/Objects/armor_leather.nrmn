@@ -1,19 +1,19 @@
 {type=object, key=kalisto_leather_armor, name=Leather Armor, parent=kalisto_grande_armory, sort=998, template=goods
-    {attribute, tags=syn_take, output=\b(take vege*|take the vege*|buy vege*|buy the vege*)\b }
+    {attribute, tags=syn_take, output=\b(take leather*|take the leather*|buy leather*|buy the leather*|take armor*|take the armor*|buy armor*|buy the armor*)\b }
     {attribute, tags=cost, output=1 }
     {attribute, tags=fail_take
         output={@
-You don't have enough gold to purchase the vegetables.
+You don't have enough gold to purchase the leather armor.
         }
     }
     {attribute, tags=already_purchased
         output={@
-You've already purchased the vegetables.
+You've already purchased the armor.
         }
     }
     {attribute, tags=msg_take
         output={@
-You purchase the vegetables.
+You purchase the leather armor.
         }
     }
     {attribute, tags=lgc_take
@@ -23,10 +23,10 @@ You purchase the vegetables.
     }
     {attribute, tags=adj_take, output=-=1 }
 
-    {attribute, tags=syn_drop, output=\b(drop vege*|drop the vege*)\b }
+    {attribute, tags=syn_drop, output=\b(drop leather*|drop the leather*|drop armor*|drop the armor*)\b }
     {attribute, tags=msg_drop
         output={@
-You drop the vegetables.
+You drop the leather armor.
         }
     }
 
@@ -35,7 +35,7 @@ You drop the vegetables.
     {type=look
         {type=message
             output={@
-You see a set of leather armor.
+<?[self]parent = [room]?>You see a set of leather armor.</?>
             }
         }
     }
@@ -48,47 +48,17 @@ You examine the leather armor.
         }
     }
 
-    {take
-        {message
-            output={@
-You purchase the leather armor.
-            }
-        }
+    {type=take_adjustment
+        {set, logic=[player]((armor)), output=+=10 }
     }
-
-    {drop
-        {message
-            output={@
-You drop the leather armor.
-            }
-        }
+    {type=drop_adjustment
+        {set, logic=[player]((armor)), output=-=10 }
     }
 
 
 --------------------------------------------------------------------------------
 
-    {input, syntax=\b(take [[ITEM]]*|take the [[ITEM]]*|buy [[ITEM]]*|buy the [[ITEM]]*)\b
-        {logic
-            output={@
-[[NOT ENOUGH MONEY]]
-            }
-            logic={@
-                ?[player]((gold)) >= 10
-            }
-        }
-        {move, logic=[player], tags=[self] }
-        {set, logic=[player]((gold)), output=-=10 }
-        {set, logic=[self]tags, output=+inventory }
-        {action, logic=take, tags=type|self }
-    }
-
-    {input, syntax=\b(drop [[ITEM]]|drop the [[ITEM]])\b
-        {move, logic=[room], tags=[self] }
-        {set, logic=[self]tags, output=-inventory }
-        {action, logic=drop, tags=type|self }
-    }
-
-    {input, syntax=(examine(.*)[[ITEM]]|x(.*)[[ITEM]])
-        {action, logic=examine[[ITEM]], tags=type|room }
+    {input, syntax=(examine(.*)armor|x(.*)armor)
+        {action, logic=examine_leather_armor, tags=type|room }
     }
 }

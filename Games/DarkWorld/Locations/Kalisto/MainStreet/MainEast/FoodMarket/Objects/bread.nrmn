@@ -39,7 +39,7 @@ You drop the bread.
         }
     }
 
-    {examinebread
+    {examine_bread
         {message
             output={@
 You examine the bread. It is hard tac so it will keep for quite a while
@@ -53,6 +53,6 @@ A chunk of bread costs 1 gold piece.
 --------------------------------------------------------------------------------
 
     {input, syntax=(examine(.*)bread|x(.*)bread)
-        {action, logic=examinebread, tags=type|room }
+        {action, logic=examine_bread, tags=type|room }
     }
 }
