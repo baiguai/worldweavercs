@@ -22,6 +22,7 @@
     {input, syntax=[self]((syn_drop))
         {move, logic=[room], tags=[self], output=[self]((msg_drop)) }
         {set, logic=[self]tags, output=-inventory }
+        {set, logic=[self]((purchased)), output=false }
         {action, logic=drop_adjustment, tags=type|room }
     }
 
