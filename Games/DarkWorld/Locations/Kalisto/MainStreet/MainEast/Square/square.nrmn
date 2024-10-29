@@ -1,0 +1,30 @@
+{room, key=kalisto_square, name=Town Square, template=room_template
+    {attribute, tags=go_w, output=kalisto_ms_east }
+    {attribute, tags=message_w
+        output={@
+You travel west along the main road.
+        }
+    }
+
+    {enter_message
+        output={@
+You are in the town square.
+        }
+    }
+
+    {look
+        {message
+            output={@
+You are in the town square.
+            }
+        }
+    }
+
+    {navigation, tags=enter_message|look
+        {message
+            output={@
+West leads to the eastern end of the main road.
+            }
+        }
+    }
+}
