@@ -139,6 +139,8 @@ namespace WorldWeaver.Parsers
         {
             Tools.CacheManager.ClearCache();
 
+            MainClass.adminEnabled = false;
+
             MainClass.output.OutputText = OutputProcessor.ProcessOutputText(Tools.InitFunctions.GetInitMessage(false), Cache.GameCache.Game);
             MainClass.output.MatchMade = true;
         }
