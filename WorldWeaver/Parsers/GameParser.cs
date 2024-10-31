@@ -76,11 +76,6 @@ namespace WorldWeaver.Parsers
                         DoSetPlayerName();
                     }
 
-                    if (!MainClass.output.MatchMade && method.Equals("DoQuit"))
-                    {
-                        DoQuit();
-                    }
-
                     if (!MainClass.output.MatchMade && method.Equals("DoNoteAdd"))
                     {
                         DoAddNote();
@@ -132,16 +127,6 @@ namespace WorldWeaver.Parsers
             DataManagement.GameLogic.Game gameData = new DataManagement.GameLogic.Game();
 
             MainClass.output.OutputText = gameData.GetTime();
-            MainClass.output.MatchMade = true;
-        }
-
-        private void DoQuit()
-        {
-            Tools.CacheManager.ClearCache();
-
-            MainClass.adminEnabled = false;
-
-            MainClass.output.OutputText = OutputProcessor.ProcessOutputText(Tools.InitFunctions.GetInitMessage(false), Cache.GameCache.Game);
             MainClass.output.MatchMade = true;
         }
 
