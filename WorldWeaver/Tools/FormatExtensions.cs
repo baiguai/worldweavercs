@@ -53,8 +53,8 @@ namespace WorldWeaver.Tools
                 var range = tmp.Split('|');
                 if (range.Length == 2)
                 {
-                    var min = Tools.OutputProcessor.ProcessOutputText(range[0], currentElement);
-                    var max = Tools.OutputProcessor.ProcessOutputText(range[1], currentElement);
+                    var min = RandomValue(Tools.OutputProcessor.ProcessOutputText(range[0], currentElement), currentElement);
+                    var max = RandomValue(Tools.OutputProcessor.ProcessOutputText(range[1], currentElement), currentElement);
                     Random rnd = new Random((int)DateTime.Now.Ticks);
                     rndVal = rnd.Next(Convert.ToInt32(min), Convert.ToInt32(max));
                 }

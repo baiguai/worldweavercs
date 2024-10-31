@@ -5,6 +5,12 @@
 You travel west along the main road.
         }
     }
+    {attribute, tags=go_ne, output=kalisto_square_tree }
+    {attribute, tags=message_ne
+        output={@
+You approach the center of the town square.
+        }
+    }
 
     {enter_message
         output={@
@@ -32,6 +38,8 @@ In the east end of the square is a temple.
         {message
             output={@
 West leads to the eastern end of the main road.
+North East leads to the old tree in the center of the square.
+East leads to the temple that you see.
             }
         }
     }
