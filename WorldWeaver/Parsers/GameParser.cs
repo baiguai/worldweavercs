@@ -139,6 +139,8 @@ namespace WorldWeaver.Parsers
         {
             Tools.CacheManager.ClearCache();
 
+            MainClass.adminEnabled = false;
+
             MainClass.output.OutputText = OutputProcessor.ProcessOutputText(Tools.InitFunctions.GetInitMessage(false), Cache.GameCache.Game);
             MainClass.output.MatchMade = true;
         }
@@ -236,6 +238,7 @@ namespace WorldWeaver.Parsers
                     MainClass.output.OutputText = "Game file not found. Game names are case sensitive, so be sure it matches the game's case.";
                     MainClass.output.MatchMade = true;
                     MainClass.output.Error = true;
+                    return;
                 }
             }
 

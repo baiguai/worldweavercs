@@ -43,6 +43,19 @@ namespace WorldWeaver.Tools
         {
             var updated = specialString;
 
+            if (updated.Equals("[player]"))
+            {
+                return Cache.PlayerCache.Player.ElementKey;
+            }
+            if (updated.Equals("[room]"))
+            {
+                return Cache.RoomCache.Room.ElementKey;
+            }
+            if (updated.Equals("[enemy]") && Cache.FightCache.Fight != null)
+            {
+                return Cache.FightCache.Fight.Enemy.ElementKey;
+            }
+
             updated = GetSpecialValue(currentElement, specialString);
             if (!updated.Equals(specialString))
             {

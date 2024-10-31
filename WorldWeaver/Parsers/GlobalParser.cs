@@ -53,6 +53,7 @@ namespace WorldWeaver.Parsers
         private string DoQuit()
         {
             CacheManager.ClearCache();
+            MainClass.adminEnabled = false;
             return InitFunctions.GetInitMessage(false);
         }
 

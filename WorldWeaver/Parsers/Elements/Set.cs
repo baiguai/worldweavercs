@@ -264,6 +264,7 @@ namespace WorldWeaver.Parsers.Elements
             var adjOutput = outputValue;
             var elemDb = new DataManagement.GameLogic.Element();
             var elem = elemDb.GetElementByKey(targetElementKey);
+            var relOut = SetRelativeElementChildValueByTag(elem, elem.Tags, outputValue, adjOutput);
 
             if (outputValue.StartsWith("++"))
             {

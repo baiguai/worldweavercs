@@ -1,4 +1,36 @@
-{type=object, key=kal-bread, name=Bread, parent=kalisto_food_market, sort=998
+{type=object, key=kal-bread, name=Bread, parent=kalisto_food_market, sort=991, template=goods
+    {attribute, tags=syn_take, output=\b(take bread*|take the bread*|buy bread*|buy the bread*)\b }
+    {attribute, tags=cost, output=1 }
+    {attribute, tags=fail_take
+        output={@
+You don't have enough gold to purchase the bread.
+        }
+    }
+    {attribute, tags=already_purchased
+        output={@
+You've already purchased the bread.
+        }
+    }
+    {attribute, tags=msg_take
+        output={@
+You purchase the bread.
+        }
+    }
+    {attribute, tags=lgc_take
+        output={@
+            ?[player]((gold)) >= 1
+        }
+    }
+    {attribute, tags=adj_take, output=-=1 }
+
+    {attribute, tags=syn_drop, output=\b(drop bread|drop the bread)\b }
+    {attribute, tags=msg_drop
+        output={@
+You drop the bread.
+        }
+    }
+
+
     {type=look
         {type=message
             output={@
@@ -7,7 +39,7 @@
         }
     }
 
-    {examinebread
+    {examine_bread
         {message
             output={@
 You examine the bread. It is hard tac so it will keep for quite a while
@@ -17,47 +49,10 @@ A chunk of bread costs 1 gold piece.
         }
     }
 
-    {take
-        {message
-            output={@
-You purchase some bread.
-            }
-        }
-    }
-
-    {drop
-        {message
-            output={@
-You drop some bread.
-            }
-        }
-    }
-
 
 --------------------------------------------------------------------------------
 
-    {input, syntax=\b(take bread*|take the bread*|buy bread*|buy the bread*)\b
-        {logic
-            output={@
-You don't have enough gold to purchase some bread.
-            }
-            logic={@
-                ?[player]((gold)) >= 1
-            }
-        }
-        {move, logic=[player], tags=[self] }
-        {set, logic=[player]((gold)), output=-=1 }
-        {set, logic=[self]tags, output=+inventory }
-        {action, logic=take, tags=type|self }
-    }
-
-    {input, syntax=\b(drop bread|drop the bread)\b
-        {move, logic=[room], tags=[self] }
-        {set, logic=[self]tags, output=-inventory }
-        {action, logic=drop, tags=type|self }
-    }
-
     {input, syntax=(examine(.*)bread|x(.*)bread)
-        {action, logic=examinebread, tags=type|room }
+        {action, logic=examine_bread, tags=type|room }
     }
 }

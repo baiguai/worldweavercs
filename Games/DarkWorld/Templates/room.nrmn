@@ -23,11 +23,11 @@
         {move, logic=[self]((go_s)), tags=[player], output=[self]((message_s)) }
     }
 
-    {input, syntax\b(go*south*west|south*west|sw)\b
+    {input, syntax=\b(go*south*west|south*west|sw)\b
         {move, logic=[self]((go_sw)), tags=[player], output=[self]((message_sw)) }
     }
 
-    {input, syntax\b(go*west|west|w)\b
+    {input, syntax=\b(go*west|west|w)\b
         {move, logic=[self]((go_w)), tags=[player], output=[self]((message_w)) }
     }
 

@@ -17,6 +17,12 @@ You go south towards the Food Market.
 You travel west along the main road.
         }
     }
+    {attribute, tags=go_e, output=kalisto_square }
+    {attribute, tags=message_e
+        output={@
+You travel east to the town square.
+        }
+    }
 
     {enter_message
         output={@

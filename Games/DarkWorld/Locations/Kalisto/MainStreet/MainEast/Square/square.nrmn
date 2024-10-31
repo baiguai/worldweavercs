@@ -1,0 +1,38 @@
+{room, key=kalisto_square, name=Town Square, template=room_template
+    {attribute, tags=go_w, output=kalisto_ms_east }
+    {attribute, tags=message_w
+        output={@
+You travel west along the main road.
+        }
+    }
+
+    {enter_message
+        output={@
+You are in the town square.
+The road becomes a circle. In the middle is a grassy area with a
+large old tree growing there, gnarled and twisted.
+\n
+Along the outside of the ring are various cottages and shops.
+At the far east end of the square is a temple.
+        }
+    }
+
+    {look
+        {message
+            output={@
+You are in the town square.
+There is a tree growing in the center of the square.
+Around the square are cottages and shops.
+In the east end of the square is a temple.
+            }
+        }
+    }
+
+    {navigation, tags=enter_message|look
+        {message
+            output={@
+West leads to the eastern end of the main road.
+            }
+        }
+    }
+}
