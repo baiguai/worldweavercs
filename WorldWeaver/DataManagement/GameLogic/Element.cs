@@ -931,36 +931,51 @@ WHERE 1=1
         {
             var elems = GetRandOutputElements();
             string connectionString = Connection.GetConnection();
+            var batchSize = 500;
+            var curSize = 0;
+            var updateQuery = "";
 
+            var primContainers = AppSettingFunctions.GetRootArray("Config/PrimaryContainers.json");
+
+            foreach (var elem in elems)
+            {
+                elem.Output = elem.Output.RandomValue(elem).ToString();
+
+                updateQuery = $@"
+UPDATE
+element
+SET
+Output = '{elem.Output}'
+WHERE 1=1
+AND ElementKey = '{elem.ElementKey}'
+;
+                ";
+
+                curSize++;
+
+                if (curSize >= batchSize)
+                {
+                    curSize = 0;
+                    updateQuery = "BEGIN " + updateQuery + " END;";
+                    ApplyRandOutputElements(connectionString, updateQuery);
+                    updateQuery = "";
+                }
+            }
+
+            Tools.CacheManager.RefreshCache();
+        }
+
+        internal void ApplyRandOutputElements(string connectionString, string sql)
+        {
             using (SqliteConnection connection = new SqliteConnection(connectionString))
             {
                 connection.Open();
                 var primContainers = AppSettingFunctions.GetRootArray("Config/PrimaryContainers.json");
 
-                foreach (var elem in elems)
+                using (SqliteCommand command = new SqliteCommand(sql, connection))
                 {
-                    elem.Output = elem.Output.RandomValue(elem).ToString();
-
-                    var updateQuery = $@"
-UPDATE
-    element
-SET
-    Output = '{elem.Output}'
-WHERE 1=1
-    AND ElementKey = '{elem.ElementKey}'
-;
-                    ";
-
-                    using (SqliteCommand command = new SqliteCommand(updateQuery, connection))
-                    {
-                        command.ExecuteNonQuery();
-                        command.Dispose();
-
-                        if (primContainers.Contains(Tools.Elements.GetSelf(elem).ElementType))
-                        {
-                            Tools.CacheManager.RefreshCache();
-                        }
-                    }
+                    command.ExecuteNonQuery();
+                    command.Dispose();
                 }
 
                 connection.Close();
