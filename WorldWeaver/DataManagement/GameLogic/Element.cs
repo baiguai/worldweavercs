@@ -941,7 +941,7 @@ WHERE 1=1
             {
                 elem.Output = elem.Output.RandomValue(elem).ToString();
 
-                updateQuery = $@"
+                updateQuery += $@"
 UPDATE
 element
 SET
@@ -956,11 +956,13 @@ AND ElementKey = '{elem.ElementKey}'
                 if (curSize >= batchSize)
                 {
                     curSize = 0;
-                    updateQuery = "BEGIN " + updateQuery + " END;";
+                    // updateQuery = "BEGIN " + updateQuery + " END;";
                     ApplyRandOutputElements(connectionString, updateQuery);
                     updateQuery = "";
                 }
             }
+
+            ApplyRandOutputElements(connectionString, updateQuery);
 
             Tools.CacheManager.RefreshCache();
         }

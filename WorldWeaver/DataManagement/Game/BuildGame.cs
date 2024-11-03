@@ -33,6 +33,8 @@ namespace WorldWeaver.DataManagement.Game
 
             string connectionString = $"Data Source={gameFile};Cache=Shared;";
 
+            Console.WriteLine("Creating the game database...");
+
             using (SqliteConnection connection = new SqliteConnection(connectionString))
             {
                 connection.Open();
@@ -280,9 +282,12 @@ PRAGMA foreign_keys = on;
 
             CreateDatabase(game_key);
 
+            Console.WriteLine("Loading the game files...");
             success = LoadGameFiles(gameFile, gameDirectory);
+            Console.WriteLine("Fixing the link elements...");
             success = FixLinkElements(gameFile);
             success = FixTemplateReferences(gameFile);
+            Console.WriteLine("Removing the template references...");
             success = RemoveTemplates(gameFile);
 
             return success;
@@ -914,6 +919,8 @@ WHERE 1=1
             {
                 if (elem.Count == 2)
                 {
+                    Console.WriteLine($"Fixing template elements for {elem[elementKeyIndex]}");
+
                     success = FixTemplateChildren(connectionString, elem[elementKeyIndex], elem[templateKeyIndex]);
                 }
             }
