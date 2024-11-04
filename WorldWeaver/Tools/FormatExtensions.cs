@@ -43,6 +43,15 @@ namespace WorldWeaver.Tools
         {
             var rndVal = 0;
 
+            try
+            {
+                rndVal = Convert.ToInt32(value);
+            }
+            catch(Exception)
+            {
+                rndVal = 0;
+            }
+
             if (value.Contains("[rand:"))
             {
                 var tmp = value.Replace("[rand:", "");
@@ -59,7 +68,7 @@ namespace WorldWeaver.Tools
                     rndVal = rnd.Next(Convert.ToInt32(min), Convert.ToInt32(max));
                 }
             }
-            else
+            if (value.Contains("[roll:"))
             {
                 rndVal = RollDice(value, currentElement);
             }

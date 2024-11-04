@@ -101,6 +101,15 @@
         },
         {
             "types" : [
+                "look"
+            ],
+            "elements" : [
+                "navigation"
+            ],
+            "repeat_options" : "false"
+        },
+        {
+            "types" : [
                 "message",
                 "general"
             ],

@@ -33,6 +33,9 @@ She is staring at you. After a moment she approaches you and sits down at the ba
             output={@
 You look around.
 The Inn is full of loud boisterous patrons.
+
+In the north east corner of the Inn is a staircase leading up.
+Set into the south wall is the door that leads out to the main street.
             }
         }
     }

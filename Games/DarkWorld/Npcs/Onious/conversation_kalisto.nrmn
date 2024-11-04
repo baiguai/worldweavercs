@@ -73,5 +73,6 @@ I'm sorry to hear that. Cheers.
 
     {input, syntax=\b(no*|nope *)\b
         {action, logic=decline, tags=type|self }
+        {set, logic=[player]((quest)), output=declined }
     }
 }
