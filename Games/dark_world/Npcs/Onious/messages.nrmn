@@ -1,0 +1,34 @@
+{link, parent=onious
+    {enter_message
+        {logic
+            logic={@
+                ?(onious)((travel))active = 'true'
+            }
+        }
+    }
+
+
+    --   Only show her name if the player knows it.
+    {look
+        {message
+            output={@
+You see <<[self]((npc_label_a))>>.
+            }
+        }
+    }
+
+    {examineclericwoman
+        {message
+            output={@
+You examine the cleric woman.
+She is wearing a green hooded cloak and has a sword bound to her right hand with a thick rope.
+            }
+        }
+    }
+
+--------------------------------------------------------------------------------
+
+    {input, syntax=(examine(.*)cleric woman*|x(.*)cleric woman*|examine(.*)cleric|x(.*)cleric)
+        {action, logic=examineclericwoman, tags=type|self }
+    }
+}

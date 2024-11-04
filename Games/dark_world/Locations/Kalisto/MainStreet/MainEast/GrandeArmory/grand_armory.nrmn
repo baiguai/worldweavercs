@@ -1,0 +1,22 @@
+{room, key=kalisto_grande_armory, name=The Grande Armory, template=room_template
+    {attribute, tags=go_s, output=kalisto_ms_east }
+    {attribute, tags=message_s
+        output={@
+You go south, returning to the main street.
+        }
+    }
+
+    {enter_message
+        output={@
+You are in the Grande Armory.
+        }
+    }
+
+    {navigation, tags=enter_message|look
+        {message
+            output={@
+South of you is the main street of Kalisto.
+            }
+        }
+    }
+}

@@ -1,0 +1,64 @@
+{type=object, key=kalisto_leather_armor, name=Leather Armor, parent=kalisto_grande_armory, sort=998, template=goods
+    {attribute, tags=syn_take, output=\b(take leather*|take the leather*|buy leather*|buy the leather*|take armor*|take the armor*|buy armor*|buy the armor*)\b }
+    {attribute, tags=cost, output=1 }
+    {attribute, tags=fail_take
+        output={@
+You don't have enough gold to purchase the leather armor.
+        }
+    }
+    {attribute, tags=already_purchased
+        output={@
+You've already purchased the armor.
+        }
+    }
+    {attribute, tags=msg_take
+        output={@
+You purchase the leather armor.
+        }
+    }
+    {attribute, tags=lgc_take
+        output={@
+            ?[player]((gold)) >= 1
+        }
+    }
+    {attribute, tags=adj_take, output=-=1 }
+
+    {attribute, tags=syn_drop, output=\b(drop leather*|drop the leather*|drop armor*|drop the armor*)\b }
+    {attribute, tags=msg_drop
+        output={@
+You drop the leather armor.
+        }
+    }
+
+
+
+    {type=look
+        {type=message
+            output={@
+<?[self]parent = [room]?>You see a set of leather armor.</?>
+            }
+        }
+    }
+
+    {examine_leather_armor
+        {message
+            output={@
+You examine the leather armor.
+            }
+        }
+    }
+
+    {type=take_adjustment
+        {set, logic=[player]((armor)), output=+=10 }
+    }
+    {type=drop_adjustment
+        {set, logic=[player]((armor)), output=-=10 }
+    }
+
+
+--------------------------------------------------------------------------------
+
+    {input, syntax=(examine(.*)armor|x(.*)armor)
+        {action, logic=examine_leather_armor, tags=type|room }
+    }
+}

@@ -23,5 +23,12 @@ namespace WorldWeaver.DataManagement
 
             return $"Data Source={gameFile};Cache=Shared;";
         }
+
+        public static string GetConfigConnection()
+        {
+            var configDb = $"{Environment.CurrentDirectory}/Config/config.db";
+
+            return $"Data Source={configDb};Cache=Shared;";
+        }
     }
 }

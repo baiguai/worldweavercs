@@ -1,0 +1,59 @@
+{type=object, key=kal-vege, name=Fruits and Vegetables, parent=kalisto_food_market, sort=992, template=goods
+    {attribute, tags=syn_take, output=\b(take vege*|take the vege*|buy vege*|buy the vege*)\b }
+    {attribute, tags=cost, output=1 }
+    {attribute, tags=fail_take
+        output={@
+You don't have enough gold to purchase the vegetables.
+        }
+    }
+    {attribute, tags=already_purchased
+        output={@
+You've already purchased the vegetables.
+        }
+    }
+    {attribute, tags=msg_take
+        output={@
+You purchase the vegetables.
+        }
+    }
+    {attribute, tags=lgc_take
+        output={@
+            ?[player]((gold)) >= 1
+        }
+    }
+    {attribute, tags=adj_take, output=-=1 }
+
+    {attribute, tags=syn_drop, output=\b(drop vege*|drop the vege*)\b }
+    {attribute, tags=msg_drop
+        output={@
+You drop the vegetables.
+        }
+    }
+
+
+    {type=look
+        {type=message
+            output={@
+<?[self]parent = [room]?>You see some dried vegetables.</?>
+            }
+        }
+    }
+
+    {examinevege
+        {message
+            output={@
+You examine the dried vegetables. They consist of various leafy greens and fruits.
+These will not keep very long.
+A bundle of vegetables costs 1 gold piece.
+            }
+        }
+    }
+
+
+--------------------------------------------------------------------------------
+
+
+    {input, syntax=(examine(.*)fruit*|x(.*)fruit*|examine(.*)vege*|x(.*)vege*)
+        {action, logic=examinevege, tags=type|room }
+    }
+}

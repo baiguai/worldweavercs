@@ -1,0 +1,78 @@
+{link, parent=onious
+    {attribute, output=offer, tags=topic }
+
+
+    {accept
+        {message
+            output={@
+Oh great!
+My superiors have been hearing rumors of undead activity throughout the land.
+This is very troubling. Unfortunately we lack the resources necessary to deal with this issue.
+However an adventurer like yourself could prove very useful to us.
+Do you accept our offer? If so, I can provide you with further details.
+            }
+        }
+        {set, logic=[player]((quest)), output=Investigate the Undead }
+    }
+
+
+    {details
+        {message
+            output={@
+She beckons you to her table. You follow her and sit down. A tall hooded man with a long staff
+silently approaches and sits next to <<[self]((npc_label_the))>>.
+"My name is Onious." She informs you.
+She drops a coin purse onto the table.
+"Here's 100 gold pieces. At the conclusion of the mission I will give you much more than that."
+
+We have arranged a room for you. Our journey will begin in the morning. In the meantime, feel
+free to explore Kalisto. When you are ready to slumber for the night come back here, the rooms
+are upstairs and your particular room is 204.
+            }
+        }
+    }
+
+
+    {decline
+        {message
+            output={@
+I'm sorry to hear that. Cheers.
+
+<<[self]((npc_label_the_proper))>> exits the pub.
+            }
+        }
+        {set, logic=[self]parent, output=limbo }
+    }
+
+
+
+--------------------------------------------------------------------------------
+
+    {input, syntax=\b(yes*|yep *|sure *)\b
+        {logic
+            logic={@
+                ?[self]((topic)) = 'offer'
+            }
+        }
+        {action, logic=accept, tags=type|room }
+        {set, logic=[self]((topic)), output=inform }
+    }
+
+    {input, syntax=\b(yes*|yep *|sure *|i accept *|accept *)\b
+        {logic
+            logic={@
+                ?[self]((topic)) = 'inform'
+            }
+        }
+        {action, logic=details, tags=type|room }
+        {set, logic=[self]((topic)), output=kalisto }
+        {set, logic=[self]((label)), output=Onious }
+        {set, logic=[player]((gold)), output=+=100 }
+        {set, logic=[player]((quest)), output=accepted }
+    }
+
+    {input, syntax=\b(no*|nope *)\b
+        {action, logic=decline, tags=type|self }
+        {set, logic=[player]((quest)), output=declined }
+    }
+}

@@ -1,0 +1,93 @@
+{object, name=Note, parent=ooi_second_floor_chest, sort=999
+    {attribute, output=false, tags=moved }
+
+    {open
+        {message
+            output={@
+You see a note.
+Sketched on the parchment is a tree in the center of a village.
+There is some text scrawled on it that points to a spot below the tree.
+It says simply: "Death Map"
+            }
+        }
+        {logic
+            logic={@
+                ?[self]((moved)) = 'false'
+            }
+        }
+    }
+
+    {look
+        {message
+            output={@
+You see a note.
+            }
+        }
+        {logic
+            logic={@
+                ?[self]parent = [room]key
+            }
+        }
+    }
+
+    {examine
+        {message
+            output={@
+Inside you see a note.
+            }
+        }
+    }
+
+    {examinenote
+        {message
+            output={@
+You examine the note.
+
+Sketched on the parchment is a tree in the center of a village.
+There is some text scrawled on it that points to a spot below the tree.
+It says simply: "Death Map"
+            }
+        }
+        {logic
+            logic={@
+                ?[room]((notehidden)) != 'true'
+            }
+        }
+    }
+
+    {take
+        {message
+            output={@
+You take the note.
+            }
+        }
+    }
+
+    {drop
+        {message
+            output={@
+You drop the note.
+            }
+        }
+    }
+
+
+--------------------------------------------------------------------------------
+
+    {input, syntax=(examine(.*)note|x(.*)note)
+        {action, logic=examinenote, tags=type|self }
+    }
+
+    {input, syntax=\b(take note|take the note)\b
+        {move, logic=[player], tags=[self] }
+        {set, logic=[self]tags, output=+inventory }
+        {set, logic=[self]((moved)), output=true }
+        {action, logic=take, tags=type|self }
+    }
+
+    {input, syntax=\b(drop note|drop the note)\b
+        {move, logic=[room], tags=[self] }
+        {set, logic=[self]tags, output=-inventory }
+        {action, logic=drop, tags=type|self }
+    }
+}
