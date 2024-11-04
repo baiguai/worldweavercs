@@ -6,8 +6,11 @@ namespace WorldWeaver.DataManagement
 {
     public class ConfigDb
     {
+        public string connection = "";
+
         public ConfigDb()
         {
+            connection = Connection.GetConfigConnection();
         }
     }
 }

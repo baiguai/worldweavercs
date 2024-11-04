@@ -39,17 +39,22 @@ namespace WorldWeaver.Tools
             return rndVal;
         }
 
-        public static int RandomValue(this string value, Classes.Element currentElement)
+        public static string RandomValue(this string value, Classes.Element currentElement)
         {
-            var rndVal = 0;
+            var rndVal = "";
+
+            if (!value.ToLower().Contains("[rand") && !value.ToLower().Contains("[roll"))
+            {
+                return value;
+            }
 
             try
             {
-                rndVal = Convert.ToInt32(value);
+                rndVal = value;
             }
             catch(Exception)
             {
-                rndVal = 0;
+                rndVal = "0";
             }
 
             if (value.Contains("[rand:"))
@@ -62,15 +67,15 @@ namespace WorldWeaver.Tools
                 var range = tmp.Split('|');
                 if (range.Length == 2)
                 {
-                    var min = RandomValue(Tools.OutputProcessor.ProcessOutputText(range[0], currentElement), currentElement);
-                    var max = RandomValue(Tools.OutputProcessor.ProcessOutputText(range[1], currentElement), currentElement);
+                    var min = Convert.ToInt32(RandomValue(Tools.OutputProcessor.ProcessOutputText(range[0], currentElement), currentElement));
+                    var max = Convert.ToInt32(RandomValue(Tools.OutputProcessor.ProcessOutputText(range[1], currentElement), currentElement));
                     Random rnd = new Random((int)DateTime.Now.Ticks);
-                    rndVal = rnd.Next(Convert.ToInt32(min), Convert.ToInt32(max));
+                    rndVal = rnd.Next(Convert.ToInt32(min), Convert.ToInt32(max)).ToString();
                 }
             }
             if (value.Contains("[roll:"))
             {
-                rndVal = RollDice(value, currentElement);
+                rndVal = RollDice(value, currentElement).ToString();
             }
 
             return rndVal;

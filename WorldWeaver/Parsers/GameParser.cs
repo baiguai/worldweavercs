@@ -3,6 +3,7 @@ using System.IO;
 using System.Reflection;
 using WorldWeaver.Classes;
 using WorldWeaver.Tools;
+using System.Globalization;
 
 namespace WorldWeaver.Parsers
 {
@@ -45,7 +46,7 @@ namespace WorldWeaver.Parsers
 
                     if (!MainClass.output.MatchMade && method.Equals("DoResumeGame"))
                     {
-                        var gameFile = MainClass.userInput.Replace("resume ", "");
+                        var gameFile = MainClass.userInput.ToLower().Replace("resume ", "").Replace(" ", "_");
                         if (!File.Exists($"Games/{gameFile}_playing.db"))
                         {
                             MainClass.userInput = $"play {gameFile}";
@@ -209,7 +210,7 @@ namespace WorldWeaver.Parsers
                 MainClass.gameDb = "";
             }
 
-            var gameFile = MainClass.userInput.Replace("play ", "");
+            var gameFile = MainClass.userInput.ToLower().Replace("play ", "").Replace(" ", "_");
             if (MainClass.gameDb.Equals(""))
             {
                 MainClass.gameDb = $"{gameFile}_playing";
@@ -232,7 +233,7 @@ namespace WorldWeaver.Parsers
 
         public void DoResumeGame(bool startingGame = false)
         {
-            var gameFile = MainClass.userInput.Replace("resume ", "");
+            var gameFile = MainClass.userInput.ToLower().Replace("resume ", "").Replace(" ", "_");
 
             if (MainClass.gameDb.Equals(""))
             {
@@ -357,7 +358,11 @@ set player name <<NAME>>
                         MainClass.output.OutputText += Environment.NewLine;
                     }
 
-                    MainClass.output.OutputText += Path.GetFileNameWithoutExtension(file);
+                    var gameName = Path.GetFileNameWithoutExtension(file).Replace("_", " ");
+                    TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
+                    gameName = textInfo.ToTitleCase(gameName);
+
+                    MainClass.output.OutputText += gameName;
                 }
             }
 

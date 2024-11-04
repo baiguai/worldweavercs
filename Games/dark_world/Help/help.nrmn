@@ -1,0 +1,15 @@
+{global, parent=root
+    {help_home
+        {type=message
+            output={@
+Welcome to the DarkWorld help system.
+            }
+        }
+    }
+
+
+
+    {input, syntax=\b(help|h)\b
+        {action, logic=help_home, tags=type }
+    }
+}

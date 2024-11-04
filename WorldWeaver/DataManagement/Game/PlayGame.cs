@@ -38,8 +38,10 @@ namespace WorldWeaver.DataManagement.Game
 
         private void ProcessCustomStaticValues()
         {
+            Console.WriteLine("Updating random values...");
             ProcessRandomNames();
             ProcessRandomOutput();
+            Console.WriteLine("Updateing references...");
             ProcessReferences();
 
             CacheManager.RefreshCache();

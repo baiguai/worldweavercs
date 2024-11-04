@@ -1,0 +1,55 @@
+{room, key=kalisto_ms_east, name=Main Street East, template=room_template
+    {attribute, tags=go_n, output=kalisto_grande_armory }
+    {attribute, tags=message_n
+        output={@
+You go north towards The Grande Armory.
+        }
+    }
+    {attribute, tags=go_s, output=kalisto_food_market }
+    {attribute, tags=message_s
+        output={@
+You go south towards the Food Market.
+        }
+    }
+    {attribute, tags=go_w, output=kalisto_main_street }
+    {attribute, tags=message_w
+        output={@
+You travel west along the main road.
+        }
+    }
+    {attribute, tags=go_e, output=kalisto_square }
+    {attribute, tags=message_e
+        output={@
+You travel east to the town square.
+        }
+    }
+
+    {enter_message
+        output={@
+You are in the eastern end of the main street that cuts through Kalisto.
+There is a cottage on the north side of the street with a wooden sign over the door that reads:
+"Grande Armory"
+On the south side of the street is another small building with the following words painted on it:
+"Food Market"
+        }
+    }
+
+    {look
+        {message
+            output={@
+You are in the east end of the main road of Kalisto.
+            }
+        }
+    }
+
+    {navigation, tags=enter_message|look
+        {message
+            output={@
+Further east leads to the village square.
+West leads to the western end of the main road.
+North of you is the "Grande Armory" and
+south of you is the "Food Market".
+            }
+        }
+    }
+}

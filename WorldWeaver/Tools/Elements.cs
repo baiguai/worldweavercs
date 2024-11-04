@@ -105,7 +105,7 @@ namespace WorldWeaver.Tools
                     return curElement.Name;
 
                 default:
-                    return curElement.Output.RandomValue(curElement).ToString();
+                    return curElement.Output.RandomValue(curElement);
             }
         }
 

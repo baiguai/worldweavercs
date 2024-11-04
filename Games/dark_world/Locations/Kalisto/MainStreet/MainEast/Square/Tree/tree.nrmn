@@ -1,0 +1,15 @@
+{room, key=kalisto_square_tree, name=Town Square Tree, template=room_template
+    {enter_message
+        output={@
+You are in the center of the town square.
+        }
+    }
+
+    {look
+        {message
+            output={@
+You are in the center of the town square.
+            }
+        }
+    }
+}
