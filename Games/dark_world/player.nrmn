@@ -24,10 +24,14 @@
     {attribute, name=Quest, output=, tags=stats|quest }
 
 
-    {devnote, logic=n, tags=todo
+    {devnote, logic=n, tags=gamenotes
         output={@
 Quest values list in rough order:
 - accepted
+- declined
+
+If the player has declined, they've already lost the game.
+Ensure that they can do nothing more then wander around.
         }
     }
 }

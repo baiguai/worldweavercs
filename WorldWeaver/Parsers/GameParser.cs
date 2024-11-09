@@ -147,7 +147,7 @@ namespace WorldWeaver.Parsers
             var arr = noteInput.Split('|');
             if (arr.Length != 2)
             {
-                MainClass.output.OutputText = $"To add a note use:{Environment.NewLine}add note <note key>|<note text>";
+                MainClass.output.OutputText = $"To add a note use:{Environment.NewLine}noteadd <note key>|<note text>";
                 return;
             }
             var noteKey = arr[0].Trim();

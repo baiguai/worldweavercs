@@ -1,15 +1,45 @@
-{global, parent=root
+{global, key=helpsys, parent=root
     {help_home
-        {type=message
+        {message
             output={@
 Welcome to the DarkWorld help system.
+
+For information on how to play Interactive Fiction games use:
+help if or h if
+            }
+        }
+    }
+
+    {help_if
+        {message
+            output={@
+Interactive Fiction Help
+Interactive Fiction (IF) refers to games that are text-based.
+            }
+        }
+    }
+
+    {help_notes
+        {message
+            output={@
+Notes help...
             }
         }
     }
 
 
 
+
+
+    {input, syntax=\b(help notes|h notes)\b
+        {action, logic=help_notes, tags=type|self }
+    }
+
+    {input, syntax=\b(help if|h if)\b
+        {action, logic=help_if, tags=type|self }
+    }
+
     {input, syntax=\b(help|h)\b
-        {action, logic=help_home, tags=type }
+        {action, logic=help_home, tags=type|self }
     }
 }
