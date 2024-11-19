@@ -11,7 +11,7 @@ namespace WorldWeaver.Parsers.Elements
             bool isEntering = false
         )
         {
-            if (currentElement.ElementType.Equals("attribute"))
+            if (currentElement.ElementType.Equals("attribute", StringComparison.OrdinalIgnoreCase))
             {
                 return;
             }
@@ -44,12 +44,12 @@ namespace WorldWeaver.Parsers.Elements
                     {
                         continue;
                     }
-                    if (child.ElementType.Equals("attribute"))
+                    if (child.ElementType.Equals("attribute", StringComparison.OrdinalIgnoreCase))
                     {
                         continue;
                     }
 
-                    if (currentElement.ElementType.Equals("room") && !Cache.RoomCache.Room.ElementKey.Equals(currentElement.ElementKey))
+                    if (currentElement.ElementType.Equals("room", StringComparison.OrdinalIgnoreCase) && !Cache.RoomCache.Room.ElementKey.Equals(currentElement.ElementKey))
                     {
                         return;
                     }
@@ -113,7 +113,7 @@ namespace WorldWeaver.Parsers.Elements
                             {
                                 continue;
                             }
-                            if (child.ElementType.Equals("enter_message") && !isEntering)
+                            if (child.ElementType.Equals("enter_message", StringComparison.OrdinalIgnoreCase) && !isEntering)
                             {
                                 continue;
                             }
@@ -240,7 +240,7 @@ namespace WorldWeaver.Parsers.Elements
                             break;
 
                         case "devnote":
-                            if (!MainClass.adminEnabled || !child.ElementType.Equals("devnote"))
+                            if (!MainClass.adminEnabled || !child.ElementType.Equals("devnote", StringComparison.OrdinalIgnoreCase))
                             {
                                 continue;
                             }
