@@ -136,14 +136,14 @@ namespace WorldWeaver.Parsers
             var gameObj = new DataManagement.Game.PlayGame();
             Cache.GameCache.Game = null;
 
-            gameObj.SetPlayerName(MainClass.userInput.Replace("set player name ", "set_player_name ").GetInputParams());
+            gameObj.SetPlayerName(MainClass.userInput.Replace("set player name ", "set_player_name ", StringComparison.OrdinalIgnoreCase).GetInputParams());
 
             DoResumeGame(true);
         }
 
         private void DoAddNote()
         {
-            var noteInput = MainClass.userInput.Replace("noteadd ", "");
+            var noteInput = MainClass.userInput.Replace("noteadd ", "", StringComparison.OrdinalIgnoreCase);
             var arr = noteInput.Split('|');
             if (arr.Length != 2)
             {
@@ -160,7 +160,7 @@ namespace WorldWeaver.Parsers
 
         private void DoDeleteNote()
         {
-            var noteInput = MainClass.userInput.Replace("notedelete ", "");
+            var noteInput = MainClass.userInput.Replace("notedelete ", "", StringComparison.OrdinalIgnoreCase);
 
             var elemDb = new DataManagement.GameLogic.Element();
 
@@ -190,7 +190,7 @@ namespace WorldWeaver.Parsers
 
         private void DoViewNote()
         {
-            var noteInput = MainClass.userInput.Replace("note ", "");
+            var noteInput = MainClass.userInput.Replace("note ", "", StringComparison.OrdinalIgnoreCase);
 
             var elemDb = new DataManagement.GameLogic.Element();
 
@@ -210,7 +210,7 @@ namespace WorldWeaver.Parsers
                 MainClass.gameDb = "";
             }
 
-            var gameFile = MainClass.userInput.ToLower().Replace("play ", "").Replace(" ", "_");
+            var gameFile = MainClass.userInput.ToLower().Replace("play ", "", StringComparison.OrdinalIgnoreCase).Replace(" ", "_");
             if (MainClass.gameDb.Equals(""))
             {
                 MainClass.gameDb = $"{gameFile}_playing";
@@ -233,7 +233,7 @@ namespace WorldWeaver.Parsers
 
         public void DoResumeGame(bool startingGame = false)
         {
-            var gameFile = MainClass.userInput.ToLower().Replace("resume ", "").Replace(" ", "_");
+            var gameFile = MainClass.userInput.ToLower().Replace("resume ", "", StringComparison.OrdinalIgnoreCase).Replace(" ", "_");
 
             if (MainClass.gameDb.Equals(""))
             {

@@ -413,23 +413,23 @@ PRAGMA foreign_keys = on;
                 switch (line)
                 {
                     case string s when line.ToLower().StartsWith("type=", StringComparison.OrdinalIgnoreCase):
-                        element.ElementType = line.Replace("type=", "").SqlSafe();
+                        element.ElementType = line.Replace("type=", "", StringComparison.OrdinalIgnoreCase).ToLower().SqlSafe();
                         break;
 
                     case string s when line.ToLower().StartsWith("key=", StringComparison.OrdinalIgnoreCase):
-                        element.ElementKey = line.Replace("key=", "").Replace(' ', '_').SqlSafe();
+                        element.ElementKey = line.Replace("key=", "", StringComparison.OrdinalIgnoreCase).Replace(' ', '_').SqlSafe();
                         break;
 
                     case string s when line.ToLower().StartsWith("name=", StringComparison.OrdinalIgnoreCase):
-                        element.Name = line.Replace("name=", "").SqlSafe();
+                        element.Name = line.Replace("name=", "", StringComparison.OrdinalIgnoreCase).SqlSafe();
                         break;
 
                     case string s when line.ToLower().StartsWith("parent=", StringComparison.OrdinalIgnoreCase):
-                        element.ParentKey = line.Replace("parent=", "").SqlSafe();
+                        element.ParentKey = line.Replace("parent=", "", StringComparison.OrdinalIgnoreCase).SqlSafe();
                         break;
 
                     case string s when line.ToLower().StartsWith("syntax=", StringComparison.OrdinalIgnoreCase):
-                        element.Syntax = line.Replace("syntax=", "").SqlSafe();
+                        element.Syntax = line.Replace("syntax=", "", StringComparison.OrdinalIgnoreCase).SqlSafe();
                         break;
 
                     case string s when line.ToLower().StartsWith("logic=", StringComparison.OrdinalIgnoreCase):
@@ -439,7 +439,7 @@ PRAGMA foreign_keys = on;
 
                     case string s when line.ToLower().StartsWith("repeat=", StringComparison.OrdinalIgnoreCase):
                         ix = GetFieldValue(element, lines, "repeat", ix);
-                        element.Repeat = line.Replace("repeat=", "").SqlSafe();
+                        element.Repeat = line.Replace("repeat=", "", StringComparison.OrdinalIgnoreCase).ToLower().SqlSafe();
                         break;
 
                     case string s when line.ToLower().StartsWith("output=", StringComparison.OrdinalIgnoreCase):
@@ -456,11 +456,11 @@ PRAGMA foreign_keys = on;
                         break;
 
                     case string s when line.ToLower().StartsWith("active=", StringComparison.OrdinalIgnoreCase):
-                        element.Active = line.Replace("active=", "");
+                        element.Active = line.Replace("active=", "", StringComparison.OrdinalIgnoreCase).ToLower();
                         break;
 
                     case string s when line.ToLower().StartsWith("sort=", StringComparison.OrdinalIgnoreCase):
-                        element.Sort = Convert.ToInt32(line.Replace("sort=", ""));
+                        element.Sort = Convert.ToInt32(line.Replace("sort=", "", StringComparison.OrdinalIgnoreCase));
                         break;
 
                     case "}":
@@ -506,8 +506,8 @@ PRAGMA foreign_keys = on;
 
                 if (ix == startRow)
                 {
-                    line = line.Replace($"{fieldName}=", "");
-                    if (!line.StartsWith("{", StringComparison.OrdinalIgnoreCase))
+                    line = line.Replace($"{fieldName}=", "", StringComparison.OrdinalIgnoreCase);
+                    if (!line.StartsWith("{"))
                     {
                         propertyValue = line;
                         break;
@@ -572,7 +572,7 @@ PRAGMA foreign_keys = on;
                             break;
 
                         case "type":
-                            element.ElementType = pairArr[1].Trim();
+                            element.ElementType = pairArr[1].ToLower().Trim();
                             break;
 
                         case "name":
@@ -588,7 +588,7 @@ PRAGMA foreign_keys = on;
                             break;
 
                         case "repeat":
-                            element.Repeat = pairArr[1].Trim();
+                            element.Repeat = pairArr[1].ToLower().Trim();
                             break;
 
                         case "logic":
@@ -608,7 +608,7 @@ PRAGMA foreign_keys = on;
                             break;
 
                         case "active":
-                            element.Active = pairArr[1].Trim();
+                            element.Active = pairArr[1].ToLower().Trim();
                             break;
 
                         case "sort":
@@ -760,7 +760,7 @@ VALUES";
                         createDbQuery += ",";
                     }
 
-                    if (e.ElementType.Equals("player"))
+                    if (e.ElementType.Equals("player", StringComparison.OrdinalIgnoreCase))
                     {
                         MainClass.logger.WriteToLog("SQL:    " + createDbQuery, Logger.LogTypes.BuildGame);
                     }

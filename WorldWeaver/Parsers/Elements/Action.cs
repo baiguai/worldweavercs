@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Formats.Asn1;
 using System.Globalization;
+using System.Linq;
+using System.Collections.Generic;
 using WorldWeaver.Cache;
 using WorldWeaver.Classes;
 using WorldWeaver.Tools;
@@ -19,7 +21,7 @@ namespace WorldWeaver.Parsers.Elements
             {
                 if (proc.ChildProcElements.Contains("logic"))
                 {
-                    foreach (var child in currentElement.Children.Where(c => c.ElementType.Equals("logic")))
+                    foreach (var child in currentElement.Children.Where(c => c.ElementType.Equals("logic", StringComparison.OrdinalIgnoreCase)))
                     {
                         elemLogic.ParseLogic(child);
                         if (MainClass.output.FailedLogic)
