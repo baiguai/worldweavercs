@@ -768,10 +768,21 @@ VALUES";
                     MainClass.logger.WriteToLog($"Element Type: {e.ElementType}, Key: {e.ElementKey}, Parent: {e.ParentKey}", Logger.LogTypes.BuildGame);
                 }
 
-                using (SqliteCommand command = new SqliteCommand(createDbQuery, connection))
+                if (!createDbQuery.Equals(""))
                 {
-                    command.ExecuteNonQuery();
-                    command.Dispose();
+                    try
+                    {
+                        using (SqliteCommand command = new SqliteCommand(createDbQuery, connection))
+                        {
+                            command.ExecuteNonQuery();
+                            command.Dispose();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(createDbQuery);
+                        throw;
+                    }
                 }
 
                 connection.Close();
@@ -895,7 +906,7 @@ SELECT
 FROM
     element e
 WHERE 1=1   
-    AND e.Template IS NOT NULL
+    AND e.Template != ''
 ;
                 ";
 
@@ -924,64 +935,34 @@ WHERE 1=1
                 if (elem.Count == 2)
                 {
                     Console.WriteLine($"Fixing template elements for {elem[elementKeyIndex]}");
+                    var templateElem = allTemplates.Where(t => t.ElementKey == elem[templateKeyIndex]).FirstOrDefault();
 
-                    success = FixTemplateChildren(connectionString, allTemplates, elem[elementKeyIndex], elem[templateKeyIndex]);
+                    if (templateElem != null)
+                    {
+                        success = FixTemplateChildren(connectionString, templateElem.Children, elem[elementKeyIndex]);
+                    }
                 }
             }
+
+            SaveElements(connectionString);
 
             return true;
         }
 
-        private bool FixTemplateChildren(string connectionString, List<Classes.Element> allTemplates, string newParentKey, string currentParentKey)
+        private bool FixTemplateChildren(string connectionString, List<Classes.Element> templateElementChildren, string newParentKey)
         {
-            var success = false;
-            var templateChildElems = new List<string>();
-            var elementKeyIndex = 0;
-            var templateKeyIndex = 1;
-
-            using (SqliteConnection connection = new SqliteConnection(connectionString))
+            foreach (var child in templateElementChildren)
             {
-                connection.Open();
-                var selectQuery = $@"
-SELECT
-    e.ElementKey
-FROM
-    element e
-WHERE 1=1   
-    AND e.ParentKey = '{currentParentKey}'
-;
-                ";
-
-                using (SqliteCommand command = new SqliteCommand(selectQuery, connection))
-                {
-                    using (SqliteDataReader reader = command.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            templateChildElems.Add(reader.GetString(reader.GetOrdinal("ElementKey")));
-                        }
-                    }
-
-                    command.Dispose();
-                }
-
-                connection.Close();
-                connection.Dispose();
-            }
-
-            var elemDb = new DataManagement.GameLogic.Element();
-            foreach (var elem in templateChildElems)
-            {
-                var childElem = elemDb.GetElementByKey(connectionString, elem);
                 var newKey = Guid.NewGuid().ToString();
-                childElem.ParentKey = newParentKey;
-                var curChildKey = childElem.ElementKey;
-                childElem.ElementKey = newKey;
-                LoadElement(connectionString, childElem);
-                FixTemplateChildren(connectionString, allTemplates, newKey, curChildKey);
-            }
+                child.ElementKey = newKey;
+                child.ParentKey = newParentKey;
+                LoadElement(connectionString, child);
 
-            SaveElements(connectionString);
+                if (child.Children.Count > 0)
+                {
+                    FixTemplateChildren(connectionString, child.Children, newKey);
+                }
+            }
 
             return true;
         }
