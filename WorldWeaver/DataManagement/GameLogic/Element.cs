@@ -13,6 +13,10 @@ namespace WorldWeaver.DataManagement.GameLogic
         public List<Classes.Element> GetElementsByType(string type)
         {
             string connectionString = Connection.GetConnection(MainClass.gameDb);
+            return GetElementsByType(connectionString, type);
+        }
+        public List<Classes.Element> GetElementsByType(string connectionString, string type)
+        {
             var cachedElems = Tools.CacheManager.GetCachedElementByType(type);
             if (cachedElems.Count > 0)
             {

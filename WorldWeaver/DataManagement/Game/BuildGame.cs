@@ -876,10 +876,14 @@ WHERE
         private bool FixTemplateReferences(string gameFile)
         {
             var connectionString = $"Data Source={gameFile};Cache=Shared;";
+            var elemDb = new DataManagement.GameLogic.Element();
             var success = false;
             var templatedElems = new List<List<string>>();
             var elementKeyIndex = 0;
             var templateKeyIndex = 1;
+            // TODO: Figure out how to use this list
+            // And build the elements without hitting the DB
+            var allTemplates = elemDb.GetElementsByType(connectionString, "template");
 
             using (SqliteConnection connection = new SqliteConnection(connectionString))
             {
@@ -921,14 +925,14 @@ WHERE 1=1
                 {
                     Console.WriteLine($"Fixing template elements for {elem[elementKeyIndex]}");
 
-                    success = FixTemplateChildren(connectionString, elem[elementKeyIndex], elem[templateKeyIndex]);
+                    success = FixTemplateChildren(connectionString, allTemplates, elem[elementKeyIndex], elem[templateKeyIndex]);
                 }
             }
 
             return true;
         }
 
-        private bool FixTemplateChildren(string connectionString, string newParentKey, string currentParentKey)
+        private bool FixTemplateChildren(string connectionString, List<Classes.Element> allTemplates, string newParentKey, string currentParentKey)
         {
             var success = false;
             var templateChildElems = new List<string>();
@@ -974,7 +978,7 @@ WHERE 1=1
                 var curChildKey = childElem.ElementKey;
                 childElem.ElementKey = newKey;
                 LoadElement(connectionString, childElem);
-                FixTemplateChildren(connectionString, newKey, curChildKey);
+                FixTemplateChildren(connectionString, allTemplates, newKey, curChildKey);
             }
 
             SaveElements(connectionString);
