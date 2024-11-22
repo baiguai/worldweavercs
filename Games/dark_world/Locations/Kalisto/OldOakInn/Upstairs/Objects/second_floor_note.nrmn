@@ -1,5 +1,24 @@
-{object, name=Note, parent=ooi_second_floor_chest, sort=999
-    {attribute, output=false, tags=moved }
+{object, name=Note, parent=ooi_second_floor_chest, sort=999, template=takeable
+    {attribute, tags=syn_take, output=\b(take note*|take the note*)\b }
+    {attribute, tags=fail_take
+        output={@
+You already have the note
+        }
+    }
+    {attribute, tags=msg_take
+        output={@
+You take the note.
+        }
+    }
+
+    {attribute, tags=syn_drop, output=\b(drop note|drop the note)\b }
+    {attribute, tags=msg_drop
+        output={@
+You drop the note.
+        }
+    }
+
+
 
     {open
         {message
@@ -20,12 +39,7 @@ It says simply: "Death Map"
     {look
         {message
             output={@
-You see a note.
-            }
-        }
-        {logic
-            logic={@
-                ?[self]parent = [room]key
+<?[self]parent = [room]?>You see a note.</?>
             }
         }
     }
