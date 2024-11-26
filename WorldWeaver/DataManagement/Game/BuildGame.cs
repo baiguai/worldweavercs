@@ -286,9 +286,6 @@ PRAGMA foreign_keys = on;
             success = LoadGameFiles(gameFile, gameDirectory);
             Console.WriteLine("Fixing the link elements...");
             success = FixLinkElements(gameFile);
-            success = FixTemplateReferences(gameFile);
-            Console.WriteLine("Removing the template references...");
-            success = RemoveTemplates(gameFile);
 
             return success;
         }
@@ -736,62 +733,44 @@ VALUES";
                 foreach (var e in elementsToInsert)
                 {
                     createDbQuery += $@"
-('{e.ElementType}',
-'{e.ElementKey}',
-'{e.Name}',
-'{e.ParentKey}',
-'{e.Syntax}',
-'{e.Logic}',
-'{e.Output}',
-'{e.Tags}',
-'{e.Template}',
-'{e.Repeat}',
-'{e.Active}',
-'{e.Sort}',
-'{e.CreateDate}',
-'{e.UpdateDate}')";
+( '{e.ElementType}','{e.ElementKey}','{e.Name}','{e.ParentKey}','{e.Syntax}','{e.Logic}','{e.Output}','{e.Tags}','{e.Template}','{e.Repeat}','{e.Active}','{e.Sort}','{e.CreateDate}','{e.UpdateDate}' )";
 
                     if (e.Equals(lastElem))
                     {
                         createDbQuery += ";";
+
+                        if (!createDbQuery.Equals(""))
+                        {
+                            try
+                            {
+                                using (SqliteCommand command = new SqliteCommand(createDbQuery, connection))
+                                {
+                                    command.ExecuteNonQuery();
+                                    command.Dispose();
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(createDbQuery);
+                                throw;
+                            }
+
+                            elementsToInsert.Clear();
+                            connection.Close();
+                            connection.Dispose();
+                            return true;
+                        }
                     }
                     else
                     {
                         createDbQuery += ",";
                     }
 
-                    if (e.ElementType.Equals("player", StringComparison.OrdinalIgnoreCase))
-                    {
-                        MainClass.logger.WriteToLog("SQL:    " + createDbQuery, Logger.LogTypes.BuildGame);
-                    }
-
                     MainClass.logger.WriteToLog($"Element Type: {e.ElementType}, Key: {e.ElementKey}, Parent: {e.ParentKey}", Logger.LogTypes.BuildGame);
                 }
-
-                if (!createDbQuery.Equals(""))
-                {
-                    try
-                    {
-                        using (SqliteCommand command = new SqliteCommand(createDbQuery, connection))
-                        {
-                            command.ExecuteNonQuery();
-                            command.Dispose();
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(createDbQuery);
-                        throw;
-                    }
-                }
-
-                connection.Close();
-                connection.Dispose();
             }
 
             success = true;
-            elementsToInsert.Clear();
-
             return success;
         }
 
@@ -864,118 +843,6 @@ WHERE
             AND p.ElementType = 'link'
             AND p.ElementKey = element.ParentKey
     )
-;
-            ";
-
-            using (SqliteConnection connection = new SqliteConnection(connectionString))
-            {
-                connection.Open();
-
-                using (SqliteCommand command = new SqliteCommand(updateQuery, connection))
-                {
-                    command.ExecuteNonQuery();
-                    command.Dispose();
-                }
-
-                connection.Close();
-                connection.Dispose();
-            }
-
-            return true;
-        }
-
-        private bool FixTemplateReferences(string gameFile)
-        {
-            var connectionString = $"Data Source={gameFile};Cache=Shared;";
-            var elemDb = new DataManagement.GameLogic.Element();
-            var success = false;
-            var templatedElems = new List<List<string>>();
-            var elementKeyIndex = 0;
-            var templateKeyIndex = 1;
-            // TODO: Figure out how to use this list
-            // And build the elements without hitting the DB
-            var allTemplates = elemDb.GetElementsByType(connectionString, "template");
-
-            using (SqliteConnection connection = new SqliteConnection(connectionString))
-            {
-                connection.Open();
-                var selectQuery = $@"
-SELECT
-    e.ElementKey,
-    e.Template
-FROM
-    element e
-WHERE 1=1   
-    AND e.Template != ''
-;
-                ";
-
-                using (SqliteCommand command = new SqliteCommand(selectQuery, connection))
-                {
-                    using (SqliteDataReader reader = command.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            var newItm = new List<string>();
-                            newItm.Add(reader.GetString(reader.GetOrdinal("ElementKey")));
-                            newItm.Add(reader.GetString(reader.GetOrdinal("Template")));
-                            templatedElems.Add(newItm);
-                        }
-                    }
-
-                    command.Dispose();
-                }
-
-                connection.Close();
-                connection.Dispose();
-            }
-
-            foreach (var elem in templatedElems)
-            {
-                if (elem.Count == 2)
-                {
-                    Console.WriteLine($"Fixing template elements for {elem[elementKeyIndex]}");
-                    var templateElem = allTemplates.Where(t => t.ElementKey == elem[templateKeyIndex]).FirstOrDefault();
-
-                    if (templateElem != null)
-                    {
-                        success = FixTemplateChildren(connectionString, templateElem.Children, elem[elementKeyIndex]);
-                    }
-                }
-            }
-
-            SaveElements(connectionString);
-
-            return true;
-        }
-
-        private bool FixTemplateChildren(string connectionString, List<Classes.Element> templateElementChildren, string newParentKey)
-        {
-            foreach (var child in templateElementChildren)
-            {
-                var newKey = Guid.NewGuid().ToString();
-                child.ElementKey = newKey;
-                child.ParentKey = newParentKey;
-                LoadElement(connectionString, child);
-
-                if (child.Children.Count > 0)
-                {
-                    FixTemplateChildren(connectionString, child.Children, newKey);
-                }
-            }
-
-            return true;
-        }
-
-        private bool RemoveTemplates(string gameFile)
-        {
-            var connectionString = $"Data Source={gameFile};Cache=Shared;";
-
-            var updateQuery = $@"
-DELETE FROM
-    element
-WHERE
-    ElementType = 'template'
 ;
             ";
 

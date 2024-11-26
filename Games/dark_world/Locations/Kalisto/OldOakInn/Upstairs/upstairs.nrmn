@@ -1,6 +1,5 @@
 {room, key=ooi_upstairs, name=Old Oak Inn Second Floor, template=room_template
     {attribute, output=true, tags=notehidden }
-    {attribute, tags=go_s, output=old_oak_inn }
     {attribute, tags=message_s
         output={@
 You descend the stairs to the main floor.
@@ -35,8 +34,8 @@ In the south end of the hallway is the stairs leading down to the first floor.
 
 --------------------------------------------------------------------------------
 
-    {input, syntax=\b(go*down*stairs|down*stairs|down)\b
-        {move, logic=[self]((go_s)), tags=[player], output=[self]((message_s)) }
+    {input, syntax=^(go\s+)?(south|s|down(stairs)?|down\s+stairs)$
+        {move, logic=old_oak_inn, tags=[player], output=[self]((message_s)) }
     }
 
 

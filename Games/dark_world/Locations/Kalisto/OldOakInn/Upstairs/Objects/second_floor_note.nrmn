@@ -1,24 +1,5 @@
 {object, name=Note, parent=ooi_second_floor_chest, sort=999, template=takeable
-    {attribute, tags=syn_take, output=\b(take note*|take the note*)\b }
-    {attribute, tags=fail_take
-        output={@
-You already have the note
-        }
-    }
-    {attribute, tags=msg_take
-        output={@
-You take the note.
-        }
-    }
-
-    {attribute, tags=syn_drop, output=\b(drop note|drop the note)\b }
-    {attribute, tags=msg_drop
-        output={@
-You drop the note.
-        }
-    }
-
-
+    {attribute, output=false, tags=moved }
 
     {open
         {message
@@ -40,6 +21,22 @@ It says simply: "Death Map"
         {message
             output={@
 <?[self]parent = [room]?>You see a note.</?>
+            }
+        }
+    }
+
+    {takenote
+        {message
+            output={@
+You take the note.
+            }
+        }
+    }
+
+    {dropnote
+        {message
+            output={@
+You drop the note.
             }
         }
     }
@@ -69,39 +66,23 @@ It says simply: "Death Map"
         }
     }
 
-    {take
-        {message
-            output={@
-You take the note.
-            }
-        }
-    }
-
-    {drop
-        {message
-            output={@
-You drop the note.
-            }
-        }
-    }
-
 
 --------------------------------------------------------------------------------
 
-    {input, syntax=(examine(.*)note|x(.*)note)
-        {action, logic=examinenote, tags=type|self }
+    {input, syntax=\b(?:examine|x|look(?: at)?)\s+(?:the\s+)?note\b
+        {action, logic=examinenote, tags=type|room }
     }
 
-    {input, syntax=\b(take note|take the note)\b
+    {input, syntax=(take|pick up|grab)\s(the\s)?note
         {move, logic=[player], tags=[self] }
         {set, logic=[self]tags, output=+inventory }
         {set, logic=[self]((moved)), output=true }
-        {action, logic=take, tags=type|self }
+        {action, logic=takenote, tags=type|room }
     }
 
-    {input, syntax=\b(drop note|drop the note)\b
+    {input, syntax=\b(?:drop|put)\s(?:the\s)?note\s(?:down)?\b
         {move, logic=[room], tags=[self] }
         {set, logic=[self]tags, output=-inventory }
-        {action, logic=drop, tags=type|self }
+        {action, logic=dropnote, tags=type|self }
     }
 }

@@ -5,7 +5,6 @@
 You ascend the stairs to the second floor.
         }
     }
-    {attribute, tags=go_s, output=kalisto_main_street }
     {attribute, tags=message_s
         output={@
 You leave the Old Oak Inn.
@@ -51,7 +50,11 @@ Set into the south wall is the door that leads out to the main street.
 
 
     -- Custom Navigation Syntax
-    {input, syntax=\b(up*stairs|go*up*stairs|up)\b
+    {input, syntax=\b(?:go\s+)?(?:northeast|ne|up(?:\s+stairs)?)\b
         {move, logic=[self]((go_ne)), tags=[player], output=[self]((message_ne)) }
+    }
+
+    {input, syntax=^(go\s+south|south|s)$
+        {move, logic=kalisto_main_street, tags=[player], output=[self]((message_s)) }
     }
 }

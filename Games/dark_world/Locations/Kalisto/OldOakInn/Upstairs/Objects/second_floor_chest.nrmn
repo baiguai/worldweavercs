@@ -35,13 +35,13 @@ The chest is already open.
 
 --------------------------------------------------------------------------------
 
-    {input, syntax=(examine(.*)chest|x(.*)chest)
+    {input, syntax=^(x|examine)(?:\s+the)?\s+chest$
         {action, logic=examine, tags=type|self }
     }
 
-    {input, syntax=\b(open chest|open the chest|look in*chest|in chest)\b
+    {input, syntax=\b(?:open|look(?:\s+in(?:side)?)?)\s+(?:the\s+)?chest\b
         {set, logic=[self]((isopen)), output=true }
         {set, logic=[room]((notehidden)), output=false }
-        {action, logic=open, tags=type|self }
+        {action, logic=open, tags=type|room }
     }
 }
