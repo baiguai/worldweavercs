@@ -1,4 +1,4 @@
-{room, key=kalisto_main_street, name=Main Street, template=room_template
+{room, key=kalisto_main_street, name=Main Street
     {attribute, tags=go_n, output=old_oak_inn }
     {attribute, tags=message_n
         output={@
