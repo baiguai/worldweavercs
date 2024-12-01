@@ -1,23 +1,19 @@
 {room, key=kalisto_ms_east, name=Main Street East, template=room_template
-    {attribute, tags=go_n, output=kalisto_grande_armory }
     {attribute, tags=message_n
         output={@
 You go north towards The Grande Armory.
         }
     }
-    {attribute, tags=go_s, output=kalisto_food_market }
     {attribute, tags=message_s
         output={@
 You go south towards the Food Market.
         }
     }
-    {attribute, tags=go_w, output=kalisto_main_street }
     {attribute, tags=message_w
         output={@
 You travel west along the main road.
         }
     }
-    {attribute, tags=go_e, output=kalisto_square }
     {attribute, tags=message_e
         output={@
 You travel east to the town square.
@@ -51,5 +47,24 @@ North of you is the "Grande Armory" and
 south of you is the "Food Market".
             }
         }
+    }
+
+
+--------------------------------------------------------------------------------
+
+    {input, syntax=[tplt_syntax]((north))
+        {move, logic=kalisto_grande_armory, tags=[player], output=[self]((message_n)) }
+    }
+
+    {input, syntax=[tplt_syntax]((south))
+        {move, logic=kalisto_food_market, tags=[player], output=[self]((message_s)) }
+    }
+
+    {input, syntax=[tplt_syntax]((west))
+        {move, logic=kalisto_food_market, tags=[player], output=[self]((message_w)) }
+    }
+
+    {input, syntax=[tplt_syntax]((east))
+        {move, logic=kalisto_square, tags=[player], output=[self]((message_e)) }
     }
 }

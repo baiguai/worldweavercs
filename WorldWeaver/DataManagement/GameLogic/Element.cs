@@ -13,6 +13,10 @@ namespace WorldWeaver.DataManagement.GameLogic
         public List<Classes.Element> GetElementsByType(string type)
         {
             string connectionString = Connection.GetConnection(MainClass.gameDb);
+            return GetElementsByType(connectionString, type);
+        }
+        public List<Classes.Element> GetElementsByType(string connectionString, string type)
+        {
             var cachedElems = Tools.CacheManager.GetCachedElementByType(type);
             if (cachedElems.Count > 0)
             {
@@ -143,7 +147,7 @@ FROM
     element
 WHERE 1=1
     AND Output LIKE '%((%'
-    AND ElementType = 'attribute'
+    AND (ElementType = 'attribute' OR ElementType = 'attrib')
     AND Active = 'true'
 ORDER BY
     sort
@@ -275,7 +279,7 @@ WHERE 1=1
             {
                 if (!includeAttributes)
                 {
-                    return cachedElem.Children.Where(c => c.ElementType != "attribute").ToList();
+                    return cachedElem.Children.Where(c => c.ElementType != "attribute" && c.ElementType != "attrib").ToList();
                 }
                 return cachedElem.Children;
             }
@@ -314,7 +318,7 @@ ORDER BY
             var output = GetElements(connectionString, selectQuery, parms);
             if (!includeAttributes)
             {
-                output = output.Where(c => c.ElementType != "attribute").ToList();
+                output = output.Where(c => c.ElementType != "attribute" && c.ElementType != "attrib").ToList();
             }
 
             return output;

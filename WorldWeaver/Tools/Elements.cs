@@ -183,7 +183,7 @@ namespace WorldWeaver.Tools
                     return Cache.FightCache.Fight.Enemy;
 
                 default:
-                    return Cache.RoomCache.Room;
+                    return elemDb.GetElementByKey(relCode.ToLower().Replace("[", "").Replace("]", ""));
             }
         }
 

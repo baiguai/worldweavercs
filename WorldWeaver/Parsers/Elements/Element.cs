@@ -11,7 +11,8 @@ namespace WorldWeaver.Parsers.Elements
             bool isEntering = false
         )
         {
-            if (currentElement.ElementType.Equals("attribute", StringComparison.OrdinalIgnoreCase))
+            if (currentElement.ElementType.Equals("attribute", StringComparison.OrdinalIgnoreCase) ||
+                currentElement.ElementType.Equals("attrib", StringComparison.OrdinalIgnoreCase))
             {
                 return;
             }
@@ -33,7 +34,7 @@ namespace WorldWeaver.Parsers.Elements
                 handledMove = false;
                 MainClass.output.FailedLogic = false; // @todo update how failed logic is processed.
 
-                foreach (var child in currentElement.Children.Where(c => c.ElementType != "attribute"))
+                foreach (var child in currentElement.Children.Where(c => c.ElementType != "attribute" && c.ElementType != "attrib"))
                 {
                     if (Tools.Elements.FailedLogicResetTypes().Contains(child.ElementType))
                     {
@@ -44,7 +45,8 @@ namespace WorldWeaver.Parsers.Elements
                     {
                         continue;
                     }
-                    if (child.ElementType.Equals("attribute", StringComparison.OrdinalIgnoreCase))
+                    if (child.ElementType.Equals("attribute", StringComparison.OrdinalIgnoreCase) ||
+                        child.ElementType.Equals("attrib", StringComparison.OrdinalIgnoreCase))
                     {
                         continue;
                     }
