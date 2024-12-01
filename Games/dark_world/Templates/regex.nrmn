@@ -1,0 +1,10 @@
+{object, key=tplt_syntax, parent=limbo
+    {attrib, tags=look, output=^(l|look(?: around)?)$ }
+
+    {attrib, tags=north, output=\b(?:north|n|go north)\b }
+    {attrib, tags=ne_up, output=\b(?:go\s+)?(?:northeast|ne|up(?:\s+stairs)?)\b }
+    {attrib, tags=east, output=^(e|east|go east)$ }
+    {attrib, tags=south, output=^(go\s+south|south|s)$ }
+    {attrib, tags=s_down, output=^(go\s+)?(south|s|down(stairs)?|down\s+stairs)$ }
+    {attrib, tags=west, output=\b(w|west|go west)\b }
+}
