@@ -1,5 +1,4 @@
-{room, key=old_oak_inn, name=The Old Oak Inn, template=room_template
-    {attribute, tags=go_ne, output=ooi_upstairs }
+{room, key=old_oak_inn, name=The Old Oak Inn
     {attribute, tags=message_ne
         output={@
 You ascend the stairs to the second floor.
@@ -48,13 +47,17 @@ Set into the south wall is the door that leads out to the main street.
         }
     }
 
+--------------------------------------------------------------------------------
 
-    -- Custom Navigation Syntax
-    {input, syntax=\b(?:go\s+)?(?:northeast|ne|up(?:\s+stairs)?)\b
-        {move, logic=[self]((go_ne)), tags=[player], output=[self]((message_ne)) }
+    {input, syntax=[tplt_syntax]((look))
+        {action, logic=look, tags=type }
     }
 
-    {input, syntax=^(go\s+south|south|s)$
+    {input, syntax=[tplt_syntax]((ne_up))
+        {move, logic=ooi_upstairs, tags=[player], output=[self]((message_ne)) }
+    }
+
+    {input, syntax=[tplt_syntax]((south))
         {move, logic=kalisto_main_street, tags=[player], output=[self]((message_s)) }
     }
 }

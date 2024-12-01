@@ -12,7 +12,7 @@ namespace WorldWeaver.Tools
 
             foreach (var child in currentElement.Children)
             {
-                if (child.ElementType.Equals("attribute") && child.Tags.TagsContain(tag))
+                if ((child.ElementType.Equals("attribute") || child.ElementType.Equals("attrib")) && child.Tags.TagsContain(tag))
                 {
                     attrib = child;
                     break;
@@ -28,7 +28,7 @@ namespace WorldWeaver.Tools
 
             foreach (var child in currentElement.Children)
             {
-                if (child.ElementType.Equals("attribute") && child.Tags.TagsContain(tag))
+                if ((child.ElementType.Equals("attribute") || child.ElementType.Equals("attrib")) && child.Tags.TagsContain(tag))
                 {
                     attribs.Add(child);
                 }

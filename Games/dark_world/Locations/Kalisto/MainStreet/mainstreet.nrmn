@@ -1,11 +1,9 @@
 {room, key=kalisto_main_street, name=Main Street
-    {attribute, tags=go_n, output=old_oak_inn }
     {attribute, tags=message_n
         output={@
 You enter the Old Oak Inn.
         }
     }
-    {attribute, tags=go_e, output=kalisto_ms_east }
     {attribute, tags=message_e
         output={@
 You travel east along the main road.
@@ -41,6 +39,13 @@ West leaves Kalisto.
 
 --------------------------------------------------------------------------------
 
+    {input, syntax=[tplt_syntax]((north))
+        {move, logic=old_oak_inn, tags=[player], output=[self]((message_n)) }
+    }
+
+    {input, syntax=[tplt_syntax]((east))
+        {move, logic=kalisto_ms_east, tags=[player], output=[self]((message_e)) }
+    }
 
     {devnote, logic=n, tags=todo
         output={@

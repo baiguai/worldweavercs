@@ -42,6 +42,7 @@ namespace WorldWeaver.Tools
         public static string GetNewValue(Element currentElement, string specialString)
         {
             var updated = specialString;
+            var selElem = currentElement;
 
             if (updated.Equals("[player]"))
             {
@@ -56,27 +57,33 @@ namespace WorldWeaver.Tools
                 return Cache.FightCache.Fight.Enemy.ElementKey;
             }
 
-            updated = GetSpecialValue(currentElement, specialString);
+            var referencedElem = Tools.Elements.GetRelativeElement(currentElement, specialString);
+            if (!referencedElem.ElementKey.Equals(""))
+            {
+                selElem = referencedElem;
+            }
+
+            updated = GetSpecialValue(selElem, specialString);
             if (!updated.Equals(specialString))
             {
                 return updated;
             }
-            updated = GetElementChildByTag(currentElement, specialString);
+            updated = GetElementChildByTag(selElem, specialString);
             if (!updated.Equals(specialString))
             {
                 return updated;
             }
-            updated = GetElementPropertyByKey(currentElement, specialString);
+            updated = GetElementPropertyByKey(selElem, specialString);
             if (!updated.Equals(specialString))
             {
                 return updated;
             }
-            updated = GetRelativeElementChildByTag(currentElement, specialString);
+            updated = GetRelativeElementChildByTag(selElem, specialString);
             if (!updated.Equals(specialString))
             {
                 return updated;
             }
-            updated = GetRelativeElementProperty(currentElement, specialString);
+            updated = GetRelativeElementProperty(selElem, specialString);
             if (!updated.Equals(specialString))
             {
                 return updated;
