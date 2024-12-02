@@ -110,6 +110,13 @@ namespace WorldWeaver.Parsers
                 MainClass.output.FailedLogic = false;
                 Cache.PlayerCache.Player.ParseElement();
             }
+
+            // Navigation
+            var proc = new ElementProc();
+            proc.AllowRepeatOptions = false;
+            proc.ChildProcElements.Add("navigation");
+            proc.CurrentElementTypes.Add("room");
+            elemParser.ParseElement(Cache.RoomCache.Room, proc, false);
         }
     }
 }

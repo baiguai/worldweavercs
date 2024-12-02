@@ -100,6 +100,10 @@ namespace WorldWeaver.Parsers.Elements
                 {
                     switch (level)
                     {
+                        case "object":
+                            PareObject_Type(currentElement, type);
+                            return;
+
                         case "room":
                             ParseRoom_Type(currentElement, type);
                             return;
@@ -120,6 +124,32 @@ namespace WorldWeaver.Parsers.Elements
             }
 
             return;
+        }
+
+        private void PareObject_Type(Classes.Element currentElement, string type)
+        {
+            var logic = currentElement.Logic;
+            if (currentElement.Logic.StartsWith("["))
+            {
+                var arr = currentElement.Logic.Split("]");
+                if (arr.Length == 2)
+                {
+                    type = arr[1].Trim();
+                    logic = arr[0].Replace("[", "");
+                }
+            }
+            var selfElem = Tools.Elements.GetRelativeElement(currentElement, logic);
+            var targets = Tools.Elements.GetElementsByType(selfElem, type, true);
+            var elemParser = new Parsers.Elements.Element();
+
+            foreach (var elem in targets)
+            {
+                var selfProcItems = Tools.ProcFunctions.GetProcessStepsByType(elem.ElementType);
+                foreach (var proc in selfProcItems)
+                {
+                    elemParser.ParseElement(elem, proc);
+                }
+            }
         }
 
         private void ParsePlayer_Type(string type)
@@ -218,6 +248,10 @@ namespace WorldWeaver.Parsers.Elements
             if (tags.TagsContain("self"))
             {
                 return "self";
+            }
+            if (tags.TagsContain("object"))
+            {
+                return "object";
             }
 
             return level;

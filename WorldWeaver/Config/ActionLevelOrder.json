@@ -3,6 +3,7 @@
         "global",
         "room",
         "self",
-        "player"
+        "player",
+        "object"
     ]
 }
