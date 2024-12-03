@@ -1,5 +1,4 @@
 {room, key=kalisto_square, name=Town Square, template=room_template
-    {attribute, tags=go_w, output=kalisto_ms_east }
     {attribute, tags=message_w
         output={@
 You travel west along the main road.
@@ -42,5 +41,11 @@ North East leads to the old tree in the center of the square.
 East leads to the temple that you see.
             }
         }
+    }
+
+--------------------------------------------------------------------------------
+
+    {input, syntax=[tplt_syntax]((west))
+        {move, logic=kalisto_ms_east, tags=[player], output=[self]((message_w)) }
     }
 }

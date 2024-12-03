@@ -1,5 +1,4 @@
 {room, key=kalisto_grande_armory, name=The Grande Armory, template=room_template
-    {attribute, tags=go_s, output=kalisto_ms_east }
     {attribute, tags=message_s
         output={@
 You go south, returning to the main street.
@@ -18,5 +17,11 @@ You are in the Grande Armory.
 South of you is the main street of Kalisto.
             }
         }
+    }
+
+--------------------------------------------------------------------------------
+
+    {input, syntax=[tplt_syntax]((south))
+        {move, logic=kalisto_ms_east, tags=[player], output=[self]((message_s)) }
     }
 }
