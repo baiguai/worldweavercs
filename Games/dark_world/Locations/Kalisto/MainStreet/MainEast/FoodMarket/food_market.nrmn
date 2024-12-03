@@ -23,6 +23,10 @@ North of you is the main street of Kalisto.
 
 --------------------------------------------------------------------------------
 
+    {input, syntax=[tplt_syntax]((look))
+        {action, logic=look, tags=type|room }
+    }
+
     {input, syntax=[tplt_syntax]((north))
         {move, logic=kalisto_ms_east, tags=[player], output=[self]((message_n)) }
     }

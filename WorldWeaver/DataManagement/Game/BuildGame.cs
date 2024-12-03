@@ -5,6 +5,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text.RegularExpressions;
 using Microsoft.Data.Sqlite;
 using Newtonsoft.Json.Linq;
 using WorldWeaver.Classes;
@@ -283,33 +284,63 @@ PRAGMA foreign_keys = on;
             CreateDatabase(game_key);
 
             Console.WriteLine("Loading the game files...");
-            success = LoadGameFiles(gameFile, gameDirectory);
+            success = LoadGameFiles(gameFile, gameDirectory, gameDirectory);
             Console.WriteLine("Fixing the link elements...");
             success = FixLinkElements(gameFile);
 
             return success;
         }
 
-        private bool LoadGameFiles(string gameFile, string gameDirectory)
+        private bool LoadGameFiles(string gameFile, string rootDirectory, string curDirectory)
         {
             var success = false;
             var connectionString = $"Data Source={gameFile};Cache=Shared;";
 
-            foreach (var dir in Directory.GetDirectories(gameDirectory))
+            foreach (var dir in Directory.GetDirectories(curDirectory))
             {
-                LoadGameFiles(gameFile, dir);
+                LoadGameFiles(gameFile, rootDirectory, dir);
             }
 
-            foreach (string file in Directory.GetFiles(gameDirectory))
+            foreach (string file in Directory.GetFiles(curDirectory))
             {
                 if (Directory.Exists(file))
                 {
-                    success = LoadGameFiles(gameFile, file);
+                    success = LoadGameFiles(gameFile, rootDirectory, file);
                 }
                 else if (Path.GetExtension(file).Equals(".nrmn"))
                 {
-                    var lines = File.ReadAllLines(file).ToList();
-                    success = (ParseElement(connectionString, lines, "root", 0) > -1);
+                    // Handle injections
+                    string pattern = @"\{inject, logic=(?<logicPath>.+?)\s*\}";
+
+                    List<string> lines = new List<string>(File.ReadAllLines(file));
+
+                    for (int i = 0; i < lines.Count; i++)
+                    {
+                        Match match = Regex.Match(lines[i], pattern);
+                        if (match.Success)
+                        {
+                            string logicFilePath = rootDirectory + match.Groups["logicPath"].Value;
+
+                            if (File.Exists(logicFilePath))
+                            {
+                                // Replace the line with the contents of the logic file
+                                string[] logicLines = File.ReadAllLines(logicFilePath);
+
+                                // Replace the matching line with the logic lines
+                                lines.RemoveAt(i);
+                                lines.InsertRange(i, logicLines);
+
+                                // Adjust the index to account for the newly inserted lines
+                                i += logicLines.Length - 1;
+                            }
+                            else
+                            {
+                                Console.WriteLine($"Logic file not found: {logicFilePath}");
+                            }
+                        }
+                    }
+
+                    success = ParseElement(connectionString, lines, "root", 0) > -1;
                 }
             }
 

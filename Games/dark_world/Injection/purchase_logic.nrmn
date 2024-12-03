@@ -1,0 +1,15 @@
+{logic, output=[self]((already_purchased))
+    logic={@
+        ?[self]((purchased)) = false
+    }
+}
+{logic, output=[self]((fail_take))
+    logic={@
+        ?[player]((gold)) >= [self]((gold))
+    }
+}
+{move, logic=[player], tags=[self], output=[self]((msg_take)) }
+{set, logic=[player]((gold)), output=[self]((adj_take)) }
+{set, logic=[self]tags, output=+inventory }
+{set, logic=[self]((purchased)), output=true }
+{action, logic=take_adjustment, tags=type|room }
