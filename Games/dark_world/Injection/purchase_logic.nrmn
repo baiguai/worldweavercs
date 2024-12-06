@@ -1,4 +1,4 @@
-{logic, output=[self]((already_purchased))
+logic, output=[self]((already_purchased))
     logic={@
         ?[self]((purchased)) = false
     }

@@ -1,26 +1,27 @@
 {type=object, key=kal-bread, name=Bread, parent=kalisto_food_market, sort=991, template=goods
-    {attribute, tags=cost, output=1 }
-    {attribute, tags=fail_take
+    {attrib, tags=purchased, output=false }
+    {attrib, tags=cost, output=1 }
+    {attrib, tags=fail_take
         output={@
 You don't have enough gold to purchase the bread.
         }
     }
-    {attribute, tags=already_purchased
+    {attrib, tags=already_purchased
         output={@
 You've already purchased the bread.
         }
     }
-    {attribute, tags=msg_take
+    {attrib, tags=msg_take
         output={@
 You purchase the bread.
         }
     }
-    {attribute, tags=lgc_take
+    {attrib, tags=lgc_take
         output={@
             ?[player]((gold)) >= 1
         }
     }
-    {attribute, tags=adj_take, output=-=1 }
+    {attrib, tags=adj_take, output=-=1 }
 
     {attribute, tags=syn_drop, output=\b(drop bread|drop the bread)\b }
     {attribute, tags=msg_drop
@@ -46,6 +47,9 @@ during your travels.
 A chunk of bread costs 1 gold piece.
             }
         }
+    }
+
+    {take_adjustment
     }
 
 
