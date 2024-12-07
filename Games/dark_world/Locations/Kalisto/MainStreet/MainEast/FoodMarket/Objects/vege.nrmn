@@ -1,4 +1,4 @@
-{type=object, key=kal-vege, name=Fruits and Vegetables, parent=kalisto_food_market, sort=992, template=goods
+{type=object, key=kal-vege, name=Fruits and Vegetables, parent=kalisto_food_market, sort=992
     {attribute, tags=cost, output=1 }
     {attribute, tags=fail_take
         output={@
@@ -51,11 +51,11 @@ A bundle of vegetables costs 1 gold piece.
 
 --------------------------------------------------------------------------------
 
-    {input, syntax=^look(?: at(?: the)?)? (vegetables|veges|vege|fruit)
+    {input, syntax=[tmplt_syntax]((look_vege))
         {action, logic=examinevege, tags=type|room }
     }
 
-    {input, syntax=(?:take|buy|purchase)\s(?:some\s)?(?:the\s)?(?:vegetables|veges|vege|fruit)
-        {inject, logic=Injection/purchase_logic.nrmn }
+    {input, syntax=[tplt_syntax]((buy_vege))
+        {inject, logic=Injection/purchase_logic.inj }
     }
 }

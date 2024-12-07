@@ -1,4 +1,4 @@
-{object, name=Note, parent=ooi_second_floor_chest, sort=999, template=takeable
+{object, name=Note, parent=ooi_second_floor_chest, sort=999
     {attribute, output=false, tags=moved }
 
     {open
@@ -31,12 +31,28 @@ It says simply: "Death Map"
 You take the note.
             }
         }
+        {logic
+            output={@
+You have already taken the note.
+            }
+            logic={@
+                ?[self]parent != [player]
+            }
+        }
     }
 
     {dropnote
         {message
             output={@
 You drop the note.
+            }
+        }
+        {logic
+            output={@
+You aren't carrying a note.
+            }
+            logic={@
+                ?[self]parent = [player]
             }
         }
     }
@@ -77,7 +93,7 @@ It says simply: "Death Map"
         {move, logic=[player], tags=[self] }
         {set, logic=[self]tags, output=+inventory }
         {set, logic=[self]((moved)), output=true }
-        {action, logic=takenote, tags=type|room }
+        {action, logic=takenote, tags=type|self }
     }
 
     {input, syntax=\b(?:drop|put)\s(?:the\s)?note\s(?:down)?\b

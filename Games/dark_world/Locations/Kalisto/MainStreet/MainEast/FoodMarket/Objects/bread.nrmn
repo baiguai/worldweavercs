@@ -1,5 +1,8 @@
-{type=object, key=kal-bread, name=Bread, parent=kalisto_food_market, sort=991, template=goods
-    {attrib, tags=purchased, output=false }
+{type=object, key=kal-bread, name=Bread, parent=kalisto_food_market, sort=991
+    {attrib, tags=syn_take, output=(?i)\b(purchase|buy|take)\s+(the|some\s+)?bread\b }
+    {attrib, tags=syn_drop, output=(?i)\b(?:drop(?: the)?|put down(?: the)?) bread\b }
+
+
     {attrib, tags=cost, output=1 }
     {attrib, tags=fail_take
         output={@
@@ -49,17 +52,13 @@ A chunk of bread costs 1 gold piece.
         }
     }
 
-    {take_adjustment
-    }
 
+    {inject, logic=Injection/purchase_logic.inj }
 
 --------------------------------------------------------------------------------
 
-    {input, syntax=(examine(.*)bread|x(.*)bread)
+    {input, syntax=(?i)\b(?:x|examine(?:\s+the)?)\s+bread\b
         {action, logic=examine_bread, tags=type|room }
     }
 
-    {input, syntax=(?:take|buy|purchase)(?:\s+(?:some|the))?\s+bread
-        {inject, logic=Injection/purchase_logic.nrmn }
-    }
 }

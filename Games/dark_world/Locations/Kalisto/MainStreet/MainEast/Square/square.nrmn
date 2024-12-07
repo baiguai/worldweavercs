@@ -1,4 +1,4 @@
-{room, key=kalisto_square, name=Town Square, template=room_template
+{room, key=kalisto_square, name=Town Square
     {attribute, tags=message_w
         output={@
 You travel west along the main road.

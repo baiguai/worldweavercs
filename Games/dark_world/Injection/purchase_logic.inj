@@ -1,0 +1,44 @@
+{attribute, output=false, tags=purchased }
+
+{purchase
+    {action, logic=cost_check, tags=type|self }
+    {logic, output=[self]((already_purchased))
+        logic={@
+            ?[self]((purchased)) = false
+        }
+    }
+}
+
+{cost_check
+    {action, logic=do_purchase, tags=type|self }
+    {logic, output=[self]((fail_take))
+        logic={@
+            ?[player]((gold)) >= [self]((cost))
+        }
+    }
+}
+
+{do_purchase
+    {move, logic=[player], tags=[self], output=[self]((msg_take)) }
+    {set, logic=[player]((gold)), output=[self]((adj_take)) }
+    {set, logic=[self]tags, output=+inventory }
+    {set, logic=[self]((purchased)), output=true }
+    {action, logic=take_adjustment, tags=type|self }
+}
+
+
+{input, syntax=[self]((syn_take))
+    {action, logic=purchase, tags=type|self }
+}
+
+{input, syntax=[self]((syn_drop))
+    {move, logic=[room], tags=[self], output=[self]((msg_drop)) }
+    {set, logic=[self]tags, output=-inventory }
+    {action, logic=drop_adjustment, tags=type|self }
+}
+
+{input, syntax=[self]((syn_use))
+    {move, logic=limbo, tags=[self], output=[self]((msg_use)) }
+    {set, logic=[self]tags, output=-inventory }
+    {action, logic=use_adjustment, tags=type|self }
+}

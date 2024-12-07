@@ -1,4 +1,4 @@
-{type=object, key=kalisto_leather_armor, name=Leather Armor, parent=kalisto_grande_armory, sort=998, template=goods
+{type=object, key=kalisto_leather_armor, name=Leather Armor, parent=kalisto_grande_armory, sort=998
     {attribute, tags=syn_take, output=\b(take leather*|take the leather*|buy leather*|buy the leather*|take armor*|take the armor*|buy armor*|buy the armor*)\b }
     {attribute, tags=cost, output=1 }
     {attribute, tags=fail_take

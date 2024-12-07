@@ -1,4 +1,4 @@
-{room, key=kalisto_grande_armory, name=The Grande Armory, template=room_template
+{room, key=kalisto_grande_armory, name=The Grande Armory
     {attribute, tags=message_s
         output={@
 You go south, returning to the main street.

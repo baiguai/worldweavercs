@@ -1,4 +1,4 @@
-{type=object, key=kal-meat, name=Dried Meat, parent=kalisto_food_market, sort=990, template=goods
+{type=object, key=kal-meat, name=Dried Meat, parent=kalisto_food_market, sort=990
     {attribute, tags=cost, output=2 }
     {attribute, tags=fail_take
         output={@
@@ -57,6 +57,6 @@ A packet of meat costs 2 gold pieces.
     }
 
     {input, syntax=(?:take|buy|purchase)(?:\s+(?:some|the))?\s+meat
-        {inject, logic=Injection/purchase_logic.nrmn }
+        {inject, logic=Injection/purchase_logic.inj }
     }
 }

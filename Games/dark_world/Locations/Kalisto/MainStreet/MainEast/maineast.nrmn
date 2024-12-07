@@ -1,4 +1,4 @@
-{room, key=kalisto_ms_east, name=Main Street East, template=room_template
+{room, key=kalisto_ms_east, name=Main Street East
     {attribute, tags=message_n
         output={@
 You go north towards The Grande Armory.

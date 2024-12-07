@@ -101,7 +101,7 @@ namespace WorldWeaver.Parsers.Elements
                     switch (level)
                     {
                         case "object":
-                            PareObject_Type(currentElement, type);
+                            ParseObject_Type(currentElement, type);
                             return;
 
                         case "room":
@@ -126,7 +126,7 @@ namespace WorldWeaver.Parsers.Elements
             return;
         }
 
-        private void PareObject_Type(Classes.Element currentElement, string type)
+        private void ParseObject_Type(Classes.Element currentElement, string type)
         {
             var logic = currentElement.Logic;
             if (currentElement.Logic.StartsWith("["))
