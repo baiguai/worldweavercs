@@ -11,6 +11,14 @@ You are in the Grande Armory.
         }
     }
 
+    {look
+        {message
+            output={@
+You are in the Grande Armory.
+            }
+        }
+    }
+
     {navigation, tags=enter_message|look
         {message
             output={@
@@ -20,6 +28,10 @@ South of you is the main street of Kalisto.
     }
 
 --------------------------------------------------------------------------------
+
+    {input, syntax=[tplt_syntax]((look))
+        {action, logic=look, tags=type|room }
+    }
 
     {input, syntax=[tplt_syntax]((south))
         {move, logic=kalisto_ms_east, tags=[player], output=[self]((message_s)) }

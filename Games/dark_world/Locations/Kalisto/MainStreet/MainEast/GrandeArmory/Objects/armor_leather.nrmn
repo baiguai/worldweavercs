@@ -1,64 +1,81 @@
 {type=object, key=kalisto_leather_armor, name=Leather Armor, parent=kalisto_grande_armory, sort=998
-    {attribute, tags=syn_take, output=\b(take leather*|take the leather*|buy leather*|buy the leather*|take armor*|take the armor*|buy armor*|buy the armor*)\b }
-    {attribute, tags=cost, output=1 }
-    {attribute, tags=fail_take
+    {attrib, tags=syn_take, output=(?i)^(purchase|take|buy) (the )?armor$ }
+    {attrib, tags=syn_drop, output=(?i)\b(?:drop|leave|put down)\s+(?:the\s+)?armor\b }
+    {attrib, tags=syn_examine, output=(?i)\b(?:x|examine(?:\s+the)?)\s+armor\b }
+    {attrib, tags=act_examine, output=examine_armor }
+
+    {attrib, tags=cost, output=10 }
+    {attrib, tags=fail_take
         output={@
 You don't have enough gold to purchase the leather armor.
         }
     }
-    {attribute, tags=already_purchased
+    {attrib, tags=already_purchased
         output={@
-You've already purchased the armor.
+You've already purchased the leather armor.
         }
     }
-    {attribute, tags=msg_take
+    {attrib, tags=already_have
+        output={@
+You are already wearing the leather armor.
+        }
+    }
+    {attrib, tags=msg_take
         output={@
 You purchase the leather armor.
         }
     }
-    {attribute, tags=lgc_take
+    {attrib, tags=lgc_take
         output={@
-            ?[player]((gold)) >= 1
+            ?[player]((gold)) >= 10
         }
     }
-    {attribute, tags=adj_take, output=-=1 }
+    {attrib, tags=adj_take, output=-=10 }
 
-    {attribute, tags=syn_drop, output=\b(drop leather*|drop the leather*|drop armor*|drop the armor*)\b }
     {attribute, tags=msg_drop
         output={@
 You drop the leather armor.
         }
     }
 
-
-
-    {type=look
-        {type=message
-            output={@
-<?[self]parent = [room]?>You see a set of leather armor.</?>
-            }
-        }
-    }
-
-    {examine_leather_armor
-        {message
-            output={@
-You examine the leather armor.
-            }
-        }
-    }
-
-    {type=take_adjustment
+    {purchase
         {set, logic=[player]((armor)), output=+=10 }
     }
-    {type=drop_adjustment
+
+    {drop
         {set, logic=[player]((armor)), output=-=10 }
     }
 
 
+    {look
+        {message
+            output={@
+<?[self]parent = [room]?>You see leather armor.</?>
+            }
+        }
+    }
+
+
+
+    {inject, logic=Injection/purchase_logic.inj }
+
+
 --------------------------------------------------------------------------------
 
-    {input, syntax=(examine(.*)armor|x(.*)armor)
-        {action, logic=examine_leather_armor, tags=type|room }
+
+    {input, syntax=[self]((syn_examine))
+        {action, logic=[self]((act_examine)) }
+    }
+
+    {input, syntax=[self]((syn_drop))
+        {move, logic=[room], tags=[self], output=[self]((msg_drop)) }
+        {set, logic=[self]tags, output=-inventory }
+        {action, logic=drop_adjustment, tags=type|room }
+    }
+
+    {input, syntax=[self]((syn_use))
+        {move, logic=limbo, tags=[self], output=[self]((msg_use)) }
+        {set, logic=[self]tags, output=-inventory }
+        {action, logic=use_adjustment, tags=type|room }
     }
 }
