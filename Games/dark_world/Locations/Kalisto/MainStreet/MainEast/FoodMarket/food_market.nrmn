@@ -11,6 +11,14 @@ You are in the food market.
         }
     }
 
+    {look
+        {message
+            output={@
+You are in the food market.
+            }
+        }
+    }
+
     {navigation, tags=enter_message|look
         {message
             output={@

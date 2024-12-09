@@ -441,54 +441,90 @@ PRAGMA foreign_keys = on;
                 switch (line)
                 {
                     case string s when line.ToLower().StartsWith("type=", StringComparison.OrdinalIgnoreCase):
-                        element.ElementType = line.Replace("type=", "", StringComparison.OrdinalIgnoreCase).ToLower().SqlSafe();
+                        if (element != null)
+                        {
+                            element.ElementType = line.Replace("type=", "", StringComparison.OrdinalIgnoreCase).ToLower().SqlSafe();
+                        }
                         break;
 
                     case string s when line.ToLower().StartsWith("key=", StringComparison.OrdinalIgnoreCase):
-                        element.ElementKey = line.Replace("key=", "", StringComparison.OrdinalIgnoreCase).Replace(' ', '_').SqlSafe();
+                        if (element != null)
+                        {
+                            element.ElementKey = line.Replace("key=", "", StringComparison.OrdinalIgnoreCase).Replace(' ', '_').SqlSafe();
+                        }
                         break;
 
                     case string s when line.ToLower().StartsWith("name=", StringComparison.OrdinalIgnoreCase):
-                        element.Name = line.Replace("name=", "", StringComparison.OrdinalIgnoreCase).SqlSafe();
+                        if (element != null)
+                        {
+                            element.Name = line.Replace("name=", "", StringComparison.OrdinalIgnoreCase).SqlSafe();
+                        }
                         break;
 
                     case string s when line.ToLower().StartsWith("parent=", StringComparison.OrdinalIgnoreCase):
-                        element.ParentKey = line.Replace("parent=", "", StringComparison.OrdinalIgnoreCase).SqlSafe();
+                        if (element != null)
+                        {
+                            element.ParentKey = line.Replace("parent=", "", StringComparison.OrdinalIgnoreCase).SqlSafe();
+                        }
                         break;
 
                     case string s when line.ToLower().StartsWith("syntax=", StringComparison.OrdinalIgnoreCase):
-                        element.Syntax = line.Replace("syntax=", "", StringComparison.OrdinalIgnoreCase).SqlSafe();
+                        if (element != null)
+                        {
+                            element.Syntax = line.Replace("syntax=", "", StringComparison.OrdinalIgnoreCase).SqlSafe();
+                        }
                         break;
 
                     case string s when line.ToLower().StartsWith("logic=", StringComparison.OrdinalIgnoreCase):
-                        ix = GetFieldValue(element, lines, "logic", ix);
-                        element.Logic = ParseMultilineField(element.Logic);
+                        if (element != null)
+                        {
+                            ix = GetFieldValue(element, lines, "logic", ix);
+                            element.Logic = ParseMultilineField(element.Logic);
+                        }
                         break;
 
                     case string s when line.ToLower().StartsWith("repeat=", StringComparison.OrdinalIgnoreCase):
-                        ix = GetFieldValue(element, lines, "repeat", ix);
-                        element.Repeat = line.Replace("repeat=", "", StringComparison.OrdinalIgnoreCase).ToLower().SqlSafe();
+                        if (element != null)
+                        {
+                            ix = GetFieldValue(element, lines, "repeat", ix);
+                            element.Repeat = line.Replace("repeat=", "", StringComparison.OrdinalIgnoreCase).ToLower().SqlSafe();
+                        }
                         break;
 
                     case string s when line.ToLower().StartsWith("output=", StringComparison.OrdinalIgnoreCase):
-                        ix = GetFieldValue(element, lines, "output", ix);
-                        element.Output = ParseMultilineField(element.Output);
+                        if (element != null)
+                        {
+                            ix = GetFieldValue(element, lines, "output", ix);
+                            element.Output = ParseMultilineField(element.Output);
+                        }
                         break;
 
                     case string s when line.ToLower().StartsWith("tags=", StringComparison.OrdinalIgnoreCase):
-                        ix = GetFieldValue(element, lines, "tags", ix);
+                        if (element != null)
+                        {
+                            ix = GetFieldValue(element, lines, "tags", ix);
+                        }
                         break;
 
                     case string s when line.ToLower().StartsWith("template=", StringComparison.OrdinalIgnoreCase):
-                        ix = GetFieldValue(element, lines, "template", ix);
+                        if (element != null)
+                        {
+                            ix = GetFieldValue(element, lines, "template", ix);
+                        }
                         break;
 
                     case string s when line.ToLower().StartsWith("active=", StringComparison.OrdinalIgnoreCase):
-                        element.Active = line.Replace("active=", "", StringComparison.OrdinalIgnoreCase).ToLower();
+                        if (element != null)
+                        {
+                            element.Active = line.Replace("active=", "", StringComparison.OrdinalIgnoreCase).ToLower();
+                        }
                         break;
 
                     case string s when line.ToLower().StartsWith("sort=", StringComparison.OrdinalIgnoreCase):
-                        element.Sort = Convert.ToInt32(line.Replace("sort=", "", StringComparison.OrdinalIgnoreCase));
+                        if (element != null)
+                        {
+                            element.Sort = Convert.ToInt32(line.Replace("sort=", "", StringComparison.OrdinalIgnoreCase));
+                        }
                         break;
 
                     case "}":

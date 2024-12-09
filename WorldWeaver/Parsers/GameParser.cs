@@ -65,6 +65,10 @@ namespace WorldWeaver.Parsers
 
                     if (!MainClass.output.MatchMade && method.Equals("DoMenu"))
                     {
+                        if (Cache.GameCache.Game == null)
+                        {
+                            Cache.GameCache.Game = new Element();
+                        }
                         MainClass.output.OutputText = OutputProcessor.ProcessOutputText(Tools.InitFunctions.GetInitMessage(false), Cache.GameCache.Game);
                         MainClass.output.MatchMade = true;
                     }

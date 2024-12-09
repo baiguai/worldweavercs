@@ -156,6 +156,11 @@ namespace WorldWeaver.Parsers.Elements
                 return Cache.PlayerCache.Player.ElementKey;
             }
 
+            if (rawVariable.Equals("[children]"))
+            {
+                return Tools.Elements.GetSelf(currentElement).Children.Where(c => c.ElementType.Equals("object", StringComparison.OrdinalIgnoreCase)).ToList().Count.ToString();
+            }
+
             if (rawVariable.Equals("[enemy]"))
             {
                 if (Cache.FightCache.Fight == null)

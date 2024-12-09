@@ -162,6 +162,8 @@
                 "logic",
                 "action",
                 "message",
+                "set",
+                "move",
                 "input",
                 "devnote"
             ],
@@ -186,6 +188,7 @@
             ],
             "elements" : [
                 "link",
+                "logic",
                 "action",
                 "enter_message",
                 "set",
@@ -194,6 +197,7 @@
                 "input",
                 "npc",
                 "navigation",
+                "move",
                 "devnote"
             ],
             "repeat_options" : "false"

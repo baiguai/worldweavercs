@@ -1,5 +1,5 @@
 {object, key=tplt_syntax, parent=limbo
-    {attrib, tags=look, output=(?i)\blook(?: around)?\b }
+    {attrib, tags=look, output=(?i)^(look(?: around)?|l)$ }
 
     {attrib, tags=north, output=(?i)\b(?:north|n|go north)\b }
     {attrib, tags=ne_up, output=(?i)\b(?:go\s+)?(?:northeast|ne|up(?:\s+stairs)?)\b }
@@ -7,4 +7,8 @@
     {attrib, tags=south, output=(?i)\b(?:s|south|go south)\b }
     {attrib, tags=s_down, output=(?i)\b(?:s|south|go south|down|go down|go down stairs|go down the stairs)\b }
     {attrib, tags=west, output=(?i)\b(?:w|west|go west)\b }
+
+    Kalisto
+    {attrib, tags=x_kal_chest, output=(?i)^(x|examine)(?:\s+the)?\s+chest$ }
+    {attrib, tags=open_kal_chest, output=(?i)open(?: the)? chest }
 }

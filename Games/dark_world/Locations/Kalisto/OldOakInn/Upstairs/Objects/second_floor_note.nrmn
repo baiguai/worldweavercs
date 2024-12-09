@@ -31,14 +31,8 @@ It says simply: "Death Map"
 You take the note.
             }
         }
-        {logic
-            output={@
-You have already taken the note.
-            }
-            logic={@
-                ?[self]parent != [player]
-            }
-        }
+        {set, logic=[self]tags, output=+inventory }
+        {set, logic=[self]((moved)), output=true }
     }
 
     {dropnote
@@ -47,14 +41,8 @@ You have already taken the note.
 You drop the note.
             }
         }
-        {logic
-            output={@
-You aren't carrying a note.
-            }
-            logic={@
-                ?[self]parent = [player]
-            }
-        }
+        {move, logic=[room], tags=[self] }
+        {set, logic=[self]tags, output=-inventory }
     }
 
     {examine
@@ -75,11 +63,6 @@ There is some text scrawled on it that points to a spot below the tree.
 It says simply: "Death Map"
             }
         }
-        {logic
-            logic={@
-                ?[room]((notehidden)) != 'true'
-            }
-        }
     }
 
 
@@ -87,18 +70,43 @@ It says simply: "Death Map"
 
     {input, syntax=\b(?:examine|x|look(?: at)?)\s+(?:the\s+)?note\b
         {action, logic=examinenote, tags=type|room }
+        {logic
+            logic={@
+                ?[room]((notehidden)) != 'true'
+            }
+        }
     }
 
     {input, syntax=(take|pick up|grab)\s(the\s)?note
+        {logic
+            output={@
+You have already taken the note.
+            }
+            logic={@
+                ?[self]parent != [player]
+            }
+        }
+        {logic
+            output={@
+What note?
+            }
+            logic={@
+                ?[room]((notehidden)) != 'true'
+            }
+        }
         {move, logic=[player], tags=[self] }
-        {set, logic=[self]tags, output=+inventory }
-        {set, logic=[self]((moved)), output=true }
-        {action, logic=takenote, tags=type|self }
+        {action, logic=takenote, tags=type|room }
     }
 
     {input, syntax=\b(?:drop|put)\s(?:the\s)?note\s(?:down)?\b
-        {move, logic=[room], tags=[self] }
-        {set, logic=[self]tags, output=-inventory }
-        {action, logic=dropnote, tags=type|self }
+        {logic
+            output={@
+You aren't carrying a note.
+            }
+            logic={@
+                ?[self]parent = [player]
+            }
+        }
+        {action, logic=dropnote, tags=type|room }
     }
 }
