@@ -1,4 +1,4 @@
-{room, key=ooi_upstairs, name=Old Oak Inn Second Floor, template=room_template
+{room, key=ooi_upstairs, name=Old Oak Inn Second Floor
     {attribute, output=true, tags=notehidden }
     {attribute, tags=message_s
         output={@

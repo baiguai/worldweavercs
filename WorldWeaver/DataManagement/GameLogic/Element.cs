@@ -247,7 +247,7 @@ WHERE 1=1
             });
 
 
-            Classes.Element output = null;
+            Classes.Element? output = null;
 
             if (connectionString.Equals(""))
             {
@@ -435,9 +435,13 @@ ORDER BY
         {
             var cachedElem = Tools.CacheManager.GetCachedElement(parent_key);
             var connectionString = Connection.GetConnection(MainClass.gameDb);
-            if (cachedElem != null)
+            if (cachedElem != null && cachedElem.Children.Count > 0)
             {
-                return cachedElem.Children.Where(c => c.Tags.TagsContain(tag)).FirstOrDefault();
+                var cachedChild = cachedElem.Children.Where(c => c.Tags.TagsContain(tag)).FirstOrDefault();
+                if (cachedChild != null)
+                {
+                    return cachedChild;
+                }
             }
 
             var selectQuery = $@"

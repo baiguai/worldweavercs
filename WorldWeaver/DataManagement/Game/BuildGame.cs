@@ -5,6 +5,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text.RegularExpressions;
 using Microsoft.Data.Sqlite;
 using Newtonsoft.Json.Linq;
 using WorldWeaver.Classes;
@@ -283,33 +284,63 @@ PRAGMA foreign_keys = on;
             CreateDatabase(game_key);
 
             Console.WriteLine("Loading the game files...");
-            success = LoadGameFiles(gameFile, gameDirectory);
+            success = LoadGameFiles(gameFile, gameDirectory, gameDirectory);
             Console.WriteLine("Fixing the link elements...");
             success = FixLinkElements(gameFile);
 
             return success;
         }
 
-        private bool LoadGameFiles(string gameFile, string gameDirectory)
+        private bool LoadGameFiles(string gameFile, string rootDirectory, string curDirectory)
         {
             var success = false;
             var connectionString = $"Data Source={gameFile};Cache=Shared;";
 
-            foreach (var dir in Directory.GetDirectories(gameDirectory))
+            foreach (var dir in Directory.GetDirectories(curDirectory))
             {
-                LoadGameFiles(gameFile, dir);
+                LoadGameFiles(gameFile, rootDirectory, dir);
             }
 
-            foreach (string file in Directory.GetFiles(gameDirectory))
+            foreach (string file in Directory.GetFiles(curDirectory))
             {
                 if (Directory.Exists(file))
                 {
-                    success = LoadGameFiles(gameFile, file);
+                    success = LoadGameFiles(gameFile, rootDirectory, file);
                 }
                 else if (Path.GetExtension(file).Equals(".nrmn"))
                 {
-                    var lines = File.ReadAllLines(file).ToList();
-                    success = (ParseElement(connectionString, lines, "root", 0) > -1);
+                    // Handle injections
+                    string pattern = @"\{inject, logic=(?<logicPath>.+?)\s*\}";
+
+                    List<string> lines = new List<string>(File.ReadAllLines(file));
+
+                    for (int i = 0; i < lines.Count; i++)
+                    {
+                        Match match = Regex.Match(lines[i], pattern);
+                        if (match.Success)
+                        {
+                            string logicFilePath = rootDirectory + match.Groups["logicPath"].Value;
+
+                            if (File.Exists(logicFilePath))
+                            {
+                                // Replace the line with the contents of the logic file
+                                string[] logicLines = File.ReadAllLines(logicFilePath);
+
+                                // Replace the matching line with the logic lines
+                                lines.RemoveAt(i);
+                                lines.InsertRange(i, logicLines);
+
+                                // Adjust the index to account for the newly inserted lines
+                                i += logicLines.Length - 1;
+                            }
+                            else
+                            {
+                                Console.WriteLine($"Logic file not found: {logicFilePath}");
+                            }
+                        }
+                    }
+
+                    success = ParseElement(connectionString, lines, "root", 0) > -1;
                 }
             }
 
@@ -410,54 +441,90 @@ PRAGMA foreign_keys = on;
                 switch (line)
                 {
                     case string s when line.ToLower().StartsWith("type=", StringComparison.OrdinalIgnoreCase):
-                        element.ElementType = line.Replace("type=", "", StringComparison.OrdinalIgnoreCase).ToLower().SqlSafe();
+                        if (element != null)
+                        {
+                            element.ElementType = line.Replace("type=", "", StringComparison.OrdinalIgnoreCase).ToLower().SqlSafe();
+                        }
                         break;
 
                     case string s when line.ToLower().StartsWith("key=", StringComparison.OrdinalIgnoreCase):
-                        element.ElementKey = line.Replace("key=", "", StringComparison.OrdinalIgnoreCase).Replace(' ', '_').SqlSafe();
+                        if (element != null)
+                        {
+                            element.ElementKey = line.Replace("key=", "", StringComparison.OrdinalIgnoreCase).Replace(' ', '_').SqlSafe();
+                        }
                         break;
 
                     case string s when line.ToLower().StartsWith("name=", StringComparison.OrdinalIgnoreCase):
-                        element.Name = line.Replace("name=", "", StringComparison.OrdinalIgnoreCase).SqlSafe();
+                        if (element != null)
+                        {
+                            element.Name = line.Replace("name=", "", StringComparison.OrdinalIgnoreCase).SqlSafe();
+                        }
                         break;
 
                     case string s when line.ToLower().StartsWith("parent=", StringComparison.OrdinalIgnoreCase):
-                        element.ParentKey = line.Replace("parent=", "", StringComparison.OrdinalIgnoreCase).SqlSafe();
+                        if (element != null)
+                        {
+                            element.ParentKey = line.Replace("parent=", "", StringComparison.OrdinalIgnoreCase).SqlSafe();
+                        }
                         break;
 
                     case string s when line.ToLower().StartsWith("syntax=", StringComparison.OrdinalIgnoreCase):
-                        element.Syntax = line.Replace("syntax=", "", StringComparison.OrdinalIgnoreCase).SqlSafe();
+                        if (element != null)
+                        {
+                            element.Syntax = line.Replace("syntax=", "", StringComparison.OrdinalIgnoreCase).SqlSafe();
+                        }
                         break;
 
                     case string s when line.ToLower().StartsWith("logic=", StringComparison.OrdinalIgnoreCase):
-                        ix = GetFieldValue(element, lines, "logic", ix);
-                        element.Logic = ParseMultilineField(element.Logic);
+                        if (element != null)
+                        {
+                            ix = GetFieldValue(element, lines, "logic", ix);
+                            element.Logic = ParseMultilineField(element.Logic);
+                        }
                         break;
 
                     case string s when line.ToLower().StartsWith("repeat=", StringComparison.OrdinalIgnoreCase):
-                        ix = GetFieldValue(element, lines, "repeat", ix);
-                        element.Repeat = line.Replace("repeat=", "", StringComparison.OrdinalIgnoreCase).ToLower().SqlSafe();
+                        if (element != null)
+                        {
+                            ix = GetFieldValue(element, lines, "repeat", ix);
+                            element.Repeat = line.Replace("repeat=", "", StringComparison.OrdinalIgnoreCase).ToLower().SqlSafe();
+                        }
                         break;
 
                     case string s when line.ToLower().StartsWith("output=", StringComparison.OrdinalIgnoreCase):
-                        ix = GetFieldValue(element, lines, "output", ix);
-                        element.Output = ParseMultilineField(element.Output);
+                        if (element != null)
+                        {
+                            ix = GetFieldValue(element, lines, "output", ix);
+                            element.Output = ParseMultilineField(element.Output);
+                        }
                         break;
 
                     case string s when line.ToLower().StartsWith("tags=", StringComparison.OrdinalIgnoreCase):
-                        ix = GetFieldValue(element, lines, "tags", ix);
+                        if (element != null)
+                        {
+                            ix = GetFieldValue(element, lines, "tags", ix);
+                        }
                         break;
 
                     case string s when line.ToLower().StartsWith("template=", StringComparison.OrdinalIgnoreCase):
-                        ix = GetFieldValue(element, lines, "template", ix);
+                        if (element != null)
+                        {
+                            ix = GetFieldValue(element, lines, "template", ix);
+                        }
                         break;
 
                     case string s when line.ToLower().StartsWith("active=", StringComparison.OrdinalIgnoreCase):
-                        element.Active = line.Replace("active=", "", StringComparison.OrdinalIgnoreCase).ToLower();
+                        if (element != null)
+                        {
+                            element.Active = line.Replace("active=", "", StringComparison.OrdinalIgnoreCase).ToLower();
+                        }
                         break;
 
                     case string s when line.ToLower().StartsWith("sort=", StringComparison.OrdinalIgnoreCase):
-                        element.Sort = Convert.ToInt32(line.Replace("sort=", "", StringComparison.OrdinalIgnoreCase));
+                        if (element != null)
+                        {
+                            element.Sort = Convert.ToInt32(line.Replace("sort=", "", StringComparison.OrdinalIgnoreCase));
+                        }
                         break;
 
                     case "}":

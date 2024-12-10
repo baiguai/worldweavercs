@@ -28,7 +28,9 @@ namespace WorldWeaver.Parsers.Elements
 
             foreach (var line in lines)
             {
-                if (line.StartsWith("?"))
+                var curline = line.Trim();
+
+                if (curline.StartsWith("?"))
                 {
                     passed = ParseConditional(currentElement, lines);
                     if (!passed)
@@ -73,7 +75,9 @@ namespace WorldWeaver.Parsers.Elements
 
             foreach (var line in lines)
             {
-                switch (line.ToLower().Trim())
+                var curline = line.Trim();
+
+                switch (curline.ToLower())
                 {
                     case "and":
                         if (!curCheck)
@@ -90,10 +94,10 @@ namespace WorldWeaver.Parsers.Elements
                         break;
                 }
 
-                if (line.StartsWith("?"))
+                if (curline.StartsWith("?"))
                 {
-                    operand = GetOperand(line);
-                    var arr = line.Split(operand);
+                    operand = GetOperand(curline);
+                    var arr = curline.Split(operand);
                     if (arr.Length == 2)
                     {
                         var variable1 = GetVariableValue(currentElement, arr[0].Trim());
@@ -150,6 +154,11 @@ namespace WorldWeaver.Parsers.Elements
             if (rawVariable.Equals("[player]"))
             {
                 return Cache.PlayerCache.Player.ElementKey;
+            }
+
+            if (rawVariable.Equals("[children]"))
+            {
+                return Tools.Elements.GetSelf(currentElement).Children.Where(c => c.ElementType.Equals("object", StringComparison.OrdinalIgnoreCase)).ToList().Count.ToString();
             }
 
             if (rawVariable.Equals("[enemy]"))

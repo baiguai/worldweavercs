@@ -1,29 +1,37 @@
-{type=object, key=kal-vege, name=Fruits and Vegetables, parent=kalisto_food_market, sort=992, template=goods
-    {attribute, tags=syn_take, output=\b(take vege*|take the vege*|buy vege*|buy the vege*)\b }
-    {attribute, tags=cost, output=1 }
-    {attribute, tags=fail_take
+{type=object, key=kal-vege, name=Dried Vegetables, parent=kalisto_food_market, sort=990
+    {attrib, tags=syn_take, output=(?i)^(purchase|take|buy) (the )?vege$ }
+    {attrib, tags=syn_drop, output=(?i)\b(?:drop|leave|put down)\s+(?:the\s+)?vege\b }
+    {attrib, tags=syn_examine, output=(?i)\b(?:x|examine(?:\s+the)?)\s+vege\b }
+    {attrib, tags=act_examine, output=examine_vege }
+
+    {attrib, tags=cost, output=2 }
+    {attrib, tags=fail_take
         output={@
 You don't have enough gold to purchase the vegetables.
         }
     }
-    {attribute, tags=already_purchased
+    {attrib, tags=already_purchased
         output={@
 You've already purchased the vegetables.
         }
     }
-    {attribute, tags=msg_take
+    {attrib, tags=already_have
+        output={@
+You are already carrying the vegetables.
+        }
+    }
+    {attrib, tags=msg_take
         output={@
 You purchase the vegetables.
         }
     }
-    {attribute, tags=lgc_take
+    {attrib, tags=lgc_take
         output={@
-            ?[player]((gold)) >= 1
+            ?[player]((gold)) >= 2
         }
     }
-    {attribute, tags=adj_take, output=-=1 }
+    {attrib, tags=adj_take, output=-=2 }
 
-    {attribute, tags=syn_drop, output=\b(drop vege*|drop the vege*)\b }
     {attribute, tags=msg_drop
         output={@
 You drop the vegetables.
@@ -31,29 +39,44 @@ You drop the vegetables.
     }
 
 
-    {type=look
-        {type=message
+    {look
+        {message
             output={@
-<?[self]parent = [room]?>You see some dried vegetables.</?>
+<?[self]parent = [room]?>You see some vegetables.</?>
             }
         }
     }
 
-    {examinevege
+    {examine_vege
         {message
             output={@
-You examine the dried vegetables. They consist of various leafy greens and fruits.
-These will not keep very long.
-A bundle of vegetables costs 1 gold piece.
+You examine the vegetables. It is hard tac so it will keep for quite a while
+during your travels.
+A bunch of vegetables costs 2 gold piece.
             }
         }
     }
+
+
+    {inject, logic=Injection/purchase_logic.inj }
 
 
 --------------------------------------------------------------------------------
 
 
-    {input, syntax=(examine(.*)fruit*|x(.*)fruit*|examine(.*)vege*|x(.*)vege*)
-        {action, logic=examinevege, tags=type|room }
+    {input, syntax=[self]((syn_examine))
+        {action, logic=[self]((act_examine)) }
+    }
+
+    {input, syntax=[self]((syn_drop))
+        {move, logic=[room], tags=[self], output=[self]((msg_drop)) }
+        {set, logic=[self]tags, output=-inventory }
+        {action, logic=drop_adjustment, tags=type|room }
+    }
+
+    {input, syntax=[self]((syn_use))
+        {move, logic=limbo, tags=[self], output=[self]((msg_use)) }
+        {set, logic=[self]tags, output=-inventory }
+        {action, logic=use_adjustment, tags=type|room }
     }
 }

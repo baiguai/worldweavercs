@@ -1,0 +1,43 @@
+{attribute, output=false, tags=purchased }
+
+{purchase
+    {move, logic=[player], tags=[self], output=[self]((msg_take)) }
+    {set, logic=[player]((gold)), output=[self]((adj_take)) }
+    {set, logic=[self]tags, output=+inventory }
+    {set, logic=[self]((purchased)), output=true }
+    {action, logic=take_adjustment, tags=type|self }
+}
+
+{drop
+    {move, logic=[room], tags=[self], output=[self]((msg_drop)) }
+    {set, logic=[self]tags, output=-inventory }
+}
+
+
+{input, syntax=[self]((syn_take))
+    {action, logic=purchase, tags=type|self }
+    {logic, output=[self]((already_have))
+        logic={@
+            ?[self]parent != [player]
+        }
+    }
+    {logic, output=[self]((already_purchased))
+        logic={@
+            ?[self]((purchased)) = 'false'
+        }
+    }
+    {logic, output=[self]((fail_take))
+        logic={@
+            ?[player]((gold)) >= [self]((cost))
+        }
+    }
+}
+
+{input, syntax=[self]((syn_drop))
+    {action, logic=drop, tags=type|self }
+    {logic, output=[self]((dont_have))
+        logic={@
+            ?[self]parent = [player]
+        }
+    }
+}

@@ -21,7 +21,9 @@ Do you accept our offer? If so, I can provide you with further details.
             output={@
 She beckons you to her table. You follow her and sit down. A tall hooded man with a long staff
 silently approaches and sits next to <<[self]((npc_label_the))>>.
-"My name is Onious." She informs you.
+"My name is Onious." She informs you, "And this is Elcaro." She motions toward the motionless
+hooded man.
+
 She drops a coin purse onto the table.
 "Here's 100 gold pieces. At the conclusion of the mission I will give you much more than that."
 

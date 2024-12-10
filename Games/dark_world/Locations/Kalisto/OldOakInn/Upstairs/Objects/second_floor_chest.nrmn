@@ -12,6 +12,9 @@ It doesn't appear to be locked.
 <?[self]((isopen)) = 'true'?>
 The chest is open.
 </?>
+<?[children] < 1?>
+There is nothing inside.
+</?>
             }
         }
     }
@@ -35,11 +38,11 @@ The chest is already open.
 
 --------------------------------------------------------------------------------
 
-    {input, syntax=^(x|examine)(?:\s+the)?\s+chest$
+    {input, syntax=[tplt_syntax]((x_kal_chest))
         {action, logic=examine, tags=type|self }
     }
 
-    {input, syntax=\b(?:open|look(?:\s+in(?:side)?)?)\s+(?:the\s+)?chest\b
+    {input, syntax=[tplt_syntax]((open_kal_chest))
         {set, logic=[self]((isopen)), output=true }
         {set, logic=[room]((notehidden)), output=false }
         {action, logic=open, tags=type|room }

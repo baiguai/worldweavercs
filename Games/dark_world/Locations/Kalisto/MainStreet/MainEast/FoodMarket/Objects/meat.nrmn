@@ -1,29 +1,37 @@
-{type=object, key=kal-meat, name=Dried Meat, parent=kalisto_food_market, sort=990, template=goods
-    {attribute, tags=syn_take, output=\b(take meat*|take the meat*|buy meat*|buy the meat*)\b }
-    {attribute, tags=cost, output=2 }
-    {attribute, tags=fail_take
+{type=object, key=kal-meat, name=Dried Meat, parent=kalisto_food_market, sort=990
+    {attrib, tags=syn_take, output=(?i)^(purchase|take|buy) (the )?meat$ }
+    {attrib, tags=syn_drop, output=(?i)\b(?:drop|leave|put down)\s+(?:the\s+)?meat\b }
+    {attrib, tags=syn_examine, output=(?i)\b(?:x|examine(?:\s+the)?)\s+meat\b }
+    {attrib, tags=act_examine, output=examine_meat }
+
+    {attrib, tags=cost, output=2 }
+    {attrib, tags=fail_take
         output={@
 You don't have enough gold to purchase the meat.
         }
     }
-    {attribute, tags=already_purchased
+    {attrib, tags=already_purchased
         output={@
 You've already purchased the meat.
         }
     }
-    {attribute, tags=msg_take
+    {attrib, tags=already_have
+        output={@
+You are already carrying the meat.
+        }
+    }
+    {attrib, tags=msg_take
         output={@
 You purchase the meat.
         }
     }
-    {attribute, tags=lgc_take
+    {attrib, tags=lgc_take
         output={@
             ?[player]((gold)) >= 2
         }
     }
-    {attribute, tags=adj_take, output=-=2 }
+    {attrib, tags=adj_take, output=-=2 }
 
-    {attribute, tags=syn_drop, output=\b(drop meat|drop the meat)\b }
     {attribute, tags=msg_drop
         output={@
 You drop the meat.
@@ -31,29 +39,44 @@ You drop the meat.
     }
 
 
-    {type=look
-        {type=message
+    {look
+        {message
             output={@
-<?[self]parent = [room]?>You see some dried meat.</?>
+<?[self]parent = [room]?>You see some meat.</?>
             }
         }
     }
 
-    {examinemeat
+    {examine_meat
         {message
             output={@
-You examine the meat. It is dried and salted, perfect for adventuring.
-Kalisto is located at the southern entrance to the continent of Aetherous
-so most of the items in the village are geared toward travellers, such as yourself.
-A packet of meat costs 2 gold pieces.
+You examine the meat. It is hard tac so it will keep for quite a while
+during your travels.
+A chunk of meat costs 2 gold piece.
             }
         }
     }
+
+
+    {inject, logic=Injection/purchase_logic.inj }
 
 
 --------------------------------------------------------------------------------
 
-    {input, syntax=(examine(.*)meat|x(.*)meat)
-        {action, logic=examinemeat, tags=type|room }
+
+    {input, syntax=[self]((syn_examine))
+        {action, logic=[self]((act_examine)) }
+    }
+
+    {input, syntax=[self]((syn_drop))
+        {move, logic=[room], tags=[self], output=[self]((msg_drop)) }
+        {set, logic=[self]tags, output=-inventory }
+        {action, logic=drop_adjustment, tags=type|room }
+    }
+
+    {input, syntax=[self]((syn_use))
+        {move, logic=limbo, tags=[self], output=[self]((msg_use)) }
+        {set, logic=[self]tags, output=-inventory }
+        {action, logic=use_adjustment, tags=type|room }
     }
 }

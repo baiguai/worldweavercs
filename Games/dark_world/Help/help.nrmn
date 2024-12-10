@@ -4,8 +4,10 @@
             output={@
 Welcome to the DarkWorld help system.
 
-For information on how to play Interactive Fiction games use:
-help if or h if
+CONTENTS:
+ - Interactive Fiction
+   - ? if
+ - ? notes
             }
         }
     }
@@ -14,7 +16,15 @@ help if or h if
         {message
             output={@
 Interactive Fiction Help
-Interactive Fiction (IF) refers to games that are text-based.
+Interactive Fiction (IF) refers to games that are text-based...
+Like the one you are playing.
+
+BASIC ACTIONS:
+ - ? traveling
+ - ? looking at things
+ - ? taking things
+ - ? stats and inventory
+ - ? fighting
             }
         }
     }
@@ -31,15 +41,15 @@ Notes help...
 
 
 
-    {input, syntax=\b(help notes|h notes)\b
+    {input, syntax=(?i)^(help|\?)\snotes$
         {action, logic=help_notes, tags=type|self }
     }
 
-    {input, syntax=\b(help if|h if)\b
+    {input, syntax=(?i)^(help|\?)\s+(interactive fiction|if)$
         {action, logic=help_if, tags=type|self }
     }
 
-    {input, syntax=\b(help|h)\b
+    {input, syntax=(?i)^(help|\?)$
         {action, logic=help_home, tags=type|self }
     }
 }

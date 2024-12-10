@@ -19,7 +19,7 @@
     {attribute, name=Armed Weapon, output=onious_shortsword, tags=armed|stats|name }
     {attribute, output=a cleric woman, tags=npc_label_a|label }
     {attribute, output=the cleric woman, tags=npc_label_the|label }
-    {attribute, output=The cleric woman, tags=npc_label_the_proper|label }
+    {attribute, output=Onious, tags=npc_label_the_proper|label }
 
     {object, key=onious_shortsword, name=Short Sword, syntax=\b(short sword)\b, tags=inventory
         {attribute, name=Damage, logic=[rand:4|8], tags=damage }

@@ -1,29 +1,37 @@
-{type=object, key=kal-bread, name=Bread, parent=kalisto_food_market, sort=991, template=goods
-    {attribute, tags=syn_take, output=\b(take bread*|take the bread*|buy bread*|buy the bread*)\b }
-    {attribute, tags=cost, output=1 }
-    {attribute, tags=fail_take
+{type=object, key=kal-bread, name=Bread, parent=kalisto_food_market, sort=991
+    {attrib, tags=syn_take, output=(?i)^(purchase|take|buy) (the )?bread$ }
+    {attrib, tags=syn_drop, output=(?i)\b(?:drop|leave|put down)\s+(?:the\s+)?bread\b }
+    {attrib, tags=syn_examine, output=(?i)\b(?:x|examine(?:\s+the)?)\s+bread\b }
+    {attrib, tags=act_examine, output=examine_bread }
+
+    {attrib, tags=cost, output=1 }
+    {attrib, tags=fail_take
         output={@
 You don't have enough gold to purchase the bread.
         }
     }
-    {attribute, tags=already_purchased
+    {attrib, tags=already_purchased
         output={@
 You've already purchased the bread.
         }
     }
-    {attribute, tags=msg_take
+    {attrib, tags=already_have
+        output={@
+You are already carrying the bread.
+        }
+    }
+    {attrib, tags=msg_take
         output={@
 You purchase the bread.
         }
     }
-    {attribute, tags=lgc_take
+    {attrib, tags=lgc_take
         output={@
             ?[player]((gold)) >= 1
         }
     }
-    {attribute, tags=adj_take, output=-=1 }
+    {attrib, tags=adj_take, output=-=1 }
 
-    {attribute, tags=syn_drop, output=\b(drop bread|drop the bread)\b }
     {attribute, tags=msg_drop
         output={@
 You drop the bread.
@@ -31,8 +39,8 @@ You drop the bread.
     }
 
 
-    {type=look
-        {type=message
+    {look
+        {message
             output={@
 <?[self]parent = [room]?>You see some bread.</?>
             }
@@ -50,9 +58,25 @@ A chunk of bread costs 1 gold piece.
     }
 
 
+    {inject, logic=Injection/purchase_logic.inj }
+
+
 --------------------------------------------------------------------------------
 
-    {input, syntax=(examine(.*)bread|x(.*)bread)
-        {action, logic=examine_bread, tags=type|room }
+
+    {input, syntax=[self]((syn_examine))
+        {action, logic=[self]((act_examine)) }
+    }
+
+    {input, syntax=[self]((syn_drop))
+        {move, logic=[room], tags=[self], output=[self]((msg_drop)) }
+        {set, logic=[self]tags, output=-inventory }
+        {action, logic=drop_adjustment, tags=type|room }
+    }
+
+    {input, syntax=[self]((syn_use))
+        {move, logic=limbo, tags=[self], output=[self]((msg_use)) }
+        {set, logic=[self]tags, output=-inventory }
+        {action, logic=use_adjustment, tags=type|room }
     }
 }

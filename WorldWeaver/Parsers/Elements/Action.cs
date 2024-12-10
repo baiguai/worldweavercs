@@ -101,7 +101,7 @@ namespace WorldWeaver.Parsers.Elements
                     switch (level)
                     {
                         case "object":
-                            PareObject_Type(currentElement, type);
+                            ParseObject_Type(currentElement, type);
                             return;
 
                         case "room":
@@ -126,7 +126,7 @@ namespace WorldWeaver.Parsers.Elements
             return;
         }
 
-        private void PareObject_Type(Classes.Element currentElement, string type)
+        private void ParseObject_Type(Classes.Element currentElement, string type)
         {
             var logic = currentElement.Logic;
             if (currentElement.Logic.StartsWith("["))
@@ -171,17 +171,20 @@ namespace WorldWeaver.Parsers.Elements
         private void ParseSelf_Type(Classes.Element currentElement, string type)
         {
             var selfElem = Tools.Elements.GetSelf(currentElement);
-            var targets = Tools.Elements.GetElementsByType(selfElem, type, true);
-            var elemParser = new Parsers.Elements.Element();
 
-            foreach (var elem in targets)
-            {
-                var selfProcItems = Tools.ProcFunctions.GetProcessStepsByType(elem.ElementType);
-                foreach (var proc in selfProcItems)
-                {
-                    elemParser.ParseElement(elem, proc);
-                }
-            }
+            ParseChildren(selfElem, type, true);
+
+            // var targets = Tools.Elements.GetElementsByType(selfElem, type, true);
+            // var elemParser = new Parsers.Elements.Element();
+
+            // foreach (var elem in targets)
+            // {
+            //     var selfProcItems = Tools.ProcFunctions.GetProcessStepsByType(elem.ElementType);
+            //     foreach (var proc in selfProcItems)
+            //     {
+            //         elemParser.ParseElement(elem, proc);
+            //     }
+            // }
         }
 
         private void ParseRoom_Type(Classes.Element currentElement, string type)
@@ -227,14 +230,6 @@ namespace WorldWeaver.Parsers.Elements
                     elemParser.ParseElement(target, proc);
                 }
             }
-
-            // foreach (var child in parentElement.GetChildren())
-            // {
-            //     if (isRoom && !child.ParentKey.Equals(Cache.PlayerCache.Player.ElementKey))
-            //     {
-            //         ParseChildren(child, type);
-            //     }
-            // }
         }
 
         private object GetTypeLevel(string tags)
@@ -404,6 +399,10 @@ namespace WorldWeaver.Parsers.Elements
 
         internal void DoKill()
         {
+            if (Cache.FightCache.Fight == null)
+            {
+                return;
+            }
             var gameLgc = new DataManagement.GameLogic.Element();
             var dieElem = Cache.FightCache.Fight.Enemy.ChildByType("kill");
             var elemParser = new Parsers.Elements.Element();

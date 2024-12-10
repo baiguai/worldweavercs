@@ -51,7 +51,6 @@ Set into the south wall is the door that leads out to the main street.
 
     {input, syntax=[tplt_syntax]((look))
         {action, logic=look, tags=type|room }
-        {action, logic=navigation tags=type|room }
     }
 
     {input, syntax=[tplt_syntax]((ne_up))

@@ -1,0 +1,63 @@
+{global, key=helpsys_if, parent=root
+    {help_traveling
+        {message
+            output={@
+            }
+        }
+    }
+
+    {help_looking
+        {message
+            output={@
+Looking Inside Objects:
+    Typically to look inside an object you would actually use the syntax:
+    examine <object>
+    or
+    x <object>
+
+    'look' is typically reserved for looking at your surroundings.
+            }
+        }
+    }
+
+    {help_taking
+        {message
+            output={@
+            }
+        }
+    }
+
+    {help_stats
+        {message
+            output={@
+            }
+        }
+    }
+
+    {help_fighting
+        {message
+            output={@
+            }
+        }
+    }
+
+
+
+
+
+    {input, syntax=(?i)^(help|\?)\straveling$
+        {action, logic=help_traveling, tags=type|self }
+    }
+
+    {input, syntax=(?i)^(help|\?)\s+looking(\s+at\s+things)?$
+        {action, logic=help_looking, tags=type|self }
+    }
+
+    {input, syntax=(?i)^(help|\?) taking( things)?$
+        {action, logic=help_taking, tags=type|self }
+    }
+
+    {input, syntax=(?i)^(help|\?)\sfighting$
+        {action, logic=help_fighting, tags=type|self }
+    }
+}
