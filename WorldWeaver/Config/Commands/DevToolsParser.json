@@ -29,6 +29,10 @@
             "method" : "DoMacroList"
         },
         {
+            "pattern" : "\\b(_macrodel *)\\b",
+            "method" : "DoDeleteMacro"
+        },
+        {
             "pattern" : "\\b(_macro *)\\b",
             "method" : "DoRunMacro"
         },
