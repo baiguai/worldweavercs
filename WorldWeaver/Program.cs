@@ -76,7 +76,7 @@ namespace WorldWeaver
             {
                 var elemDb = new DataManagement.GameLogic.Element();
                 var playerLife = Tools.Elements.GetLife(Cache.PlayerCache.Player).ToString("N0");
-                var enemyLife = Tools.Elements.GetLife(Cache.FightCache.Fight.Enemy).ToString("N0");
+                var enemyLife = Tools.Elements.GetLife(Cache.FightCache.Fight.Target).ToString("N0");
                 Console.WriteLine($"Enemy Life: {enemyLife}");
                 Console.WriteLine($"Player Life: {playerLife}");
                 Console.WriteLine("");
@@ -92,7 +92,7 @@ namespace WorldWeaver
                     Console.WriteLine("");
 
                     playerLife = Tools.Elements.GetLife(Cache.PlayerCache.Player).ToString("N0");
-                    enemyLife = Tools.Elements.GetLife(Cache.FightCache.Fight.Enemy).ToString("N0");
+                    enemyLife = Tools.Elements.GetLife(Cache.FightCache.Fight.Target).ToString("N0");
                     Console.WriteLine($"Enemy Life: {enemyLife}");
                     Console.WriteLine($"Player Life: {playerLife}");
                     Console.WriteLine("");

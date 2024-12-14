@@ -12,45 +12,40 @@ namespace WorldWeaver.Parsers.Elements
         {
             var elemParser = new Elements.Element();
             var newFight = false;
-            Classes.Element? init = null;
+            var elemDb = new DataManagement.GameLogic.Element();
+            var attackables = elemDb.GetElementsByTag("attackable");
+            var target = Tools.Elements.GetRelativeElement(currentElement, currentElement.AttributeByTag("target").Output);
+            var playersTurn = true;
+            var playerWeapon = Cache.PlayerCache.Player.AttributeByTag("armed");
 
-            if (Cache.FightCache.Fight == null)
+            if (attackables.Count() < 1)
+            {
+                return;
+            }
+            if (target == null)
+            {
+                return;
+            }
+
+            if (playerWeapon == null)
+            {
+                playersTurn = false;
+            }
+
+            if (target.ElementKey.Equals(Cache.PlayerCache.Player.ElementKey))
+            {
+                target = Tools.Elements.GetSelf(currentElement);
+                playersTurn = false;
+            }
+
+            if (Cache.FightCache.Fight == null) 
             {
                 Cache.FightCache.Fight = new Classes.Fight();
-                var target = currentElement.AttributeByTag("target");
-
-                if (target.Output.Equals("[self]") && currentElement.ElementKey != Cache.PlayerCache.Player.ElementKey)
-                {
-                    target = Tools.Elements.GetSelf(currentElement);
-                }
-
-                init = currentElement.AttributeByTag("initiative");
-                if (target == null)
-                {
-                    Cache.FightCache.Fight = null;
-                    MainClass.output.MatchMade = true;
-                    return;
-                }
-
-                Cache.FightCache.Fight.Enemy = target;
-                Cache.FightCache.Fight.PlayersTurn = (init.ElementType != "player");
-
-                newFight = true;
+                Cache.FightCache.Fight.Enemies.AddRange(attackables);
             }
 
-            if (newFight)
-            {
-                if (init == null || init.Output.Equals("[player]"))
-                {
-                    Cache.FightCache.Fight.PlayersTurn = true;
-                }
-                else
-                {
-                    Cache.FightCache.Fight.PlayersTurn = false;
-                }
-            }
-
-            Cache.FightCache.Fight.PlayerHasAttacked = true;
+            Cache.FightCache.Fight.PlayersTurn = playersTurn;
+            Cache.FightCache.Fight.Target = target;
 
             ProcessFightRound();
 
@@ -63,58 +58,64 @@ namespace WorldWeaver.Parsers.Elements
             if (Cache.FightCache.Fight.PlayersTurn)
             {
                 var playerWeapon = Cache.PlayerCache.Player.AttributeByTag("armed");
-                if (playerWeapon == null || playerWeapon.Output.Equals(""))
+                var attackRoll = Tools.ValueTools.Randomize(1, 20);
+                var enemyArmor = Cache.FightCache.Fight.Target.AttributeByTag("armor");
+
+                MainClass.output.OutputText += $"Player attack roll: {attackRoll}{Environment.NewLine}Enemy's armor rating: {enemyArmor.Output}{Environment.NewLine}{Environment.NewLine}";
+
+                if (Convert.ToInt32(enemyArmor.Output) <= attackRoll)
                 {
-                    MainClass.output.OutputText += Tools.AppSettingFunctions.GetConfigValue("messages", "unarmed");
-                    MainClass.output.MatchMade = true;
-                    Cache.FightCache.Fight.PlayersTurn = false;
-                    return;
+                    var damageMsg = Cache.FightCache.Fight.Target.ChildByType("damage_message");
+                    var gameLgc = new DataManagement.GameLogic.Element();
+                    var enemyLife = Cache.FightCache.Fight.Target.AttributeByTag("life");
+                    var damageAttrib = playerWeapon.AttributeByTag("damage");
+                    var damage = Convert.ToInt32(damageAttrib.Logic.RandomValue(damageAttrib));
+                    var newLifeValue = Convert.ToInt32(enemyLife.Output) - damage;
+
+                    if (damageMsg != null)
+                    {
+                        var dmgMsg = ProcessDamageOutput(damageMsg.Output, damage);
+                        MainClass.output.OutputText += dmgMsg;
+                    }
+
+                    if (newLifeValue < 1)
+                    {
+                        var actn = new Parsers.Elements.Action();
+                        MainClass.output.MatchMade = true;
+                        actn.DoKill();
+                        return;
+                    }
+
+                    gameLgc.SetElementField(enemyLife.ElementKey, "Output", newLifeValue.ToString());
+                    Tools.CacheManager.RefreshFightCache();
                 }
                 else
                 {
-                    playerWeapon = Cache.PlayerCache.Player.ChildByKey(playerWeapon.Output);
-                    var attackRoll = Tools.ValueTools.Randomize(1, 20);
-                    var enemyArmor = Cache.FightCache.Fight.Enemy.AttributeByTag("armor");
-
-                    MainClass.output.OutputText += $"Player attack roll: {attackRoll}{Environment.NewLine}Enemy's armor rating: {enemyArmor.Output}{Environment.NewLine}{Environment.NewLine}";
-
-                    if (Convert.ToInt32(enemyArmor.Output) <= attackRoll)
-                    {
-                        var damageMsg = Cache.FightCache.Fight.Enemy.ChildByType("damage_message");
-                        var gameLgc = new DataManagement.GameLogic.Element();
-                        var enemyLife = Cache.FightCache.Fight.Enemy.AttributeByTag("life");
-                        var damageAttrib = playerWeapon.AttributeByTag("damage");
-                        var damage = Convert.ToInt32(damageAttrib.Logic.RandomValue(damageAttrib));
-                        var newLifeValue = Convert.ToInt32(enemyLife.Output) - damage;
-
-                        if (damageMsg != null)
-                        {
-                            var dmgMsg = ProcessDamageOutput(damageMsg.Output, damage);
-                            MainClass.output.OutputText += dmgMsg;
-                        }
-
-                        if (newLifeValue < 1)
-                        {
-                            var actn = new Parsers.Elements.Action();
-                            MainClass.output.MatchMade = true;
-                            actn.DoKill();
-                            return;
-                        }
-
-                        gameLgc.SetElementField(enemyLife.ElementKey, "Output", newLifeValue.ToString());
-                        Tools.CacheManager.RefreshFightCache();
-                    }
-                    else
-                    {
-                        var missElem = Cache.FightCache.Fight.Enemy.ChildByType("miss_message");
-                        var missMsg = ProcessDamageOutput(missElem.Output, 0);
-                        MainClass.output.OutputText = Tools.OutputProcessor.ProcessOutputText(missMsg, missElem);
-                    }
-
-                    MainClass.output.MatchMade = true;
+                    var missElem = Cache.FightCache.Fight.Target.ChildByType("miss_message");
+                    var missMsg = ProcessDamageOutput(missElem.Output, 0);
+                    MainClass.output.OutputText = Tools.OutputProcessor.ProcessOutputText(missMsg, missElem);
                 }
 
+                var allDead = true;
+                foreach (var enemy in Cache.FightCache.Fight.Enemies)
+                {
+                    var elife = Convert.ToInt32(enemy.AttributeByTag("life"));
+                    if (elife > 0)
+                    {
+                        allDead = false;
+                        break;
+                    }
+                }
+
+                MainClass.output.MatchMade = true;
+
                 Cache.FightCache.Fight.PlayersTurn = false;
+
+                if (allDead)
+                {
+                    Cache.FightCache.Fight = null;
+                    MainClass.output.OutputText += Environment.NewLine + "You've vanquished your enemies.";
+                }
             }
             else
             {
@@ -125,10 +126,10 @@ namespace WorldWeaver.Parsers.Elements
                     MainClass.output.OutputText = Tools.AppSettingFunctions.GetConfigValue("messages", "flee_message") + Environment.NewLine;
                 }
 
-                var enemyWeapon = Cache.FightCache.Fight.Enemy.AttributeByTag("armed");
+                var enemyWeapon = Cache.FightCache.Fight.Target.AttributeByTag("armed");
                 if (enemyWeapon != null)
                 {
-                    enemyWeapon = Cache.FightCache.Fight.Enemy.ChildByKey(enemyWeapon.Output);
+                    enemyWeapon = Cache.FightCache.Fight.Target.ChildByKey(enemyWeapon.Output);
                     var attackRoll = Tools.ValueTools.Randomize(1, 20);
                     var playerArmor = Cache.PlayerCache.Player.AttributeByTag("armor");
 
@@ -142,7 +143,7 @@ namespace WorldWeaver.Parsers.Elements
                         var damage = Convert.ToInt32(damageAttrib.Logic.RandomValue(damageAttrib));
                         var newLifeValue = Convert.ToInt32(playerLife.Output) - damage;
 
-                        var damageOutput = Cache.FightCache.Fight.Enemy.ChildByType("hit");
+                        var damageOutput = Cache.FightCache.Fight.Target.ChildByType("hit");
                         if (damageOutput != null)
                         {
                             var dmgMsg = ProcessDamageOutput(damageOutput.Output, damage);
@@ -162,7 +163,7 @@ namespace WorldWeaver.Parsers.Elements
                     }
                     else
                     {
-                        var missElem = Cache.FightCache.Fight.Enemy.ChildByType("miss");
+                        var missElem = Cache.FightCache.Fight.Target.ChildByType("miss");
                         var missMsg = ProcessDamageOutput(missElem.Output, 0);
                         MainClass.output.OutputText = Tools.OutputProcessor.ProcessOutputText(missMsg, missElem);
                     }

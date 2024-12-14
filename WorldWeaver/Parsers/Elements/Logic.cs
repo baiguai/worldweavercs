@@ -167,7 +167,7 @@ namespace WorldWeaver.Parsers.Elements
                 {
                     return "";
                 }
-                return Cache.FightCache.Fight.Enemy.ElementKey;
+                return Cache.FightCache.Fight.Target.ElementKey;
             }
 
             if (Regex.IsMatch(rawVariable.Trim(), @"^\d+$"))

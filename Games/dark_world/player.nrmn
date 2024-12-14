@@ -23,6 +23,12 @@
 
     {attribute, name=Quest, output=, tags=stats|quest }
 
+    {attackplayer
+        {attack
+            {attribute, output=[player], tags=target }
+        }
+    }
+
 
     {devnote, logic=n, tags=gamenotes
         output={@
