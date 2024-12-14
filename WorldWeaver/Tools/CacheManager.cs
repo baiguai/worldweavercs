@@ -34,7 +34,8 @@ namespace WorldWeaver.Tools
         public static void RefreshFightCache()
         {
             var elemLogic = new DataManagement.GameLogic.Element();
-            Cache.FightCache.Fight.Enemy = elemLogic.GetElementByKey(Cache.FightCache.Fight.Enemy.ElementKey);
+            Cache.FightCache.Fight.Target = elemLogic.GetElementByKey(Cache.FightCache.Fight.Target.ElementKey);
+            Cache.FightCache.Fight.Enemies = elemLogic.GetElementsByTag("attackable");
             Tools.CacheManager.RefreshCache();
         }
         internal static void ClearCache()

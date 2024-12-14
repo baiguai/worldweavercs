@@ -61,6 +61,45 @@ ORDER BY
             return output;
         }
 
+        public List<Classes.Element> GetElementsByTag(string tag)
+        {
+            string connectionString = Connection.GetConnection(MainClass.gameDb);
+
+            var selectQuery = $@"
+SELECT
+    ElementType,
+    ElementKey,
+    Name,
+    ParentKey,
+    Syntax,
+    Logic,
+    Output,
+    Tags,
+    Repeat,
+    RepeatIndex,
+    Active,
+    Sort
+FROM
+    element
+WHERE 1=1
+    AND '|'||Tags||'|' LIKE '%'||@tag||'%'
+    AND Active = 'true'
+ORDER BY
+    sort
+;
+            ";
+
+            var parms = new List<DbParameter>();
+            parms.Add(new DbParameter()
+            {
+                ParamName = "@tag",
+                ParamValue = tag
+            });
+
+            var output = GetElements(connectionString, selectQuery, parms);
+            return output;
+        }
+
         public List<Classes.Element> GetRandOutputElements()
         {
             string connectionString = Connection.GetConnection(MainClass.gameDb);

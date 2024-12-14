@@ -404,7 +404,7 @@ namespace WorldWeaver.Parsers.Elements
                 return;
             }
             var gameLgc = new DataManagement.GameLogic.Element();
-            var dieElem = Cache.FightCache.Fight.Enemy.ChildByType("kill");
+            var dieElem = Cache.FightCache.Fight.Target.ChildByType("kill");
             var elemParser = new Parsers.Elements.Element();
             var procs = Tools.ProcFunctions.GetProcessStepsByType("kill");
 
@@ -413,8 +413,8 @@ namespace WorldWeaver.Parsers.Elements
                 elemParser.ParseElement(dieElem, proc);
             }
 
-            gameLgc.SetElementField(Cache.FightCache.Fight.Enemy.ElementKey, "ParentKey", "limbo");
-            gameLgc.SetElementField(Cache.FightCache.Fight.Enemy.ElementKey, "Active", "false");
+            gameLgc.SetElementField(Cache.FightCache.Fight.Target.ElementKey, "ParentKey", "limbo");
+            gameLgc.SetElementField(Cache.FightCache.Fight.Target.ElementKey, "Active", "false");
             Cache.FightCache.Fight = null;
 
             return;

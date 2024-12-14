@@ -11,5 +11,6 @@
 
     Kalisto
     {attrib, tags=x_kal_chest, output=(?i)^(x|examine)(?:\s+the)?\s+chest$ }
+    {attrib, tags=x_kal-temp_tap, output=(?i)\b(x|examine)\s+(the\s+)?tapestries\b }
     {attrib, tags=open_kal_chest, output=(?i)open(?: the)? chest }
 }

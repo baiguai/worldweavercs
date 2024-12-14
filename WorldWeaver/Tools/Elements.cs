@@ -180,7 +180,7 @@ namespace WorldWeaver.Tools
                     {
                         return new Classes.Element();
                     }
-                    return Cache.FightCache.Fight.Enemy;
+                    return Cache.FightCache.Fight.Target;
 
                 default:
                     return elemDb.GetElementByKey(relCode.ToLower().Replace("[", "").Replace("]", ""));
@@ -207,7 +207,7 @@ namespace WorldWeaver.Tools
                     {
                         return defaultValue;
                     }
-                    return Cache.FightCache.Fight.Enemy.ElementKey;
+                    return Cache.FightCache.Fight.Target.ElementKey;
 
                 default:
                     return defaultValue;

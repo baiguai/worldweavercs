@@ -25,7 +25,7 @@ namespace WorldWeaver.Tools
                 case "[enemy]":
                     if (Cache.FightCache.Fight != null)
                     {
-                        updatedValue = Cache.FightCache.Fight.Enemy.ElementKey;
+                        updatedValue = Cache.FightCache.Fight.Target.ElementKey;
                     }
                     break;
 

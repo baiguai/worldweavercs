@@ -54,7 +54,7 @@ namespace WorldWeaver.Tools
             }
             if (updated.Equals("[enemy]") && Cache.FightCache.Fight != null)
             {
-                return Cache.FightCache.Fight.Enemy.ElementKey;
+                return Cache.FightCache.Fight.Target.ElementKey;
             }
 
             var referencedElem = Tools.Elements.GetRelativeElement(currentElement, specialString);

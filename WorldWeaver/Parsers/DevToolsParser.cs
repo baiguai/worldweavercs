@@ -38,6 +38,10 @@ namespace WorldWeaver.Parsers
                 {
                     DoMacroStop();
                 }
+                if (!MainClass.output.MatchMade && method.Equals("DoDescMacro"))
+                {
+                    DoDescMacro();
+                }
                 if (!MainClass.output.MatchMade && method.Equals("DoMacroList"))
                 {
                     DoMacroList();
@@ -290,6 +294,37 @@ namespace WorldWeaver.Parsers
                     MainClass.HandleTheFight();
                 }
             }
+        }
+
+        private void DoDescMacro()
+        {
+            if (!MainClass.adminEnabled)
+            {
+                return;
+            }
+            var macroDir = $"Config/Macros/{MainClass.gameDb}";
+            var macDesc = "";
+
+            EnsureMacroDir(macroDir);
+
+            var macroName = MainClass.userInput.Replace("_macrodesc ", "");
+            if (!File.Exists($"{macroDir}/{macroName.FileSafe()}"))
+            {
+                return;
+            }
+
+            var lines = File.ReadAllLines($"{macroDir}/{macroName}").ToList();
+            foreach (var line in lines)
+            {
+                if (!macDesc.Equals(""))
+                {
+                    macDesc += Environment.NewLine;
+                }
+                macDesc += line;
+            }
+
+            MainClass.output.OutputText = macDesc;
+            MainClass.output.MatchMade = true;
         }
 
         private void DoDeleteMacro()
