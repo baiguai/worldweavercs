@@ -529,3 +529,13 @@
 /home/baiguai/documents/development/csharp/worldweaver/WorldWeaver/bin/Debug/net8.0/Admin/AdminHelp.html_backup/Help/AdminHelp.20241210102339685.html
 /home/baiguai/documents/development/csharp/worldweaver/WorldWeaver/bin/Debug/net8.0/AdminHelp.html_backup/Help/Admin/AdminHelp.20241210100936538.html
 /home/baiguai/documents/development/csharp/worldweaver/WorldWeaver/bin/Debug/net8.0/AdminHelp.html_backup/Help/Admin/AdminHelp.20241210102339685.html
+/home/baiguai/documents/development/csharp/worldweaver/WorldWeaver/bin/Debug/net8.0/Admin/AdminHelp.html_backup/Help/AdminHelp.20241210104243032.html
+/home/baiguai/documents/development/csharp/worldweaver/WorldWeaver/bin/Debug/net8.0/Admin/AdminHelp.html_backup/Help/AdminHelp.20241213093152603.html
+/home/baiguai/documents/development/csharp/worldweaver/WorldWeaver/bin/Debug/net8.0/Admin/AdminHelp.html_backup/Help/AdminHelp.20241213093254346.html
+/home/baiguai/documents/development/csharp/worldweaver/WorldWeaver/bin/Debug/net8.0/AdminHelp.html_backup/Help/Admin/AdminHelp.20241210104243032.html
+/home/baiguai/documents/development/csharp/worldweaver/WorldWeaver/bin/Debug/net8.0/AdminHelp.html_backup/Help/Admin/AdminHelp.20241213093152603.html
+/home/baiguai/documents/development/csharp/worldweaver/WorldWeaver/bin/Debug/net8.0/AdminHelp.html_backup/Help/Admin/AdminHelp.20241213093254346.html
+/home/baiguai/documents/development/csharp/worldweaver/WorldWeaver/bin/Debug/net8.0/Admin/AdminHelp.html_backup/Help/AdminHelp.20241213093440512.html
+/home/baiguai/documents/development/csharp/worldweaver/WorldWeaver/bin/Debug/net8.0/Admin/AdminHelp.html_backup/Help/AdminHelp.20241213095819038.html
+/home/baiguai/documents/development/csharp/worldweaver/WorldWeaver/bin/Debug/net8.0/AdminHelp.html_backup/Help/Admin/AdminHelp.20241213093440512.html
+/home/baiguai/documents/development/csharp/worldweaver/WorldWeaver/bin/Debug/net8.0/AdminHelp.html_backup/Help/Admin/AdminHelp.20241213095819038.html
