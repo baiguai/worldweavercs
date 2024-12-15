@@ -1,7 +1,0 @@
-{template, key=door
-    {move, logic=ooi_upstairs, tags=[player]
-        output={@
-You ascend the stairs to the second floor.
-        }
-    }
-}
