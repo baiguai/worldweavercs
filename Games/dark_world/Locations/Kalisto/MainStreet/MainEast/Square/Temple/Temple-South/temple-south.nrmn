@@ -1,4 +1,21 @@
 {room, key=kal_temple_south, name=Temple
+    {attrib, tags=message_n
+        {message
+            output={@
+You step through the door in the north wall.
+            }
+        }
+    }
+
+    {attrib, tags=message_ds
+        {message
+            output={@
+You descend the stairs.
+            }
+        }
+    }
+
+
     {enter_message
         output={@
 You step through the narrow door into a long hall.
@@ -65,5 +82,9 @@ At the end of the hall is a staircase that goes down.
 
     {input, syntax=[tplt_syntax]((north))
         {move, logic=kalisto_temple, tags=[player], output=[self]((message_n)) }
+    }
+
+    {input, syntax=[tplt_syntax]((down_stairs))
+        {move, logic=kal_temple_basement, tags=[player], output=[self]((message_ds)) }
     }
 }

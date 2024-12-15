@@ -191,6 +191,7 @@
                 "logic",
                 "action",
                 "enter_message",
+                "attack",
                 "set",
                 "object",
                 "message",

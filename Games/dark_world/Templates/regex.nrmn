@@ -9,8 +9,14 @@
     {attrib, tags=s_down, output=(?i)\b(?:s|south|go south|down|go down|go down stairs|go down the stairs)\b }
     {attrib, tags=west, output=(?i)^(go\s+)?west|^w$ }
 
+    {attrib, tags=down_stairs, output=(?i)\b(?:descend(?: the)? stairs|go down(?: the)? stairs|go down|down stairs|down)\b }
+
     Kalisto
     {attrib, tags=x_kal_chest, output=(?i)^(x|examine)(?:\s+the)?\s+chest$ }
     {attrib, tags=x_kal-temp_tap, output=(?i)\b(x|examine)\s+(the\s+)?tapestries\b }
     {attrib, tags=open_kal_chest, output=(?i)open(?: the)? chest }
+
+
+    Enemies
+    {attrib, tags=attack_skeleton, output=(?i)\battack(?: the)? skeleton\b }
 }

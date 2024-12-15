@@ -1,0 +1,20 @@
+{room, key=kal_temple_basement, name=Temple
+    {enter_message
+        output={@
+You are in the temple's basement.
+        }
+    }
+
+    {npc, name=Skeleton, syntax=\b(?:*skeleton*)\b, tags=attackable
+        {inject, logic=Injection/Enemies/skeleton.inj }
+    }
+
+    {look
+        {message
+            output={@
+You look around.
+The basement is dark.
+            }
+        }
+    }
+}

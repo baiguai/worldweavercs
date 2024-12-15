@@ -17,6 +17,10 @@
             "method" : "DoList"
         },
         {
+            "pattern" : "\\b(_macrols)\\b",
+            "method" : "DoMacroList"
+        },
+        {
             "pattern" : "\\b(_recordon *)\\b",
             "method" : "DoMacroStart"
         },
