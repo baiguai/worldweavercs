@@ -1,0 +1,23 @@
+{room, key=old_oak_north
+    {enter_message
+        output={@
+You are in the north room.
+        }
+    }
+
+--------------------------------------------------------------------------------
+
+    {navigation
+        {message
+            output={@
+In the south wall is a narrow wooden door that leads back to the Inn's main room.
+            }
+        }
+    }
+
+--------------------------------------------------------------------------------
+
+    {input, syntax=[tplt_syntax]((south))
+        {move, logic=old_oak_inn, tags=[player], output=You return to the Inn's main room. }
+    }
+}

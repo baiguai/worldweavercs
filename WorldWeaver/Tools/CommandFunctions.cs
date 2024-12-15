@@ -26,6 +26,7 @@ namespace WorldWeaver.Tools
                     if (rgx.IsMatch(input))
                     {
                         output = method;
+                        break;
                     }
                 }
             }

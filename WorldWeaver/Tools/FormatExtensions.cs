@@ -13,6 +13,7 @@ namespace WorldWeaver.Tools
             var outParser = new Parsers.OutputParser();
 
             formattedOutput = formattedOutput.Replace("---", "--------------------------------------------------------------------------------");
+            formattedOutput = formattedOutput.Replace("^^", "   ");
             formattedOutput = formattedOutput.Replace("''", "'");
             formattedOutput = formattedOutput.Replace("\\b", $"{Environment.NewLine}");
 

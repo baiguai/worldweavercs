@@ -36,7 +36,7 @@
             "during_game" : "true"
         },
         {
-            "pattern" : "^noteadd$",
+            "pattern" : "(?i)^noteadd.*",
             "method" : "DoNoteAdd",
             "during_game" : "true"
         },

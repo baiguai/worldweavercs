@@ -1,4 +1,4 @@
-﻿{player, key=player, name=, parent=old_oak_inn
+﻿{player, key=player, name=, parent=road_to_kalisto
     {attribute, output=[rand:3|5], tags=stats_dice }
     {attribute, output=[rand:4|6], tags=money_dice }
 
@@ -32,12 +32,7 @@
 
     {devnote, logic=n, tags=gamenotes
         output={@
-Quest values list in rough order:
-- accepted
-- declined
-
-If the player has declined, they've already lost the game.
-Ensure that they can do nothing more then wander around.
+Add notes here...
         }
     }
 }

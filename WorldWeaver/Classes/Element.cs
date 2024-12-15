@@ -10,7 +10,7 @@ namespace WorldWeaver.Classes
         public string ParentKey { get; set; } = "";
         public string Syntax { get; set; } = "";
         public string Logic { get; set; } = "";
-        public string Repeat { get; set; } = "repeat";
+        public string Repeat { get; set; }
         public int RepeatIndex { get; set; } = 0;
         public string Output { get; set; } = "";
         public string Tags { get; set; } = "";

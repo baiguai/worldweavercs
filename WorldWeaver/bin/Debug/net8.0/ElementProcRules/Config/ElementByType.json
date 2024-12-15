@@ -68,7 +68,8 @@
             "elements" : [
                 "logic",
                 "input",
-                "action"
+                "action",
+                "message"
             ],
             "repeat_options" : "false"
         },
@@ -191,7 +192,6 @@
                 "logic",
                 "action",
                 "enter_message",
-                "attack",
                 "set",
                 "object",
                 "message",

@@ -68,7 +68,8 @@
             "elements" : [
                 "logic",
                 "input",
-                "action"
+                "action",
+                "message"
             ],
             "repeat_options" : "false"
         },

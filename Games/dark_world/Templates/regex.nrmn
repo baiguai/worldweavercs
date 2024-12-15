@@ -1,6 +1,8 @@
 {object, key=tplt_syntax, parent=limbo
     {attrib, tags=look, output=(?i)^(look(?: around)?|l)$ }
 
+    {attrib, tags=left, output=(?i)\b(?:go\s+)?left\b }
+
     {attrib, tags=north, output=(?i)^(go\s+)?north|^n$ }
     {attrib, tags=northeast, output=(?i)^(go\s+)?(north\s*east|northeast|ne)$ }
     {attrib, tags=ne_up, output=(?i)\b(?:go\s+)?(?:northeast|ne|up(?:\s+stairs)?)\b }
@@ -19,4 +21,9 @@
 
     Enemies
     {attrib, tags=attack_skeleton, output=(?i)\battack(?: the)? skeleton\b }
+
+
+    Specifics
+    {attrib, tags=x_mead, output=(?i)\b(?:take|drink|examine|x)\s+(?:the\s+)?mead\b }
+    {attrib, tags=x_parchment, output=(?i)\b(take|examine|x|read)(?:\s+the)?\s+parchment\b }
 }
