@@ -2,6 +2,10 @@
     {enter_message
         output={@
 You are in the north room.
+It appears to be used as a storage space.
+A single candle sitting on a wall sconce provides the only light.
+There are shelves along the walls and piles of clothing, bar utensils, truncheons,
+even packs and pouches. You notice that one pack is open.
         }
     }
 
