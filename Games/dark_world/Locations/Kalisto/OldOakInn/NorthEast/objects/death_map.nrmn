@@ -1,0 +1,11 @@
+{object, key=death_map, name=Death Map, parent=oak_inn_203, sort=500
+    {attrib, tags=moved, output=false }
+
+    {u_bed
+        {message
+            output={@
+You see a rolled up sheet of parchment.
+            }
+        }
+    }
+}

@@ -1,0 +1,42 @@
+{room, key=oak_inn_203, name=Room 203
+    {enter_message
+        output={@
+You are in an empty room.
+A simple bed is situated against the opposite wall.
+There is a cooking area in the right side of the room, a single
+candle burns on the counter there.
+
+Something is off about the bed.
+        }
+    }
+
+    {look
+        {message
+            output={@
+You look around.
+A simple bed is situated against the opposite wall.
+There is a cooking area in the right side of the room.
+
+Something is off about the bed.
+            }
+        }
+    }
+
+--------------------------------------------------------------------------------
+
+    {navigation, tags=look
+        {message
+            output={@
+                You can leave the Inn room's front door.
+            }
+        }
+    }
+
+--------------------------------------------------------------------------------
+
+    {inject, logic=Injection/look.inj }
+
+    {input, syntax=[tplt_syntax]((leave))
+        {move, logic=old_oak_inn_upstairs, tags=[player], output=You exit room 203. }
+    }
+}

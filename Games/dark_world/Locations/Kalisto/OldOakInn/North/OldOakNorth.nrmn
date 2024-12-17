@@ -9,6 +9,23 @@ even packs and pouches. You notice that one pack is open.
         }
     }
 
+    {x_pack
+        {message
+            output={@
+You rummage around in the open pack. There are some moldy old rations and other
+useless items. However a bound journal catches your eye. You untie the leather
+strap that secures it shut and open it up.
+
+It appears to be an adventurer's diary. It seems they are investigating strange
+phenomenon throughout the peninsula of Aetherous. Something about undead activity.
+There's mention of something called 'The Cleansing'.
+
+The adventurer mentions a head priest in a northern kingdom called Ennex as well
+as something called the Death Map and an artifact called the Pocula Mortem.
+            }
+        }
+    }
+
 --------------------------------------------------------------------------------
 
     {navigation
@@ -20,6 +37,10 @@ In the south wall is a narrow wooden door that leads back to the Inn's main room
     }
 
 --------------------------------------------------------------------------------
+
+    {input, syntax=[tplt_syntax]((x_pack))
+        {action, logic=x_pack, tags=type }
+    }
 
     {input, syntax=[tplt_syntax]((south))
         {move, logic=old_oak_inn, tags=[player], output=You return to the Inn's main room. }

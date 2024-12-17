@@ -4,7 +4,7 @@
 The Old Oak Inn is completely empty.
 
 There is not a single soul in the entire place.
-No bark keep, no patrons, no bards or maidens.
+No bar keep, no patrons, no bards or maidens.
 
 The silence is unnerving.
         }
@@ -80,6 +80,11 @@ In the North wall is a narrow unmarked wooden door.
 --------------------------------------------------------------------------------
 
     {inject, logic=Injection/look.inj }
+
+
+    {input, syntax=[tplt_syntax]((ne_up))
+        {move, logic=old_oak_inn_upstairs, tags=[player], output=You ascend the stairs in the north east corner of the Inn }
+    }
 
     {input, syntax=[tplt_syntax]((north))
         {move, logic=old_oak_north, tags=[player], output=You enter the door in the north wall. }

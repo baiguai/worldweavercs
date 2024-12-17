@@ -427,13 +427,16 @@ namespace WorldWeaver.Parsers.Elements
                 msg.ParseMessage(msgParent, msgElem, allowRepeatOptions, index);
             }
 
-            foreach (var c in Cache.RoomCache.Room.Children)
+            if (currentElement.ElementType.Equals("room"))
             {
-                if (c.ElementType.Equals("navigation"))
+                foreach (var c in Cache.RoomCache.Room.Children)
                 {
-                    foreach (var msgChild in c.Children.Where(c => c.ElementType.Equals("message")))
+                    if (c.ElementType.Equals("navigation"))
                     {
-                        msg.ParseMessage(c, msgChild, false, index);
+                        foreach (var msgChild in c.Children.Where(c => c.ElementType.Equals("message")))
+                        {
+                            msg.ParseMessage(c, msgChild, false, index);
+                        }
                     }
                 }
             }

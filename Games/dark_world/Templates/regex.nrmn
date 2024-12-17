@@ -2,6 +2,7 @@
     {attrib, tags=look, output=(?i)^(look(?: around)?|l)$ }
 
     {attrib, tags=left, output=(?i)\b(?:go\s+)?left\b }
+    {attrib, tags=leave, output=(?i)\bleave\b(?:\s+(?:the|this)?\s*(?:room|area|place))? }
 
     {attrib, tags=north, output=(?i)^(go\s+)?north|^n$ }
     {attrib, tags=northeast, output=(?i)^(go\s+)?(north\s*east|northeast|ne)$ }
@@ -12,6 +13,8 @@
     {attrib, tags=west, output=(?i)^(go\s+)?west|^w$ }
 
     {attrib, tags=down_stairs, output=(?i)\b(?:descend(?: the)? stairs|go down(?: the)? stairs|go down|down stairs|down)\b }
+    {attrib, tags=x_bed, output=(?i)\b(?:examine|x)\s+(?:the\s+)?bed\b }
+    {attrib, tags=u_bed, output=(?i)\blook\s+under\s+(the\s+)?bed\b }
 
     Kalisto
     {attrib, tags=x_kal_chest, output=(?i)^(x|examine)(?:\s+the)?\s+chest$ }
@@ -24,6 +27,10 @@
 
 
     Specifics
-    {attrib, tags=x_mead, output=(?i)\b(?:take|drink|examine|x)\s+(?:the\s+)?mead\b }
-    {attrib, tags=x_parchment, output=(?i)\b(take|examine|x|read)(?:\s+the)?\s+parchment\b }
+
+    Kalisto
+        {attrib, tags=x_mead, output=(?i)\b(?:take|drink|examine|x)\s+(?:the\s+)?mead\b }
+        {attrib, tags=x_parchment, output=(?i)\b(take|examine|x|read)(?:\s+the)?\s+parchment\b }
+        {attrib, tags=x_pack, output=(?i)\b(?:look|in|examine|x)\s+(?:the\s+)?pack\b }
+        {attrib, tags=ooi_in_203, output=\b(?:open|enter|go in|in)?(?:\s+door)?\s+203\b }
 }
