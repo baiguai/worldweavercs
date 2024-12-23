@@ -5,8 +5,10 @@ You are in an empty room.
 A simple bed is situated against the opposite wall.
 There is a cooking area in the right side of the room, a single
 candle burns on the counter there.
+<?[death_map]((moved)) = 'false'?>
 
 Something is off about the bed.
+</?>
         }
     }
 
@@ -16,8 +18,10 @@ Something is off about the bed.
 You look around.
 A simple bed is situated against the opposite wall.
 There is a cooking area in the right side of the room.
+<?[death_map]((moved)) = 'false'?>
 
 Something is off about the bed.
+</?>
             }
         }
     }

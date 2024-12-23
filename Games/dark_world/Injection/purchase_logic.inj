@@ -14,7 +14,7 @@
 }
 
 
-{input, syntax=[self]((syn_take))
+{input, syntax=[self]((syn_purchase))
     {action, logic=purchase, tags=type|self }
     {logic, output=[self]((already_have))
         logic={@

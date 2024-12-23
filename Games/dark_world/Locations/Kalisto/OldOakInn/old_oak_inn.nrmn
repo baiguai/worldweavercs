@@ -52,19 +52,6 @@ It wasn't poured long ago.
         }
     }
 
-    {x_parchment
-        {message
-            output={@
-You pick up the piece of parchment and read it.
-
-^^Library of Agnoth, North of Kalisto - Death Map.
-^^Tholemville, Sothoth Marshes - Pocula Mortem
-
-You set it back down where it was.
-            }
-        }
-    }
-
 --------------------------------------------------------------------------------
 
     {navigation, tags=look
@@ -92,9 +79,5 @@ In the North wall is a narrow unmarked wooden door.
 
     {input, syntax=[tplt_syntax]((x_mead))
         {action, logic=x_mead, tags=type }
-    }
-
-    {input, syntax=[tplt_syntax]((x_parchment))
-        {action, logic=x_parchment, tags=type }
     }
 }

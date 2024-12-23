@@ -1,5 +1,65 @@
 {object, key=death_map, name=Death Map, parent=oak_inn_203, sort=500
-    {attrib, tags=moved, output=false }
+    {attrib, tags=identified, output=false }
+
+    {attrib, tags=msg_look
+        output={@
+<?[self]parent = [room]?>
+You see the death map.
+</?>
+        }
+    }
+
+    {attrib, tags=msg_take
+        output={@
+<?[self]((identified)) = 'false'?>
+You take the parchment.
+You notice that 'Death Map' is written across the top of it.
+</?>
+<?[self]((identified)) = 'true'?>
+You take the death map.
+</?>
+        }
+    }
+    {attrib, tags=msg_drop
+        output={@
+<?[self]((identified)) = 'false'?>
+You put the parchment down.
+</?>
+<?[self]((identified)) = 'true'?>
+You put the death map down.
+</?>
+        }
+    }
+    {attrib, tags=already_have
+        output={@
+<?[self]((identified)) = 'false'?>
+You are already carrying the parchment.
+</?>
+<?[self]((identified)) = 'true'?>
+You are already carrying the death map.
+</?>
+        }
+    }
+    {attrib, tags=dont_have
+        output={@
+<?[self]((identified)) = 'false'?>
+You aren't carrying a piece of parchment.
+</?>
+<?[self]((identified)) = 'true'?>
+You aren't carrying the death map.
+</?>
+        }
+    }
+
+    {attrib, tags=syn_take,
+        output=(?i)\b(?:take the piece of parchment|take the parchment|take parchment|pick up the piece of parchment|pick up the parchment|pick up parchment|take the death map|take death map)\b
+    }
+
+    {attrib, tags=syn_drop,
+        output=(?i)\b(?:drop the piece of parchment|drop the parchment|drop parchment|put down the piece of parchment|put down the parchment|put down parchment|drop the death map|drop death map|put down the death map|put down death map)\b
+    }
+
+--------------------------------------------------------------------------------
 
     {u_bed
         {message
@@ -7,5 +67,30 @@
 You see a rolled up sheet of parchment.
             }
         }
+
+        {logic
+            logic={@
+                ?[self]((moved))='false'
+            }
+        }
+    }
+
+    {x_parch
+        {message
+            output={@
+You examine the piece of parchment.
+
+^^Library of Agnoth, North of Kalisto - Death Map.
+^^Tholemville, Sothoth Marshes - Pocula Mortem
+            }
+        }
+    }
+
+--------------------------------------------------------------------------------
+
+    {inject, logic=Injection/take_logic.inj }
+
+    {input, syntax=[tplt_syntax]((x_parchment))
+        {action, logic=x_parch, tags=type }
     }
 }
