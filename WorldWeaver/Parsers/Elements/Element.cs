@@ -25,6 +25,7 @@ namespace WorldWeaver.Parsers.Elements
             var handledMessage = false;
             var handledMove = false;
             var handledAttack = false;
+            var handledNav = false;
 
             foreach (var proc in procObj.ChildProcElements)
             {
@@ -427,7 +428,7 @@ namespace WorldWeaver.Parsers.Elements
                 msg.ParseMessage(msgParent, msgElem, allowRepeatOptions, index);
             }
 
-            if (currentElement.ElementType.Equals("room"))
+            if (currentElement.ElementType.Equals("room") || currentElement.ElementType.Equals("look"))
             {
                 foreach (var c in Cache.RoomCache.Room.Children)
                 {

@@ -12,6 +12,8 @@ namespace WorldWeaver.Tools
             var formattedOutput = str;
             var outParser = new Parsers.OutputParser();
 
+            formattedOutput = formattedOutput.RemoveLeadingBreaks();
+
             formattedOutput = formattedOutput.Replace("---", "--------------------------------------------------------------------------------");
             formattedOutput = formattedOutput.Replace("^^", "   ");
             formattedOutput = formattedOutput.Replace("''", "'");

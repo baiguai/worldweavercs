@@ -17,5 +17,15 @@ namespace WorldWeaver.Tools
             var newValue = value.Substring(startIndex, endDifference);
             return newValue;
         }
+
+        public static string RemoveLeadingBreaks(this string value)
+        {
+            while (value.StartsWith("\n"))
+            {
+                value = value.Substring(1);
+            }
+
+            return value;
+        }
     }
 }

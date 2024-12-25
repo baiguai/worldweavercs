@@ -112,11 +112,22 @@ namespace WorldWeaver.Parsers
             }
 
             // Navigation
-            var proc = new ElementProc();
-            proc.AllowRepeatOptions = false;
-            proc.ChildProcElements.Add("navigation");
-            proc.CurrentElementTypes.Add("room");
-            elemParser.ParseElement(Cache.RoomCache.Room, proc, false);
+            var parent = new Classes.Element();
+            foreach (var nav in Cache.RoomCache.Room.Children.Where(r => r.ElementType.Equals("navigation", StringComparison.OrdinalIgnoreCase)))
+            {
+                parent = nav;
+                var procs = parent.GetProcs();
+
+                foreach (var proc in procs)
+                {
+                    elemParser.ParseElement(Cache.RoomCache.Room, proc, false);
+                    if (MainClass.output.MatchMade)
+                    {
+                        break;
+                    }
+                }
+            }
+
         }
     }
 }

@@ -1,11 +1,15 @@
 {object, key=death_map, name=Death Map, parent=oak_inn_203, sort=500
     {attrib, tags=identified, output=false }
 
-    {attrib, tags=msg_look
-        output={@
+    {look
+        {message
+            output={@
 <?[self]parent = [room]?>
+<?[self]((moved)) = 'true'?>
 You see the death map.
 </?>
+</?>
+            }
         }
     }
 
@@ -61,10 +65,19 @@ You aren't carrying the death map.
 
 --------------------------------------------------------------------------------
 
+    {take_adjustment, sort=500
+        {set, logic=[self]((identified)), output=true }
+    }
+
     {u_bed
         {message
             output={@
+<?[self]((identified)) = 'false'?>
 You see a rolled up sheet of parchment.
+</?>
+<?[self]((identified)) = 'true'?>
+You see the Death Map.
+</?>
             }
         }
 
@@ -78,7 +91,13 @@ You see a rolled up sheet of parchment.
     {x_parch
         {message
             output={@
+<?[self]((identified)) = 'false'?>
 You examine the piece of parchment.
+At the top is written 'Death Map'.
+</?>
+<?[self]((identified)) = 'true'?>
+You examine the death map.
+</?>
 
 ^^Library of Agnoth, North of Kalisto - Death Map.
 ^^Tholemville, Sothoth Marshes - Pocula Mortem
@@ -92,5 +111,6 @@ You examine the piece of parchment.
 
     {input, syntax=[tplt_syntax]((x_parchment))
         {action, logic=x_parch, tags=type }
+        {set, logic=[self]((identified)), output=true }
     }
 }
