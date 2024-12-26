@@ -1,0 +1,42 @@
+{room, key=road_to_kalisto, name=Road to Kalisto
+    {enter_message
+        output={@
+At the start the road is easy and pleasant. There is a warm gentle breeze
+and the few fellow travelers you encounter are pleasant. You even meet
+a ranger who joins you for a ways. He is good conversation.
+
+Some days later however a thick fog rolls in. You can barely
+see a couple of meters before you.
+
+The dense oppressive fog remains throughout the final day of travel and
+as you approach Kalisto the entire village is just a ghostly silhouette.
+
+The Old Oak Inn is one of the first buildings you encounter on your left.
+        }
+    }
+
+    {look
+        {message
+            output={@
+You are at the end of the road where the village of Kalisto begins.
+You can't see much due to the fog, just ghostly silhouettes in the distance.
+            }
+        }
+    }
+
+    {navigation, tags=look
+        {message
+            output={@
+To your left is The Old Oak Inn.
+            }
+        }
+    }
+
+--------------------------------------------------------------------------------
+
+    {input, syntax=[tplt_syntax]((left))
+        {move, logic=old_oak_inn, tags=[player], output=You turn left and enter the inn. }
+    }
+
+    {inject, logic=Injection/look.inj }
+}

@@ -5,6 +5,8 @@ namespace WorldWeaver.Parsers.Elements
 {
     public class Element
     {
+        public Random rnd = new Random(DateTime.Now.Millisecond);
+
         public void ParseElement(
             Classes.Element currentElement,
             Classes.ElementProc procObj,
@@ -23,6 +25,7 @@ namespace WorldWeaver.Parsers.Elements
             var handledMessage = false;
             var handledMove = false;
             var handledAttack = false;
+            var handledNav = false;
 
             foreach (var proc in procObj.ChildProcElements)
             {
@@ -125,10 +128,15 @@ namespace WorldWeaver.Parsers.Elements
                             }
 
                             MainClass.output.MatchMade = false;
+                            var allowRep = procObj.AllowRepeatOptions;
+                            if (!currentElement.Repeat.Equals(""))
+                            {
+                                allowRep = true;
+                            }
                             HandleMessage(
                                 currentElement,
                                 child,
-                                procObj.AllowRepeatOptions,
+                                allowRep,
                                 isEntering
                             );
                             if (
@@ -294,14 +302,13 @@ namespace WorldWeaver.Parsers.Elements
                     break;
 
                 case "random":
-                    var rnd = new Random(DateTime.Now.Millisecond);
                     var cnt = children.Count;
                     // If the child count is only 2 - rnd will always pick 0, so increase it and check that
                     if (cnt == 2)
                     {
                         cnt = 11;
                     }
-                    repeatOutput = rnd.Next(cnt - 1);
+                    repeatOutput = rnd.Next(cnt);
                     if (children.Count == 2)
                     {
                         if (repeatOutput < 5)
@@ -393,23 +400,6 @@ namespace WorldWeaver.Parsers.Elements
                 usingChild = true;
             }
 
-            // var procItems = Tools.ProcFunctions.GetProcessStepsByType(msgParent.ElementType);
-            // foreach (var proc in procItems)
-            // {
-            //     if (proc.ChildProcElements.Contains("logic"))
-            //     {
-            //         foreach (var msgChild in msgParent.Children.Where(c => c.ElementType.Equals("logic")))
-            //         {
-            //             elemLogic.ParseLogic(msgChild);
-            //             if (MainClass.output.FailedLogic)
-            //             {
-            //                 MainClass.output.MatchMade = true;
-            //                 return;
-            //             }
-            //         }
-            //     }
-            // }
-
             if (!msgParent.Repeat.Equals(""))
             {
                 index = HandleRepeat(msgParent, msgParent.Children.Where(c => c.ElementType.Equals("message")).ToList(), rptType);
@@ -438,16 +428,19 @@ namespace WorldWeaver.Parsers.Elements
                 msg.ParseMessage(msgParent, msgElem, allowRepeatOptions, index);
             }
 
-            foreach (var c in msgParent.Children)
-            {
-                if (c.ElementType.Equals("navigation"))
-                {
-                    foreach (var msgChild in c.Children.Where(c => c.ElementType.Equals("message")))
-                    {
-                        msg.ParseMessage(c, msgChild, allowRepeatOptions, index);
-                    }
-                }
-            }
+            // if (currentElement.ElementType.Equals("room") || currentElement.ElementType.Equals("look"))
+            // {
+            //     foreach (var c in Cache.RoomCache.Room.Children)
+            //     {
+            //         if (c.ElementType.Equals("navigation"))
+            //         {
+            //             foreach (var msgChild in c.Children.Where(c => c.ElementType.Equals("message")))
+            //             {
+            //                 msg.ParseMessage(c, msgChild, false, index);
+            //             }
+            //         }
+            //     }
+            // }
 
             return;
         }

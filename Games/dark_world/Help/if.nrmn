@@ -45,19 +45,19 @@ Looking Inside Objects:
 
 
 
-    {input, syntax=(?i)^(help|\?)\straveling$
-        {action, logic=help_traveling, tags=type|self }
+    {input, syntax=(?i)^\??traveling$
+        {action, logic=help_traveling, tags=type }
     }
 
-    {input, syntax=(?i)^(help|\?)\s+looking(\s+at\s+things)?$
-        {action, logic=help_looking, tags=type|self }
+    {input, syntax=(?i)^\? looking at things$
+        {action, logic=help_looking, tags=type }
     }
 
-    {input, syntax=(?i)^(help|\?) taking( things)?$
-        {action, logic=help_taking, tags=type|self }
+    {input, syntax=(?i)\? taking things
+        {action, logic=help_taking, tags=type }
     }
 
-    {input, syntax=(?i)^(help|\?)\sfighting$
+    {input, syntax=(?i)\? fighting
         {action, logic=help_fighting, tags=type|self }
     }
 }

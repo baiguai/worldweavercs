@@ -68,7 +68,8 @@
             "elements" : [
                 "logic",
                 "input",
-                "action"
+                "action",
+                "message"
             ],
             "repeat_options" : "false"
         },
@@ -110,14 +111,26 @@
         },
         {
             "types" : [
-                "message",
-                "general"
+                "message"
             ],
             "elements" : [
                 "logic",
                 "action",
                 "message",
                 "set"
+            ],
+            "repeat_options" : "true"
+        },
+        {
+            "types" : [
+                "general"
+            ],
+            "elements" : [
+                "logic",
+                "action",
+                "message",
+                "set",
+                "navigation"
             ],
             "repeat_options" : "true"
         },

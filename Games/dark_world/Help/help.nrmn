@@ -32,7 +32,14 @@ BASIC ACTIONS:
     {help_notes
         {message
             output={@
-Notes help...
+Adding a Note
+^^Syntax: noteadd <note key (single word, case sensitive)>|<note text>
+Deleting a Note
+^^Syntax: notedelete <note key (single word, case sensitive)>
+Listing Notes
+^^Syntax: listnotes
+Viewing a Note
+^^Syntax: note <note key (single word, case sensitive)>
             }
         }
     }
@@ -41,15 +48,15 @@ Notes help...
 
 
 
-    {input, syntax=(?i)^(help|\?)\snotes$
+    {input, syntax=(?i)\? notes
         {action, logic=help_notes, tags=type|self }
     }
 
-    {input, syntax=(?i)^(help|\?)\s+(interactive fiction|if)$
+    {input, syntax=(?i)\b(?:interactive fiction|if)\b
         {action, logic=help_if, tags=type|self }
     }
 
-    {input, syntax=(?i)^(help|\?)$
+    {input, syntax=(?i)^\?$
         {action, logic=help_home, tags=type|self }
     }
 }

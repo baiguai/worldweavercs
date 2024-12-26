@@ -173,18 +173,6 @@ namespace WorldWeaver.Parsers.Elements
             var selfElem = Tools.Elements.GetSelf(currentElement);
 
             ParseChildren(selfElem, type, true);
-
-            // var targets = Tools.Elements.GetElementsByType(selfElem, type, true);
-            // var elemParser = new Parsers.Elements.Element();
-
-            // foreach (var elem in targets)
-            // {
-            //     var selfProcItems = Tools.ProcFunctions.GetProcessStepsByType(elem.ElementType);
-            //     foreach (var proc in selfProcItems)
-            //     {
-            //         elemParser.ParseElement(elem, proc);
-            //     }
-            // }
         }
 
         private void ParseRoom_Type(Classes.Element currentElement, string type)

@@ -28,10 +28,11 @@ You have received a mysterious letter that was left outside your humble cottage.
 It stated that if you were interested in high adventure, treasure, and money -
 to be in a village called Kalisto at the next full moon.
 
-You have heard of Kalisto, but have never been to that corner of the continent.
+You would have laughed it off, however there is <<[player]((gold))>> gold pieces
+in a pouch, sitting on top of the letter.
 
-You arrive at The Old Oak Inn on the evening requested and are sitting at the
-bar sipping on some mead.
+You have heard of Kalisto, but have never been to that corner of the continent.
+You hit the road North West to Kalisto.
         }
     }
 

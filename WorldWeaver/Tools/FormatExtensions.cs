@@ -12,11 +12,21 @@ namespace WorldWeaver.Tools
             var formattedOutput = str;
             var outParser = new Parsers.OutputParser();
 
+            formattedOutput = formattedOutput.RemoveLeadingBreaks();
+
             formattedOutput = formattedOutput.Replace("---", "--------------------------------------------------------------------------------");
+            formattedOutput = formattedOutput.Replace("^^", "   ");
             formattedOutput = formattedOutput.Replace("''", "'");
             formattedOutput = formattedOutput.Replace("\\b", $"{Environment.NewLine}");
 
             return formattedOutput;
+        }
+
+        public static string TrimEndBreaks(this string str)
+        {
+            var outString = str.TrimEnd('\n').TrimEnd('\r');
+            outString += Environment.NewLine;
+            return outString;
         }
 
         public static string FormatDate(this DateTime dt)

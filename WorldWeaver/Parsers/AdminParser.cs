@@ -130,9 +130,18 @@ namespace WorldWeaver.Parsers
                 {
                     if (!MainClass.output.Equals(""))
                     {
+                        if (MainClass.output.OutputText.Equals("\n"))
+                        {
+                            MainClass.output.OutputText = "";
+                        }
                         MainClass.output.OutputText += Environment.NewLine;
                     }
 
+
+                    if (MainClass.output.OutputText.Equals("\n"))
+                    {
+                        MainClass.output.OutputText = "";
+                    }
                     MainClass.output.OutputText += Path.GetFileNameWithoutExtension(file);
                 }
             }
@@ -150,12 +159,16 @@ namespace WorldWeaver.Parsers
 
                     foreach (var line in contents)
                     {
+                        if (MainClass.output.OutputText.Equals("\n"))
+                        {
+                            MainClass.output.OutputText = "";
+                        }
                         if (!MainClass.output.OutputText.Equals(""))
                         {
                             MainClass.output.OutputText += Environment.NewLine;
+                            MainClass.output.OutputText += line;
                         }
 
-                        MainClass.output.OutputText += line;
                     }
                 }
             }

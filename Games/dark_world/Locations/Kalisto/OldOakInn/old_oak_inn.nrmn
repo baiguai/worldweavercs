@@ -1,63 +1,83 @@
 {room, key=old_oak_inn, name=The Old Oak Inn
-    {attribute, tags=message_ne
-        output={@
-You ascend the stairs to the second floor.
-        }
-    }
-    {attribute, tags=message_s
-        output={@
-You leave the Old Oak Inn.
-        }
-    }
-
     {enter_message
         output={@
+The Old Oak Inn is completely empty.
 
-The bar is full this night. A bard is belting out an old tune about something called "The Cleansing".
-However the crowd is not enjoying it and is booing him and throwing food at him.
+There is not a single soul in the entire place.
+No bar keep, no patrons, no bards or maidens.
 
-<?(onious)((topic)) = 'offer'?>
-<?(onious)parent = 'old_oak_inn'?>
-As you glance around you notice <<(onious)((npc_label_a))>>.
-She is staring at you. After a moment she approaches you and sits down at the bar.
-"You are here for high adventure and wealth?"
-</?>
-</?>
+The silence is unnerving.
         }
     }
 
-    {look
+--------------------------------------------------------------------------------
+
+    {look, repeat=random
         {message
             output={@
 You look around.
-The Inn is full of loud boisterous patrons.
-
-In the north east corner of the Inn is a staircase leading up.
-Set into the south wall is the door that leads out to the main street.
+The furniture isn't dusty. It seems to have been in use
+recently. In fact there's a mug of mead sitting on the
+bar top.
             }
         }
-    }
-
-    {navigation, tags=look
         {message
             output={@
-In the north east corner of the Inn is a staircase leading up.
-Set into the south wall is the door that leads out to the main street.
+You look around.
+The place doesn't appear to have been empty long.
+You even see a small bit of parchment sitting on one
+of the tables.
+            }
+        }
+        {message
+            output={@
+You look around.
+The furniture isn't dusty. It seems to have been in use
+recently.
             }
         }
     }
 
 --------------------------------------------------------------------------------
 
-    {input, syntax=[tplt_syntax]((look))
-        {action, logic=look, tags=type|room }
+    {x_mead
+        {message
+            output={@
+The mead is tempting but reason wins over and you decide to
+merely inspect the mug.
+There is moisture over the surface of it, clearly the liquid
+within is still very cold.
+It wasn't poured long ago.
+            }
+        }
     }
+
+--------------------------------------------------------------------------------
+
+    {navigation, tags=look
+        {message
+            output={@
+In the South wall is the door that exits the Inn.
+In the North East corner is a staircase leading up.
+In the North wall is a narrow unmarked wooden door.
+            }
+        }
+    }
+
+--------------------------------------------------------------------------------
+
+    {inject, logic=Injection/look.inj }
+
 
     {input, syntax=[tplt_syntax]((ne_up))
-        {move, logic=ooi_upstairs, tags=[player], output=[self]((message_ne)) }
+        {move, logic=old_oak_inn_upstairs, tags=[player], output=You ascend the stairs in the north east corner of the Inn }
     }
 
-    {input, syntax=[tplt_syntax]((south))
-        {move, logic=kalisto_main_street, tags=[player], output=[self]((message_s)) }
+    {input, syntax=[tplt_syntax]((north))
+        {move, logic=old_oak_north, tags=[player], output=You enter the door in the north wall. }
+    }
+
+    {input, syntax=[tplt_syntax]((x_mead))
+        {action, logic=x_mead, tags=type }
     }
 }
