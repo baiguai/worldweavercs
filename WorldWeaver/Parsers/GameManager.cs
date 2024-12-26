@@ -115,12 +115,13 @@ namespace WorldWeaver.Parsers
             var parent = new Classes.Element();
             foreach (var nav in Cache.RoomCache.Room.Children.Where(r => r.ElementType.Equals("navigation", StringComparison.OrdinalIgnoreCase)))
             {
-                parent = nav;
-                var procs = parent.GetProcs();
+                var procs = Cache.RoomCache.Room.GetProcs();
+
+                MainClass.output.OutputText = MainClass.output.OutputText.TrimEndBreaks();
 
                 foreach (var proc in procs)
                 {
-                    elemParser.ParseElement(Cache.RoomCache.Room, proc, false);
+                    elemParser.ParseElement(nav, proc, false);
                     if (MainClass.output.MatchMade)
                     {
                         break;

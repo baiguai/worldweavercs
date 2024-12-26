@@ -22,6 +22,13 @@ namespace WorldWeaver.Tools
             return formattedOutput;
         }
 
+        public static string TrimEndBreaks(this string str)
+        {
+            var outString = str.TrimEnd('\n').TrimEnd('\r');
+            outString += Environment.NewLine;
+            return outString;
+        }
+
         public static string FormatDate(this DateTime dt)
         {
             if (dt == null) return null;

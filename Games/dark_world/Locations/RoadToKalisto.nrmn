@@ -20,6 +20,13 @@ The Old Oak Inn is one of the first buildings you encounter on your left.
             output={@
 You are at the end of the road where the village of Kalisto begins.
 You can't see much due to the fog, just ghostly silhouettes in the distance.
+            }
+        }
+    }
+
+    {navigation, tags=look
+        {message
+            output={@
 To your left is The Old Oak Inn.
             }
         }
