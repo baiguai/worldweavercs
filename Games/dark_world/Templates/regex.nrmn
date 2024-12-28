@@ -15,12 +15,14 @@
     {attrib, tags=down_stairs, output=(?i)\b(?:descend(?: the)? stairs|go down(?: the)? stairs|go down|down stairs|down)\b }
     {attrib, tags=x_bed, output=(?i)\b(?:examine|x)\s+(?:the\s+)?bed\b }
     {attrib, tags=u_bed, output=(?i)\blook\s+under\s+(the\s+)?bed\b }
+    {attrib, tags=x_mead, output=(?i)\b(?:take|drink|examine|x)\s+(?:the\s+)?mead\b }
+    {attrib, tags=x_pack, output=(?i)\b(?:look|in|examine|x)\s+(?:the\s+)?pack\b }
+    {attrib, tags=x_pouch, output=(?i)\b(?:look|in|examine|x)\s+(?:the\s+)?pouch\b }
+    {attrib, tags=x_chest, output=(?i)^(x|examine)(?:\s+the)?\s+chest$ }
+    {attrib, tags=x_tap, output=(?i)\b(x|examine)\s+(the\s+)?tapestries\b }
+    {attrib, tags=open_chest, output=(?i)open(?: the)? chest }
 
-    Kalisto
-    {attrib, tags=x_kal_chest, output=(?i)^(x|examine)(?:\s+the)?\s+chest$ }
-    {attrib, tags=x_kal-temp_tap, output=(?i)\b(x|examine)\s+(the\s+)?tapestries\b }
-    {attrib, tags=open_kal_chest, output=(?i)open(?: the)? chest }
-
+    {attrib, tags=take_5_coins, output=(?i)\b(?:take|pick up)\b(?:\s+the)?(?:\s+(?:\d+|five))?\s+coins\b }
 
     Enemies
     {attrib, tags=attack_skeleton, output=(?i)\battack(?: the)? skeleton\b }
@@ -29,8 +31,12 @@
     Specifics
 
     Kalisto
-        {attrib, tags=x_mead, output=(?i)\b(?:take|drink|examine|x)\s+(?:the\s+)?mead\b }
-        {attrib, tags=x_parchment, output=(?i)\b(?:examine|x)\s+(?:the\s+)?(?:parchment|death\s+map)\b }
-        {attrib, tags=x_pack, output=(?i)\b(?:look|in|examine|x)\s+(?:the\s+)?pack\b }
+        {attrib, tags=x_kal_parchment, output=(?i)\b(?:examine|x)\s+(?:the\s+)?(?:parchment|death\s+map)\b }
+        {attrib, tags=x_kal_corpse_f, output=(?i)\b(?:examine|x)\s+(?:the\s+)?(?:dead\s+)?(?:woman|girl|corpse)\b }
+        {attrib, tags=ooi_in_201, output=\b(?:open|enter|go in|in)?(?:\s+door)?\s+201\b }
+        {attrib, tags=ooi_in_202, output=\b(?:open|enter|go in|in)?(?:\s+door)?\s+202\b }
         {attrib, tags=ooi_in_203, output=\b(?:open|enter|go in|in)?(?:\s+door)?\s+203\b }
+        {attrib, tags=ooi_in_204, output=\b(?:open|enter|go in|in)?(?:\s+door)?\s+204\b }
+        {attrib, tags=ooi_in_205, output=\b(?:open|enter|go in|in)?(?:\s+door)?\s+205\b }
+        {attrib, tags=ooi_in_206, output=\b(?:open|enter|go in|in)?(?:\s+door)?\s+206\b }
 }

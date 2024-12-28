@@ -4,6 +4,11 @@
 You try the door to room 203. It actually opens. You enter.
         }
     }
+    {attrib, tags=msg_205
+        output={@
+You try the door to room 205. It actually opens. You enter.
+        }
+    }
 
     {enter_message
         output={@
@@ -29,6 +34,36 @@ A thin layer of fog has seeped into the hotel and has settled along the floor.
         }
     }
 
+
+    {enter_201
+        {message
+            output={@
+You try to enter room 201 but it is locked.
+            }
+        }
+    }
+    {enter_202
+        {message
+            output={@
+You try to enter room 202 but it is locked.
+            }
+        }
+    }
+    {enter_204
+        {message
+            output={@
+You try to enter room 204 but it is locked.
+            }
+        }
+    }
+    {enter_206
+        {message
+            output={@
+You try to enter room 206 but it is locked.
+            }
+        }
+    }
+
 --------------------------------------------------------------------------------
 
     {navigation, tags=look
@@ -43,8 +78,28 @@ At the end of the hall you see a set of stairs that go down to the main floor.
 
     {inject, logic=Injection/look.inj }
 
+    {input, syntax=[tplt_syntax]((ooi_in_201))
+        {action, logic=enter_201, tags=type }
+    }
+
+    {input, syntax=[tplt_syntax]((ooi_in_202))
+        {action, logic=enter_202, tags=type }
+    }
+
     {input, syntax=[tplt_syntax]((ooi_in_203))
         {move, logic=oak_inn_203, tags=[player], output=[self]((msg_203)) }
+    }
+
+    {input, syntax=[tplt_syntax]((ooi_in_204))
+        {action, logic=enter_204, tags=type }
+    }
+    
+    {input, syntax=[tplt_syntax]((ooi_in_205))
+        {move, logic=oak_inn_205, tags=[player], output=[self]((msg_205)) }
+    }
+
+    {input, syntax=[tplt_syntax]((ooi_in_206))
+        {action, logic=enter_206, tags=type }
     }
 
     {input, syntax=[tplt_syntax]((down_stairs))
