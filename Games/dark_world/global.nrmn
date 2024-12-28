@@ -20,7 +20,7 @@ You are now armed with the [player_armed_weapon].
     }
 
     {action
-        {set, logic=cur_heal_round(output)++ }
+        {set, logic=cur_heal_round(output), output=++ }
     }
 
     {action
@@ -31,7 +31,7 @@ You are now armed with the [player_armed_weapon].
                 ?player((life))<player((maxlife))
             }
         }
-        {set, logic=player((life))++ }
+        {set, logic=player((life)), output=++ }
     }
 
     {action
@@ -40,7 +40,7 @@ You are now armed with the [player_armed_weapon].
                 ?cur_heal_round(output)>heal_rounds(output)
             }
         }
-        {set, logic=cur_heal_round(output)0 }
+        {set, logic=cur_heal_round(output), output=0 }
     }
 
     {key=day_string

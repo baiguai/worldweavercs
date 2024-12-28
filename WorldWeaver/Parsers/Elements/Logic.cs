@@ -141,6 +141,26 @@ namespace WorldWeaver.Parsers.Elements
                 return rawVariable.Replace("'", "");
             }
 
+            var tmpOutput = "";
+            tmpOutput = ParseElementByKey(currentElement, rawVariable);
+            if (tmpOutput.Equals(""))
+            {
+                tmpOutput = ParseElementChildByTag(currentElement, rawVariable);
+            }
+            if (tmpOutput.Equals(""))
+            {
+                tmpOutput = ParseRelativeElement(currentElement, rawVariable);
+            }
+            if (tmpOutput.Equals(""))
+            {
+                tmpOutput = ParseRelativeElementByTag(currentElement, rawVariable);
+            }
+
+            if (!tmpOutput.Equals(""))
+            {
+                return tmpOutput;
+            }
+
             if (rawVariable.Equals("[self]"))
             {
                 return Tools.Elements.GetSelf(currentElement).ElementKey;
