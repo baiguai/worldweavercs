@@ -18,6 +18,7 @@
     {attrib, tags=x_mead, output=(?i)\b(?:take|drink|examine|x)\s+(?:the\s+)?mead\b }
     {attrib, tags=x_pack, output=(?i)\b(?:look|in|examine|x)\s+(?:the\s+)?pack\b }
     {attrib, tags=x_pouch, output=(?i)\b(?:look|in|examine|x)\s+(?:the\s+)?pouch\b }
+    {attrib, tags=x_note, output=(?i)\b(?:look|in|examine|x)\s+(?:the\s+)?note\b }
     {attrib, tags=x_chest, output=(?i)^(x|examine)(?:\s+the)?\s+chest$ }
     {attrib, tags=x_tap, output=(?i)\b(x|examine)\s+(the\s+)?tapestries\b }
     {attrib, tags=open_chest, output=(?i)open(?: the)? chest }

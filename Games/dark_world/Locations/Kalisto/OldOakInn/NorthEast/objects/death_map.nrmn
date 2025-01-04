@@ -109,8 +109,8 @@ You examine the death map.
 
     {inject, logic=Injection/take_logic.inj }
 
-    {input, syntax=[tplt_syntax]((x_parchment))
-        {action, logic=x_parch, tags=type }
+    {input, syntax=[tplt_syntax]((x_kal_parchment))
+        {action, logic=x_parch, tags=type|room|player }
         {set, logic=[self]((identified)), output=true }
     }
 }
