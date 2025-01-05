@@ -52,6 +52,25 @@ It wasn't poured long ago.
         }
     }
 
+    {x_parchment_piece
+        {message
+            output={@
+You are curious about the parchment, however when you examine
+it you realize it is nothing more than a small portion of a mundane
+equipment list.
+            }
+        }
+    }
+
+    {x_furniture
+        {message
+            output={@
+You examine the furniture. It isn't dusty. Even though everything appears
+to be abandoned, that must have occurred recently.
+            }
+        }
+    }
+
 --------------------------------------------------------------------------------
 
     {navigation, tags=look
@@ -77,7 +96,19 @@ In the North wall is a narrow unmarked wooden door.
         {move, logic=old_oak_north, tags=[player], output=You enter the door in the north wall. }
     }
 
+    {input, syntax=[tplt_syntax]((south))
+        {move, logic=kal_main, tags=[player], output=You exit the Old Oak Inn. }
+    }
+
     {input, syntax=[tplt_syntax]((x_mead))
         {action, logic=x_mead, tags=type }
+    }
+
+    {input, syntax=[tplt_syntax]((x_parchment))
+        {action, logic=x_parchment_piece, tags=type }
+    }
+
+    {input, syntax=[tplt_syntax]((x_furniture))
+        {action, logic=x_furniture, tags=type }
     }
 }

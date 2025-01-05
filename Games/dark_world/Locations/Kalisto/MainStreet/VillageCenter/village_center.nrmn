@@ -1,0 +1,35 @@
+{room, key=kal_vill_center, name=Kalisto Village Center
+    {enter_message
+        output={@
+You are standing in the center of Kalisto Village.
+There is a park in the center of the looping road.
+In the middle of that park is a large, and very ancient tree.
+        }
+    }
+
+    {look
+        {message
+            output={@
+You look around...
+            }
+        }
+    }
+
+--------------------------------------------------------------------------------
+
+    {navigation, tags=look
+        {message
+            output={@
+West of where you are standing returns to the entrance to the village.
+            }
+        }
+    }
+
+--------------------------------------------------------------------------------
+
+    {inject, logic=Injection/look.inj }
+
+    {input, syntax=[tplt_syntax]((west))
+        {move, logic=kal_main, tags=[player], output=You return to Kalisto's main street. }
+    }
+}
