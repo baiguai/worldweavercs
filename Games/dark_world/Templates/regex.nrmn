@@ -15,14 +15,19 @@
     {attrib, tags=down_stairs, output=(?i)\b(?:descend(?: the)? stairs|go down(?: the)? stairs|go down|down stairs|down)\b }
     {attrib, tags=x_bed, output=(?i)\b(?:examine|x)\s+(?:the\s+)?bed\b }
     {attrib, tags=u_bed, output=(?i)\blook\s+under\s+(the\s+)?bed\b }
+    {attrib, tags=x_furniture, output=(?i)\b(x|examine|look at)\s+(?:the\s+)?furniture\b }
     {attrib, tags=x_mead, output=(?i)\b(?:take|drink|examine|x)\s+(?:the\s+)?mead\b }
     {attrib, tags=x_pack, output=(?i)\b(?:look|in|examine|x)\s+(?:the\s+)?pack\b }
+    {attrib, tags=x_parchment, output=(?i)\b(?:take|examine|x)\s+(?:the\s+)?parchment\b }
     {attrib, tags=x_pouch, output=(?i)\b(?:look|in|examine|x)\s+(?:the\s+)?pouch\b }
+    {attrib, tags=x_note, output=(?i)\b(?:look|in|examine|x)\s+(?:the\s+)?note\b }
     {attrib, tags=x_chest, output=(?i)^(x|examine)(?:\s+the)?\s+chest$ }
     {attrib, tags=x_tap, output=(?i)\b(x|examine)\s+(the\s+)?tapestries\b }
     {attrib, tags=open_chest, output=(?i)open(?: the)? chest }
 
     {attrib, tags=take_5_coins, output=(?i)\b(?:take|pick up)\b(?:\s+the)?(?:\s+(?:\d+|five))?\s+coins\b }
+    {attrib, tags=take_diary, output=(?i)\b(?:take|pick up)\s+(?:the\s+)?diary\b }
+    {attrib, tags=take_pack, output=(?i)\b(?:take|pick up)\s+(?:the\s+)?pack\b }
 
     Enemies
     {attrib, tags=attack_skeleton, output=(?i)\battack(?: the)? skeleton\b }

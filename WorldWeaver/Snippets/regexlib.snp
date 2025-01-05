@@ -1,0 +1,58 @@
+Attacking Things:
+    Attack the Skeleton:
+        (?i)\battack(?: the)? skeleton\b
+
+Directions:
+    Left:
+        (?i)\b(?:go\s+)?left\b
+    Leave:
+        (?i)\bleave\b(?:\s+(?:the|this)?\s*(?:room|area|place))?
+    North:
+        (?i)^(go\s+)?north|^n$
+    NorthEast:
+        (?i)^(go\s+)?(north\s*east|northeast|ne)$
+    NorthEast - or Up Stairs:
+        (?i)\b(?:go\s+)?(?:northeast|ne|up(?:\s+stairs)?)\b
+    East:
+        (?i)^(go\s+)?east|^e$
+    South:    
+        (?i)^(go\s+)?south|^s$
+    Down, Down Stairs:
+        (?i)\b(?:s|south|go south|down|go down|go down stairs|go down the stairs)\b
+    West:
+        (?i)^(go\s+)?west|^w$
+    Down Stairs:
+        (?i)\b(?:descend(?: the)? stairs|go down(?: the)? stairs|go down|down stairs|down)\b
+
+Examining Items:        
+    Examine the Bed:
+        (?i)\b(?:examine|x)\s+(?:the\s+)?bed\b
+    Look Under the Bed:
+        (?i)\blook\s+under\s+(the\s+)?bed\b
+    Examine the Furniture:
+        (?i)\b(x|examine|look at)\s+(?:the\s+)?furniture\b
+    Examine the Mead:
+        (?i)\b(?:take|drink|examine|x)\s+(?:the\s+)?mead\b
+    Examine the Pack:
+        (?i)\b(?:look|in|examine|x)\s+(?:the\s+)?pack\b
+    Examine the Parchment:
+        (?i)\b(?:take|examine|x)\s+(?:the\s+)?parchment\b
+    Examine the Pouch:
+        (?i)\b(?:look|in|examine|x)\s+(?:the\s+)?pouch\b
+    Examine the Note:
+        (?i)\b(?:look|in|examine|x)\s+(?:the\s+)?note\b
+    Examine the Chest:
+        (?i)^(x|examine)(?:\s+the)?\s+chest$
+    Examine the Tapestries:
+        (?i)\b(x|examine)\s+(the\s+)?tapestries\b
+    Examine the Chest:
+        (?i)open(?: the)? chest
+    Take the Diary:
+        (?i)\b(?:take|pick up)\s+(?:the\s+)?diary\b
+
+Look:
+    (?i)^(look(?: around)?|l)$
+
+Taking Things:
+    Take Pack:
+        (?i)\b(?:take|pick up)\s+(?:the\s+)?pack\b

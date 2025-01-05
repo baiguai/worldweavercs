@@ -166,9 +166,9 @@ namespace WorldWeaver.Parsers
                         if (!MainClass.output.OutputText.Equals(""))
                         {
                             MainClass.output.OutputText += Environment.NewLine;
-                            MainClass.output.OutputText += line;
                         }
-
+                            
+                        MainClass.output.OutputText += line;
                     }
                 }
             }
