@@ -3,6 +3,7 @@
     parent=root
 
     {attribute, output=warbeiter, tags=adminpass }
+    {attribute, output=false, tags=game_started }
 
     {enter_message, key=game_title
         output={@
@@ -24,6 +25,7 @@ Welcome to:
 
 --------------------------------------------------------------------------------
 
+<?[self]((game_started)) = 'false'?>
 You have received a mysterious letter that was left outside your humble cottage.
 It stated that if you were interested in high adventure, treasure, and money -
 to be in a village called Kalisto at the next full moon.
@@ -33,6 +35,18 @@ in a pouch, sitting on top of the letter.
 
 You have heard of Kalisto, but have never been to that corner of the continent.
 You hit the road North West to Kalisto.
+
+
+At the start the road is easy and pleasant. There is a warm gentle breeze
+and the few fellow travelers you encounter are pleasant. You even meet
+a ranger who joins you for a ways. He is good conversation.
+
+Some days later however a thick fog rolls in. You can barely
+see a couple of meters before you.
+
+The dense oppressive fog remains throughout the final day of travel and
+as you approach Kalisto the entire village is just a ghostly silhouette.
+</?>
         }
     }
 

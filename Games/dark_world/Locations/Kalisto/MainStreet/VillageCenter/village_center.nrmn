@@ -30,7 +30,8 @@ to be a temple. The fog is still very thick.
     {navigation, tags=look
         {message
             output={@
-West of where you are standing returns to the entrance to the village.
+West of where you are standing returns to the Kalisto's main street.
+To the east is the silhouette of a temple.
             }
         }
     }
@@ -41,5 +42,9 @@ West of where you are standing returns to the entrance to the village.
 
     {input, syntax=[tplt_syntax]((west))
         {move, logic=kal_main, tags=[player], output=You return to Kalisto's main street. }
+    }
+
+    {input, syntax=[tplt_syntax]((east))
+        {move, logic=kal_temple, tags=[player], output=You approach the temple. }
     }
 }

@@ -33,7 +33,11 @@ namespace WorldWeaver.Parsers.Elements
                 foreach (var child in currentElement.Children)
                 {
                     elem.ParseElement(currentElement, proc);
-                    if (MainClass.output.MatchMade)
+                    // @!@
+                    // Added the global consideration.
+                    // Global processing doesn't set MatchMade - so that other elements can still process.
+                    if (MainClass.output.MatchMade ||
+                        Tools.Elements.GetSelf(currentElement).ElementType.Equals("global", StringComparison.CurrentCultureIgnoreCase))
                     {
                         break;
                     }

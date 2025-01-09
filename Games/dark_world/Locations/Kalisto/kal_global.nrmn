@@ -8,6 +8,8 @@
         {message
             output={@
 You hear a strange scraping somewhere in the distance.
+
+
             }
         }
     }
