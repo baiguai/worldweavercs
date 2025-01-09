@@ -297,7 +297,11 @@ namespace WorldWeaver.Parsers.Elements
                                 MainClass.output.OutputText += $"{child.Name}: {child.Output}{Environment.NewLine}";
                             }
                         }
-                        MainClass.output.MatchMade = true;
+
+                        if (!Tools.Elements.GetSelf(child).ElementType.Equals("global", StringComparison.CurrentCultureIgnoreCase))
+                        {
+                            MainClass.output.MatchMade = true;
+                        }
                     }
                 }
             }

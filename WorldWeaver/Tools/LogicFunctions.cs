@@ -90,6 +90,18 @@ namespace WorldWeaver.Tools
                 return logicElems;
             }
 
+            if (logicString.StartsWith("rdm_", StringComparison.CurrentCultureIgnoreCase))
+            {
+                logicElems.Add(
+                    new LogicElement()
+                    {
+                        Property = "output",
+                        Value = logicString.RandomValue(currentElement)
+                    }
+                );
+                return logicElems;
+            }
+
 
             var inputElem = ElementPropFromInput(currentElement, logicString);
             if (inputElem.Count > 0)
