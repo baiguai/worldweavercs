@@ -33,7 +33,11 @@ namespace WorldWeaver.Parsers.Elements
                 foreach (var child in currentElement.Children)
                 {
                     elem.ParseElement(currentElement, proc);
-                    if (MainClass.output.MatchMade)
+                    // @!@
+                    // Added the global consideration.
+                    // Global processing doesn't set MatchMade - so that other elements can still process.
+                    if (MainClass.output.MatchMade ||
+                        Tools.Elements.GetSelf(currentElement).ElementType.Equals("global", StringComparison.CurrentCultureIgnoreCase))
                     {
                         break;
                     }
@@ -251,11 +255,23 @@ namespace WorldWeaver.Parsers.Elements
 
                 var logic = new DataManagement.GameLogic.Element();
 
-                if (key.Equals("[self]"))
+                if (key.Equals("[self]", StringComparison.CurrentCultureIgnoreCase))
                 {
                     elem = Tools.Elements.GetSelf(currentElement);
                 }
-                else
+                if (key.Equals("[player]", StringComparison.CurrentCultureIgnoreCase))
+                {
+                    elem = Cache.PlayerCache.Player;
+                }
+                if (key.Equals("[room]", StringComparison.CurrentCultureIgnoreCase))
+                {
+                    elem = Cache.RoomCache.Room;
+                }
+                if (key.Equals("[enemy]", StringComparison.CurrentCultureIgnoreCase) && Cache.FightCache.Fight != null)
+                {
+                    elem = Cache.FightCache.Fight.Enemies.First();
+                }
+                if (elem == null)
                 {
                     elem = logic.GetElementByKey(key);
                 }
@@ -272,6 +288,7 @@ namespace WorldWeaver.Parsers.Elements
                         if (child.Output.Equals(""))
                         {
                             MainClass.output.OutputText += $"{child.Name}{Environment.NewLine}";
+                            MainClass.output.OutputText = MainClass.output.OutputText.RandomValue(currentElement);
                         }
                         else
                         {
@@ -285,15 +302,19 @@ namespace WorldWeaver.Parsers.Elements
                                 }
                                 else
                                 {
-                                    MainClass.output.OutputText += $"{child.Name}: {child.Output}{Environment.NewLine}";
+                                    MainClass.output.OutputText += $"{child.Name}: {child.Output.RandomValue(child)}{Environment.NewLine}";
                                 }
                             }
                             else
                             {
-                                MainClass.output.OutputText += $"{child.Name}: {child.Output}{Environment.NewLine}";
+                                MainClass.output.OutputText += $"{child.Name}: {child.Output.RandomValue(child)}{Environment.NewLine}";
                             }
                         }
-                        MainClass.output.MatchMade = true;
+
+                        if (!Tools.Elements.GetSelf(child).ElementType.Equals("global", StringComparison.CurrentCultureIgnoreCase))
+                        {
+                            MainClass.output.MatchMade = true;
+                        }
                     }
                 }
             }

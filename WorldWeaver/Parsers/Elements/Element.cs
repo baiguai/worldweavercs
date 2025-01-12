@@ -144,8 +144,15 @@ namespace WorldWeaver.Parsers.Elements
                                 || !MainClass.output.OutputText.Equals("")
                             )
                             {
-                                handledMessage = true;
-                                MainClass.output.MatchMade = true;
+                                if (!Tools.Elements.GetSelf(currentElement).ElementType.Equals("global", StringComparison.CurrentCultureIgnoreCase))
+                                {
+                                    handledMessage = true;
+                                    MainClass.output.MatchMade = true;
+                                }
+                                else
+                                {
+                                    MainClass.output.MatchMade = false;
+                                }
                             }
                             break;
 

@@ -1,16 +1,26 @@
 {room, key=kal_vill_center, name=Kalisto Village Center
+    {attrib, tags=loc, output=kalisto }
+
     {enter_message
         output={@
 You are standing in the center of Kalisto Village.
 There is a park in the center of the looping road.
 In the middle of that park is a large, and very ancient tree.
+
+At the east end of the loop is the silhouette of what appears
+to be a temple. The fog is still very thick.
         }
     }
 
     {look
         {message
             output={@
-You look around...
+You look around.
+You see a park in the center of the looping road.
+There is a large ancient tree in the middle of the park.
+
+At the east end of the loop is the silhouette of what appears
+to be a temple. The fog is still very thick.
             }
         }
     }
@@ -20,7 +30,8 @@ You look around...
     {navigation, tags=look
         {message
             output={@
-West of where you are standing returns to the entrance to the village.
+West of where you are standing returns to the Kalisto's main street.
+To the east is the silhouette of a temple.
             }
         }
     }
@@ -31,5 +42,9 @@ West of where you are standing returns to the entrance to the village.
 
     {input, syntax=[tplt_syntax]((west))
         {move, logic=kal_main, tags=[player], output=You return to Kalisto's main street. }
+    }
+
+    {input, syntax=[tplt_syntax]((east))
+        {move, logic=kal_temple, tags=[player], output=You approach the temple. }
     }
 }

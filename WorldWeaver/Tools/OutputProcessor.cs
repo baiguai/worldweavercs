@@ -283,7 +283,7 @@ namespace WorldWeaver.Tools
                 startPos = output.IndexOf("<?");
             }
 
-            return output;
+            return output.RandomValue(currentElement);
         }
 
         private static int GetEndPos(string output, int startPos)

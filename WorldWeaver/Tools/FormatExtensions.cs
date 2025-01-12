@@ -53,7 +53,13 @@ namespace WorldWeaver.Tools
         {
             var rndVal = "";
 
-            if (!value.ToLower().Contains("[rand") && !value.ToLower().Contains("[roll"))
+            if (value.StartsWith("rdm_[", StringComparison.CurrentCultureIgnoreCase))
+            {
+                value = value.Replace("rdm_", "", StringComparison.CurrentCultureIgnoreCase);
+            }
+
+            if (!value.StartsWith("[rand", StringComparison.CurrentCultureIgnoreCase) &&
+                !value.StartsWith("[roll", StringComparison.CurrentCultureIgnoreCase))
             {
                 return value;
             }
@@ -67,7 +73,7 @@ namespace WorldWeaver.Tools
                 rndVal = "0";
             }
 
-            if (value.Contains("[rand:"))
+            if (value.StartsWith("[rand:", StringComparison.CurrentCultureIgnoreCase))
             {
                 var tmp = value.Replace("[rand:", "");
                 if (tmp.Length > 0)
@@ -83,7 +89,7 @@ namespace WorldWeaver.Tools
                     rndVal = rnd.Next(Convert.ToInt32(min), Convert.ToInt32(max)).ToString();
                 }
             }
-            if (value.Contains("[roll:"))
+            if (value.StartsWith("[roll:", StringComparison.CurrentCultureIgnoreCase))
             {
                 rndVal = RollDice(value, currentElement).ToString();
             }

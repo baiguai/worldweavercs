@@ -1,0 +1,9 @@
+{room, key=kal_temple, name=The Temple
+    {attrib, tags=loc, output=kalisto }
+
+    {enter_message
+        output={@
+You enter the temple.
+        }
+    }
+}

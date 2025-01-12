@@ -1,4 +1,6 @@
 {room, key=kal_main, name=Kalisto Main Street
+    {attrib, tags=loc, output=kalisto }
+
     {enter_message
         output={@
 You are standing in the middle of Kalisto's main street.

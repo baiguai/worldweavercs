@@ -1,0 +1,18 @@
+{global, key=kal_global, parent=root
+    {action
+        {logic
+            logic={@
+                ?[room]((loc)) = 'kalisto'
+                and
+                ?rdm_[roll:1d6] > 2
+            }
+        }
+        {message
+            output={@
+You hear a strange scraping somewhere in the distance.
+
+
+            }
+        }
+    }
+}
