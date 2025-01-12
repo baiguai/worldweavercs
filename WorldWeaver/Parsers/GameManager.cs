@@ -85,6 +85,7 @@ namespace WorldWeaver.Parsers
 
             foreach (var glob in Cache.GlobalCache.Global)
             {
+                MainClass.output.FailedLogic = false;
                 glob.ParseElement();
             }
 
