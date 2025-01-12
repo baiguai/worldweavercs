@@ -3,7 +3,44 @@
 
     {enter_message
         output={@
-You enter the temple.
+You step inside the vast temple. It is constructed of marble and smooth sandstone.
+The ceiling towers over you and massive marble pillars line the north and south walls of the building.
+In the east end of the temple is a massive stone statue of a woman draped in loosely hanging cloth.
+She is holding a hammer and a large spike.
+
+There are two doors, one set into the north wall and one set in the south wall.
         }
+    }
+
+    {look
+        {message
+            output={@
+The ceiling towers over you and massive marble pillars line the north and south walls of the building.
+In the east end of the temple is a massive stone statue of a woman draped in loosely hanging cloth.
+She is holding a hammer and a large spike.
+
+There are two doors, one set into the north wall and one set in the south wall.
+            }
+        }
+    }
+
+--------------------------------------------------------------------------------
+
+    {navigation, tags=look
+        {message
+            output={@
+West of where you stand is the door that exits the temple.
+North of where you are is a door.
+South of you is another door.
+            }
+        }
+    }
+
+--------------------------------------------------------------------------------
+
+    {inject, logic=Injection/look.inj }
+
+    {input, syntax=[tplt_syntax]((west))
+        {move, logic=kal_vill_center, tags=[player], output=You exit the temple. }
     }
 }
