@@ -32,6 +32,9 @@
     Enemies
     {attrib, tags=attack_skeleton, output=(?i)\battack(?: the)? skeleton\b }
 
+    Objects
+    {attrib, tags=x_statue, output=(?i)\b(?:examine|x|look|l)(?: at| the)? statue\b }
+
 
     Specifics
 

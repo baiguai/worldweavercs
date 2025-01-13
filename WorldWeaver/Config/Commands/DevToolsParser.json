@@ -2,47 +2,58 @@
     "commands" : [
         {
             "pattern" : "\\b(_admin *)\\b",
-            "method" : "DoAdminLogin"
+            "method" : "DoAdminLogin",
+            "description": "Logs the player in as an ADMIN user, giving them access to tools designed to help with game development and debugging."
         },
         {
             "pattern" : "\\b(_map)\\b",
-            "method" : "DoMap"
+            "method" : "DoMap",
+            "description" : "Outputs a text-based description of each room in the current game."
         },
         {
             "pattern" : "\\b(_room)\\b",
-            "method" : "DoRoom"
+            "method" : "DoRoom",
+            "description" : "Outputs a text-based description of the current room in the current game."
         },
         {
             "pattern" : "\\b(_list)\\b",
-            "method" : "DoList"
+            "method" : "DoList",
+            "description" : "Lists the available ADMIN commands that are available."
         },
         {
             "pattern" : "\\b(_macrols)\\b",
-            "method" : "DoMacroList"
+            "method" : "DoMacroList",
+            "description" : "Lists the macros that have been created for the current game."
         },
         {
             "pattern" : "\\b(_recordon *)\\b",
-            "method" : "DoMacroStart"
+            "method" : "DoMacroStart",
+            "description" : "Begins the recording of a macro for the current game, use this command followed by a one-word name for the macro. (Note: You can run existing macros as part of the currently recording macro!)"
         },
         {
             "pattern" : "\\b(_recordoff)\\b",
-            "method" : "DoMacroStop"
+            "method" : "DoMacroStop",
+            "description" : "Stops the currently recording macro and saves it as a file."
         },
         {
             "pattern" : "\\b(_macrodesc *)\\b",
-            "method" : "DoDescMacro"
+            "method" : "DoDescMacro",
+            "description" : "Displays the commands that are stored within the specified macro (One-word name)."
         },
         {
             "pattern" : "\\b(_macrodel *)\\b",
-            "method" : "DoDeleteMacro"
+            "method" : "DoDeleteMacro",
+            "description" : "Deletes the specified macro."
         },
         {
             "pattern" : "\\b(_macro *)\\b",
-            "method" : "DoRunMacro"
+            "method" : "DoRunMacro",
+            "description" : "Runs the specified macro (To see the available macros use _macrols). WARNING! Running macros may take time, since it goes through each stored command, calling it as though a player entered the command."
         },
         {
             "pattern" : "\\b(_notesearch *)\\b",
-            "method" : "DoNoteSearch"
+            "method" : "DoNoteSearch",
+            "description" : "Searches through any 'devnotes' that have been defined in the game's source files. A entering a space will return all devnotes."
         }
     ]
 }

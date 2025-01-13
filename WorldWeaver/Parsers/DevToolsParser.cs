@@ -107,7 +107,7 @@ namespace WorldWeaver.Parsers
             {
                 MainClass.adminEnabled = true;
                 MainClass.output.MatchMade = true;
-                MainClass.output.OutputText = "Admin mode enabled.";
+                MainClass.output.OutputText = "Admin mode enabled. Use _list to view the possible admin commands. Or consult the Admin Help System.";
             }
         }
 
@@ -186,7 +186,7 @@ namespace WorldWeaver.Parsers
             {
                 return;
             }
-            var commands = Tools.CommandFunctions.GetCommands("DevToolsParser");
+            var commands = Tools.CommandFunctions.GetCommandsAndDescription("DevToolsParser");
             var cmdOutput = "";
             var nl = Environment.NewLine;
 
