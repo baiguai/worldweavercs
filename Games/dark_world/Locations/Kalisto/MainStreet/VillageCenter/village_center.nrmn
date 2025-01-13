@@ -45,6 +45,11 @@ To the east is the silhouette of a temple.
     }
 
     {input, syntax=[tplt_syntax]((east))
-        {move, logic=kal_temple, tags=[player], output=You approach the temple. }
+        {move, logic=kal_temple, tags=[player],
+            output={@
+You approach the temple.
+You step inside the vast temple. It is constructed of marble and smooth sandstone.
+The ceiling towers over you and massive marble pillars line the north and south walls of the building.
+        }
     }
 }

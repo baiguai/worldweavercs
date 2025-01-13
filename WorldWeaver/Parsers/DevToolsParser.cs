@@ -186,7 +186,7 @@ namespace WorldWeaver.Parsers
             {
                 return;
             }
-            var commands = Tools.CommandFunctions.GetCommands("DevToolsParser");
+            var commands = Tools.CommandFunctions.GetCommandsAndDescription("DevToolsParser");
             var cmdOutput = "";
             var nl = Environment.NewLine;
 

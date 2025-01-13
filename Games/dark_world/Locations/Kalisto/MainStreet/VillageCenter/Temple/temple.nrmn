@@ -1,10 +1,6 @@
 {room, key=kal_temple, name=The Temple
-    {attrib, tags=loc, output=kalisto }
-
     {enter_message
         output={@
-You step inside the vast temple. It is constructed of marble and smooth sandstone.
-The ceiling towers over you and massive marble pillars line the north and south walls of the building.
 In the east end of the temple is a massive stone statue of a woman draped in loosely hanging cloth.
 She is holding a hammer and a large spike.
 
@@ -20,6 +16,16 @@ In the east end of the temple is a massive stone statue of a woman draped in loo
 She is holding a hammer and a large spike.
 
 There are two doors, one set into the north wall and one set in the south wall.
+            }
+        }
+    }
+
+    {x_statue
+        {message
+            output={@
+You examine the statue.
+It depicts a realistic woman draped in a loosely hanging cloth, holding a hammer and a large spike.
+You don't see anything suspicious about the statue and there isn't anything odd on the floor around it.
             }
         }
     }
@@ -40,7 +46,19 @@ South of you is another door.
 
     {inject, logic=Injection/look.inj }
 
+    {input, syntax=[tplt_syntax]((north))
+        {move, logic=kal_temple_n, tags=[player], output=You enter the north door. }
+    }
+
+    {input, syntax=[tplt_syntax]((south))
+        {move, logic=kal_temple_s, tags=[player], output=You enter the south door. }
+    }
+
     {input, syntax=[tplt_syntax]((west))
         {move, logic=kal_vill_center, tags=[player], output=You exit the temple. }
+    }
+
+    {input, syntax=[tplt_syntax]((x_statue))
+        {action, logic=x_statue, tags=type }
     }
 }
