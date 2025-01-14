@@ -25,6 +25,7 @@ If you wish to enter it, you can go north.
     {navigation, tags=look
         {message
             output={@
+North of you is the confessional booth.
 In the south wall is the door leading back to the main room of the temple.
             }
         }

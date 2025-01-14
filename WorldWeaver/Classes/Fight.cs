@@ -8,5 +8,7 @@ namespace WorldWeaver.Classes
         public Classes.Element Target { get; set; } = new Element();
         public bool PlayerHasAttacked { get; set; }
         public bool PlayerFleeing { get; set; } = false;
+
+        public bool AllEnemiesDead { get; set; } = false;
     }
 }

@@ -13,7 +13,7 @@ namespace WorldWeaver.Parsers.Elements
             var elemParser = new Elements.Element();
             var newFight = false;
             var elemDb = new DataManagement.GameLogic.Element();
-            var attackables = elemDb.GetElementsByTag("attackable");
+            var attackables = elemDb.GetRoomElementsByTag("attackable", Cache.RoomCache.Room.ElementKey);
             var target = Tools.Elements.GetRelativeElement(currentElement, currentElement.AttributeByTag("target").Output);
             var playersTurn = true;
             var playerWeapon = Cache.PlayerCache.Player.AttributeByTag("armed");
@@ -55,9 +55,20 @@ namespace WorldWeaver.Parsers.Elements
 
         public void ProcessFightRound()
         {
+            var elemDb = new DataManagement.GameLogic.Element();
+
             if (Cache.FightCache.Fight.PlayersTurn)
             {
-                var playerWeapon = Cache.PlayerCache.Player.AttributeByTag("armed");
+                MainClass.output.OutputText = "";
+                var playerWeapon = elemDb.GetElementByKey(Cache.PlayerCache.Player.AttributeByTag("armed").Output);
+
+                if (playerWeapon == null)
+                {
+                    MainClass.output.OutputText = "You aren't armed with a weapon.";
+                    MainClass.output.MatchMade = true;
+                    return;
+                }
+
                 var attackRoll = Tools.ValueTools.Randomize(1, 20);
                 var enemyArmor = Cache.FightCache.Fight.Target.AttributeByTag("armor");
 
@@ -72,6 +83,13 @@ namespace WorldWeaver.Parsers.Elements
                     var damage = Convert.ToInt32(damageAttrib.Logic.RandomValue(damageAttrib));
                     var newLifeValue = Convert.ToInt32(enemyLife.Output) - damage;
 
+                    if (newLifeValue < 0)
+                    {
+                        newLifeValue = 0;
+                    }
+                    gameLgc.SetElementField(enemyLife.ElementKey, "Output", newLifeValue.ToString());
+                    Tools.CacheManager.RefreshFightCache();
+
                     if (damageMsg != null)
                     {
                         var dmgMsg = ProcessDamageOutput(damageMsg.Output, damage);
@@ -85,9 +103,6 @@ namespace WorldWeaver.Parsers.Elements
                         actn.DoKill();
                         return;
                     }
-
-                    gameLgc.SetElementField(enemyLife.ElementKey, "Output", newLifeValue.ToString());
-                    Tools.CacheManager.RefreshFightCache();
                 }
                 else
                 {
@@ -99,7 +114,7 @@ namespace WorldWeaver.Parsers.Elements
                 var allDead = true;
                 foreach (var enemy in Cache.FightCache.Fight.Enemies)
                 {
-                    var elife = Convert.ToInt32(enemy.AttributeByTag("life"));
+                    var elife = Convert.ToInt32(enemy.AttributeByTag("life").Output);
                     if (elife > 0)
                     {
                         allDead = false;
@@ -108,6 +123,7 @@ namespace WorldWeaver.Parsers.Elements
                 }
 
                 MainClass.output.MatchMade = true;
+                MainClass.output.OutputText += Environment.NewLine + Environment.NewLine;
 
                 Cache.FightCache.Fight.PlayersTurn = false;
 
@@ -119,11 +135,14 @@ namespace WorldWeaver.Parsers.Elements
             }
             else
             {
-                MainClass.output.OutputText = "";
-
                 if (Cache.FightCache.Fight.PlayerFleeing)
                 {
                     MainClass.output.OutputText = Tools.AppSettingFunctions.GetConfigValue("messages", "flee_message") + Environment.NewLine;
+                }
+                var enemyLife = Cache.FightCache.Fight.Target.AttributeByTag("life");
+                if (enemyLife == null || Convert.ToInt32(enemyLife.Output) < 1)
+                {
+                    return;
                 }
 
                 var enemyWeapon = Cache.FightCache.Fight.Target.AttributeByTag("armed");
@@ -165,11 +184,12 @@ namespace WorldWeaver.Parsers.Elements
                     {
                         var missElem = Cache.FightCache.Fight.Target.ChildByType("miss");
                         var missMsg = ProcessDamageOutput(missElem.Output, 0);
-                        MainClass.output.OutputText = Tools.OutputProcessor.ProcessOutputText(missMsg, missElem);
+                        MainClass.output.OutputText += Tools.OutputProcessor.ProcessOutputText(missMsg, missElem);
                     }
                 }
 
                 Cache.FightCache.Fight.PlayersTurn = true;
+                MainClass.output.OutputText += Environment.NewLine + Environment.NewLine;
             }
 
             return;
