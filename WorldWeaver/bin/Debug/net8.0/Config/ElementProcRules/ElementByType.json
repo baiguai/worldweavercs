@@ -42,7 +42,8 @@
             "elements" : [
                 "logic",
                 "message",
-                "action"
+                "action",
+                "attack"
             ],
             "repeat_options" : "true"
         },

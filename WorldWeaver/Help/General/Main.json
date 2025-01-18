@@ -9,6 +9,15 @@ Welcome to the WorldWeaver help system.
 If you are new to Interactive Fiction games use:
 help if
 
+While you are playing a game, to execute the command you
+just entered again, use:  ^
+
+While you are playing a game use the following to view the
+game's help system:
+?
+
+To view the WorldWeaver menu use:
+menu
 
 If you are building games as opposed to playing them, use:
 _help

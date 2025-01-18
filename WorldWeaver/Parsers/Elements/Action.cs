@@ -418,6 +418,10 @@ namespace WorldWeaver.Parsers.Elements
 
             foreach (var child in dieElem.Children)
             {
+                if (child.ElementType.Equals("action", StringComparison.CurrentCultureIgnoreCase))
+                {
+                    child.ParseElement();
+                }
                 if (child.ElementType.Equals("message", StringComparison.CurrentCultureIgnoreCase))
                 {
                     MainClass.output.OutputText += child.Output;

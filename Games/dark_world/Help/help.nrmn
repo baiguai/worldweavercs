@@ -5,9 +5,14 @@
 Welcome to the DarkWorld help system.
 
 CONTENTS:
- - Interactive Fiction
-   - ? if
- - ? notes
+Interactive Fiction
+- ? if
+Notes
+- ? notes
+
+ Note:
+   To redo the last command you entered use:
+   ^
             }
         }
     }
@@ -20,11 +25,11 @@ Interactive Fiction (IF) refers to games that are text-based...
 Like the one you are playing.
 
 BASIC ACTIONS:
- - ? traveling
- - ? looking at things
- - ? taking things
- - ? stats and inventory
- - ? fighting
+- ? traveling
+- ? looking at things
+- ? taking things
+- ? stats and inventory
+- ? fighting
             }
         }
     }

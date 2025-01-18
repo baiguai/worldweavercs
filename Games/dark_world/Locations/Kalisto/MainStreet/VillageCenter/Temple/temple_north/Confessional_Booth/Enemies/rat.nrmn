@@ -48,6 +48,10 @@ You attack the rat. But your attack failed.
 You have killed the rat.
             }
         }
+
+        {act
+            {set, logic=[player]((experience)), output=++ }
+        }
     }
     ---------------------------------------------------------------------------
 
