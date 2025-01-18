@@ -81,6 +81,21 @@ namespace WorldWeaver.Parsers
                     atkPars.ProcessFightRound();
                     return;
                 }
+                else
+                {
+                    if (Cache.FightCache.Fight.AllEnemiesDead)
+                    {
+                        Cache.FightCache.Fight = null;
+                    }
+                    else
+                    {
+                        var attackables = elemDb.GetRoomElementsByTag("attackable", Cache.RoomCache.Room.ElementKey);
+                        foreach (var attackable in attackables)
+                        {
+                            attackable.ParseElement(false);
+                        }
+                    }
+                }
             }
 
             foreach (var glob in Cache.GlobalCache.Global)

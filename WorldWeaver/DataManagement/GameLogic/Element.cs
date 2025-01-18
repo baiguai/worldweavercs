@@ -100,6 +100,51 @@ ORDER BY
             return output;
         }
 
+        public List<Classes.Element> GetRoomElementsByTag(string tag, string roomKey)
+        {
+            string connectionString = Connection.GetConnection(MainClass.gameDb);
+
+            var selectQuery = $@"
+SELECT
+    ElementType,
+    ElementKey,
+    Name,
+    ParentKey,
+    Syntax,
+    Logic,
+    Output,
+    Tags,
+    Repeat,
+    RepeatIndex,
+    Active,
+    Sort
+FROM
+    element
+WHERE 1=1
+    AND '|'||Tags||'|' LIKE '%'||@tag||'%'
+    AND ParentKey = @parent
+    AND Active = 'true'
+ORDER BY
+    sort
+;
+            ";
+
+            var parms = new List<DbParameter>();
+            parms.Add(new DbParameter()
+            {
+                ParamName = "@tag",
+                ParamValue = tag
+            });
+            parms.Add(new DbParameter()
+            {
+                ParamName = "@parent",
+                ParamValue = roomKey
+            });
+
+            var output = GetElements(connectionString, selectQuery, parms);
+            return output;
+        }
+
         public List<Classes.Element> GetRandOutputElements()
         {
             string connectionString = Connection.GetConnection(MainClass.gameDb);
@@ -290,7 +335,7 @@ WHERE 1=1
 
             if (connectionString.Equals(""))
             {
-                output = GetElement(connectionString, selectQuery, parms);
+                output = GetElement(selectQuery, parms);
             }
             else
             {

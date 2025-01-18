@@ -1,0 +1,79 @@
+{npc, key=kal_temple_rat_01, name=Rat, syntax=[tplt_syntax]((rat)), parent=road_to_kalisto, tags=attackable
+    {attrib, name=Life, output=[rand:15|30], tags=stats|life }
+    {attrib, name=Armor Rating, output=[rand:4|10], tags=stats|armor }
+    {attrib, name=Strength, output=[rand:8|18], tags=stats }
+    {attrib, name=Intelligence, output=[rand:8|18], tags=stats }
+    {attrib, name=Cunning, output=[rand:8|18], tags=stats }
+    {attrib, name=Gold, output=[rand:20|40], tags=stats }
+    {attrib, name=Armed Weapon, output=rat_claw_01, tags=armed|stats|name }
+    {attrib, output=the rat, tags=title }
+
+    ---- FIGHTING MESSAGES ----
+    ----------------------------------------------------------------------------
+    {hit
+        output={@
+
+
+You have been attacked by the rat. It has caused your life to be reduced by [damage].
+        }
+    }
+
+    {miss
+        output={@
+
+The rat attempts to attack you but fails.
+        }
+    }
+
+    {damage_message
+        output={@
+
+
+You have attacked the rat. Its life has been reduced by [damage].
+        }
+    }
+
+    {miss_message
+        output={@
+
+You attack the rat. But your attack failed.
+        }
+    }
+
+    {kill
+        {message
+            output={@
+
+
+You have killed the rat.
+            }
+        }
+    }
+    ---------------------------------------------------------------------------
+
+    {enter_message
+        {message
+            output={@
+You see a large rat with faintly glowing red eyes.
+            }
+        }
+
+        {attack
+            {attrib, output=[player], tags=target }
+        }
+    }
+
+    {look
+        {message
+            output={@
+                You see a rat.
+            }
+        }
+    }
+
+    {input, syntax=[tplt_syntax]((attack_rat))
+        {attack
+            {attrib, output=[self], tags=target }
+        }
+    }
+}

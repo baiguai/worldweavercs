@@ -443,7 +443,7 @@ PRAGMA foreign_keys = on;
                     case string s when line.ToLower().StartsWith("type=", StringComparison.OrdinalIgnoreCase):
                         if (element != null)
                         {
-                            element.ElementType = line.Replace("type=", "", StringComparison.OrdinalIgnoreCase).ToLower().SqlSafe();
+                            element.ElementType = line.Replace("type=", "", StringComparison.OrdinalIgnoreCase).ToLower().SqlSafe().FixElementType();
                         }
                         break;
 
@@ -620,7 +620,7 @@ PRAGMA foreign_keys = on;
             // {action, logic="...", tags="..." }
             if (!arr[0].Contains("="))
             {
-                element.ElementType = arr[0].Trim();
+                element.ElementType = arr[0].Trim().FixElementType();
             }
 
             foreach (var pair in arr)
@@ -636,7 +636,7 @@ PRAGMA foreign_keys = on;
                             break;
 
                         case "type":
-                            element.ElementType = pairArr[1].ToLower().Trim();
+                            element.ElementType = pairArr[1].ToLower().Trim().FixElementType();
                             break;
 
                         case "name":

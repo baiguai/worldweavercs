@@ -1,27 +1,27 @@
 ﻿{player, key=player, name=, parent=road_to_kalisto
-    {attribute, output=[rand:3|5], tags=stats_dice }
-    {attribute, output=[rand:4|6], tags=money_dice }
+    {attrib, output=[rand:3|5], tags=stats_dice }
+    {attrib, output=[rand:4|6], tags=money_dice }
 
-    {attribute, output=[rand:<<[self]((stats_dice))>>|6], tags=life_dice }
-    {attribute, output=[rand:<<[self]((stats_dice))>>|6], tags=armor_dice }
-    {attribute, output=[rand:<<[self]((stats_dice))>>|5], tags=strength_dice }
-    {attribute, output=[rand:<<[self]((stats_dice))>>|5], tags=int_dice }
-    {attribute, output=[rand:<<[self]((stats_dice))>>|5], tags=cunning_dice }
-    {attribute, output=[rand:<<[self]((money_dice))>>|9], tags=gold_dice }
+    {attrib, output=[rand:<<[self]((stats_dice))>>|6], tags=life_dice }
+    {attrib, output=[rand:<<[self]((stats_dice))>>|6], tags=armor_dice }
+    {attrib, output=[rand:<<[self]((stats_dice))>>|5], tags=strength_dice }
+    {attrib, output=[rand:<<[self]((stats_dice))>>|5], tags=int_dice }
+    {attrib, output=[rand:<<[self]((stats_dice))>>|5], tags=cunning_dice }
+    {attrib, output=[rand:<<[self]((money_dice))>>|9], tags=gold_dice }
 
-    {attribute, name=Life, output=[roll:(8)<<[self]((life_dice))>>d6], tags=stats|life }
-    {attribute, output=player((life)), tags=maxlife }
-    {attribute, name=Armor Rating, output=[roll:(6)<<[self]((armor_dice))>>d6+3], tags=stats|armor }
-    {attribute, name=Strength, output=[roll:(6)<<[self]((strength_dice))>>d6], tags=stats }
-    {attribute, name=Intelligence, output=[roll:(6)<<[self]((int_dice))>>d6], tags=stats }
-    {attribute, name=Cunning, output=[roll:(6)<<[self]((cunning_dice))>>d6], tags=stats }
-    {attribute, name=Gold, output=[roll:<<[self]((gold_dice))>>d8], tags=stats|gold }
-    {attribute, key=player_armed, name=Armed Weapon, output=long-sword_01, tags=armed|stats|name }
+    {attrib, name=Life, output=[roll:(8)<<[self]((life_dice))>>d6], tags=stats|life }
+    {attrib, output=player((life)), tags=maxlife }
+    {attrib, name=Armor Rating, output=[roll:(6)<<[self]((armor_dice))>>d6+3], tags=stats|armor }
+    {attrib, name=Strength, output=[roll:(6)<<[self]((strength_dice))>>d6], tags=stats }
+    {attrib, name=Intelligence, output=[roll:(6)<<[self]((int_dice))>>d6], tags=stats }
+    {attrib, name=Cunning, output=[roll:(6)<<[self]((cunning_dice))>>d6], tags=stats }
+    {attrib, name=Gold, output=[roll:<<[self]((gold_dice))>>d8], tags=stats|gold }
+    {attrib, key=player_armed, name=Armed Weapon, output=long-sword_01, tags=armed|stats|name }
 
-    {attribute, key=heal_rounds, output=5 }
-    {attribute, key=cur_heal_round, output=0 }
+    {attrib, key=heal_rounds, output=5 }
+    {attrib, key=cur_heal_round, output=0 }
 
-    {attribute, name=Quest, output=, tags=stats|quest }
+    {attrib, name=Quest, output=, tags=stats|quest }
 
     {attackplayer
         {attack

@@ -415,16 +415,18 @@ namespace WorldWeaver.Parsers.Elements
             var gameLgc = new DataManagement.GameLogic.Element();
             var dieElem = Cache.FightCache.Fight.Target.ChildByType("kill");
             var elemParser = new Parsers.Elements.Element();
-            var procs = Tools.ProcFunctions.GetProcessStepsByType("kill");
 
-            foreach (var proc in procs)
+            foreach (var child in dieElem.Children)
             {
-                elemParser.ParseElement(dieElem, proc);
+                if (child.ElementType.Equals("message", StringComparison.CurrentCultureIgnoreCase))
+                {
+                    MainClass.output.OutputText += child.Output;
+                }
             }
 
             gameLgc.SetElementField(Cache.FightCache.Fight.Target.ElementKey, "ParentKey", "limbo");
             gameLgc.SetElementField(Cache.FightCache.Fight.Target.ElementKey, "Active", "false");
-            Cache.FightCache.Fight = null;
+            Tools.CacheManager.RefreshCache();
 
             return;
         }
