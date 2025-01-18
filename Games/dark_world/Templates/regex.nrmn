@@ -30,8 +30,8 @@
     {attrib, tags=take_pack, output=(?i)\b(?:take|pick up)\s+(?:the\s+)?pack\b }
 
     Enemies
-    {attrib, tags=attack_skeleton, output=(?i)\battack(?: the)? skeleton\b }
-    {attrib, tags=attack_rat, output=(?i)\battack(?: the)? rat\b }
+    {attrib, tags=attack_skeleton, output=(?i)\b(?:attack\s+the\s+skeleton|attack\s+skeleton|!\s*the\s+skeleton|!\s*skeleton)\b }
+    {attrib, tags=attack_rat, output=(?i)^(?:! the rat|! rat|attack the rat|attack rat)$ }
 
     Objects
     {attrib, tags=x_statue, output=(?i)\b(?:examine|x|look|l)(?: at| the)? statue\b }

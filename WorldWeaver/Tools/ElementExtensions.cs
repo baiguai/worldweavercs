@@ -84,5 +84,39 @@ namespace WorldWeaver.Tools
 
             return selChild;
         }
+
+        public static string FixElementType(this string elemType)
+        {
+            switch (elemType.ToLower())
+            {
+                case "act":
+                    return "action";
+                case "att":
+                    return "attack";
+                case "attrib":
+                    return "attribute";
+                case "enter":
+                    return "enter_message";
+                case "inj":
+                    return "injection";
+                case "inp":
+                    return "input";
+                case "msg":
+                    return "message";
+                case "nav":
+                    return "navigation";
+                case "obj":
+                    return "object";
+                case "plr":
+                    return "player";
+                case "rm":
+                    return "room";
+                case "trv":
+                    return "travel";
+
+                default:
+                    return elemType;
+            }
+        }
     }
 }

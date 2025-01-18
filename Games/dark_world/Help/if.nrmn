@@ -37,6 +37,13 @@ Looking Inside Objects:
     {help_fighting
         {message
             output={@
+You can attempt to attack creatures or other characters using the following syntax:
+
+attack <description of enemy>
+! <description of enemy>
+
+For example, if you want to attack a skeleton, you can try:
+! skeleton
             }
         }
     }
@@ -59,5 +66,9 @@ Looking Inside Objects:
 
     {input, syntax=(?i)\? fighting
         {action, logic=help_fighting, tags=type|self }
+    }
+
+    {input, syntax=(?i)^(?:\?|help)\s+stats(?:\s+and)?\s+inventory$
+        {action, logic=help_stats, tags=type|self }
     }
 }

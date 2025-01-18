@@ -1,12 +1,12 @@
 {npc, key=kal_temple_rat_01, name=Rat, syntax=[tplt_syntax]((rat)), parent=road_to_kalisto, tags=attackable
-    {attribute, name=Life, output=[rand:15|30], tags=stats|life }
-    {attribute, name=Armor Rating, output=[rand:4|10], tags=stats|armor }
-    {attribute, name=Strength, output=[rand:8|18], tags=stats }
-    {attribute, name=Intelligence, output=[rand:8|18], tags=stats }
-    {attribute, name=Cunning, output=[rand:8|18], tags=stats }
-    {attribute, name=Gold, output=[rand:20|40], tags=stats }
-    {attribute, name=Armed Weapon, output=rat_claw_01, tags=armed|stats|name }
-    {attribute, output=the rat, tags=title }
+    {attrib, name=Life, output=[rand:15|30], tags=stats|life }
+    {attrib, name=Armor Rating, output=[rand:4|10], tags=stats|armor }
+    {attrib, name=Strength, output=[rand:8|18], tags=stats }
+    {attrib, name=Intelligence, output=[rand:8|18], tags=stats }
+    {attrib, name=Cunning, output=[rand:8|18], tags=stats }
+    {attrib, name=Gold, output=[rand:20|40], tags=stats }
+    {attrib, name=Armed Weapon, output=rat_claw_01, tags=armed|stats|name }
+    {attrib, output=the rat, tags=title }
 
     ---- FIGHTING MESSAGES ----
     ----------------------------------------------------------------------------
@@ -57,6 +57,10 @@ You have killed the rat.
 You see a large rat with faintly glowing red eyes.
             }
         }
+
+        {attack
+            {attrib, output=[player], tags=target }
+        }
     }
 
     {look
@@ -69,7 +73,7 @@ You see a large rat with faintly glowing red eyes.
 
     {input, syntax=[tplt_syntax]((attack_rat))
         {attack
-            {attribute, output=[self], tags=target }
+            {attrib, output=[self], tags=target }
         }
     }
 }
