@@ -42,6 +42,7 @@
             "elements" : [
                 "logic",
                 "message",
+                "attack",
                 "action",
                 "attack"
             ],
