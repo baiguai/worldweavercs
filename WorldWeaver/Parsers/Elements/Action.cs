@@ -408,7 +408,8 @@ namespace WorldWeaver.Parsers.Elements
 
         internal void DoKill()
         {
-            if (Cache.FightCache.Fight == null)
+            if (Cache.FightCache.Fight == null ||
+                MainClass.macro.IsRunning)
             {
                 return;
             }

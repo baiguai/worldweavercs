@@ -285,15 +285,19 @@ namespace WorldWeaver.Parsers
                 return;
             }
 
+            MainClass.macro.IsRunning = true;
+
             var lines = File.ReadAllLines($"{macroDir}/{macroName}").ToList();
             foreach (var line in lines)
             {
                 MainClass.RunTheParsers(line);
                 if (MainClass.output.MatchMade)
                 {
-                    MainClass.HandleTheFight();
+                    // MainClass.HandleTheFight();
                 }
             }
+
+            MainClass.macro.IsRunning = false;
         }
 
         private void DoDescMacro()

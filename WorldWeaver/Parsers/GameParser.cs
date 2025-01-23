@@ -339,6 +339,11 @@ set player name <<NAME>>
             {
                 MainClass.output.OutputText = MainClass.output.OutputText.OutputFormat();
 
+                if (MainClass.macro.IsRunning)
+                {
+                    return;
+                }
+
                 if (Cache.FightCache.Fight != null && !Cache.FightCache.Fight.RoundHandled && !Cache.FightCache.Fight.InitialRound && !Cache.FightCache.Fight.PlayerHasAttacked && !Cache.FightCache.Fight.AllEnemiesDead)
                 {
                     var atkParse = new Parsers.Elements.Attack();

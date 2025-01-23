@@ -77,6 +77,10 @@ namespace WorldWeaver.Parsers.Elements
                     switch (child.ElementType)
                     {
                         case "attack":
+                            if (MainClass.macro.IsRecording || MainClass.macro.IsRunning)
+                            {
+                                continue;
+                            }
                             if (handledAttack)
                             {
                                 continue;
@@ -437,6 +441,11 @@ namespace WorldWeaver.Parsers.Elements
             else
             {
                 msg.ParseMessage(msgParent, msgElem, allowRepeatOptions, index);
+            }
+
+            if (MainClass.macro.IsRecording || MainClass.macro.IsRunning)
+            {
+                return;
             }
 
             foreach (var c in msgParent.Children)

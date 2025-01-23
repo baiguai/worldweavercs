@@ -68,7 +68,8 @@ namespace WorldWeaver.Parsers
             }
 
 
-            if (Cache.FightCache.Fight != null)
+            if (Cache.FightCache.Fight != null &&
+                !MainClass.macro.IsRunning)
             {
                 var method = Tools.CommandFunctions.GetCommandMethod(MainClass.userInput, "FightParser");
 

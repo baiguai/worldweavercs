@@ -18,6 +18,11 @@ namespace WorldWeaver.Parsers.Elements
             var playersTurn = true;
             var playerWeapon = Cache.PlayerCache.Player.AttributeByTag("armed");
 
+            if (MainClass.macro.IsRecording || MainClass.macro.IsRunning)
+            {
+                return;
+            }
+
             if (attackables.Count() < 1)
             {
                 return;
