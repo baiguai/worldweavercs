@@ -1,4 +1,4 @@
-{npc, key=kal_temple_rat_01, name=Rat, syntax=[tplt_syntax]((rat)), parent=kal_temple_n_conf, tags=attackable
+{npc, key=kal_temple_rat_01, name=Rat, syntax=[tplt_syntax]((rat)), parent=old_oak_inn, tags=attackable
     {attrib, name=Life, output=[rand:15|30], tags=stats|life }
     {attrib, name=Armor Rating, output=[rand:4|10], tags=stats|armor }
     {attrib, name=Strength, output=[rand:8|18], tags=stats }
