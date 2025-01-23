@@ -60,8 +60,7 @@ namespace WorldWeaver
 
                 Console.Clear();
                 Console.WriteLine(output.OutputText);
-                Console.WriteLine("");
-                Console.WriteLine("");
+                Console.WriteLine($"{Environment.NewLine}{Environment.NewLine}");
                 output.ExitFlow = false;
 
                 HandleTheFight();
@@ -90,6 +89,7 @@ namespace WorldWeaver
                     {
                         if (Convert.ToInt32(enemyLife) > 0)
                         {
+                            MainClass.output.OutputText = "";
                             Thread.Sleep(2000);
                             var attParser = new Parsers.Elements.Attack();
                             attParser.ProcessFightRound();
@@ -106,6 +106,9 @@ namespace WorldWeaver
                         }
                         else
                         {
+                            Console.WriteLine($"Enemy Life: {enemyLife}");
+                            Console.WriteLine($"Player Life: {playerLife}");
+                            Console.WriteLine("");
                             Cache.FightCache.Fight = null;
                         }
                     }
@@ -114,6 +117,9 @@ namespace WorldWeaver
                 {
                     if (Cache.FightCache.Fight.PlayerFleeing)
                     {
+                        Console.WriteLine($"Enemy Life: {enemyLife}");
+                        Console.WriteLine($"Player Life: {playerLife}");
+                        Console.WriteLine("");
                         Cache.FightCache.Fight = null;
                     }
                 }

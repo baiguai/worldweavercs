@@ -431,6 +431,7 @@ namespace WorldWeaver.Parsers.Elements
 
             gameLgc.SetElementField(Cache.FightCache.Fight.Target.ElementKey, "ParentKey", "limbo");
             gameLgc.SetElementField(Cache.FightCache.Fight.Target.ElementKey, "Active", "false");
+            Cache.FightCache.Fight = null;
             Tools.CacheManager.RefreshCache();
 
             return;

@@ -28,6 +28,17 @@
         },
         {
             "types" : [
+                "flee"
+            ],
+            "elements" : [
+                "attribute",
+                "logic",
+                "action"
+            ],
+            "repeat_options" : "false"
+        },
+        {
+            "types" : [
                 "attribute"
             ],
             "elements" : [
@@ -42,7 +53,6 @@
             "elements" : [
                 "logic",
                 "message",
-                "attack",
                 "action",
                 "attack"
             ],
@@ -84,6 +94,7 @@
                 "preset",   
                 "action",
                 "attack",
+                "flee",
                 "message",
                 "set",
                 "move"
@@ -107,7 +118,8 @@
                 "look"
             ],
             "elements" : [
-                "navigation"
+                "navigation",
+                "attack"
             ],
             "repeat_options" : "false"
         },
@@ -192,6 +204,7 @@
                 "link",
                 "message",
                 "attack",
+                "flee",
                 "input",
                 "devnote"
             ],

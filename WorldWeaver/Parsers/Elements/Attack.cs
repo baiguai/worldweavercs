@@ -47,6 +47,7 @@ namespace WorldWeaver.Parsers.Elements
             {
                 Cache.FightCache.Fight = new Classes.Fight();
                 Cache.FightCache.Fight.Enemies.AddRange(attackables);
+                MainClass.output.OutputText += $"{Environment.NewLine}{Environment.NewLine}{Environment.NewLine}!FIGHT!{Environment.NewLine}";
             }
 
             Cache.FightCache.Fight.PlayersTurn = playersTurn;
@@ -77,7 +78,7 @@ namespace WorldWeaver.Parsers.Elements
                 var attackRoll = Tools.ValueTools.Randomize(1, 20);
                 var enemyArmor = Cache.FightCache.Fight.Target.AttributeByTag("armor");
 
-                MainClass.output.OutputText += $"Player attack roll: {attackRoll}{Environment.NewLine}Enemy's armor rating: {enemyArmor.Output}{Environment.NewLine}{Environment.NewLine}";
+                MainClass.output.OutputText += $"Player attack roll: {attackRoll}{Environment.NewLine}Enemy's armor rating: {enemyArmor.Output}";
 
                 if (Convert.ToInt32(enemyArmor.Output) <= attackRoll)
                 {
@@ -130,7 +131,7 @@ namespace WorldWeaver.Parsers.Elements
                 }
 
                 MainClass.output.MatchMade = true;
-                MainClass.output.OutputText += Environment.NewLine + Environment.NewLine;
+                MainClass.output.OutputText += Environment.NewLine;
                 Cache.FightCache.Fight.InitialRound = false;
 
                 Cache.FightCache.Fight.PlayersTurn = false;
@@ -146,6 +147,7 @@ namespace WorldWeaver.Parsers.Elements
                 if (Cache.FightCache.Fight.PlayerFleeing)
                 {
                     MainClass.output.OutputText = Tools.AppSettingFunctions.GetConfigValue("messages", "flee_message") + Environment.NewLine;
+                    MainClass.output.MatchMade = true;
                 }
                 var enemyLife = Cache.FightCache.Fight.Target.AttributeByTag("life");
                 if (enemyLife == null || Convert.ToInt32(enemyLife.Output) < 1)
@@ -160,7 +162,7 @@ namespace WorldWeaver.Parsers.Elements
                     var attackRoll = Tools.ValueTools.Randomize(1, 20);
                     var playerArmor = Cache.PlayerCache.Player.AttributeByTag("armor");
 
-                    MainClass.output.OutputText += $"{Environment.NewLine}{Environment.NewLine}Enemy attack roll: {attackRoll}{Environment.NewLine}Player's armor rating: {playerArmor.Output}{Environment.NewLine}{Environment.NewLine}";
+                    MainClass.output.OutputText += $"{Environment.NewLine}Enemy attack roll: {attackRoll}{Environment.NewLine}Player's armor rating: {playerArmor.Output}{Environment.NewLine}";
 
                     if (Convert.ToInt32(playerArmor.Output) <= attackRoll)
                     {
@@ -198,7 +200,7 @@ namespace WorldWeaver.Parsers.Elements
 
                 Cache.FightCache.Fight.PlayersTurn = true;
                 Cache.FightCache.Fight.RoundHandled = true;
-                MainClass.output.OutputText += Environment.NewLine + Environment.NewLine;
+                MainClass.output.OutputText += Environment.NewLine;
             }
 
             return;
