@@ -8,6 +8,10 @@ namespace WorldWeaver.Parsers.Elements
         public void ParseMessage(Classes.Element parentElement, Classes.Element msgElement, bool allowRepeatOptions, int currentIndex)
         {
             var elemParser = new Parsers.Elements.Element();
+            if (currentIndex == -1)
+            {
+                currentIndex = 0;
+            }
 
             if (msgElement.Output.Equals(""))
             {

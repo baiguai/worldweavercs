@@ -18,6 +18,11 @@ namespace WorldWeaver.Parsers.Elements
             var playersTurn = true;
             var playerWeapon = Cache.PlayerCache.Player.AttributeByTag("armed");
 
+            if (MainClass.macro.IsRecording || MainClass.macro.IsRunning)
+            {
+                return;
+            }
+
             if (attackables.Count() < 1)
             {
                 return;
@@ -103,6 +108,8 @@ namespace WorldWeaver.Parsers.Elements
                         actn.DoKill();
                         return;
                     }
+
+                    Cache.FightCache.Fight.RoundHandled = true;
                 }
                 else
                 {
@@ -124,6 +131,7 @@ namespace WorldWeaver.Parsers.Elements
 
                 MainClass.output.MatchMade = true;
                 MainClass.output.OutputText += Environment.NewLine + Environment.NewLine;
+                Cache.FightCache.Fight.InitialRound = false;
 
                 Cache.FightCache.Fight.PlayersTurn = false;
 
@@ -152,7 +160,7 @@ namespace WorldWeaver.Parsers.Elements
                     var attackRoll = Tools.ValueTools.Randomize(1, 20);
                     var playerArmor = Cache.PlayerCache.Player.AttributeByTag("armor");
 
-                    MainClass.output.OutputText += $"Enemy attack roll: {attackRoll}{Environment.NewLine}Player's armor rating: {playerArmor.Output}{Environment.NewLine}{Environment.NewLine}";
+                    MainClass.output.OutputText += $"{Environment.NewLine}{Environment.NewLine}Enemy attack roll: {attackRoll}{Environment.NewLine}Player's armor rating: {playerArmor.Output}{Environment.NewLine}{Environment.NewLine}";
 
                     if (Convert.ToInt32(playerArmor.Output) <= attackRoll)
                     {
@@ -189,6 +197,7 @@ namespace WorldWeaver.Parsers.Elements
                 }
 
                 Cache.FightCache.Fight.PlayersTurn = true;
+                Cache.FightCache.Fight.RoundHandled = true;
                 MainClass.output.OutputText += Environment.NewLine + Environment.NewLine;
             }
 

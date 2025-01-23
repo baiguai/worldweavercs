@@ -11,6 +11,7 @@ namespace WorldWeaver.Parsers
     {
         public bool playingGame = false;
         public string gameKey = "";
+        public CommandHistoryManager cmdHist = new CommandHistoryManager();
 
         public void ParseInput()
         {
@@ -105,21 +106,13 @@ namespace WorldWeaver.Parsers
                     {
                         DoTime();
                     }
-
-                    if (!MainClass.output.MatchMade && method.Equals("DoHistory"))
-                    {
-                        DoHistory();
-                        if (MainClass.output.OutputText.Equals(""))
-                        {
-                            DoGameInput();
-                        }
-                    }
                 }
             }
             else
             {
                 if (DataManagement.GameLogic.Game.IsGameRunning())
                 {
+                    MainClass.userInput = cmdHist.HandleInput(MainClass.userInput);
                     DoGameInput();
                 }
             }
@@ -323,6 +316,11 @@ set player name <<NAME>>
 
         public void DoGameInput()
         {
+            var histComm = "";
+
+
+
+
             if (!DataManagement.GameLogic.Game.IsGameRunning())
             {
                 MainClass.output.MatchMade = false;
@@ -341,10 +339,15 @@ set player name <<NAME>>
             {
                 MainClass.output.OutputText = MainClass.output.OutputText.OutputFormat();
 
-                if (Cache.FightCache.Fight != null && !Cache.FightCache.Fight.PlayerHasAttacked && !Cache.FightCache.Fight.AllEnemiesDead)
+                if (MainClass.macro.IsRunning)
+                {
+                    return;
+                }
+
+                if (Cache.FightCache.Fight != null && !Cache.FightCache.Fight.RoundHandled && !Cache.FightCache.Fight.InitialRound && !Cache.FightCache.Fight.PlayerHasAttacked && !Cache.FightCache.Fight.AllEnemiesDead)
                 {
                     var atkParse = new Parsers.Elements.Attack();
-                    Cache.FightCache.Fight.PlayersTurn = false;
+                    Cache.FightCache.Fight.PlayersTurn = true;
                     atkParse.ProcessFightRound();
                 }
             }
@@ -373,21 +376,6 @@ set player name <<NAME>>
             MainClass.output.MatchMade = true;
 
             return;
-        }
-
-        private void DoHistory()
-        {
-            var histInput = MainClass.userInput.Replace(":h", "").Trim();
-
-            if (histInput.Equals(""))
-            {
-                MainClass.output.OutputText = Tools.History.ListHistory();
-                MainClass.output.MatchMade = true;
-            }
-            else
-            {
-                MainClass.userInput = Tools.History.GetHistory(histInput);
-            }
         }
     }
 }

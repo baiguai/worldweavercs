@@ -18,6 +18,8 @@
     {attrib, name=Gold, output=[roll:<<[self]((gold_dice))>>d8], tags=stats|gold }
     {attrib, key=player_armed, name=Armed Weapon, output=long-sword_01, tags=armed|stats|name }
 
+    {attrib, name=Experience, key=experience, output=0, tags=experience|stats }
+
     {attrib, key=heal_rounds, output=5 }
     {attrib, key=cur_heal_round, output=0 }
 

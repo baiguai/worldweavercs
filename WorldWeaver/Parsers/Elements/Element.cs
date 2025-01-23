@@ -69,7 +69,7 @@ namespace WorldWeaver.Parsers.Elements
                         continue;
                     }
 
-                    if (Cache.FightCache.Fight != null && !proc.Equals("attack", StringComparison.CurrentCultureIgnoreCase) && !proc.Equals("input", StringComparison.CurrentCultureIgnoreCase))
+                    if (Cache.FightCache.Fight != null && !proc.Equals("attack", StringComparison.CurrentCultureIgnoreCase) && !proc.Equals("input", StringComparison.CurrentCultureIgnoreCase) && !proc.Equals("set", StringComparison.CurrentCultureIgnoreCase))
                     {
                         continue;
                     }
@@ -77,6 +77,10 @@ namespace WorldWeaver.Parsers.Elements
                     switch (child.ElementType)
                     {
                         case "attack":
+                            if (MainClass.macro.IsRecording || MainClass.macro.IsRunning)
+                            {
+                                continue;
+                            }
                             if (handledAttack)
                             {
                                 continue;
@@ -439,19 +443,26 @@ namespace WorldWeaver.Parsers.Elements
                 msg.ParseMessage(msgParent, msgElem, allowRepeatOptions, index);
             }
 
-            // if (currentElement.ElementType.Equals("room") || currentElement.ElementType.Equals("look"))
-            // {
-            //     foreach (var c in Cache.RoomCache.Room.Children)
-            //     {
-            //         if (c.ElementType.Equals("navigation"))
-            //         {
-            //             foreach (var msgChild in c.Children.Where(c => c.ElementType.Equals("message")))
-            //             {
-            //                 msg.ParseMessage(c, msgChild, false, index);
-            //             }
-            //         }
-            //     }
-            // }
+            if (MainClass.macro.IsRecording || MainClass.macro.IsRunning)
+            {
+                return;
+            }
+
+            foreach (var c in msgParent.Children)
+            {
+                if (c.ElementType.Equals("attack") && Cache.FightCache.Fight == null)
+                {
+                    var atk = new Parsers.Elements.Attack();
+                    atk.ParseAttack(msgParent, c);
+                    Cache.FightCache.Fight.RoundHandled = false;
+                    Cache.FightCache.Fight.PlayerHasAttacked = true;
+                    Cache.FightCache.Fight.InitialRound = false;
+                    if (MainClass.output.MatchMade)
+                    {
+                        break;
+                    }
+                }
+            }
 
             return;
         }

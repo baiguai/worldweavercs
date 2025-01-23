@@ -408,7 +408,8 @@ namespace WorldWeaver.Parsers.Elements
 
         internal void DoKill()
         {
-            if (Cache.FightCache.Fight == null)
+            if (Cache.FightCache.Fight == null ||
+                MainClass.macro.IsRunning)
             {
                 return;
             }
@@ -418,6 +419,10 @@ namespace WorldWeaver.Parsers.Elements
 
             foreach (var child in dieElem.Children)
             {
+                if (child.ElementType.Equals("action", StringComparison.CurrentCultureIgnoreCase))
+                {
+                    child.ParseElement();
+                }
                 if (child.ElementType.Equals("message", StringComparison.CurrentCultureIgnoreCase))
                 {
                     MainClass.output.OutputText += child.Output;

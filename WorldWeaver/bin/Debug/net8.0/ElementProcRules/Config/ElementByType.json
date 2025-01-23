@@ -42,7 +42,9 @@
             "elements" : [
                 "logic",
                 "message",
-                "action"
+                "attack",
+                "action",
+                "attack"
             ],
             "repeat_options" : "true"
         },
