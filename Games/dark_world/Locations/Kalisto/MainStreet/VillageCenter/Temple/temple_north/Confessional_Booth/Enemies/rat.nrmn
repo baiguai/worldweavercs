@@ -10,9 +10,15 @@
 
     ---- FIGHTING MESSAGES ----
     ----------------------------------------------------------------------------
-    {hit
+    {flee
         output={@
 
+You run away from the rat.
+        }
+    }
+
+    {hit
+        output={@
 
 You have been attacked by the rat. It has caused your life to be reduced by [damage].
         }
@@ -28,7 +34,6 @@ The rat attempts to attack you but fails.
     {damage_message
         output={@
 
-
 You have attacked the rat. Its life has been reduced by [damage].
         }
     }
@@ -43,7 +48,6 @@ You attack the rat. But your attack failed.
     {kill
         {message
             output={@
-
 
 You have killed the rat.
             }
@@ -73,10 +77,20 @@ You see a large rat with faintly glowing red eyes.
                 You see a rat.
             }
         }
+
+        {attack
+            {attrib, output=[player], tags=target }
+        }
     }
 
     {input, syntax=[tplt_syntax]((attack_rat))
         {attack
+            {attrib, output=[self], tags=target }
+        }
+    }
+
+    {input, syntax=[tplt_syntax]((flee_rat))
+        {flee
             {attrib, output=[self], tags=target }
         }
     }
