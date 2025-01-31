@@ -309,35 +309,12 @@ PRAGMA foreign_keys = on;
                 }
                 else if (Path.GetExtension(file).Equals(".nrmn"))
                 {
-                    // Handle injections
-                    string pattern = @"\{inject, logic=(?<logicPath>.+?)\s*\}";
+                    List<string> fileLines = new List<string>(File.ReadAllLines(file));
+                    List<string> lines = new List<string>();
 
-                    List<string> lines = new List<string>(File.ReadAllLines(file));
-
-                    for (int i = 0; i < lines.Count; i++)
+                    foreach (var line in fileLines)
                     {
-                        Match match = Regex.Match(lines[i], pattern);
-                        if (match.Success)
-                        {
-                            string logicFilePath = rootDirectory + match.Groups["logicPath"].Value;
-
-                            if (File.Exists(logicFilePath))
-                            {
-                                // Replace the line with the contents of the logic file
-                                string[] logicLines = File.ReadAllLines(logicFilePath);
-
-                                // Replace the matching line with the logic lines
-                                lines.RemoveAt(i);
-                                lines.InsertRange(i, logicLines);
-
-                                // Adjust the index to account for the newly inserted lines
-                                i += logicLines.Length - 1;
-                            }
-                            else
-                            {
-                                Console.WriteLine($"Logic file not found: {logicFilePath}");
-                            }
-                        }
+                        lines.AddRange(GetLineOrInjection(line));                        
                     }
 
                     success = ParseElement(connectionString, lines, "root", 0) > -1;
@@ -345,6 +322,34 @@ PRAGMA foreign_keys = on;
             }
 
             return success;
+        }
+
+        private List<string> GetLineOrInjection(string line)
+        {
+            var inject = new List<string>();
+            string pattern = @"\{inject, logic=(?<logicPath>.+?)\s*\}";
+            Match match = Regex.Match(lines[i], pattern);
+            if (match.Success)
+            {
+                string logicFilePath = rootDirectory + match.Groups["logicPath"].Value;
+
+                if (File.Exists(logicFilePath))
+                {
+                    // Replace the line with the contents of the logic file
+                    string[] logicLines = File.ReadAllLines(logicFilePath);
+                    inject.AddRange(logicLines);
+                }
+                else
+                {
+                    Console.WriteLine($"Logic file not found: {logicFilePath}");
+                }
+            }
+            else
+            {
+                inject.add(line)
+            }
+
+            return inject;
         }
 
         private int ParseElement(string connectionString, List<string> lines, string parentKey, int startLine) // @place
