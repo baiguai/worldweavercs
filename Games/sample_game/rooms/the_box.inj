@@ -1,0 +1,20 @@
+    THE BOX
+    {object, syntax=[tplt_syntax]((syn_ornbox)), name=ornate box
+        {attrib, tags=container, output=true }
+
+        {enter_message
+            output={@
+You see an ornate box.
+            }
+        }
+
+        {look
+            {message
+                output={@
+You see an ornate box.
+                }
+            }
+        }
+
+        {inject, logic=look.inj }
+    }

@@ -293,8 +293,8 @@ PRAGMA foreign_keys = on;
 
         private bool LoadGameFiles(string gameFile, string rootDirectory, string curDirectory)
         {
-            var success = false;
-            var connectionString = $"Data Source={gameFile};Cache=Shared;";
+            bool success = false;
+            string connectionString = $"Data Source={gameFile};Cache=Shared;";
 
             foreach (var dir in Directory.GetDirectories(curDirectory))
             {
@@ -314,7 +314,7 @@ PRAGMA foreign_keys = on;
 
                     foreach (var line in fileLines)
                     {
-                        lines.AddRange(GetLineOrInjection(line));                        
+                        lines.AddRange(GetLineOrInjection(rootDirectory, file, line));                        
                     }
 
                     success = ParseElement(connectionString, lines, "root", 0) > -1;
@@ -324,19 +324,41 @@ PRAGMA foreign_keys = on;
             return success;
         }
 
-        private List<string> GetLineOrInjection(string line)
+        private List<string> GetLineOrInjection(string rootDirectory, string currentFile, string line)
         {
-            var inject = new List<string>();
+            List<string> inject = new List<string>();
             string pattern = @"\{inject, logic=(?<logicPath>.+?)\s*\}";
-            Match match = Regex.Match(lines[i], pattern);
+            Match match = Regex.Match(line, pattern);
             if (match.Success)
             {
-                string logicFilePath = rootDirectory + match.Groups["logicPath"].Value;
+                string logicFilePath = match.Groups["logicPath"].Value;
+
+                if (logicFilePath.StartsWith("./"))
+                {
+                    logicFilePath = Directory.GetParent(currentFile) + logicFilePath.Substring(1);
+                }
+                else
+                {
+                    logicFilePath = rootDirectory + logicFilePath;
+                }
 
                 if (File.Exists(logicFilePath))
                 {
                     // Replace the line with the contents of the logic file
-                    string[] logicLines = File.ReadAllLines(logicFilePath);
+                    List<string> logicLines = new List<string>();
+                    logicLines = File.ReadAllLines(logicFilePath).ToList<string>();
+
+                    for (int i = logicLines.Count - 1; i >= 0; i--)
+                    {
+                        string curLine = logicLines[i];
+                        match = Regex.Match(curLine, pattern);
+                        if (match.Success)
+                        {
+                            logicLines.RemoveAt(i);
+                            logicLines.AddRange(GetLineOrInjection(rootDirectory, currentFile, curLine));
+                        }
+                    }
+
                     inject.AddRange(logicLines);
                 }
                 else
@@ -346,7 +368,7 @@ PRAGMA foreign_keys = on;
             }
             else
             {
-                inject.add(line)
+                inject.Add(line);
             }
 
             return inject;

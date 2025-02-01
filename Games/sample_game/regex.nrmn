@@ -1,0 +1,57 @@
+{object, key=tplt_syntax, parent=limbo
+    {attrib, tags=look, output=(?i)^(look(?: around)?|l)$ }
+
+    {attrib, tags=left, output=(?i)\b(?:go\s+)?left\b }
+    {attrib, tags=leave, output=(?i)\bleave\b(?:\s+(?:the|this)?\s*(?:room|area|place))? }
+
+    {attrib, tags=north, output=(?i)^(go\s+)?north|^n$ }
+    {attrib, tags=northeast, output=(?i)^(go\s+)?(north\s*east|northeast|ne)$ }
+    {attrib, tags=ne_up, output=(?i)\b(?:go\s+)?(?:northeast|ne|up(?:\s+stairs)?)\b }
+    {attrib, tags=east, output=(?i)^(go\s+)?east|^e$ }
+    {attrib, tags=south, output=(?i)^(go\s+)?south|^s$ }
+    {attrib, tags=s_down, output=(?i)\b(?:s|south|go south|down|go down|go down stairs|go down the stairs)\b }
+    {attrib, tags=west, output=(?i)^(go\s+)?west|^w$ }
+
+    {attrib, tags=down_stairs, output=(?i)\b(?:descend(?: the)? stairs|go down(?: the)? stairs|go down|down stairs|down)\b }
+    {attrib, tags=x_bed, output=(?i)\b(?:examine|x)\s+(?:the\s+)?bed\b }
+    {attrib, tags=u_bed, output=(?i)\blook\s+under\s+(the\s+)?bed\b }
+    {attrib, tags=x_furniture, output=(?i)\b(x|examine|look at)\s+(?:the\s+)?furniture\b }
+    {attrib, tags=x_mead, output=(?i)\b(?:take|drink|examine|x)\s+(?:the\s+)?mead\b }
+    {attrib, tags=x_pack, output=(?i)\b(?:look|in|examine|x)\s+(?:the\s+)?pack\b }
+    {attrib, tags=x_parchment, output=(?i)\b(?:take|examine|x)\s+(?:the\s+)?parchment\b }
+    {attrib, tags=x_pouch, output=(?i)\b(?:look|in|examine|x)\s+(?:the\s+)?pouch\b }
+    {attrib, tags=x_note, output=(?i)\b(?:look|in|examine|x)\s+(?:the\s+)?note\b }
+    {attrib, tags=x_chest, output=(?i)^(x|examine)(?:\s+the)?\s+chest$ }
+    {attrib, tags=x_tap, output=(?i)\b(x|examine)\s+(the\s+)?tapestries\b }
+    {attrib, tags=open_chest, output=(?i)open(?: the)? chest }
+
+    {attrib, tags=take_5_coins, output=(?i)\b(?:take|pick up)\b(?:\s+the)?(?:\s+(?:\d+|five))?\s+coins\b }
+    {attrib, tags=take_diary, output=(?i)\b(?:take|pick up)\s+(?:the\s+)?diary\b }
+    {attrib, tags=take_key, output=(?i)\b(?:take|pick up)\s+(?:the\s+)?key\b }
+    {attrib, tags=drop_key, output=(?i)\b(?:drop|put down)\s+(?:the\s+)?key\b }
+    {attrib, tags=put_key_in, output=(?i)\b(?:put|insert)\s+(?:the\s+)?key\s+(?:in|into)\b }
+    {attrib, tags=take_pack, output=(?i)\b(?:take|pick up)\s+(?:the\s+)?pack\b }
+
+    Enemies
+    {attrib, tags=attack_skeleton, output=(?i)\b(?:attack\s+the\s+skeleton|attack\s+skeleton|!\s*the\s+skeleton|!\s*skeleton)\b }
+    {attrib, tags=attack_rat, output=(?i)^(?:! the rat|! rat|attack the rat|attack rat)$ }
+
+    Objects
+    {attrib, tags=x_statue, output=(?i)\b(?:examine|x|look|l)(?: at| the)? statue\b }
+    {attrib, tags=syn_ornbox, output=(?i)\b(the\s+)?(ornate\s+)?box\b }
+    {attrib, tags=syn_x-box, output=(?i)\b(?:examin(?:e)?|x|look(?:\s+inside|\s+in)?|inside|in)\s+(?:the\s+)?box\b }
+    {attrib, tags=syn_x-key, output=(?i)\b(x|examine)\s+(the\s+)?key\b }
+
+
+    Specifics
+
+    Kalisto
+        {attrib, tags=x_kal_parchment, output=(?i)\b(?:examine|x)\s+(?:the\s+)?(?:parchment|death\s+map)\b }
+        {attrib, tags=x_kal_corpse_f, output=(?i)\b(?:examine|x)\s+(?:the\s+)?(?:dead\s+)?(?:woman|girl|corpse)\b }
+        {attrib, tags=ooi_in_201, output=\b(?:open|enter|go in|in)?(?:\s+door)?\s+201\b }
+        {attrib, tags=ooi_in_202, output=\b(?:open|enter|go in|in)?(?:\s+door)?\s+202\b }
+        {attrib, tags=ooi_in_203, output=\b(?:open|enter|go in|in)?(?:\s+door)?\s+203\b }
+        {attrib, tags=ooi_in_204, output=\b(?:open|enter|go in|in)?(?:\s+door)?\s+204\b }
+        {attrib, tags=ooi_in_205, output=\b(?:open|enter|go in|in)?(?:\s+door)?\s+205\b }
+        {attrib, tags=ooi_in_206, output=\b(?:open|enter|go in|in)?(?:\s+door)?\s+206\b }
+}
