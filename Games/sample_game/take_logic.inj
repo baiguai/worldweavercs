@@ -1,4 +1,4 @@
-{attribute, output=false, tags=moved }
+{attrib, output=false, tags=moved }
 
 {take
     {move, logic=[player], tags=[self], output=[self]((msg_take)) }

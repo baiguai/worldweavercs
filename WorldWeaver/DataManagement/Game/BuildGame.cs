@@ -309,12 +309,17 @@ PRAGMA foreign_keys = on;
                 }
                 else if (Path.GetExtension(file).Equals(".nrmn"))
                 {
-                    List<string> fileLines = new List<string>(File.ReadAllLines(file));
-                    List<string> lines = new List<string>();
+                    List<string> lines = ProcessFile(rootDirectory, file, new HashSet<string>());
 
-                    foreach (var line in fileLines)
+                    var allLines = "";
+
+                    foreach (var curLine in lines)
                     {
-                        lines.AddRange(GetLineOrInjection(rootDirectory, file, line));                        
+                        if (!allLines.Equals(""))
+                        {
+                            allLines += Environment.NewLine;
+                        }
+                        allLines += curLine;
                     }
 
                     success = ParseElement(connectionString, lines, "root", 0) > -1;
@@ -324,54 +329,58 @@ PRAGMA foreign_keys = on;
             return success;
         }
 
-        private List<string> GetLineOrInjection(string rootDirectory, string currentFile, string line)
+        private List<string> ProcessFile(string rootDirectory, string filePath, HashSet<string> visitedFiles)
         {
-            List<string> inject = new List<string>();
+            if (!File.Exists(filePath))
+            {
+                Console.WriteLine($"Warning: File not found - {filePath}");
+                return new List<string> { $"// Missing file: {filePath}" };
+            }
+
+            // Prevent infinite loops from circular references
+            if (visitedFiles.Contains(filePath))
+            {
+                Console.WriteLine($"Warning: Circular reference detected - {filePath}");
+                return new List<string> { $"// Circular reference: {filePath}" };
+            }
+
+            visitedFiles.Add(filePath);
+
             string pattern = @"\{inject, logic=(?<logicPath>.+?)\s*\}";
-            Match match = Regex.Match(line, pattern);
-            if (match.Success)
+            var regex = new Regex(pattern, RegexOptions.Compiled);
+            var result = new List<string>();
+
+            foreach (var line in File.ReadLines(filePath))
             {
-                string logicFilePath = match.Groups["logicPath"].Value;
-
-                if (logicFilePath.StartsWith("./"))
+                var match = regex.Match(line);
+                if (match.Success)
                 {
-                    logicFilePath = Directory.GetParent(currentFile) + logicFilePath.Substring(1);
-                }
-                else
-                {
-                    logicFilePath = rootDirectory + logicFilePath;
-                }
+                    string logicPath = match.Groups["logicPath"].Value.Trim();
+                    string fullPath = "";
 
-                if (File.Exists(logicFilePath))
-                {
-                    // Replace the line with the contents of the logic file
-                    List<string> logicLines = new List<string>();
-                    logicLines = File.ReadAllLines(logicFilePath).ToList<string>();
-
-                    for (int i = logicLines.Count - 1; i >= 0; i--)
+                    if (logicPath.StartsWith("./"))
                     {
-                        string curLine = logicLines[i];
-                        match = Regex.Match(curLine, pattern);
-                        if (match.Success)
-                        {
-                            logicLines.RemoveAt(i);
-                            logicLines.AddRange(GetLineOrInjection(rootDirectory, currentFile, curLine));
-                        }
+                        fullPath = Path.Combine(Directory.GetParent(filePath).ToString(), logicPath.Substring(2));
                     }
-
-                    inject.AddRange(logicLines);
+                    else
+                    {
+                        fullPath = Path.Combine(Path.GetFullPath(rootDirectory), logicPath);
+                        // string dir = Path.GetDirectoryName(filePath) ?? "";
+                        // fullPath = Path.Combine(dir, logicPath);
+                    }
+                    
+                    // Recursively process the referenced file
+                    var injectedContent = ProcessFile(rootDirectory, fullPath, visitedFiles);
+                    result.AddRange(injectedContent);
                 }
                 else
                 {
-                    Console.WriteLine($"Logic file not found: {logicFilePath}");
+                    result.Add(line);
                 }
             }
-            else
-            {
-                inject.Add(line);
-            }
 
-            return inject;
+            visitedFiles.Remove(filePath);
+            return result;
         }
 
         private int ParseElement(string connectionString, List<string> lines, string parentKey, int startLine) // @place
