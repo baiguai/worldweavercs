@@ -14,9 +14,25 @@ namespace WorldWeaver.Tools
             Error,
             Message
         }
+
+       public void WriteToLog(List<string> message, LogTypes logType) 
+       {
+            string msgString = "";
+
+            foreach (string line in message)
+            {
+                if (!msgString.Equals(""))
+                {
+                    msgString += Environment.NewLine;
+                }
+                msgString += line;
+            }
+
+            WriteToLog(message, logType);
+       }
        public void WriteToLog(string? message, LogTypes logType) 
        {
-            var typeString = "";
+            string typeString;
 
             switch (logType)
             {
@@ -31,7 +47,7 @@ namespace WorldWeaver.Tools
                     break;
             }
 
-            var path = Tools.AppSettingFunctions.GetConfigValue("logging", "log_path");
+            string path = Tools.AppSettingFunctions.GetConfigValue("logging", "log_path");
 
             if (!Directory.Exists(path))
             {

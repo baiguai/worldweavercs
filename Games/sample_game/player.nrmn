@@ -1,0 +1,40 @@
+﻿{player, key=player, name=, parent=put_in_test_room
+    {attrib, output=[rand:3|5], tags=stats_dice }
+    {attrib, output=[rand:4|6], tags=money_dice }
+
+    {attrib, output=[rand:<<[self]((stats_dice))>>|6], tags=life_dice }
+    {attrib, output=[rand:<<[self]((stats_dice))>>|6], tags=armor_dice }
+    {attrib, output=[rand:<<[self]((stats_dice))>>|5], tags=strength_dice }
+    {attrib, output=[rand:<<[self]((stats_dice))>>|5], tags=int_dice }
+    {attrib, output=[rand:<<[self]((stats_dice))>>|5], tags=cunning_dice }
+    {attrib, output=[rand:<<[self]((money_dice))>>|9], tags=gold_dice }
+
+    {attrib, name=Life, output=[roll:(8)<<[self]((life_dice))>>d6], tags=stats|life }
+    {attrib, output=player((life)), tags=maxlife }
+    {attrib, name=Armor Rating, output=[roll:(6)<<[self]((armor_dice))>>d6+3], tags=stats|armor }
+    {attrib, name=Strength, output=[roll:(6)<<[self]((strength_dice))>>d6], tags=stats }
+    {attrib, name=Intelligence, output=[roll:(6)<<[self]((int_dice))>>d6], tags=stats }
+    {attrib, name=Cunning, output=[roll:(6)<<[self]((cunning_dice))>>d6], tags=stats }
+    {attrib, name=Gold, output=[roll:<<[self]((gold_dice))>>d8], tags=stats|gold }
+    {attrib, key=player_armed, name=Armed Weapon, output=long-sword_01, tags=armed|stats|name }
+
+    {attrib, name=Experience, key=experience, output=0, tags=experience|stats }
+
+    {attrib, key=heal_rounds, output=5 }
+    {attrib, key=cur_heal_round, output=0 }
+
+    {attrib, name=Quest, output=, tags=stats|quest }
+
+    {attackplayer
+        {attack
+            {attribute, output=[player], tags=target }
+        }
+    }
+
+
+    {devnote, logic=n, tags=gamenotes
+        output={@
+Add notes here...
+        }
+    }
+}

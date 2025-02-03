@@ -12,5 +12,24 @@ namespace WorldWeaver.Tools
             Random rnd = new Random((int)DateTime.Now.Ticks);
             return rnd.Next(minValue, maxValue);
         }
+
+        public static string JoinList(List<string> list)
+        {
+            string listOutput = "";
+
+            foreach (string itm in list)
+            {
+                if (!listOutput.Equals(""))
+                {
+                    listOutput += Environment.NewLine;
+                }
+                else
+                {
+                    listOutput += itm;
+                }
+            }
+
+            return listOutput;
+        }
     }
 }

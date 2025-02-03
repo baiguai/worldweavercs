@@ -1,0 +1,3 @@
+{input, syntax=[tplt_syntax]((look))
+    {action, logic=look, tags=type|room }
+}

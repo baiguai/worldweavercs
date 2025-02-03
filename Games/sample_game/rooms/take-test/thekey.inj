@@ -1,0 +1,42 @@
+THE KEY
+{object, name=Key, parent=take_test_room
+    {attrib, tags=msg_take, output=You take the key. }
+    {attrib, tags=msg_drop, output=You have dropped the key. }
+    {attrib, tags=already_have, output=You already have the key. }
+    {attrib, tags=dont_have, output=You don't have a key. }
+    {attrib, tags=syn_take, output=<<[tplt_syntax]((take_key))>> }
+    {attrib, tags=syn_drop, output=<<[tplt_syntax]((drop_key))>> }
+    {attrib, tags=syn_putin, output=<<[tplt_syntax]((put_key_in))>> }
+
+    {enter_message
+        output={@
+You see a key.
+        }
+    }
+
+    {look
+        {message
+            output={@
+<?[self]parent = [room]?>
+You see a key.
+</?>
+            }
+        }
+    }
+
+    {examine_key
+        {message
+            output={@
+You see a key.
+            }
+        }
+    }
+
+    {inject, logic=look.inj }
+    {inject, logic=take_logic.inj }
+    {inject, logic=put_in.inj }
+
+    {input, syntax=[tplt_syntax]((syn_x-key))
+        {action, logic=examine_key, tags=type|room }
+    }
+}

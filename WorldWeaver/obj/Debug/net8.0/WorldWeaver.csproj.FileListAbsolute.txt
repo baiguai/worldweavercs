@@ -346,3 +346,9 @@
 /home/baiguai/documents/development/csharp/worldweaver/WorldWeaver/bin/Debug/net8.0/DarkWorld/Help/dw-general.html
 /home/baiguai/documents/development/csharp/worldweaver/WorldWeaver/bin/Debug/net8.0/DarkWorld/dw-general.html_backup/Help/dw-general.20240809065028198.html
 /home/baiguai/documents/development/csharp/worldweaver/WorldWeaver/bin/Debug/net8.0/Snippets/regexlib.snp
+/home/baiguai/documents/development/csharp/worldweaver/WorldWeaver/bin/Debug/net8.0/Admin/AdminHelp.html_backup/Help/AdminHelp.20250131102514482.html
+/home/baiguai/documents/development/csharp/worldweaver/WorldWeaver/bin/Debug/net8.0/Admin/AdminHelp.html_backup/Help/AdminHelp.20250202094059920.html
+/home/baiguai/documents/development/csharp/worldweaver/WorldWeaver/bin/Debug/net8.0/Admin/AdminHelp.html_backup/Help/AdminHelp.20250202094746024.html
+/home/baiguai/documents/development/csharp/worldweaver/WorldWeaver/bin/Debug/net8.0/AdminHelp.html_backup/Help/Admin/AdminHelp.20250131102514482.html
+/home/baiguai/documents/development/csharp/worldweaver/WorldWeaver/bin/Debug/net8.0/AdminHelp.html_backup/Help/Admin/AdminHelp.20250202094059920.html
+/home/baiguai/documents/development/csharp/worldweaver/WorldWeaver/bin/Debug/net8.0/AdminHelp.html_backup/Help/Admin/AdminHelp.20250202094746024.html
