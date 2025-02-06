@@ -24,6 +24,14 @@ You see a key.
         }
     }
 
+    {describe
+        {message
+            output={@
+You see a plain key.
+            }
+        }
+    }
+
     {examine_key
         {message
             output={@

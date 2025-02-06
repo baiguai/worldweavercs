@@ -141,8 +141,8 @@
             ],
             "elements" : [
                 "logic",
-                "action",
                 "message",
+                "action",
                 "set",
                 "navigation"
             ],

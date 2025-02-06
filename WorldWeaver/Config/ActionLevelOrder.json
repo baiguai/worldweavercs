@@ -4,6 +4,7 @@
         "room",
         "self",
         "player",
-        "object"
+        "object",
+        "children"
     ]
 }
