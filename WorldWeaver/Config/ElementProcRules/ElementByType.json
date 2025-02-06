@@ -141,8 +141,8 @@
             ],
             "elements" : [
                 "logic",
-                "action",
                 "message",
+                "action",
                 "set",
                 "navigation"
             ],
@@ -188,9 +188,9 @@
                 "object",
                 "logic",
                 "action",
-                "message",
                 "set",
                 "move",
+                "message",
                 "input",
                 "devnote"
             ],

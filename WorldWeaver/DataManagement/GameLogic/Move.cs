@@ -38,19 +38,5 @@ namespace WorldWeaver.DataManagement.GameLogic
 
             return;
         }
-
-        private string HandleSpecialLocations(string newParentKey)
-        {
-            switch (newParentKey)
-            {
-                case "[room]":
-                    return Cache.RoomCache.Room.ElementKey;
-
-                case "[player]":
-                    return Cache.PlayerCache.Player.ElementKey;
-            }
-
-            return newParentKey;
-        }
     }
 }

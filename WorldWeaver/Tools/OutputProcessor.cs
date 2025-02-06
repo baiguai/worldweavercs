@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.AccessControl;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using WorldWeaver.Classes;
 
@@ -55,6 +56,10 @@ namespace WorldWeaver.Tools
             if (updated.Equals("[enemy]") && Cache.FightCache.Fight != null)
             {
                 return Cache.FightCache.Fight.Target.ElementKey;
+            }
+            if (updated.Equals("[syntax]"))
+            {
+                return GetRoomChildKeyBySyntax(currentElement, MainClass.userInput);
             }
 
             var referencedElem = Tools.Elements.GetRelativeElement(currentElement, specialString);
@@ -245,6 +250,31 @@ namespace WorldWeaver.Tools
             }
 
             return Tools.Elements.GetElementProperty(childElem, prop);
+        }
+
+        private static string GetRoomChildKeyBySyntax(Classes.Element currentElement, string specialString)
+        {
+            var children = Cache.RoomCache.Room.Children;
+
+            foreach (var child in children)
+            {
+                if (child.Syntax.Equals(""))
+                {
+                    continue;
+                }
+
+                var syntax = GetNewValue(child, child.Syntax);
+
+                Regex rgx = new Regex(syntax, RegexOptions.IgnoreCase);
+                if (rgx.IsMatch(specialString))
+                {
+                    // Return the first match found.
+                    // If there are more than one - you will need to adjust your game definition.
+                    return child.ElementKey;
+                }
+            }
+
+            return "";
         }
 
         private static string ProcessOutputLogic(string output, Classes.Element currentElement)

@@ -78,7 +78,8 @@ namespace WorldWeaver.Parsers.Elements
             var level = GetTypeLevel(tags);
             var lvlOrder = AppSettingFunctions.GetRootArray("Config/ActionLevelOrder.json");
 
-            if (Cache.RoomCache.Room == null || MainClass.output.MatchMade)
+            // if (Cache.RoomCache.Room == null || MainClass.output.MatchMade)
+            if (Cache.RoomCache.Room == null)
             {
                 return;
             }
@@ -123,11 +124,41 @@ namespace WorldWeaver.Parsers.Elements
                         case "global":
                             ParseGlobal_Type(currentElement, type);
                             return;
+
+                        case "children":
+                            ParseChildren_Type(currentElement, type);
+                            return;
                     }
                 }
             }
 
             return;
+        }
+
+        private void ParseChildren_Type(Classes.Element currentElement, string type)
+        {
+            var elemDb = new DataManagement.GameLogic.Element();
+            var children = elemDb.GetElementChildren(Tools.Elements.GetSelf(currentElement).ElementKey);
+            var elemParser = new Parsers.Elements.Element();
+
+            foreach (var elem in children)
+            {
+                if (!elem.ElementType.Equals("object", StringComparison.OrdinalIgnoreCase))
+                {
+                    continue;
+                }
+
+                var typeElems = elemDb.GetElementChildrenByType(elem.ElementKey, type);
+
+                foreach (var tElem in typeElems)
+                {
+                    var selfProcItems = Tools.ProcFunctions.GetProcessStepsByType(type);
+                    foreach (var proc in selfProcItems)
+                    {
+                        elemParser.ParseElement(tElem, proc);
+                    }
+                }
+            }
         }
 
         private void ParseObject_Type(Classes.Element currentElement, string type)
@@ -239,6 +270,10 @@ namespace WorldWeaver.Parsers.Elements
             if (tags.TagsContain("object"))
             {
                 return "object";
+            }
+            if (tags.TagsContain("children"))
+            {
+                return "children";
             }
 
             return level;
