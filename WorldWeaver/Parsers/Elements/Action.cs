@@ -143,10 +143,20 @@ namespace WorldWeaver.Parsers.Elements
 
             foreach (var elem in children)
             {
-                var selfProcItems = Tools.ProcFunctions.GetProcessStepsByType(elem.ElementType);
-                foreach (var proc in selfProcItems)
+                if (!elem.ElementType.Equals("object", StringComparison.OrdinalIgnoreCase))
                 {
-                    elemParser.ParseElement(elem, proc);
+                    continue;
+                }
+
+                var typeElems = elemDb.GetElementChildrenByType(elem.ElementKey, type);
+
+                foreach (var tElem in typeElems)
+                {
+                    var selfProcItems = Tools.ProcFunctions.GetProcessStepsByType(type);
+                    foreach (var proc in selfProcItems)
+                    {
+                        elemParser.ParseElement(tElem, proc);
+                    }
                 }
             }
         }

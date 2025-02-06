@@ -10,7 +10,9 @@ THE KEY
 
     {enter_message
         output={@
+<?[self]parent = [room]?>
 You see a key.
+</?>
         }
     }
 

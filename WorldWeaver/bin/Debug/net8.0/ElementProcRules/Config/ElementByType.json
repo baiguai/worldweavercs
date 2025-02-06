@@ -188,9 +188,9 @@
                 "object",
                 "logic",
                 "action",
-                "message",
                 "set",
                 "move",
+                "message",
                 "input",
                 "devnote"
             ],
