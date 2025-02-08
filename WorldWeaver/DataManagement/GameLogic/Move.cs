@@ -6,7 +6,7 @@ namespace WorldWeaver.DataManagement.GameLogic
 {
     public class Move
     {
-        internal void MoveElement(Classes.Element currentElement, string outputText, string subject, string newParentKey)
+        internal void MoveElement(Classes.Element currentElement, string subject, string newParentKey)
         {
             var tagList = subject.Split('|');
             var elemDb = new DataManagement.GameLogic.Element();
@@ -22,10 +22,12 @@ namespace WorldWeaver.DataManagement.GameLogic
 
                 success = elemDb.SetElementParentKey(key, newParentKey);
 
+                var moveOutput = Tools.OutputProcessor.ProcessSpecialValues(currentElement, currentElement.Output);
+
                 if (success)
                 {
                     Tools.CacheManager.RefreshCache();
-                    MainClass.output.OutputText += outputText;
+                    MainClass.output.OutputText += moveOutput;
                     Cache.RoomCache.Room.ParseElement(true);
                 }
 

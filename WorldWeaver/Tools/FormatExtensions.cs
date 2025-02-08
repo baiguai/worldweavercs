@@ -198,7 +198,7 @@ namespace WorldWeaver.Tools
             }
 
             try{
-                modifier = Convert.ToInt32(Tools.OutputProcessor.ProcessSpecialValues(arr[1].Trim(), currentElement));
+                modifier = Convert.ToInt32(Tools.OutputProcessor.ProcessSpecialValues(currentElement, arr[1].Trim()));
                 if (delimiter.Equals("-"))
                 {
                     modifier = -(modifier);

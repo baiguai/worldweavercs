@@ -1,13 +1,13 @@
 {attrib, output=false, tags=moved }
 
 {take
-    {move, logic=[player], tags=[self], output=[self]((msg_take)) }
+    {move, logic=[player], tags=[self], output=<<[self]((msg_take))>> }
     {set, logic=[self]tags, output=+inventory }
     {set, logic=[self]((moved)), output=true }
 }
 
 {drop
-    {move, logic=[room], tags=[self], output=[self]((msg_drop)) }
+    {move, logic=[room], tags=[self], output=<<[self]((msg_drop))>> }
     {set, logic=[self]tags, output=-inventory }
 }
 
