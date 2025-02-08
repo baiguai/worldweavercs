@@ -12,13 +12,13 @@ namespace WorldWeaver.Tools
     {
         public static string ProcessOutputText(string output, Classes.Element currentElement)
         {
-            output = ProcessSpecialValues(output, currentElement);
+            output = ProcessSpecialValues(currentElement, output);
             output = ProcessOutputLogic(output, currentElement);
 
             return output;
         }
 
-        public static string ProcessSpecialValues(string output, Classes.Element currentElement)
+        public static string ProcessSpecialValues(Classes.Element currentElement, string output)
         {
             var startPos = 0;
             var endPos = 0;
@@ -32,7 +32,7 @@ namespace WorldWeaver.Tools
             {
                 endPos = output.IndexOf(">>", startPos) + 2;
                 specialString = output.Substring(startPos, (endPos - startPos));
-                newValue = GetNewValue(currentElement, specialString);
+                newValue = ProcessSpecialValue(currentElement, specialString);
                 output = output.Replace(specialString, newValue);
                 startPos = output.IndexOf("<<");
             }
@@ -40,7 +40,7 @@ namespace WorldWeaver.Tools
             return output;
         }
 
-        public static string GetNewValue(Element currentElement, string specialString)
+        public static string ProcessSpecialValue(Element currentElement, string specialString)
         {
             var updated = specialString;
             var selElem = currentElement;
@@ -263,7 +263,7 @@ namespace WorldWeaver.Tools
                     continue;
                 }
 
-                var syntax = GetNewValue(child, child.Syntax);
+                var syntax = ProcessSpecialValue(child, child.Syntax);
 
                 Regex rgx = new Regex(syntax, RegexOptions.IgnoreCase);
                 if (rgx.IsMatch(specialString))

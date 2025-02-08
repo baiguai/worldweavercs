@@ -12,7 +12,7 @@ namespace WorldWeaver.Parsers.Elements
             MainClass.output.MatchMade = false;
             var elemParser = new Elements.Element();
             var elemLogic = new Parsers.Elements.Logic();
-            var syntax = Tools.OutputProcessor.GetNewValue(currentElement, currentElement.Syntax);
+            var syntax = Tools.OutputProcessor.ProcessSpecialValue(currentElement, currentElement.Syntax);
             if (syntax.Equals(""))
             {
                 return;

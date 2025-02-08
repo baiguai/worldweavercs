@@ -173,7 +173,7 @@ namespace WorldWeaver.Tools
                     return Cache.RoomCache.Room;
 
                 case "[parent]":
-                    return elemDb.GetElementByKey(currentElement.ParentKey);
+                    return elemDb.GetElementByKey(Tools.Elements.GetSelf(currentElement).ParentKey);
 
                 case "[player]":
                     return Cache.PlayerCache.Player;
