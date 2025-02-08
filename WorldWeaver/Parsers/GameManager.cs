@@ -31,6 +31,8 @@ namespace WorldWeaver.Parsers
             }
             Cache.PlayerCache.Player.ParseElement();
             Cache.RoomCache.Room.ParseElement(true);
+
+            DoNavigation();
         }
 
         private void ParseRunningGame()
@@ -130,6 +132,13 @@ namespace WorldWeaver.Parsers
 
             // Navigation
             var parent = new Classes.Element();
+            DoNavigation();
+        }
+
+        public void DoNavigation()
+        {
+            var elemParser = new Elements.Element();
+
             foreach (var nav in Cache.RoomCache.Room.Children.Where(r => r.ElementType.Equals("navigation", StringComparison.OrdinalIgnoreCase)))
             {
                 var procs = Cache.RoomCache.Room.GetProcs();
@@ -145,7 +154,6 @@ namespace WorldWeaver.Parsers
                     }
                 }
             }
-
         }
     }
 }

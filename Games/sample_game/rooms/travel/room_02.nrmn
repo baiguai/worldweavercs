@@ -1,0 +1,38 @@
+{room, key=travel_room_02, name=Travel Test Room
+    {enter_message
+        output={@
+This is a room for testing traveling.
+        }
+
+        {set, logic=[game]((game_started)), output=true }
+    }
+
+    {look
+        {message
+            output={@
+You are in room 02.
+            }
+        }
+    }
+
+    {navigation, tags=look|enter_message
+        {message
+            output={@
+In the North wall is a door.
+You can also go home, to the 'home room'.
+            }
+        }
+    }
+
+    {inject, logic=look.inj }
+
+--------------------------------------------------------------------------------
+
+    {input, syntax=(?i)\b(?:go\s+to\s+)?(?:the\s+)?home\s+room\b
+        {move, logic=home, tags=[player], output=You return to the testing home room. }
+    }
+
+    {input, syntax=[tplt_syntax]((north))
+        {move, logic=travel_room_01, tags=[player], output=You enter the door into room 1. }
+    }
+}

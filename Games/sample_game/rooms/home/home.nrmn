@@ -1,0 +1,38 @@
+{room, key=home, name=Testing Home Room
+    {enter_message
+        output={@
+Welcome to the WorldWeaver Testing Game.
+        }
+
+        {set, logic=[game]((game_started)), output=true }
+    }
+
+    {look
+        {message
+            output={@
+You are in the testing room.
+            }
+        }
+    }
+
+    {navigation, tags=look|enter_message
+        {message
+            output={@
+Go to traveling
+Go to Taking and Putting
+            }
+        }
+    }
+
+    {inject, logic=look.inj }
+
+--------------------------------------------------------------------------------
+
+    {input, syntax=(?i)\b(taking|putting)\b
+        {move, logic=put_in_test_room, tags=[player], output=You have decided to test putting objects into other objects. }
+    }
+
+    {input, syntax=(?i)traveling
+        {move, logic=travel_room_01, tags=[player], output=You have decided to test traveling. }
+    }
+}

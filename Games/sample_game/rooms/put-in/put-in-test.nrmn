@@ -15,9 +15,21 @@ You are in the test room.
         }
     }
 
+    {navigation, tags=look|enter_message
+        {message
+            output={@
+You can go home, to the 'home room'.
+            }
+        }
+    }
+
     {inject, logic=look.inj }
 
 --------------------------------------------------------------------------------
+
+    {input, syntax=(?i)\b(?:go\s+to\s+)?(?:the\s+)?home\s+room\b
+        {move, logic=home, tags=[player], output=You return to the testing home room. }
+    }
 
     {inject, logic=./thebox.inj }
     {inject, logic=./thekey.inj }

@@ -1,4 +1,4 @@
-﻿{player, key=player, name=, parent=put_in_test_room
+﻿{player, key=player, name=, parent=home
     {attrib, output=[rand:3|5], tags=stats_dice }
     {attrib, output=[rand:4|6], tags=money_dice }
 
