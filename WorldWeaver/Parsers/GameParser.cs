@@ -256,17 +256,17 @@ namespace WorldWeaver.Parsers
             var playerElem = elemLogic.GetElementsByType("player")[0];
             var roomElem = elemLogic.GetElementByKey(playerElem.ParentKey);
             var elemParser = new Parsers.Elements.Element();
+            var gameMgr = new GameManager();
 
             Cache.GameCache.Game = gameElem;
             Cache.PlayerCache.Player = playerElem;
             Cache.RoomCache.Room = roomElem;
 
-            // if (startingGame)
-            // {
             Cache.GameCache.Game.ParseElement(true);
-            // }
 
             Cache.RoomCache.Room.ParseElement(true);
+
+            gameMgr.DoNavigation();
         }
 
         public void InitiateGame()

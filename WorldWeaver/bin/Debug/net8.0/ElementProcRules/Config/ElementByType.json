@@ -141,6 +141,7 @@
             ],
             "elements" : [
                 "logic",
+                "enter_message",
                 "message",
                 "action",
                 "set",
