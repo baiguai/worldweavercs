@@ -32,6 +32,14 @@
     }
 
 
+    ---- weapons ----
+    ----------------------------------------------------------------------------
+    {object, key=long-sword_01, name=Long Sword, syntax=\b(?:your\s+)?long\s+sword\b, tags=inventory, parent=player
+        {attribute, name=Damage, logic=[rand:4|12], tags=damage }
+        {attribute, output=a Long Sword, tags=title }
+    }
+
+
     {devnote, logic=n, tags=gamenotes
         output={@
 Add notes here...

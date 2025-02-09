@@ -1,0 +1,21 @@
+{room, key=arm, name=Arm Test Room
+    {enter_message
+        output={@
+You are in the arming a weapon test room.
+You will want to pick up the weapon you find and arm yourself with it using:
+arm <weapon name>.
+        }
+    }
+
+    {look
+        {message
+            output={@
+You are in the weapon arm test room.
+            }
+        }
+    }
+
+    {inject, logic=nav.inj }
+    {inject, logic=look.inj }
+    {inject, logic=home.inj }
+}

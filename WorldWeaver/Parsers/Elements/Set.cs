@@ -10,6 +10,11 @@ namespace WorldWeaver.Parsers.Elements
         {
             var setPerformed = false;
 
+            if (currentElement.Tags.TagsContain("arm"))
+            {
+                SetArmed(currentElement);
+            }
+
             if (!setPerformed)
             {
                 setPerformed = SetElementChildValueByTag(
@@ -54,6 +59,13 @@ namespace WorldWeaver.Parsers.Elements
             }
 
             return;
+        }
+
+        private void SetArmed(Classes.Element currentElement)
+        {
+            var elemDb = new DataManagement.GameLogic.Element();
+            var attrib = Tools.Elements.GetElementProperty(currentElement, currentElement.Logic);
+            var weapon = elemDb.GetElementKeysBySyntax(MainClass.userInput);
         }
 
         private bool SetElementValue(
