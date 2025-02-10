@@ -78,7 +78,7 @@ namespace WorldWeaver.Parsers.Elements
                 var attackRoll = Tools.ValueTools.Randomize(1, 20);
                 var enemyArmor = Cache.FightCache.Fight.Target.AttributeByTag("armor");
 
-                MainClass.output.OutputText += $"Player attack roll: {attackRoll}{Environment.NewLine}Enemy's armor rating: {enemyArmor.Output}";
+                MainClass.output.OutputText += $"Player attack roll: {attackRoll}{Environment.NewLine}Enemy's armor rating: {enemyArmor.Output}{Environment.NewLine}";
 
                 if (Convert.ToInt32(enemyArmor.Output) <= attackRoll)
                 {
@@ -168,7 +168,6 @@ namespace WorldWeaver.Parsers.Elements
                 var enemyWeapon = Cache.FightCache.Fight.Target.AttributeByTag("armed");
                 if (enemyWeapon != null)
                 {
-                    enemyWeapon = Cache.FightCache.Fight.Target.ChildByKey(enemyWeapon.Output);
                     var attackRoll = Tools.ValueTools.Randomize(1, 20);
                     var playerArmor = Cache.PlayerCache.Player.AttributeByTag("armor");
 
