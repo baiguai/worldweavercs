@@ -43,6 +43,6 @@ Go to Weapon Arming.
     }
 
     {input, syntax=(?i)weapon\s+arm(?:ing)?
-        {move, logic=arm, tags=[player], output=You have decided to test arming. }
+        {move, logic=armtest, tags=[player], output=You have decided to test arming. }
     }
 }

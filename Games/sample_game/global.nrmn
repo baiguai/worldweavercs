@@ -11,6 +11,6 @@
     }
 
     {input, syntax=\b(arm *)\b
-        {set, logic=[player]((player_armed)), tags=arm }
+        {set, logic=player_armed, tags=arm }
     }
 }

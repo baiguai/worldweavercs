@@ -1,4 +1,4 @@
-{room, key=arm, name=Arm Test Room
+{room, key=armtest, name=Arm Test Room
     {enter_message
         output={@
 You are in the arming a weapon test room.
