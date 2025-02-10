@@ -86,7 +86,17 @@ namespace WorldWeaver.Parsers.Elements
                     var gameLgc = new DataManagement.GameLogic.Element();
                     var enemyLife = Cache.FightCache.Fight.Target.AttributeByTag("life");
                     var damageAttrib = playerWeapon.AttributeByTag("damage");
-                    var damage = Convert.ToInt32(damageAttrib.Logic.RandomValue(damageAttrib));
+
+                    int damage = 0;
+                    if (damageAttrib == null)
+                    {
+                        // The player doesn't have a weapon, so do low - fist - damage.
+                        damage = FormatExtensions.RollDice("[roll:1d4]", Cache.PlayerCache.Player);
+                    }
+                    else
+                    {
+                        damage = Convert.ToInt32(damageAttrib.Logic.RandomValue(damageAttrib));
+                    }
                     var newLifeValue = Convert.ToInt32(enemyLife.Output) - damage;
 
                     if (newLifeValue < 0)

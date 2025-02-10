@@ -10,6 +10,11 @@ namespace WorldWeaver.Parsers.Elements
         {
             var setPerformed = false;
 
+            if (currentElement.Tags.TagsContain("arm"))
+            {
+                SetArmed(currentElement);
+            }
+
             if (!setPerformed)
             {
                 setPerformed = SetElementChildValueByTag(
@@ -54,6 +59,32 @@ namespace WorldWeaver.Parsers.Elements
             }
 
             return;
+        }
+
+        private void SetArmed(Classes.Element currentElement)
+        {
+            var weaponName = MainClass.userInput.Replace("arm ", "");
+            var elemDb = new DataManagement.GameLogic.Element();
+            var weapon = elemDb.GetChildElementKeysBySyntax(Cache.PlayerCache.Player, weaponName, true);
+
+            if (weapon.Equals("") || weapon.Count != 1)
+            {
+                MainClass.output.OutputText = "Could not locate the weapon you wish to arm.";
+                MainClass.output.MatchMade = true;
+                return;
+            }
+
+            var weaponElem = elemDb.GetElementByKey(weapon.First());
+
+            foreach (var child in Cache.PlayerCache.Player.Children)
+            {
+                if (child.ElementKey.Equals(currentElement.Logic, StringComparison.OrdinalIgnoreCase))
+                {
+                    elemDb.SetElementField(child.ElementKey, "output", weapon.First(), true);
+                    MainClass.output.OutputText = $"You are now armed with the {weaponElem.Name}.";
+                    MainClass.output.MatchMade = true;
+                }
+            }
         }
 
         private bool SetElementValue(

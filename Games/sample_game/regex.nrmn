@@ -30,6 +30,8 @@
     {attrib, tags=take_key, output=(?i)\b(?:take|pick up)\s+(?:the\s+)?key\b }
     {attrib, tags=drop_key, output=(?i)\b(?:drop|put down)\s+(?:the\s+)?key\b }
     {attrib, tags=put_key_in, output=(?i)\b(?:put|insert)\s+(?:the\s+)?key\s+(?:in|into)\b }
+    {attrib, tags=take_ax, output=(?i)\b(?:take|pick up)(?: the)? (?:battle )?ax(?:e)? }
+    {attrib, tags=drop_ax, output=(?i)\b(?:drop|put down)(?: the)? (?:battle )?ax(?:e)? }
     {attrib, tags=take_pack, output=(?i)\b(?:take|pick up)\s+(?:the\s+)?pack\b }
 
     Enemies
@@ -41,17 +43,11 @@
     {attrib, tags=syn_ornbox, output=(?i)\b(the\s+)?(ornate\s+)?box\b }
     {attrib, tags=syn_x-box, output=(?i)\b(?:examin(?:e)?|x|look(?:\s+inside|\s+in)?|inside|in)\s+(?:the\s+)?box\b }
     {attrib, tags=syn_x-key, output=(?i)\b(x|examine)\s+(the\s+)?key\b }
+    {attrib, tags=syn_x-ax, output=(?i)\b(x|examine)\s+(?:the\s+)?(battle\s+ax|ax)\b }
 
 
     Specifics
 
-    Kalisto
-        {attrib, tags=x_kal_parchment, output=(?i)\b(?:examine|x)\s+(?:the\s+)?(?:parchment|death\s+map)\b }
-        {attrib, tags=x_kal_corpse_f, output=(?i)\b(?:examine|x)\s+(?:the\s+)?(?:dead\s+)?(?:woman|girl|corpse)\b }
-        {attrib, tags=ooi_in_201, output=\b(?:open|enter|go in|in)?(?:\s+door)?\s+201\b }
-        {attrib, tags=ooi_in_202, output=\b(?:open|enter|go in|in)?(?:\s+door)?\s+202\b }
-        {attrib, tags=ooi_in_203, output=\b(?:open|enter|go in|in)?(?:\s+door)?\s+203\b }
-        {attrib, tags=ooi_in_204, output=\b(?:open|enter|go in|in)?(?:\s+door)?\s+204\b }
-        {attrib, tags=ooi_in_205, output=\b(?:open|enter|go in|in)?(?:\s+door)?\s+205\b }
-        {attrib, tags=ooi_in_206, output=\b(?:open|enter|go in|in)?(?:\s+door)?\s+206\b }
+    Fight
+        {attrib, tags=rat, output=(?i)\b(?:a|the)?\s*rat\b }
 }

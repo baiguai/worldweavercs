@@ -11,11 +11,6 @@
     }
 
     {input, syntax=\b(arm *)\b
-        {set, logic=[player]((player_armed)), output=[syntax](key) tags=arm|[player] }
-        {message
-            output={@
-You are now armed with the [player_armed_weapon].
-            }
-        }
+        {set, logic=player_armed, tags=arm }
     }
 }

@@ -18,8 +18,10 @@ You are in the testing room.
     {navigation, tags=look|enter_message
         {message
             output={@
-Go to traveling
-Go to Taking and Putting
+Go to Traveling.
+Go to Taking and Putting.
+Go to Fighting.
+Go to Weapon Arming.
             }
         }
     }
@@ -34,5 +36,13 @@ Go to Taking and Putting
 
     {input, syntax=(?i)traveling
         {move, logic=travel_room_01, tags=[player], output=You have decided to test traveling. }
+    }
+
+    {input, syntax=(?i)\bfight(?:ing|\s+test)?\b
+        {move, logic=fight, tags=[player], output=You have decided to test fighting. }
+    }
+
+    {input, syntax=(?i)weapon\s+arm(?:ing)?
+        {move, logic=armtest, tags=[player], output=You have decided to test arming. }
     }
 }
