@@ -1,0 +1,12 @@
+﻿{
+    "commands" : [
+        {
+            "pattern" : "(?i)(?:help|\\?)\\s+index",
+            "method" : "DoHelpIndex"
+        },
+        {
+            "pattern" : "(?i)^(help|\\?)",
+            "method" : "DoHelp"
+        }
+    ]
+}

@@ -111,6 +111,21 @@ CREATE TABLE IF NOT EXISTS gamestate (
     UpdateDate  TEXT (10)  NOT NULL
 );
 
+-- Table: helpsys
+DROP TABLE IF EXISTS helpsys;
+
+CREATE TABLE IF NOT EXISTS helpsys (
+    TopicId TEXT (200) PRIMARY KEY
+                            UNIQUE
+                            NOT NULL,
+    Title       TEXT(400)  NOT NULL,
+    Tags        BLOB       NOT NULL,
+    Related     BLOB       NOT NULL,
+    Article     BLOB       NOT NULL,
+    CreateDate  TEXT (10)  NOT NULL,
+    UpdateDate  TEXT (10)  NOT NULL
+);
+
 -- Table: note
 DROP TABLE IF EXISTS note;
 
@@ -236,6 +251,37 @@ CREATE INDEX IF NOT EXISTS ix_element_Tags ON element (
 );
 
 
+DROP INDEX IF EXISTS ix_topicid;
+
+CREATE INDEX IF NOT EXISTS ix_topicid ON helpsys (
+    TopicId
+);
+
+DROP INDEX IF EXISTS ix_title;
+
+CREATE INDEX IF NOT EXISTS ix_title ON helpsys (
+    Title
+);
+
+DROP INDEX IF EXISTS ix_article;
+
+CREATE INDEX IF NOT EXISTS ix_article ON helpsys (
+    Article
+);
+
+DROP INDEX IF EXISTS ix_tags;
+
+CREATE INDEX IF NOT EXISTS ix_tags ON helpsys (
+    Tags
+);
+
+DROP INDEX IF EXISTS ix_related;
+
+CREATE INDEX IF NOT EXISTS ix_related ON helpsys (
+    Related
+);
+
+
 -- Index: ix_note_NoteKey
 DROP INDEX IF EXISTS ix_note_NoteKey;
 
@@ -307,6 +353,10 @@ PRAGMA foreign_keys = on;
                 {
                     success = LoadGameFiles(gameFile, rootDirectory, file);
                 }
+                else if (Path.GetExtension(file).Equals(".hlp"))
+                {
+                    LoadHelpFile(connectionString, file);
+                }
                 else if (Path.GetExtension(file).Equals(".nrmn"))
                 {
                     List<string> lines = ProcessFile(rootDirectory, file, new HashSet<string>());
@@ -327,6 +377,46 @@ PRAGMA foreign_keys = on;
             }
 
             return success;
+        }
+
+        private void LoadHelpFile(string connectionString, string file)
+        {
+            var id = Guid.NewGuid().ToString();
+            var title = "";
+            var tags = "";
+            var related = "";
+            var article = "";
+            foreach (var line in File.ReadLines(file))
+            {
+                if (line.Trim().Length > 7 && line.Trim().StartsWith("title:", StringComparison.OrdinalIgnoreCase))
+                {
+                    title = line.Replace("title:", "", StringComparison.OrdinalIgnoreCase).Trim();
+                }
+                else if (line.Trim().Length > 6 && line.Trim().StartsWith("tags:", StringComparison.OrdinalIgnoreCase))
+                {
+                    tags = line.Replace("tags:", "", StringComparison.OrdinalIgnoreCase).Trim();
+                }
+                else if (line.Trim().Length > 9 && line.Trim().StartsWith("related:", StringComparison.OrdinalIgnoreCase))
+                {
+                    related = line.Replace("related:", "", StringComparison.OrdinalIgnoreCase).Trim();
+                }
+                else
+                {
+                    if (!article.Equals(""))
+                    {
+                        article+= System.Environment.NewLine;
+                    }
+                    article+= line;
+                }
+            }
+
+            if (title.Equals("") || article.Equals(""))
+            {
+                Console.WriteLine($"The help file: {file} is malformed.");
+                return;
+            }
+
+            SaveHelpTopic(connectionString, id, title, tags, related, article);
         }
 
         private List<string> ProcessFile(string rootDirectory, string filePath, HashSet<string> visitedFiles)
@@ -964,6 +1054,54 @@ WHERE
             }
 
             return true;
+        }
+
+        private bool SaveHelpTopic(string connectionString, string id, string title, string tags, string related, string article)
+        {
+            id = id.SqlSafe();
+            title = title.SqlSafe();
+            tags = tags.SqlSafe();
+            related = related.SqlSafe();
+            article = article.SqlSafe();
+
+            using (SqliteConnection connection = new SqliteConnection(connectionString))
+            {
+                connection.Open();
+
+                string createDbQuery = $@"
+INSERT INTO helpsys (
+    TopicId,
+    Title,
+    Tags,
+    Related,
+    Article,
+    CreateDate,
+    UpdateDate
+)
+VALUES";
+
+                createDbQuery += $@"
+( '{id}','{title}','{tags}','{related}','{article}','{DateTime.Now.FormatDate()}','{DateTime.Now.FormatDate()}' )";
+
+                try
+                {
+                    using (SqliteCommand command = new SqliteCommand(createDbQuery, connection))
+                    {
+                        command.ExecuteNonQuery();
+                        command.Dispose();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(createDbQuery);
+                    throw;
+                }
+
+                elementsToInsert.Clear();
+                connection.Close();
+                connection.Dispose();
+                return true;
+            }
         }
     }
 }
