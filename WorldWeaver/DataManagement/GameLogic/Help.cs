@@ -29,11 +29,11 @@ namespace WorldWeaver.DataManagement.GameLogic
 
             if (inputString.StartsWith("?"))
             {
-                inputString = inputString.Substring(1);
+                inputString = inputString.Substring(1).Trim();
             }
             if (inputString.StartsWith("help", StringComparison.OrdinalIgnoreCase))
             {
-                inputString = inputString.Substring(4);
+                inputString = inputString.Substring(4).Trim();
             }
 
             var selectQuery = $@"
@@ -46,7 +46,7 @@ SELECT
 FROM
     helpsys
 WHERE 1=1
-    AND Title = @title
+    AND LOWER(Title) = @title
 ORDER BY
     Title
 ;
@@ -56,7 +56,7 @@ ORDER BY
             parms.Add(new DbParameter()
             {
                 ParamName = "@title",
-                ParamValue = inputString
+                ParamValue = inputString.ToLower()
             });
 
             using (SqliteConnection connection = new SqliteConnection(connectionString))
@@ -102,11 +102,11 @@ ORDER BY
 
             if (inputString.StartsWith("?"))
             {
-                inputString = inputString.Substring(1);
+                inputString = inputString.Substring(1).Trim();
             }
             if (inputString.StartsWith("help", StringComparison.OrdinalIgnoreCase))
             {
-                inputString = inputString.Substring(4);
+                inputString = inputString.Substring(4).Trim();
             }
 
             var selectQuery = $@"
@@ -120,11 +120,11 @@ FROM
     helpsys
 WHERE 1=1
     AND (
-        Title LIKE '%'||@input||'%'
+        LOWER(Title) LIKE '%'||@input||'%'
         OR
-        Tags LIKE '%'||@input||'%'
+        LOWER(Tags) LIKE '%'||@input||'%'
         OR
-        Article LIKE '%'||@input||'%'
+        LOWER(Article) LIKE '%'||@input||'%'
     )
 
 ORDER BY
@@ -136,7 +136,7 @@ ORDER BY
             parms.Add(new DbParameter()
             {
                 ParamName = "@input",
-                ParamValue = inputString
+                ParamValue = inputString.ToLower()
             });
 
             using (SqliteConnection connection = new SqliteConnection(connectionString))

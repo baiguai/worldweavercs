@@ -1,10 +1,6 @@
-title: Sample Game Help
-tags: help home
-Welcome to the sample game help system.
+title: Home
+tags: home
+related: if
+Welcome to the Sample Game help system.
 
-Yep. This....
-
-
-
-
-Is a help system.
+For information on general Interactive Fiction game play use: ? if

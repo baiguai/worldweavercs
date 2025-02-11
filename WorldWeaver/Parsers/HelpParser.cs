@@ -47,11 +47,14 @@ namespace WorldWeaver.Parsers
         {
             var helpOutput = "";
             DataManagement.GameLogic.Help helpDb = new DataManagement.GameLogic.Help();
+            var rel = "";
 
             var topics = helpDb.GetHelpArticles(playerInput);
 
             foreach (var hlp in topics)
             {
+                rel = "";
+
                 if (!helpOutput.Equals(""))
                 {
                     helpOutput += Environment.NewLine + Environment.NewLine;
@@ -59,6 +62,22 @@ namespace WorldWeaver.Parsers
                 helpOutput += hlp.Title + Environment.NewLine;
                 helpOutput += "---" + Environment.NewLine;
                 helpOutput += hlp.Article;
+                if (hlp.Related.Count() > 0 && !hlp.Related.First().Equals(""))
+                {
+                    helpOutput += "---" + Environment.NewLine;
+                    helpOutput += "Related:" + Environment.NewLine;
+
+                    foreach (var reltd in hlp.Related)
+                    {
+                        if (!rel.Equals(""))
+                        {
+                            rel += Environment.NewLine;
+                        }
+                        rel += reltd;
+                    }
+
+                    helpOutput += rel;
+                }
             }
 
             return helpOutput;
@@ -76,7 +95,7 @@ namespace WorldWeaver.Parsers
             {
                 if (!helpOutput.Equals(""))
                 {
-                    helpOutput += Environment.NewLine;
+                    helpOutput += Environment.NewLine + Environment.NewLine;
                 }
 
                 letterOutput = "";
@@ -88,7 +107,7 @@ namespace WorldWeaver.Parsers
                         {
                             if (letterOutput.Equals(""))
                             {
-                                letterOutput = letter.ToString().ToUpper() + Environment.NewLine;
+                                letterOutput = letter.ToString().ToUpper();
                             }
                             if (!letterOutput.Equals(""))
                             {
