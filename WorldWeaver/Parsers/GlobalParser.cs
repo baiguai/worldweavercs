@@ -1,13 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Text.RegularExpressions;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using WorldWeaver.Classes;
-using WorldWeaver.Tools;
+﻿using WorldWeaver.Tools;
 
 namespace WorldWeaver.Parsers
 {
@@ -36,16 +27,6 @@ namespace WorldWeaver.Parsers
                         MainClass.output.MatchMade = true;
                         MainClass.output.OutputText = DoQuit();
                         break;
-
-                    case "DoHelp":
-                        // In game help systems are defined using global inputs, actions and custom element types
-                        if (!MainClass.gameDb.Equals(""))
-                        {
-                            return;
-                        }
-                        MainClass.output.MatchMade = true;
-                        MainClass.output.OutputText = DoHelp();
-                        break;
                 }
             }
         }
@@ -60,22 +41,6 @@ namespace WorldWeaver.Parsers
         public string DoExit()
         {
             return "DoExit";
-        }
-
-        public string DoHelp()
-        {
-            var parms = playerInput.GetInputParams();
-
-            if (parms.Equals(""))
-            {
-                parms = "help";
-            }
-
-            var helpPath = "Help/General";
-
-            var output = Tools.CommandFunctions.GetHelpTopic(parms, helpPath);
-
-            return output;
         }
     }
 }

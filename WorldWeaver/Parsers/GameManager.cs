@@ -38,6 +38,7 @@ namespace WorldWeaver.Parsers
         private void ParseRunningGame()
         {
             var gameLogic = new DataManagement.GameLogic.Game();
+            var helpParser = new HelpParser();
             var devParser = new DevToolsParser();
             var elemParser = new Elements.Element();
             var logic = new DataManagement.GameLogic.Element();
@@ -51,6 +52,12 @@ namespace WorldWeaver.Parsers
                 CacheManager.RefreshCache();
                 Cache.GameCache.Game.ParseElement();
                 Cache.GameCache.GameInitialized = true;
+            }
+
+            helpParser.ParseInput();
+            if (MainClass.output.MatchMade)
+            {
+                return;
             }
 
             MainClass.output.FailedLogic = false;

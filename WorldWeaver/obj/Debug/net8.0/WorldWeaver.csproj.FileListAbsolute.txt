@@ -462,3 +462,13 @@
 /home/baiguai/documents/development/csharp/worldweaver/WorldWeaver/bin/Debug/net8.0/AdminHelp.html_backup/Help/Admin/AdminHelp.20250208110711256.html
 /home/baiguai/documents/development/csharp/worldweaver/WorldWeaver/bin/Debug/net8.0/AdminHelp.html_backup/Help/Admin/AdminHelp.20250208110839279.html
 /home/baiguai/documents/development/csharp/worldweaver/WorldWeaver/bin/Debug/net8.0/AdminHelp.html_backup/Help/Admin/AdminHelp.20250208110907086.html
+/home/baiguai/documents/development/csharp/worldweaver/WorldWeaver/bin/Debug/net8.0/Admin/AdminHelp.html_backup/Help/AdminHelp.20250210092600872.html
+/home/baiguai/documents/development/csharp/worldweaver/WorldWeaver/bin/Debug/net8.0/Admin/AdminHelp.html_backup/Help/AdminHelp.20250211073255997.html
+/home/baiguai/documents/development/csharp/worldweaver/WorldWeaver/bin/Debug/net8.0/AdminHelp.html_backup/Help/Admin/AdminHelp.20250210092600872.html
+/home/baiguai/documents/development/csharp/worldweaver/WorldWeaver/bin/Debug/net8.0/AdminHelp.html_backup/Help/Admin/AdminHelp.20250211073255997.html
+/home/baiguai/documents/development/csharp/worldweaver/WorldWeaver/bin/Debug/net8.0/Commands/Config/HelpParser.json
+/home/baiguai/documents/development/csharp/worldweaver/WorldWeaver/bin/Debug/net8.0/Config/Commands/HelpParser.json
+/home/baiguai/documents/development/csharp/worldweaver/WorldWeaver/bin/Debug/net8.0/Admin/AdminHelp.html_backup/Help/AdminHelp.20250211073402827.html
+/home/baiguai/documents/development/csharp/worldweaver/WorldWeaver/bin/Debug/net8.0/Admin/AdminHelp.html_backup/Help/AdminHelp.20250211094421451.html
+/home/baiguai/documents/development/csharp/worldweaver/WorldWeaver/bin/Debug/net8.0/AdminHelp.html_backup/Help/Admin/AdminHelp.20250211073402827.html
+/home/baiguai/documents/development/csharp/worldweaver/WorldWeaver/bin/Debug/net8.0/AdminHelp.html_backup/Help/Admin/AdminHelp.20250211094421451.html
