@@ -1,0 +1,29 @@
+{object, name=Red Button, parent=npc-follow
+    {enter_message
+        output={@
+You see a red button.
+        }
+    }
+
+    {look
+        {message
+            output={@
+You see a red button.
+            }
+        }
+    }
+
+    {push_button
+        {message
+            output={@
+You push the red button...
+            }
+        }
+    }
+
+--------------------------------------------------------------------------------
+
+    {input, syntax=(?i)push(?:\s+the)?\s+red?\s*button
+        {action, logic=push_button, tags=type|room }
+    }
+}

@@ -22,6 +22,7 @@ Go to Traveling.
 Go to Taking and Putting.
 Go to Fighting.
 Go to Weapon Arming.
+Go to Npc Follow.
             }
         }
     }
@@ -44,5 +45,9 @@ Go to Weapon Arming.
 
     {input, syntax=(?i)weapon\s+arm(?:ing)?
         {move, logic=armtest, tags=[player], output=You have decided to test arming. }
+    }
+
+    {input, syntax=(?i)npc\s+follow(?:s)?
+        {move, logic=npc-follow, tags=[player], output=You have decided to test npc stalking. }
     }
 }

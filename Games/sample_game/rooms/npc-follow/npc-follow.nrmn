@@ -1,0 +1,22 @@
+{room, key=npc-follow, name=NPC Follow Test
+    {enter_message
+        output={@
+You are in the NPC Follows room.
+        }
+    }
+
+    {look
+        {message
+            output={@
+You are in the NPC Follows room.
+            }
+        }
+    }
+
+
+    {inject, logic=nav.inj }
+    {inject, logic=look.inj }
+    {inject, logic=home.inj }
+
+--------------------------------------------------------------------------------
+}
