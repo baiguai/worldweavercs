@@ -64,7 +64,7 @@ namespace WorldWeaver.Parsers
                 helpOutput += hlp.Article;
                 if (hlp.Related.Count() > 0 && !hlp.Related.First().Equals(""))
                 {
-                    helpOutput += "---" + Environment.NewLine;
+                    helpOutput += Environment.NewLine + Environment.NewLine + "---" + Environment.NewLine;
                     helpOutput += "Related:" + Environment.NewLine;
 
                     foreach (var reltd in hlp.Related)
