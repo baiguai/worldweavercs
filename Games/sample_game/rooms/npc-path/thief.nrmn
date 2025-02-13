@@ -1,4 +1,4 @@
-{npc, key=thief_01, name=Thief, syntax=\b(?:*thief*)\b, parent=npc-follow, tags=attackable, sort=999
+{npc, key=thief_02, name=Thief, syntax=\b(?:*thief*)\b, parent=npc-path, tags=attackable, sort=999
     {attribute, name=Life, output=[rand:15|30], tags=stats|life }
     {attribute, name=Armor Rating, output=[rand:4|10], tags=stats|armor }
     {attribute, name=Strength, output=[rand:8|18], tags=stats }
@@ -61,7 +61,7 @@ You have killed the thief.
 
 
 
-    {travel, key=thief_01_travel, logic=[follow|player], active=false
+    {travel, key=thief_01_travel, logic=[path|npc-path], active=false
         {message
             output={@
 The thief follows you.

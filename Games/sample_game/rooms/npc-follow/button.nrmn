@@ -17,13 +17,15 @@ You see a red button.
         {message
             output={@
 You push the red button...
+The thief notices you.
             }
         }
     }
 
 --------------------------------------------------------------------------------
 
-    {input, syntax=(?i)push(?:\s+the)?\s+red?\s*button
+    {input, syntax=(?i)\bpush\s+(?:the\s+)?(?:red\s+)?button\b
         {action, logic=push_button, tags=type|room }
+        {set, logic=(thief_01_travel)active, output=true }
     }
 }

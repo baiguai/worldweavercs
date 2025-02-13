@@ -285,7 +285,8 @@
             "elements" : [
                 "enter_message",
                 "logic",
-                "move"
+                "move",
+                "message"
             ],
             "repeat_options" : "false"
         },

@@ -121,10 +121,10 @@ namespace WorldWeaver.Parsers
                 child.ParseElement();
             }
 
+            Cache.RoomCache.Room.ParseElement();
+
             var trvParser = new Parsers.Elements.Travel();
             trvParser.ParseTravel();
-
-            Cache.RoomCache.Room.ParseElement();
 
             if (Cache.GameCache.Game == null)
             {

@@ -1,14 +1,14 @@
-{room, key=npc-follow, name=NPC Follow Test
+{room, key=npc-path, name=NPC Path Test
     {enter_message
         output={@
-You are in the NPC Follows room.
+You are in the NPC Path room.
         }
     }
 
     {look
         {message
             output={@
-You are in the NPC Follows room.
+You are in the NPC Path room.
             }
         }
     }
@@ -17,7 +17,8 @@ You are in the NPC Follows room.
         {message
             output={@
 You can go home, to the 'home room'.
-In the south wall you see a hallway.
+In the east is a path - You see a pool there.
+In the south is a path - You see a fountain there.
             }
         }
     }
@@ -28,7 +29,11 @@ In the south wall you see a hallway.
 
 --------------------------------------------------------------------------------
 
+    {input, syntax=[tplt_syntax]((east))
+        {move, logic=pool-room, tags=[player], output=You go east. }
+    }
+
     {input, syntax=[tplt_syntax]((south))
-        {move, logic=hallway, tags=[player] }
+        {move, logic=fountain-room, tags=[player], output=You go south. }
     }
 }
