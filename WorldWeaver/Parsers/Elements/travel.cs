@@ -13,6 +13,11 @@ namespace WorldWeaver.Parsers.Elements
             var elemLogic = new DataManagement.GameLogic.Element();
             var allTravels = elemLogic.GetElementsByType("travel");
 
+            if (Cache.FightCache.Fight != null)
+            {
+                return;
+            }
+
             foreach (var trv in allTravels)
             {
                 var trvParent = Tools.Elements.GetSelf(trv);
@@ -21,13 +26,15 @@ namespace WorldWeaver.Parsers.Elements
                 {
                     if (!trv.Logic.Equals(""))
                     {
-                        var arr = trv.Logic.Replace("[", "").Replace("]", "").Split('|');
+                        string[]? arr = null;
 
                         if (trv.Logic.StartsWith("[follow|"))
                         {
-                            if (arr.Length == 2)
+                            arr = trv.Logic.Replace("[follow|", "").Replace("]", "").Split('|');
+
+                            if (arr.Length == 1)
                             {
-                                var target = arr[1].Trim();
+                                var target = arr[0].Trim();
 
                                 if (target.Equals(Cache.RoomCache.Room.ElementKey))
                                 {
@@ -54,29 +61,30 @@ namespace WorldWeaver.Parsers.Elements
                             }
                         }
 
-                        if (trv.Logic.StartsWith("[path|]"))
+                        if (trv.Logic.StartsWith("[path|"))
                         {
-                            if (arr.Length >= 2)
+                            arr = trv.Logic.Replace("[path|", "").Replace("]", "").Split('|');
+
+                            if (arr.Length >= 1)
                             {
-                                var parentKey = "";
-                                for (var ix = 1; ix < arr.Length; ix++)
+                                var index = trv.RepeatIndex;
+                                if (index < 0)
                                 {
-                                    if (trvParent.ElementKey.Equals(arr[ix]))
-                                    {
-                                        if (ix == arr.Length)
-                                        {
-                                            parentKey = arr[1];
-                                            elemLogic.SetElementParentKey(trvParent.ElementKey, parentKey);
-                                            break;
-                                        }
-                                        else
-                                        {
-                                            parentKey = arr[ix + 1];
-                                            elemLogic.SetElementParentKey(trvParent.ElementKey, parentKey);
-                                            break;
-                                        }
-                                    }
+                                    index = 0;
                                 }
+                                if (index >= arr.Length)
+                                {
+                                    index = 0;
+                                }
+                                elemLogic.SetElementParentKey(trvParent.ElementKey, arr[index]);
+                                index++;
+                                var dbElem = new DataManagement.GameLogic.Element();
+                                dbElem.SetElementField(
+                                    trv.ElementKey,
+                                    "RepeatIndex",
+                                    index.ToString(),
+                                    false
+                                );
                             }
                         }
                     }

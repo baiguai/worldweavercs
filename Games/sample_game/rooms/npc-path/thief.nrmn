@@ -10,7 +10,7 @@
     {attribute, output=he, tags=pronoun }
     {attribute, output=him, tags=subject_pronoun }
 
-    {object, key=thief_01_shortsword, name=Short Sword, syntax=\b(short sword)\b, tags=inventory
+    {object, key=thief_02_shortsword, name=Short Sword, syntax=\b(short sword)\b, tags=inventory
         {attribute, name=Damage, logic=[rand:4|8], tags=damage }
     }
 
@@ -61,14 +61,16 @@ You have killed the thief.
 
 
 
-    {travel, key=thief_01_travel, logic=[path|npc-path], active=false
+    {travel, key=thief_02_travel, logic=[path|npc-path|fountain-room|statue-room|fountain-room], active=false
         {message
             output={@
-The thief follows you.
+The thief leaves.
             }
 
             logic={@
-                ?(thief_01_travel)active = 'true'
+                ?(thief_02_travel)active = 'true'
+                and
+                ?(thief_02)parent = [player]parent
             }
         }
     }
@@ -77,7 +79,12 @@ The thief follows you.
     {enter_message
         {message
             output={@
+<?(thief_02)parent = 'npc-path'?>
 You see a thief sitting at the bar.
+</?>
+<?(thief_02)parent != 'npc-path'?>
+You see a thief.
+</?>
             }
         }
     }
@@ -90,7 +97,7 @@ You see a thief.
         }
     }
 
-    {input, syntax=\battack\b.*?\b(thief)\b
+    {input, syntax=[tplt_syntax]((attack_thief))
         {attack
             {attribute, output=[self], tags=target }
         }

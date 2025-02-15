@@ -11,6 +11,8 @@ You are in the NPC Path room.
 You are in the NPC Path room.
             }
         }
+
+        {set, logic=(thief_02_travel)active, output=true }
     }
 
     {navigation, tags=look|enter_message

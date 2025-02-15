@@ -23,6 +23,7 @@ Go to Taking and Putting.
 Go to Fighting.
 Go to Weapon Arming.
 Go to Npc Follow.
+Go to Npc Path.
             }
         }
     }
@@ -49,5 +50,9 @@ Go to Npc Follow.
 
     {input, syntax=(?i)npc\s+follow(?:s)?
         {move, logic=npc-follow, tags=[player], output=You have decided to test npc stalking. }
+    }
+
+    {input, syntax=(?i)npc\s+path(?:s)?
+        {move, logic=npc-path, tags=[player], output=You have decided to test npc path travel. }
     }
 }
