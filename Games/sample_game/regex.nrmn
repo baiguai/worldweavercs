@@ -37,7 +37,7 @@
     Enemies
     {attrib, tags=attack_skeleton, output=(?i)\b(?:attack\s+the\s+skeleton|attack\s+skeleton|!\s*the\s+skeleton|!\s*skeleton)\b }
     {attrib, tags=attack_rat, output=(?i)^(?:! the rat|! rat|attack the rat|attack rat)$ }
-    {attrib, tags=attack_thief, output=(?i)^(?:! the thief|! rat|attack the thief|attack theif)$ }
+    {attrib, tags=attack_thief, output=(?i)^(?:! the thief|! thief|attack the thief|attack theif)$ }
 
     Objects
     {attrib, tags=x_statue, output=(?i)\b(?:examine|x|look|l)(?: at| the)? statue\b }

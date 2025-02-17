@@ -123,8 +123,11 @@ namespace WorldWeaver.Parsers
 
             Cache.RoomCache.Room.ParseElement();
 
-            var trvParser = new Parsers.Elements.Travel();
-            trvParser.ParseTravel();
+            if (Cache.FightCache.Fight == null)
+            {
+                var trvParser = new Parsers.Elements.Travel();
+                trvParser.ParseTravel();
+            }
 
             if (Cache.GameCache.Game == null)
             {

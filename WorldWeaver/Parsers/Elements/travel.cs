@@ -21,6 +21,15 @@ namespace WorldWeaver.Parsers.Elements
             foreach (var trv in allTravels)
             {
                 var trvParent = Tools.Elements.GetSelf(trv);
+                var curParentKey = trvParent.ParentKey;
+
+                // If the traveling element is a fight target - it cannot travel
+                if (Cache.FightCache.Fight != null &&
+                    !Cache.FightCache.Fight.Target.ElementKey.Equals(trvParent.ElementKey))
+                {
+                    continue;
+                }
+
                 var msgs = trv.Children.Where(c => c.ElementType.Equals("message", StringComparison.OrdinalIgnoreCase)).ToList();
                 if (trv.Active.ToLower().Equals("true"))
                 {
@@ -39,6 +48,7 @@ namespace WorldWeaver.Parsers.Elements
                                 if (target.Equals(Cache.RoomCache.Room.ElementKey))
                                 {
                                     elemLogic.SetElementParentKey(trvParent.ElementKey, Cache.RoomCache.Room.ElementKey);
+                                    CacheManager.RefreshCache();
                                     if (MainClass.output.PlayerMoved)
                                     {
                                         ParseTravelMessages(trv, msgs);
@@ -48,6 +58,7 @@ namespace WorldWeaver.Parsers.Elements
                                 if (target.Equals(Cache.PlayerCache.Player.ElementKey))
                                 {
                                     elemLogic.SetElementParentKey(trvParent.ElementKey, Cache.PlayerCache.Player.ParentKey);
+                                    CacheManager.RefreshCache();
                                     if (MainClass.output.PlayerMoved)
                                     {
                                         ParseTravelMessages(trv, msgs);
@@ -77,6 +88,16 @@ namespace WorldWeaver.Parsers.Elements
                                     index = 0;
                                 }
                                 elemLogic.SetElementParentKey(trvParent.ElementKey, arr[index]);
+
+                                if (curParentKey.Equals(Cache.RoomCache.Room.ElementKey) && !arr[index].Equals(Cache.RoomCache.Room.ElementKey))
+                                {
+                                    ParseTravelMessages(trv, msgs);
+                                }
+                                else
+                                {
+                                    trvParent.ParseElement(false);
+                                }
+
                                 index++;
                                 var dbElem = new DataManagement.GameLogic.Element();
                                 dbElem.SetElementField(
@@ -85,6 +106,7 @@ namespace WorldWeaver.Parsers.Elements
                                     index.ToString(),
                                     false
                                 );
+                                CacheManager.RefreshCache();
                             }
                         }
                     }
