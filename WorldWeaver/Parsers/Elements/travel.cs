@@ -78,6 +78,22 @@ namespace WorldWeaver.Parsers.Elements
 
                             if (arr.Length >= 1)
                             {
+                                // To avoid elements blipping in and out of a room, they stay there
+                                // for one turn
+                                if (!trvParent.Tags.TagsContain("!_stale"))
+                                {
+                                    trvParent.Tags = trvParent.Tags.AddTag("!_stale");
+                                    elemLogic.SetElementField(trvParent.ElementKey, "tags", trvParent.Tags);
+                                    continue;
+                                }
+                                else
+                                {
+                                    // Cleanup
+                                    trvParent.Tags = trvParent.Tags.RemoveTag("!_stale");
+                                    elemLogic.SetElementField(trvParent.ElementKey, "tags", trvParent.Tags);
+                                }
+                                CacheManager.RefreshCache();
+
                                 var index = trv.RepeatIndex;
                                 if (index < 0)
                                 {
