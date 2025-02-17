@@ -301,11 +301,24 @@ namespace WorldWeaver.Tools
                 }
                 var compareBlock = arr[0].Trim();
                 var contentBlock = arr[1];
+                var elseBlock = "";
+
+                if (contentBlock.Contains("<else>", StringComparison.OrdinalIgnoreCase))
+                {
+                    var arr2 = contentBlock.Split("<else>");
+                    contentBlock = arr2[0].Trim();
+                    elseBlock = arr2[1].Trim();
+                }
+
                 var logicParse = new Parsers.Elements.Logic();
 
                 if (logicParse.ParseConditional(currentElement, compareBlock))
                 {
                     newValue = contentBlock;
+                }
+                else
+                {
+                    newValue = elseBlock;
                 }
 
                 output = output.Replace(replaceBlock, newValue);

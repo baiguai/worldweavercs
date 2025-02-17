@@ -49,6 +49,7 @@ namespace WorldWeaver
             }
 
             handledNavigation = false;
+            output.PlayerMoved = false;
             RunTheParsers(userInput);
 
             if (output.MatchMade)

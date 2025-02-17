@@ -1,0 +1,41 @@
+{room, key=npc-path, name=NPC Path Test
+    {enter_message
+        output={@
+You are in the NPC Path room.
+        }
+    }
+
+    {look
+        {message
+            output={@
+You are in the NPC Path room.
+            }
+        }
+
+        {set, logic=(thief_02_travel)active, output=true }
+    }
+
+    {navigation, tags=look|enter_message
+        {message
+            output={@
+You can go home, to the 'home room'.
+In the east is a path - You see a pool there.
+In the south is a path - You see a fountain there.
+            }
+        }
+    }
+
+
+    {inject, logic=look.inj }
+    {inject, logic=home.inj }
+
+--------------------------------------------------------------------------------
+
+    {input, syntax=[tplt_syntax]((east))
+        {move, logic=pool-room, tags=[player], output=You go east. }
+    }
+
+    {input, syntax=[tplt_syntax]((south))
+        {move, logic=fountain-room, tags=[player], output=You go south. }
+    }
+}

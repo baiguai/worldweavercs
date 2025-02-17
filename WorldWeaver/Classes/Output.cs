@@ -10,5 +10,7 @@ namespace WorldWeaver.Classes
         public bool SpecificParsePassed { get; set; } = false;
         public bool Error { get; set; } = false;
         public bool ExitFlow { get; set; } = false;
+
+        public bool PlayerMoved { get; set; } = false;
     }
 }

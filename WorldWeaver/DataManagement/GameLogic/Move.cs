@@ -18,23 +18,23 @@ namespace WorldWeaver.DataManagement.GameLogic
                 var key = tag;
 
                 key = Tools.Elements.GetRelativeElementKey(currentElement, key, key);
+
+                if (key.Equals(Cache.PlayerCache.Player.ElementKey))
+                {
+                    MainClass.output.PlayerMoved = true;
+                }
+
                 newParentKey = Tools.Elements.GetRelativeElementKey(currentElement, newParentKey, newParentKey);
 
                 success = elemDb.SetElementParentKey(key, newParentKey);
 
-                var moveOutput = Tools.OutputProcessor.ProcessSpecialValues(currentElement, currentElement.Output);
+                var moveOutput = Tools.OutputProcessor.ProcessOutputText(currentElement.Output, currentElement);
 
                 if (success)
                 {
                     Tools.CacheManager.RefreshCache();
                     MainClass.output.OutputText += moveOutput;
                     Cache.RoomCache.Room.ParseElement(true);
-                }
-
-                if (key.Equals(Cache.PlayerCache.Player.ElementKey))
-                {
-                    var trvParser = new Parsers.Elements.Travel();
-                    trvParser.ParseTravel();
                 }
             }
 
