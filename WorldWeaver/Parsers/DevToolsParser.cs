@@ -230,6 +230,8 @@ namespace WorldWeaver.Parsers
                 MacroName = macroName.FileSafe(),
                 IsRecording = true
             };
+            MainClass.output.OutputText = $"Recording macro: {MainClass.macro.MacroName}";
+            MainClass.output.MatchMade = true;
         }
 
         private void DoMacroStop()
@@ -285,6 +287,8 @@ namespace WorldWeaver.Parsers
                 return;
             }
 
+            MainClass.testResults.Clear();
+
             MainClass.macro.IsRunning = true;
 
             var lines = File.ReadAllLines($"{macroDir}/{macroName}").ToList();
@@ -298,6 +302,12 @@ namespace WorldWeaver.Parsers
             }
 
             MainClass.macro.IsRunning = false;
+
+            if (MainClass.testResults.Count > 0)
+            {
+                MainClass.output.OutputText = Tools.OutputProcessor.DisplayTestResults();
+                MainClass.output.MatchMade = true;
+            }
         }
 
         private void DoDescMacro()

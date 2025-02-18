@@ -178,8 +178,14 @@ namespace WorldWeaver.Parsers.Elements
                         var gameLgc = new DataManagement.GameLogic.Element();
                         var playerLife = Cache.PlayerCache.Player.AttributeByTag("life");
                         var damageAttrib = enemyWeapon.AttributeByTag("damage");
-                        var damage = Convert.ToInt32(damageAttrib.Logic.RandomValue(damageAttrib));
-                        var newLifeValue = Convert.ToInt32(playerLife.Output) - damage;
+                        var damage = 0;
+                        var newLifeValue = 1;
+                        
+                        if (playerLife != null && damageAttrib != null)
+                        {
+                            damage = Convert.ToInt32(damageAttrib.Logic.RandomValue(damageAttrib));
+                            newLifeValue = Convert.ToInt32(playerLife.Output) - damage;
+                        }
 
                         var damageOutput = Cache.FightCache.Fight.Target.ChildByType("hit");
                         if (damageOutput != null)
@@ -202,8 +208,11 @@ namespace WorldWeaver.Parsers.Elements
                     else
                     {
                         var missElem = Cache.FightCache.Fight.Target.ChildByType("miss");
-                        var missMsg = ProcessDamageOutput(missElem.Output, 0);
-                        MainClass.output.OutputText += Tools.OutputProcessor.ProcessOutputText(missMsg, missElem);
+                        if (missElem != null)
+                        {
+                            var missMsg = ProcessDamageOutput(missElem.Output, 0);
+                            MainClass.output.OutputText += Tools.OutputProcessor.ProcessOutputText(missMsg, missElem);
+                        }
                     }
                 }
 

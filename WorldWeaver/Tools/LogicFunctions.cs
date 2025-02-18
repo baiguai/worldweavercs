@@ -25,6 +25,17 @@ namespace WorldWeaver.Tools
                 return logicElems;
             }
 
+            if (logicString.Equals("[output]"))
+            {
+                logicElems.Add(
+                    new LogicElement()
+                    {
+                        Property = "key",
+                        Value = MainClass.userInput
+                    }
+                );
+            }
+
             if (logicString.Equals("[room]"))
             {
                 logicElems.Add(
@@ -231,7 +242,7 @@ namespace WorldWeaver.Tools
             return logicElems;
         }
 
-        private static List<LogicElement> ParseElementChildByTag(Element currentElement, string logicString)
+        private static List<LogicElement>? ParseElementChildByTag(Element currentElement, string logicString)
         {
             var logicElems = new List<LogicElement>();
             var propValue = "";

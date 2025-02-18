@@ -1150,6 +1150,10 @@ WHERE 1=1
             var tmpltElement = elemDb.GetElementByKey(templateKey);
 
             var parentAttr = tmpltElement.AttributeByTag("parent");
+            if (parentAttr == null)
+            {
+                return "";
+            }
             var pKey = Tools.Elements.GetRelativeElement(currentElement, parentAttr.Output).ElementKey;
             tmpltElement.ParentKey = pKey;
             tmpltElement.Name = Tools.Template.GetTemplateName(currentElement, tmpltElement.Name);

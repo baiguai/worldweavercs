@@ -732,7 +732,10 @@ PRAGMA foreign_keys = on;
             fieldName = textInfo.ToTitleCase(fieldName);
 
             PropertyInfo propertyInfo = element.GetType().GetProperty(fieldName);
-            propertyInfo.SetValue(element, Convert.ChangeType(propertyValue.SqlSafe(), propertyInfo.PropertyType), null);
+            if (propertyInfo != null)
+            {
+                propertyInfo.SetValue(element, Convert.ChangeType(propertyValue.SqlSafe(), propertyInfo.PropertyType), null);
+            }
 
             return currentRow;
         }
@@ -942,7 +945,7 @@ VALUES";
                                     command.Dispose();
                                 }
                             }
-                            catch (Exception ex)
+                            catch (Exception)
                             {
                                 Console.WriteLine(createDbQuery);
                                 throw;
@@ -1091,7 +1094,7 @@ VALUES";
                         command.Dispose();
                     }
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     Console.WriteLine(createDbQuery);
                     throw;

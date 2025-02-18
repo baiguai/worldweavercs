@@ -24,6 +24,7 @@ Go to Fighting.
 Go to Weapon Arming.
 Go to Npc Follow.
 Go to Npc Path.
+Go to Tests Room.
             }
         }
     }
@@ -31,6 +32,10 @@ Go to Npc Path.
     {inject, logic=look.inj }
 
 --------------------------------------------------------------------------------
+
+    {input, syntax=(?i)\btests(?:\sroom)?\b
+        {move, logic=tests_room, tags=[player], output=You have decided to test running tests. }
+    }
 
     {input, syntax=(?i)\b(taking|putting)\b
         {move, logic=put_in_test_room, tags=[player], output=You have decided to test putting objects into other objects. }

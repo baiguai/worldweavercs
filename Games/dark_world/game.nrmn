@@ -2,7 +2,7 @@
     name=Dark World
     parent=root
 
-    {attribute, output=warbeiter, tags=adminpass }
+    {attribute, output=admin, tags=adminpass }
     {attribute, output=false, tags=game_started }
 
     {enter_message, key=game_title

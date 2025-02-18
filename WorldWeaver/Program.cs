@@ -14,7 +14,7 @@ namespace WorldWeaver
         public static Macro macro = new Macro();
 
         public static Output output = new Output();
-        public static string userInput;
+        public static string userInput = "";
         public static string gameDb = "";
         public static string gameFile = "";
         public static bool adminEnabled = false;
@@ -22,6 +22,7 @@ namespace WorldWeaver
         public static bool handledNavigation = false;
 
         public static List<string> devNotesSearchResults = new List<string>();
+        public static List<string> testResults = new List<string>();
 
         public static List<string> history = new List<string>();
 

@@ -366,5 +366,21 @@ namespace WorldWeaver.Tools
 
             return endPosOut;
         }
+
+        internal static string DisplayTestResults()
+        {
+            var testsOutput = "";
+
+            foreach (var res in MainClass.testResults)
+            {
+                if (!testsOutput.Equals(""))
+                {
+                    testsOutput += Environment.NewLine;
+                }
+                testsOutput += res;
+            } 
+
+            return testsOutput;
+        }
     }
 }

@@ -1,0 +1,62 @@
+{room, key=tests_room, name=Tests Room
+    {enter_message
+        output={@
+To use this test, you need to be in the home room, then activate the admin tools (See the Admin Help file).
+Then you will need to record a macro (_recordon <name>) that issues a 'tests room' call then a 'look' command.
+Stop the macro recording with a _recordend call.
+Return to the home room.
+Run that macro.
+        }
+    }
+
+    {look, tags=!_test
+        {message
+            output={@
+You are in the tests room.
+            }
+        }
+
+        {logic, name=TestsRoom_OutputTest_ReturnsString
+            logic={@
+                ?[output] = "You are in the room 01."
+            }
+        }
+
+        {logic, name=TestsRoom_KeyLocation_ReturnsBoolean
+            logic={@
+                ?(tests_key)parent = [room]key
+            }
+        }
+    }
+
+    {navigation, tags=look|enter_message
+        {message
+            output={@
+You can go home, to the 'home room'.
+            }
+        }
+    }
+
+
+    {object, key=tests_key, name=Tests Key
+        {enter_message
+            output={@
+You see a key.
+            }
+        }
+
+        {look
+            {message
+                output={@
+You see a key.
+                }
+            }
+        }
+    }
+
+
+    {inject, logic=look.inj }
+    {inject, logic=home.inj }
+
+--------------------------------------------------------------------------------
+}
