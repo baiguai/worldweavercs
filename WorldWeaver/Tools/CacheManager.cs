@@ -50,7 +50,7 @@ namespace WorldWeaver.Tools
 
         internal static Element? GetCachedElement(string key)
         {
-            Classes.Element elem = null;
+            Classes.Element? elem = null;
 
             switch (key)
             {

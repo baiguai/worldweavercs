@@ -231,7 +231,7 @@ namespace WorldWeaver.Tools
             return logicElems;
         }
 
-        private static List<LogicElement> ParseElementChildByTag(Element currentElement, string logicString)
+        private static List<LogicElement>? ParseElementChildByTag(Element currentElement, string logicString)
         {
             var logicElems = new List<LogicElement>();
             var propValue = "";

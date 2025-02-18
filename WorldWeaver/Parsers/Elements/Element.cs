@@ -25,7 +25,6 @@ namespace WorldWeaver.Parsers.Elements
             var handledMessage = false;
             var handledMove = false;
             var handledAttack = false;
-            var handledNav = false;
 
             foreach (var proc in procObj.ChildProcElements)
             {
@@ -454,9 +453,12 @@ namespace WorldWeaver.Parsers.Elements
                 {
                     var atk = new Parsers.Elements.Attack();
                     atk.ParseAttack(msgParent, c);
-                    Cache.FightCache.Fight.RoundHandled = false;
-                    Cache.FightCache.Fight.PlayerHasAttacked = true;
-                    Cache.FightCache.Fight.InitialRound = false;
+                    if (Cache.FightCache.Fight != null)
+                    {
+                        Cache.FightCache.Fight.RoundHandled = false;
+                        Cache.FightCache.Fight.PlayerHasAttacked = true;
+                        Cache.FightCache.Fight.InitialRound = false;
+                    }
                     if (MainClass.output.MatchMade)
                     {
                         break;

@@ -34,13 +34,10 @@ public class CommandHistoryManager
                 {
                     return inputString;
                 }
-                break;
 
             default:
                 _commandHistory = inputString;
                 return inputString;
         }
-
-        return inputString;
     }
 }

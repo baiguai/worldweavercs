@@ -450,7 +450,12 @@ namespace WorldWeaver.Parsers.Elements
             }
             var gameLgc = new DataManagement.GameLogic.Element();
             var dieElem = Cache.FightCache.Fight.Target.ChildByType("kill");
-            var elemParser = new Parsers.Elements.Element();
+
+            if (Cache.FightCache.Fight.Target == null ||
+                dieElem == null)
+            {
+                return;
+            }
 
             foreach (var child in dieElem.Children)
             {
