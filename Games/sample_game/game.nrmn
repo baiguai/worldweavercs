@@ -5,13 +5,6 @@
     {attribute, output=admin, tags=adminpass }
     {attribute, output=false, tags=game_started }
 
-    {enter_message, key=game_title
-        output={@
-Welcome to a sample WorldWeaver game.
-
-
-        }
-    }
 
     {key=die_message
         output={@

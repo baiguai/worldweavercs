@@ -22,6 +22,7 @@ namespace WorldWeaver
         public static bool handledNavigation = false;
 
         public static List<string> devNotesSearchResults = new List<string>();
+        public static List<string> testResults = new List<string>();
 
         public static List<string> history = new List<string>();
 

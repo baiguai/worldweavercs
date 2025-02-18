@@ -25,6 +25,17 @@ namespace WorldWeaver.Tools
                 return logicElems;
             }
 
+            if (logicString.Equals("[output]"))
+            {
+                logicElems.Add(
+                    new LogicElement()
+                    {
+                        Property = "key",
+                        Value = MainClass.userInput
+                    }
+                );
+            }
+
             if (logicString.Equals("[room]"))
             {
                 logicElems.Add(
