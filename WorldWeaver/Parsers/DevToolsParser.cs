@@ -52,7 +52,11 @@ namespace WorldWeaver.Parsers
                 }
                 if (!MainClass.output.MatchMade && method.Equals("DoRunMacro"))
                 {
-                    DoRunMacro();
+                    DoRunMacro(false);
+                }
+                if (!MainClass.output.MatchMade && method.Equals("DoRunMacroTestMode"))
+                {
+                    DoRunMacro(true);
                 }
                 if (!MainClass.output.MatchMade && method.Equals("DoNoteSearch"))
                 {
@@ -271,17 +275,27 @@ namespace WorldWeaver.Parsers
             MainClass.output.MatchMade = true;
         }
 
-        private void DoRunMacro()
+        private void DoRunMacro(bool testMode)
         {
             if (!MainClass.adminEnabled)
             {
                 return;
             }
             var macroDir = $"Config/Macros/{MainClass.gameDb}";
+            var macroName = "";
 
             EnsureMacroDir(macroDir);
 
-            var macroName = MainClass.userInput.Replace("_macro ", "");
+            if (!testMode)
+            {
+                macroName = MainClass.userInput.Replace("_macro ", "");
+            }
+            else
+            {
+                macroName = MainClass.userInput.Replace("_macro! ", "");
+            }
+
+
             if (!File.Exists($"{macroDir}/{macroName.FileSafe()}"))
             {
                 return;
@@ -290,6 +304,15 @@ namespace WorldWeaver.Parsers
             MainClass.testResults.Clear();
 
             MainClass.macro.IsRunning = true;
+
+            if (testMode)
+            {
+                MainClass.macro.DoTests = true;
+            }
+            else
+            {
+                MainClass.macro.DoTests = false;
+            }
 
             var lines = File.ReadAllLines($"{macroDir}/{macroName}").ToList();
             foreach (var line in lines)

@@ -145,7 +145,7 @@ namespace WorldWeaver.Parsers
             DoNavigation();
 
             // Run unit tests if a macro is running
-            if (!MainClass.macro.IsRunning)
+            if (!MainClass.macro.IsRunning || !MainClass.macro.DoTests)
             {
                 return;
             }
