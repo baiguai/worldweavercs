@@ -46,6 +46,11 @@
             "description" : "Deletes the specified macro."
         },
         {
+            "pattern" : "\\b(_macro! *)\\b",
+            "method" : "DoRunMacroTestMode",
+            "description" : "Runs the specified macro (To see the available macros use _macrols). WARNING! Running macros may take time, since it goes through each stored command, calling it as though a player entered the command."
+        },
+        {
             "pattern" : "\\b(_macro *)\\b",
             "method" : "DoRunMacro",
             "description" : "Runs the specified macro (To see the available macros use _macrols). WARNING! Running macros may take time, since it goes through each stored command, calling it as though a player entered the command."
