@@ -1,0 +1,67 @@
+{room, key=outputlogic_01, name=Logic Test 01
+    {enter_message
+        output={@
+You are in the first logic test room.
+        }
+    }
+
+    {look
+        {message
+            output={@
+You are in the first logic test room.
+            }
+        }
+    }
+
+    {object, key=logic01_box, name=Box
+        {attrib, tags=isopen, output=false }
+
+        {enter_message
+            output={@
+You see a box.
+<?[self]((isopen)) = 'true'?>
+
+It is open.
+</?>
+<?[self]((isopen)) = 'false'?>
+It is not open.
+</?>
+            }
+        }
+
+        {open
+            {message
+                output={@
+You open the box.
+                }
+            }
+        }
+
+        {look
+            {message
+                output={@
+You see a box.
+<?[self]((isopen)) = 'true'?>
+
+It is open.
+</?>
+<?[self]((isopen)) = 'false'?>
+It is not open.
+</?>
+                }
+            }
+        }
+
+--------------------------------------------------------------------------------
+
+        {input, syntax=[tplt_syntax]((open_box))
+            {set, logic=[self]((isopen)), output=true }
+            {action, logic=open, tags=type|room }
+        }
+    }
+
+
+    {inject, logic=nav.inj }
+    {inject, logic=look.inj }
+    {inject, logic=home.inj }
+}

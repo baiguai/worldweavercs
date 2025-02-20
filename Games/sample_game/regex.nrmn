@@ -24,6 +24,7 @@
     {attrib, tags=x_chest, output=(?i)^(x|examine)(?:\s+the)?\s+chest$ }
     {attrib, tags=x_tap, output=(?i)\b(x|examine)\s+(the\s+)?tapestries\b }
     {attrib, tags=open_chest, output=(?i)open(?: the)? chest }
+    {attrib, tags=open_box, output=(?i)open(?: the)? box }
 
     {attrib, tags=take_5_coins, output=(?i)\b(?:take|pick up)\b(?:\s+the)?(?:\s+(?:\d+|five))?\s+coins\b }
     {attrib, tags=take_diary, output=(?i)\b(?:take|pick up)\s+(?:the\s+)?diary\b }
