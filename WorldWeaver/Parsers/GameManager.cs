@@ -123,6 +123,11 @@ namespace WorldWeaver.Parsers
 
             Cache.RoomCache.Room.ParseElement();
 
+            if (MainClass.gameDb.Equals(""))
+            {
+                return;
+            }
+
             if (Cache.FightCache.Fight == null)
             {
                 var trvParser = new Parsers.Elements.Travel();

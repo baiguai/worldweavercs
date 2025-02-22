@@ -25,6 +25,8 @@ Go to Weapon Arming.
 Go to Npc Follow.
 Go to Npc Path.
 Go to Tests Room.
+Go to Output Logic Test 01.
+Go to the Die room.
             }
         }
     }
@@ -33,31 +35,41 @@ Go to Tests Room.
 
 --------------------------------------------------------------------------------
 
-    {input, syntax=(?i)\btests(?:\sroom)?\b
-        {move, logic=tests_room, tags=[player], output=You have decided to test running tests. }
-    }
-
-    {input, syntax=(?i)\b(taking|putting)\b
-        {move, logic=put_in_test_room, tags=[player], output=You have decided to test putting objects into other objects. }
-    }
-
     {input, syntax=(?i)traveling
         {move, logic=travel_room_01, tags=[player], output=You have decided to test traveling. }
     }
 
-    {input, syntax=(?i)\bfight(?:ing|\s+test)?\b
+    {input, syntax=(?i)taking\sand\sputting
+        {move, logic=put_in_test_room, tags=[player], output=You have decided to test putting objects into other objects. }
+    }
+
+    {input, syntax=(?i)fighting
         {move, logic=fight, tags=[player], output=You have decided to test fighting. }
     }
 
-    {input, syntax=(?i)weapon\s+arm(?:ing)?
+    {input, syntax=(?i)weapon\sarming
         {move, logic=armtest, tags=[player], output=You have decided to test arming. }
     }
 
-    {input, syntax=(?i)npc\s+follow(?:s)?
+    {input, syntax=(?i)npc\sfollow
         {move, logic=npc-follow, tags=[player], output=You have decided to test npc stalking. }
     }
 
-    {input, syntax=(?i)npc\s+path(?:s)?
+    {input, syntax=(?i)npc\spath
         {move, logic=npc-path, tags=[player], output=You have decided to test npc path travel. }
+    }
+
+    {input, syntax=(?i)tests\sroom
+        {move, logic=tests_room, tags=[player], output=You have decided to test running tests. }
+    }
+
+    {input, syntax=(?i)output\slogic\stest\s0?1
+
+        {move, logic=outputlogic_01, tags=[player], output=You have decided to test output logic. }
+    }
+
+    {input, syntax=(?i)die\sroom
+
+        {move, logic=die_test, tags=[player], output=You have decided to test dying. }
     }
 }

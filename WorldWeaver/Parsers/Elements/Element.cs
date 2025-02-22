@@ -28,6 +28,10 @@ namespace WorldWeaver.Parsers.Elements
 
             foreach (var proc in procObj.ChildProcElements)
             {
+                if (MainClass.gameDb.Equals(""))
+                {
+                    return;
+                }
                 if (MainClass.output.FailedLogic)
                 {
                     return;
@@ -38,6 +42,10 @@ namespace WorldWeaver.Parsers.Elements
 
                 foreach (var child in currentElement.Children.Where(c => c.ElementType != "attribute" && c.ElementType != "attrib"))
                 {
+                    if (MainClass.gameDb.Equals(""))
+                    {
+                        return;
+                    }
                     if (Tools.Elements.FailedLogicResetTypes().Contains(child.ElementType))
                     {
                         MainClass.output.FailedLogic = false;
@@ -76,6 +84,10 @@ namespace WorldWeaver.Parsers.Elements
                     switch (child.ElementType)
                     {
                         case "attack":
+                            if (MainClass.gameDb.Equals(""))
+                            {
+                                return;
+                            }
                             if (MainClass.macro.IsRecording || MainClass.macro.IsRunning)
                             {
                                 continue;
@@ -164,6 +176,10 @@ namespace WorldWeaver.Parsers.Elements
                             break;
 
                         case "action":
+                            if (MainClass.gameDb.Equals(""))
+                            {
+                                return;
+                            }
                             if (!currentElement.Active.Equals("true"))
                             {
                                 continue;
@@ -176,6 +192,10 @@ namespace WorldWeaver.Parsers.Elements
                             break;
 
                         case "logic":
+                            if (MainClass.gameDb.Equals(""))
+                            {
+                                return;
+                            }
                             if (!currentElement.Active.Equals("true"))
                             {
                                 continue;
@@ -208,6 +228,10 @@ namespace WorldWeaver.Parsers.Elements
 
                         case "set":
                         case "preset":
+                            if (MainClass.gameDb.Equals(""))
+                            {
+                                return;
+                            }
                             if (!currentElement.Active.Equals("true"))
                             {
                                 continue;
@@ -231,6 +255,10 @@ namespace WorldWeaver.Parsers.Elements
                             break;
 
                         case "object":
+                            if (MainClass.gameDb.Equals(""))
+                            {
+                                return;
+                            }
                             if (!currentElement.Active.Equals("true"))
                             {
                                 continue;
@@ -256,6 +284,10 @@ namespace WorldWeaver.Parsers.Elements
                             break;
 
                         case "npc":
+                            if (MainClass.gameDb.Equals(""))
+                            {
+                                return;
+                            }
                             if (!currentElement.Active.Equals("true"))
                             {
                                 continue;
@@ -264,6 +296,10 @@ namespace WorldWeaver.Parsers.Elements
                             break;
 
                         case "devnote":
+                            if (MainClass.gameDb.Equals(""))
+                            {
+                                return;
+                            }
                             if (!MainClass.adminEnabled || !child.ElementType.Equals("devnote", StringComparison.OrdinalIgnoreCase))
                             {
                                 continue;

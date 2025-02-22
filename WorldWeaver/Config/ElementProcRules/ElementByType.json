@@ -92,11 +92,11 @@
             "elements" : [
                 "logic",
                 "preset",   
+                "set",
                 "action",
                 "attack",
                 "flee",
                 "message",
-                "set",
                 "move"
             ],
             "repeat_options" : "false"

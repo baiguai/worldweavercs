@@ -288,13 +288,13 @@ namespace WorldWeaver.Parsers.Elements
                         success = false;
                     }
                     break;
-                case "in":
+                case "~~":
                     if (variable2.ListContains(variable1))
                     {
                         success = true;
                     }
                     break;
-                case "!in":
+                case "!~~":
                     if (!variable2.ListContains(variable1))
                     {
                         success = true;

@@ -436,6 +436,8 @@ namespace WorldWeaver.Parsers.Elements
                 MainClass.output.OutputText = $"{dieMsg.Output}{Environment.NewLine}{Environment.NewLine}{Tools.InitFunctions.GetInitMessage(false)}";
             }
 
+            MainClass.output.MatchMade = true;
+
             Tools.Game.ClearEverything();
 
             return;

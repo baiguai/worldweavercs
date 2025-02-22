@@ -3,14 +3,14 @@ THE BOX
 
     {enter_message
         output={@
-You see an ornate box.
+You see a box.
         }
     }
 
     {look
         {message
             output={@
-You see an ornate box.
+You see a box.
             }
         }
     }

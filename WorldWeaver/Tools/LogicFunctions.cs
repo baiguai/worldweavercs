@@ -31,7 +31,7 @@ namespace WorldWeaver.Tools
                     new LogicElement()
                     {
                         Property = "key",
-                        Value = MainClass.userInput
+                        Value = MainClass.output.OutputText
                     }
                 );
             }

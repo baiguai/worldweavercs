@@ -5,7 +5,8 @@ To use this test, you need to be in the home room, then activate the admin tools
 Then you will need to record a macro (_recordon <name>) that issues a 'tests room' call then a 'look' command.
 Stop the macro recording with a _recordend call.
 Return to the home room.
-Run that macro.
+Run that macro in test mode using:
+_macro! <test name>
         }
     }
 
@@ -18,7 +19,7 @@ You are in the tests room.
 
         {logic, name=TestsRoom_OutputTest_ReturnsString
             logic={@
-                ?[output] = "You are in the room 01."
+                ?[output] ~~ "To use this test, you need to be in the home room"
             }
         }
 

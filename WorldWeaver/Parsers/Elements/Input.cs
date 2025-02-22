@@ -37,6 +37,12 @@ namespace WorldWeaver.Parsers.Elements
                             }
                         }
                     }
+
+                    if (MainClass.gameDb.Equals(""))
+                    {
+                        return;
+                    }
+
                     elemParser.ParseElement(currentElement, proc, false);
                 }
             }
