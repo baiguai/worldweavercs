@@ -26,6 +26,7 @@ Go to Npc Follow.
 Go to Npc Path.
 Go to Tests Room.
 Go to Output Logic Test 01.
+Go to Dev Note.
 Go to the Die room.
             }
         }
@@ -66,6 +67,11 @@ Go to the Die room.
     {input, syntax=(?i)output\slogic\stest\s0?1
 
         {move, logic=outputlogic_01, tags=[player], output=You have decided to test output logic. }
+    }
+
+    {input, syntax=(?i)dev\snote
+
+        {move, logic=devnote, tags=[player], output=You have decided to test dev notes. }
     }
 
     {input, syntax=(?i)die\sroom

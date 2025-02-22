@@ -42,7 +42,7 @@
 
     {devnote, logic=n, tags=gamenotes
         output={@
-Add notes here...
+This is a player level dev-note.
         }
     }
 }

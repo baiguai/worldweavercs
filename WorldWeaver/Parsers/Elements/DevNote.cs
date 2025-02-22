@@ -8,6 +8,11 @@ namespace WorldWeaver.Parsers.Elements
     {
         public void ParseDevNote(Classes.Element noteElement)
         {
+            if (noteElement.Logic.Equals("y", StringComparison.OrdinalIgnoreCase))
+            {
+                return;
+            }
+
             MainClass.output.OutputText += $@"
                 
 
