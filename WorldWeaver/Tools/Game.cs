@@ -75,7 +75,6 @@ namespace WorldWeaver.Tools
             Tools.CacheManager.ClearCache();
             Tools.Game.RemoveInProgressGame();
             MainClass.gameDb = "";
-            MainClass.output = new Classes.Output();
         }
     }
 }

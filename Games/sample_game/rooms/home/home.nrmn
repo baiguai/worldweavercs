@@ -25,7 +25,8 @@ Go to Weapon Arming.
 Go to Npc Follow.
 Go to Npc Path.
 Go to Tests Room.
-Go to Output Logic Test 01
+Go to Output Logic Test 01.
+Go to the Die room.
             }
         }
     }
@@ -65,5 +66,10 @@ Go to Output Logic Test 01
     {input, syntax=(?i)output\slogic\stest\s0?1
 
         {move, logic=outputlogic_01, tags=[player], output=You have decided to test output logic. }
+    }
+
+    {input, syntax=(?i)die\sroom
+
+        {move, logic=die_test, tags=[player], output=You have decided to test dying. }
     }
 }

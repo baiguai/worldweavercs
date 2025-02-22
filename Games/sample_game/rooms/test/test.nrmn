@@ -19,7 +19,7 @@ You are in the tests room.
 
         {logic, name=TestsRoom_OutputTest_ReturnsString
             logic={@
-                ?[output] = "You are in the room 01."
+                ?[output] ~~ "To use this test, you need to be in the home room"
             }
         }
 
