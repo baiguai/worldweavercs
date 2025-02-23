@@ -1,0 +1,89 @@
+{room, key=convers, name=Conversation Room
+    {attrib, tags=topic, output=adventure }
+
+    {enter_message
+        output={@
+You are in a busy pub.
+        }
+    }
+
+    {look
+        {message
+            output={@
+You are in a pub.
+
+<?[self]((topic)) = 'adventure'?>
+A woman approaches you.
+"Are you looking for adventure?"
+</?>
+
+<?[self]((topic)) = 'accepted'?>
+Yes! We're going to make a lot of money!!
+</?>
+
+<?[self]((topic)) = 'no'?>
+You're not interested, what do you want?
+</?>
+            }
+        }
+    }
+
+    {adv_no
+        {message
+            output={@
+I'm very sorry to hear that.
+            }
+        }
+    }
+
+    {adv_yes
+        {message
+            output={@
+I'd hoped you would say yes.
+Are you interested in acquiring a vast amount of treasure?
+            }
+        }
+    }
+
+    {treas_yes
+        {message
+            output={@
+Let's make some money!
+            }
+        }
+    }
+
+
+    {inject, logic=nav.inj }
+    {inject, logic=look.inj }
+    {inject, logic=home.inj }
+
+--------------------------------------------------------------------------------
+
+    {input, syntax=(?i)\b(no|nope|i\s*am\s*not)\b
+        {action, logic=adv_no, tags=type|room }
+        {set, logic=[self]((topic)), output=no }
+    }
+
+    {input, syntax=(?i)\b(yes|yep|i am)\b
+        {action, logic=adv_yes, tags=type|room }
+        {set, logic=[self]((topic)), output=accepted }
+
+        {logic
+            logic={@
+                ?[self]((topic)) = 'adventure'
+            }
+        }
+    }
+
+    {input, syntax=(?i)\b(yes|yep|i am)\b
+        {action, logic=treas_yes, tags=type|room }
+        {set, logic=[self]((topic)), output=good }
+
+        {logic
+            logic={@
+                ?[self]((topic)) = 'accepted'
+            }
+        }
+    }
+}
