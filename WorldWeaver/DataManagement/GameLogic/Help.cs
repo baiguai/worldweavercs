@@ -38,7 +38,7 @@ namespace WorldWeaver.DataManagement.GameLogic
 
             if (inputString.Trim().Equals(""))
             {
-                inputString = "home";
+                inputString = "helphome";
             }
 
             inputString = inputString.Replace("*", "%");
