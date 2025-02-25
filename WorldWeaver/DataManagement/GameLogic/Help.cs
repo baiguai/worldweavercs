@@ -36,6 +36,13 @@ namespace WorldWeaver.DataManagement.GameLogic
                 inputString = inputString.Substring(4).Trim();
             }
 
+            if (inputString.Trim().Equals(""))
+            {
+                inputString = "home";
+            }
+
+            inputString = inputString.Replace("*", "%");
+
             var selectQuery = $@"
 SELECT
     TopicId,
@@ -46,7 +53,7 @@ SELECT
 FROM
     helpsys
 WHERE 1=1
-    AND LOWER(Title) = @title
+    AND LOWER(Title) LIKE (@title)
 ORDER BY
     Title
 ;
@@ -108,6 +115,8 @@ ORDER BY
             {
                 inputString = inputString.Substring(4).Trim();
             }
+
+            inputString = inputString.Replace("*", "%");
 
             var selectQuery = $@"
 SELECT
