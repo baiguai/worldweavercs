@@ -1,7 +1,0 @@
-{navigation, tags=look|enter_message
-    {message
-        output={@
-You can go home, to the 'home room'.
-        }
-    }
-}
