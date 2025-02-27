@@ -1,6 +1,11 @@
 ﻿{
     "commands" : [
         {
+            "pattern" : "\\b(_adminls)\\b",
+            "method" : "DoList",
+            "description" : "Lists the available ADMIN commands that are available."
+        },
+        {
             "pattern" : "\\b(_admin *)\\b",
             "method" : "DoAdminLogin",
             "description": "Logs the player in as an ADMIN user, giving them access to tools designed to help with game development and debugging."
@@ -14,11 +19,6 @@
             "pattern" : "\\b(_room)\\b",
             "method" : "DoRoom",
             "description" : "Outputs a text-based description of the current room in the current game."
-        },
-        {
-            "pattern" : "\\b(_list)\\b",
-            "method" : "DoList",
-            "description" : "Lists the available ADMIN commands that are available."
         },
         {
             "pattern" : "\\b(_macrols)\\b",

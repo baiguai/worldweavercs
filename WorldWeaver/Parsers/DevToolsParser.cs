@@ -301,9 +301,12 @@ namespace WorldWeaver.Parsers
                 return;
             }
 
-            MainClass.testResults.Clear();
-
-            MainClass.macro.IsRunning = true;
+            if (!MainClass.macro.IsRunning)
+            {
+                MainClass.testResults.Clear();
+                MainClass.macro.InitialMacroName = macroName;
+                MainClass.macro.IsRunning = true;
+            }
 
             if (testMode)
             {
@@ -324,7 +327,10 @@ namespace WorldWeaver.Parsers
                 }
             }
 
-            MainClass.macro.IsRunning = false;
+            if (macroName.Equals(MainClass.macro.InitialMacroName))
+            {
+                MainClass.macro.IsRunning = false;
+            }
 
             if (MainClass.testResults.Count > 0)
             {

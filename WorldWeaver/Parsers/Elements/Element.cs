@@ -173,6 +173,8 @@ namespace WorldWeaver.Parsers.Elements
                                     MainClass.output.MatchMade = false;
                                 }
                             }
+
+                            Parsers.Elements.Test.ParseTest(currentElement);
                             break;
 
                         case "action":
@@ -189,6 +191,8 @@ namespace WorldWeaver.Parsers.Elements
                             {
                                 return;
                             }
+
+                            Parsers.Elements.Test.ParseTest(currentElement);
                             break;
 
                         case "logic":
@@ -224,6 +228,8 @@ namespace WorldWeaver.Parsers.Elements
                             {
                                 return;
                             }
+
+                            Parsers.Elements.Test.ParseTest(currentElement);
                             break;
 
                         case "set":
@@ -252,6 +258,8 @@ namespace WorldWeaver.Parsers.Elements
                                     }
                                 }
                             }
+
+                            Parsers.Elements.Test.ParseTest(currentElement);
                             break;
 
                         case "object":
@@ -264,6 +272,8 @@ namespace WorldWeaver.Parsers.Elements
                                 continue;
                             }
                             child.ParseElement(isEntering);
+
+                            Parsers.Elements.Test.ParseTest(currentElement);
 
                             if (MainClass.output.OutputText.Equals(""))
                             {
@@ -293,6 +303,8 @@ namespace WorldWeaver.Parsers.Elements
                                 continue;
                             }
                             child.ParseElement(isEntering);
+
+                            Parsers.Elements.Test.ParseTest(currentElement);
                             break;
 
                         case "devnote":
