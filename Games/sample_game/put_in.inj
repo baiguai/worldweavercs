@@ -1,3 +1,0 @@
-{input, syntax=[self]((syn_putin))
-    {move, logic=[syntax], tags=[self], output=You put the <<[self]name>> in the <<[parent]name>>. }
-}

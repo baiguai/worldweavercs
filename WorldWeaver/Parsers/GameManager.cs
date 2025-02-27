@@ -41,7 +41,6 @@ namespace WorldWeaver.Parsers
             var helpParser = new HelpParser();
             var devParser = new DevToolsParser();
             var elemParser = new Elements.Element();
-            var logic = new DataManagement.GameLogic.Element();
             var elemDb = new DataManagement.GameLogic.Element();
             var histCount = Convert.ToInt32(AppSettingFunctions.GetConfigValue("history", "count"));
 
@@ -148,43 +147,6 @@ namespace WorldWeaver.Parsers
             // Navigation
             var parent = new Classes.Element();
             DoNavigation();
-
-            // Run unit tests if a macro is running
-            if (!MainClass.macro.IsRunning || !MainClass.macro.DoTests)
-            {
-                return;
-            }
-            var logicParser = new Parsers.Elements.Logic();
-            var currentOutput = MainClass.output.OutputText;
-            var currentFailedLgc = MainClass.output.FailedLogic;
-            foreach (var testElem in Cache.RoomCache.Room.Children.Where(e => e.Tags.TagsContain("!_test")))
-            {
-                var testChildren = logic.GetElementChildren(testElem.ElementKey, false);
-                foreach (var tst in testChildren.Where(t => t.ElementType.Equals("logic", StringComparison.OrdinalIgnoreCase)))
-                {
-                    logicParser.ParseLogic(tst);
-
-                    if (!MainClass.output.FailedLogic)
-                    {
-                        var testRes = $"Test - {tst.Name} result: PASS";
-                        if (!MainClass.testResults.Contains(testRes))
-                        {
-                            MainClass.testResults.Add(testRes);
-                        }
-                    }
-                    else
-                    {
-                        var failedRes = $"Test - {tst.Name} result: FAIL";
-                        if (!MainClass.testResults.Contains(failedRes))
-                        {
-                            MainClass.testResults.Add(failedRes);
-                        }
-                    }
-                }
-
-                MainClass.output.OutputText = currentOutput;
-                MainClass.output.FailedLogic = currentFailedLgc;
-            }
         }
 
         public void DoNavigation()

@@ -1,3 +1,0 @@
-{input, syntax=(?i)\b(?:go\s+to\s+)?(?:the\s+)?home\s+room\b
-    {move, logic=home, tags=[player], output=You return to the testing home room. }
-}
