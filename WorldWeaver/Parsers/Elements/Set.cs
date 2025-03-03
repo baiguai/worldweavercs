@@ -12,7 +12,7 @@ namespace WorldWeaver.Parsers.Elements
 
             if (currentElement.Tags.TagsContain("arm"))
             {
-                SetArmed(currentElement);
+                SetArmed();
             }
 
             if (!setPerformed)
@@ -61,11 +61,18 @@ namespace WorldWeaver.Parsers.Elements
             return;
         }
 
-        private void SetArmed(Classes.Element currentElement)
+        private void SetArmed()
         {
             var weaponName = MainClass.userInput.Replace("arm ", "");
             var elemDb = new DataManagement.GameLogic.Element();
             var weapon = elemDb.GetChildElementKeysBySyntax(Cache.PlayerCache.Player, weaponName, true);
+
+            var weaponElem = elemDb.GetElementByKey(weapon.First());
+
+            if (!weaponElem.Tags.TagsContain("weapon"))
+            {
+                weapon = null;
+            }
 
             if (weapon.Equals("") || weapon.Count != 1)
             {
@@ -74,14 +81,33 @@ namespace WorldWeaver.Parsers.Elements
                 return;
             }
 
-            var weaponElem = elemDb.GetElementByKey(weapon.First());
-
             foreach (var child in Cache.PlayerCache.Player.Children)
             {
-                if (child.ElementKey.Equals(currentElement.Logic, StringComparison.OrdinalIgnoreCase))
+                if (child.Tags.TagsContain("armed"))
                 {
                     elemDb.SetElementField(child.ElementKey, "output", weapon.First(), true);
                     MainClass.output.OutputText = $"You are now armed with the {weaponElem.Name}.";
+                    MainClass.output.MatchMade = true;
+                }
+            }
+        }
+
+        public void SetDefaultArmed()
+        {
+            var elemDb = new DataManagement.GameLogic.Element();
+            var playerWeapon = Cache.PlayerCache.Player.ChildByTag("weapon");
+
+            if (playerWeapon == null)
+            {
+                return;
+            }
+
+            foreach (var child in Cache.PlayerCache.Player.Children)
+            {
+                if (child.Tags.TagsContain("armed"))
+                {
+                    elemDb.SetElementField(child.ElementKey, "output", playerWeapon.ElementKey, true);
+                    MainClass.output.OutputText = $"You are now armed with the {playerWeapon.Name}.";
                     MainClass.output.MatchMade = true;
                 }
             }
