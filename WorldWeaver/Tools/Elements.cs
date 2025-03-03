@@ -190,30 +190,30 @@ namespace WorldWeaver.Tools
             }
         }
 
-        internal static string GetRelativeElementKey(Element currentElement, string relCode, string defaultValue)
+        internal static Classes.Element GetRelativeElementKey(Element currentElement, string relCode)
         {
             var elemDb = new DataManagement.GameLogic.Element();
 
             switch (relCode.ToLower())
             {
                 case "[self]":
-                    return Tools.Elements.GetSelf(currentElement).ElementKey;
+                    return Tools.Elements.GetSelf(currentElement);
 
                 case "[room]":
-                    return Cache.RoomCache.Room.ElementKey;
+                    return Cache.RoomCache.Room;
 
                 case "[player]":
-                    return Cache.PlayerCache.Player.ElementKey;
+                    return Cache.PlayerCache.Player;
 
                 case "[enemy]":
                     if (Cache.FightCache.Fight == null)
                     {
-                        return defaultValue;
+                        return null;
                     }
-                    return Cache.FightCache.Fight.Target.ElementKey;
+                    return Cache.FightCache.Fight.Target;
 
                 default:
-                    return defaultValue;
+                    return null;
             }
         }
 

@@ -12,21 +12,43 @@ namespace WorldWeaver.DataManagement.GameLogic
             var elemDb = new DataManagement.GameLogic.Element();
             var elem = new Parsers.Elements.Element();
             var success = false;
+            var dropping = false;
 
             foreach (var tag in tagList)
             {
-                var key = tag;
+                var newElem = new Classes.Element();
 
-                key = Tools.Elements.GetRelativeElementKey(currentElement, key, key);
+                newElem = Tools.Elements.GetRelativeElementKey(currentElement, tag);
 
-                if (key.Equals(Cache.PlayerCache.Player.ElementKey))
+                if (newElem.Equals(Cache.PlayerCache.Player.ElementKey))
                 {
                     MainClass.output.PlayerMoved = true;
                 }
 
-                newParentKey = Tools.Elements.GetRelativeElementKey(currentElement, newParentKey, newParentKey);
+                var relElem = Tools.Elements.GetRelativeElementKey(currentElement, newParentKey);
+                if (relElem != null)
+                {
+                    newParentKey = relElem.ElementKey;
+                }
 
-                success = elemDb.SetElementParentKey(key, newParentKey);
+                if (newParentKey.Equals(""))
+                {
+                    return;
+                }
+
+                if (newElem.ParentKey.Equals(Cache.PlayerCache.Player.ElementKey, StringComparison.OrdinalIgnoreCase) &&
+                    !newParentKey.Equals(Cache.PlayerCache.Player.ElementKey, StringComparison.OrdinalIgnoreCase))
+                {
+                    dropping = true;
+                }
+
+                success = elemDb.SetElementParentKey(newElem.ElementKey, newParentKey);
+
+                if (dropping)
+                {
+                    var setCls = new Parsers.Elements.Set();
+                    setCls.SetDefaultArmed();
+                }
 
                 var moveOutput = Tools.OutputProcessor.ProcessOutputText(currentElement.Output, currentElement);
 
