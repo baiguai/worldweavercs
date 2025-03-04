@@ -17,50 +17,76 @@ namespace WorldWeaver.Parsers
                 if (!MainClass.output.MatchMade && method.Equals("DoAdminLogin"))
                 {
                     DoAdminLogin(MainClass.userInput.GetInputParamSingle());
+                    return;
                 }
                 if (!MainClass.output.MatchMade && method.Equals("DoList"))
                 {
                     DoList();
+                    return;
                 }
                 if (!MainClass.output.MatchMade && method.Equals("DoMap"))
                 {
                     DoMap();
+                    return;
                 }
                 if (!MainClass.output.MatchMade && method.Equals("DoRoom"))
                 {
                     DoRoom();
+                    return;
                 }
                 if (!MainClass.output.MatchMade && method.Equals("DoMacroStart"))
                 {
                     DoMacroStart();
+                    return;
                 }
                 if (!MainClass.output.MatchMade && method.Equals("DoMacroStop"))
                 {
                     DoMacroStop();
+                    return;
                 }
                 if (!MainClass.output.MatchMade && method.Equals("DoDescMacro"))
                 {
                     DoDescMacro();
+                    return;
                 }
                 if (!MainClass.output.MatchMade && method.Equals("DoMacroList"))
                 {
                     DoMacroList();
+                    return;
                 }
                 if (!MainClass.output.MatchMade && method.Equals("DoDeleteMacro"))
                 {
                     DoDeleteMacro();
-                }
-                if (!MainClass.output.MatchMade && method.Equals("DoRunMacro"))
-                {
-                    DoRunMacro(false);
-                }
-                if (!MainClass.output.MatchMade && method.Equals("DoRunMacroTestMode"))
-                {
-                    DoRunMacro(true);
+                    return;
                 }
                 if (!MainClass.output.MatchMade && method.Equals("DoNoteSearch"))
                 {
                     DoNoteSearch();
+                    return;
+                }
+                if (!MainClass.output.MatchMade && method.Equals("DoRunMacro"))
+                {
+                    if (!MainClass.macro.IsRunning)
+                    {
+                        DoRunMacro(false);
+                    }
+                    else
+                    {
+                        DoRunMacro(MainClass.macro.DoTests);
+                    }
+                    return;
+                }
+                if (!MainClass.output.MatchMade && method.Equals("DoRunMacroTestMode"))
+                {
+                    if (!MainClass.macro.IsRunning)
+                    {
+                        DoRunMacro(true);
+                    }
+                    else
+                    {
+                        DoRunMacro(MainClass.macro.DoTests);
+                    }
+                    return;
                 }
             }
         }

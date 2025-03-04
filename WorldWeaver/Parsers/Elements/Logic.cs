@@ -59,6 +59,13 @@ namespace WorldWeaver.Parsers.Elements
 
             MainClass.output.FailedLogic = !passed;
 
+            if (MainClass.macro.IsRunning && MainClass.macro.DoTests && currentElement.Tags.TagsContain("!_test"))
+            {
+                Test.ParseTest(currentElement);
+                currentElement.Tags = currentElement.Tags.RemoveTag("!_test");
+                return;
+            }
+
             return;
         }
 

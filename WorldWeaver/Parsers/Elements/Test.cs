@@ -18,48 +18,38 @@ namespace WorldWeaver.Parsers.Elements
                 return;
             }
 
-            var logic = new DataManagement.GameLogic.Element();
-            var logicParser = new Parsers.Elements.Logic();
             var currentOutput = MainClass.output.OutputText;
             var currentFailedLgc = MainClass.output.FailedLogic;
-            var testElems = new List<Classes.Element>();
             var elemDb = new DataManagement.GameLogic.Element();
             var curElem = elemDb.GetElementByKey(currentElement.ElementKey);
-            var children = curElem.Children.Where(c => c.Tags.TagsContain("!_test"));
 
-            foreach (var c in children)
+            if (!curElem.Tags.TagsContain("!_test"))
             {
-                testElems.Add(c);
+                return;
             }
 
-            foreach (var testElem in testElems)
+            var lgcParser = new Parsers.Elements.Logic();
+            lgcParser.ParseLogic(currentElement);
+
+            if (!MainClass.output.FailedLogic)
             {
-                var testChildren = logic.GetElementChildren(testElem.ElementKey, false);
-                foreach (var tst in testChildren.Where(t => t.ElementType.Equals("logic", StringComparison.OrdinalIgnoreCase)))
+                var testRes = $"Test - {currentElement.Name} result: PASS";
+                if (!MainClass.testResults.Contains(testRes))
                 {
-                    logicParser.ParseLogic(tst);
-
-                    if (!MainClass.output.FailedLogic)
-                    {
-                        var testRes = $"Test - {tst.Name} result: PASS";
-                        if (!MainClass.testResults.Contains(testRes))
-                        {
-                            MainClass.testResults.Add(testRes);
-                        }
-                    }
-                    else
-                    {
-                        var failedRes = $"Test - {tst.Name} result: FAIL";
-                        if (!MainClass.testResults.Contains(failedRes))
-                        {
-                            MainClass.testResults.Add(failedRes);
-                        }
-                    }
+                    MainClass.testResults.Add(testRes);
                 }
-
-                MainClass.output.OutputText = currentOutput;
-                MainClass.output.FailedLogic = currentFailedLgc;
             }
+            else
+            {
+                var failedRes = $"Test - {currentElement.Name} result: FAIL";
+                if (!MainClass.testResults.Contains(failedRes))
+                {
+                    MainClass.testResults.Add(failedRes);
+                }
+            }
+
+            MainClass.output.OutputText = currentOutput;
+            MainClass.output.FailedLogic = currentFailedLgc;
 
             return;
         }
