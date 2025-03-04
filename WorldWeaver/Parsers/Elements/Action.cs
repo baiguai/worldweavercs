@@ -253,8 +253,6 @@ namespace WorldWeaver.Parsers.Elements
                     elemParser.ParseElement(target, proc);
                 }
             }
-
-            Parsers.Elements.Test.ParseTest(parentElement);
         }
 
         private object GetTypeLevel(string tags)

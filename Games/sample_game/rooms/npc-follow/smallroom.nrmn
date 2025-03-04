@@ -1,0 +1,34 @@
+{room, key=smallroom, name=Small Room
+    {enter_message
+        output={@
+You are in a small room.
+        }
+    }
+
+    {look
+        {message
+            output={@
+You are in a small room
+            }
+        }
+    }
+
+    {navigation, tags=look|enter_message
+        {message
+            output={@
+You can go home, to the 'home room'.
+In the north wall is the entrance to the hall.
+            }
+        }
+    }
+
+
+    {inject, logic=look.inj }
+    {inject, logic=home.inj }
+
+--------------------------------------------------------------------------------
+
+    {input, syntax=[tplt_syntax]((north))
+        {move, logic=hallway, tags=[player], output=You go north. }
+    }
+}

@@ -47,17 +47,19 @@ namespace WorldWeaver.Parsers.Elements
                                 MainClass.output.OutputText = ParseRelativeElementByTag(currentElement, currentElement.Output);
                             }
                         }
-                        return;
                     }
                     else
                     {
                         MainClass.output.FailedLogic = false;
+                    }
+
+                    if (MainClass.macro.IsRunning && MainClass.macro.DoTests && currentElement.Tags.TagsContain("!_test"))
+                    {
+                        Test.ParseTest(currentElement);
                         return;
                     }
                 }
             }
-
-            MainClass.output.FailedLogic = !passed;
 
             return;
         }

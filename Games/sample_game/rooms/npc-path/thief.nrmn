@@ -1,0 +1,104 @@
+{npc, key=thief_02, name=Thief, syntax=\b(?:*thief*)\b, parent=npc-path, tags=attackable, sort=999
+    {attrib, name=Life, output=[rand:15|30], tags=stats|life }
+    {attrib, name=Armor Rating, output=[rand:4|10], tags=stats|armor }
+    {attrib, name=Strength, output=[rand:8|18], tags=stats }
+    {attrib, name=Intelligence, output=[rand:8|18], tags=stats }
+    {attrib, name=Cunning, output=[rand:8|18], tags=stats }
+    {attrib, name=Gold, output=[rand:20|40], tags=stats }
+    {attrib, name=Armed Weapon, output=thief_01_shortsword, tags=armed|stats|name }
+    {attrib, output=the shady character, tags=title }
+    {attrib, output=he, tags=pronoun }
+    {attrib, output=him, tags=subject_pronoun }
+    {attrib, output=false, tags=moved }
+
+    {object, key=thief_02_shortsword, name=Short Sword, syntax=\b(short sword)\b, tags=inventory
+        {attribute, name=Damage, logic=[rand:4|8], tags=damage }
+    }
+
+
+    ---- FIGHTING MESSAGES ----
+    ----------------------------------------------------------------------------
+    {hit
+        output={@
+
+
+You have been attacked by the thief. He has caused your life to be reduced by [damage].
+        }
+    }
+
+    {miss
+        output={@
+
+The thief attempts to attack you but fails.
+        }
+    }
+
+    {damage_message
+        output={@
+
+
+You have attacked the thief. His life has been reduced by [damage].
+        }
+    }
+
+    {miss_message
+        output={@
+
+You attack the thief. But your attack failed.
+        }
+    }
+
+    {kill
+        {move, logic=[self], tags=limbo }
+        {message
+            output={@
+
+
+You have killed the thief.
+            }
+        }
+    }
+    ---------------------------------------------------------------------------
+
+
+
+    {travel, key=thief_02_travel, logic=[path|fountain-room|statue-room|fountain-room|npc-path], active=false
+        {message
+            output={@
+The thief leaves.
+            }
+
+            logic={@
+                ?(thief_02_travel)active = 'true'
+            }
+        }
+        {action, logic=[self]((moved)), output=true }
+    }
+
+
+    {enter_message
+        {message
+            output={@
+<?[self]((moved)) = 'false'?>
+You see a thief sitting at the bar.
+<else>
+You see a thief.
+</?>
+            }
+        }
+    }
+
+    {look
+        {message
+            output={@
+You see a thief.
+            }
+        }
+    }
+
+    {input, syntax=[tplt_syntax]((attack_thief))
+        {attack
+            {attribute, output=[self], tags=target }
+        }
+    }
+}

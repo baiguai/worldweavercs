@@ -1,0 +1,108 @@
+{room, key=oak_inn_205, name=Room 205
+    {attrib, tags=coins_taken, output=false }
+
+    {enter_message
+        output={@
+You are in room 205.
+In the center of the hotel room is a mangled bloody corpse.
+It appears to be a woman and she has been killed by a battle ax to the head.
+        }
+    }
+
+    {look
+        {message
+            output={@
+In the center of the hotel room is a mangled bloody corpse.
+It appears to be a woman and she has been killed by a battle ax to the head.
+            }
+        }
+    }
+
+    {x_woman
+        {message
+            output={@
+You examine the dead woman.
+Her injuries are truly shocking.
+You notice a small leather pouch strapped to her waist as well as a small
+rolled up note.
+            }
+        }
+    }
+
+    {x_pouch
+        {message
+            output={@
+You examine the pouch.
+<?[room]((coins_taken)) = 'false'?>
+Inside you find five gold coins.
+</?>
+<?[room]((coins_taken)) = 'true'?>
+It is empty.
+</?>
+            }
+        }
+    }
+
+    {x_note
+        {message
+            output={@
+You examine the note.
+It says:
+^^ North road, secret path to the Library of Agnoth.
+^^ A clue is there. 
+            }
+        }
+    }
+
+    {take_coins
+        {message
+            output={@
+You take the gold coins.
+            }
+        }
+    }
+
+--------------------------------------------------------------------------------
+
+    {navigation, tags=look
+        {message
+            output={@
+You can leave the Inn room's front door.
+            }
+        }
+    }
+
+--------------------------------------------------------------------------------
+
+    {inject, logic=Injection/look.inj }
+
+    {input, syntax=[tplt_syntax]((leave))
+        {move, logic=old_oak_inn_upstairs, tags=[player], output=You exit room 205. }
+    }
+
+    {input, syntax=[tplt_syntax]((x_kal_corpse_f))
+        {action, logic=x_woman, tags=type|room }
+    }
+
+    {input, syntax=[tplt_syntax]((x_pouch))
+        {action, logic=x_pouch, tags=type|room }
+    }
+
+    {input, syntax=[tplt_syntax]((x_note))
+        {action, logic=x_note, tags=type|room }
+    }
+
+    {input, syntax=[tplt_syntax]((take_5_coins))
+        {logic
+            output={@
+You have already taken the coins.
+            }
+            logic={@
+                ?[room]((coins_taken)) = 'false'
+            }
+        }
+        {action, logic=take_coins, tags=type|room }
+        {set, logic=[self]((coins_taken)), output=true }
+        {set, logic=[player]((gold)), output=+=5 }
+    }
+}

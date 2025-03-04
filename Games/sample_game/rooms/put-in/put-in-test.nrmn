@@ -1,0 +1,28 @@
+{room, key=put_in_test_room, name=Put In Test Room
+    {enter_message
+        output={@
+This is a room for testing functionality.
+        }
+
+        {set, logic=[game]((game_started)), output=true }
+    }
+
+    {look
+        {message
+            output={@
+You are in the test room.
+            }
+        }
+    }
+
+
+    {inject, logic=nav.inj }
+    {inject, logic=look.inj }
+    {inject, logic=home.inj }
+
+--------------------------------------------------------------------------------
+
+    {inject, logic=./thebox.inj }
+    {inject, logic=./thekey.inj }
+
+}

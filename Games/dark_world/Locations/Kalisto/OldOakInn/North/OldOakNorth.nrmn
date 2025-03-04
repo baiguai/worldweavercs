@@ -1,0 +1,95 @@
+{room, key=old_oak_north
+    {enter_message
+        output={@
+You are in the north room.
+It appears to be used as a storage space.
+A single candle sitting on a wall sconce provides the only light.
+There are shelves along the walls and piles of clothing, bar utensils, truncheons,
+even packs and pouches. You notice that one pack is open.
+        }
+    }
+
+    {look
+        {message
+            output={@
+You are in the north room.
+It appears to be used as a storage space.
+A single candle sitting on a wall sconce provides the only light.
+There are shelves along the walls and piles of clothing, bar utensils, truncheons,
+even packs and pouches. You notice that one pack is open.
+            }
+        }
+    }
+
+    {x_pack
+        {message
+            output={@
+You rummage around in the open pack. There are some moldy old rations and other
+useless items. However a bound journal catches your eye. You untie the leather
+strap that secures it shut and open it up.
+
+It appears to be an adventurer's diary. It seems they are investigating strange
+phenomenon throughout the peninsula of Aetherous. Something about undead activity.
+There's mention of something called 'The Cleansing'.
+
+The adventurer mentions a head priest in a northern kingdom called Ennex as well
+as something called the Death Map and an artifact called the Pocula Mortem.
+
+(Note: If you want to keep some notes for yourself, be sure to read the
+information available on notes, using:
+? notes
+)
+            }
+        }
+    }
+
+    {take_diary
+        {message
+            output={@
+You consider taking the diary, however since you've already noted the only
+interesting passages within it, you decide to not burden yourself with it.
+            }
+        }
+    }
+
+    {take_pack
+        {message
+            output={@
+You think about taking the pack, but there really isn't anything in it you
+want to keep on you.
+            }
+        }
+    }
+
+--------------------------------------------------------------------------------
+
+    {navigation
+        {message
+            output={@
+In the south wall is a narrow wooden door that leads back to the Inn's main room.
+            }
+        }
+    }
+
+--------------------------------------------------------------------------------
+
+    {input, syntax=[tplt_syntax]((look))
+        {action, logic=look, tags=type }
+    }
+
+    {input, syntax=[tplt_syntax]((x_pack))
+        {action, logic=x_pack, tags=type }
+    }
+
+    {input, syntax=[tplt_syntax]((take_diary))
+        {action, logic=take_diary, tags=type }
+    }
+
+    {input, syntax=[tplt_syntax]((take_pack))
+        {action, logic=take_pack, tags=type }
+    }
+
+    {input, syntax=[tplt_syntax]((south))
+        {move, logic=old_oak_inn, tags=[player], output=You return to the Inn's main room. }
+    }
+}

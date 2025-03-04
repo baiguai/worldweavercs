@@ -1,0 +1,114 @@
+{room, key=old_oak_inn, name=The Old Oak Inn
+    {enter_message
+        output={@
+The Old Oak Inn is completely empty.
+
+There is not a single soul in the entire place.
+No bar keep, no patrons, no bards or maidens.
+
+The silence is unnerving.
+        }
+    }
+
+--------------------------------------------------------------------------------
+
+    {look, repeat=random
+        {message
+            output={@
+You look around.
+The furniture isn't dusty. It seems to have been in use
+recently. In fact there's a mug of mead sitting on the
+bar top.
+            }
+        }
+        {message
+            output={@
+You look around.
+The place doesn't appear to have been empty long.
+You even see a small bit of parchment sitting on one
+of the tables.
+            }
+        }
+        {message
+            output={@
+You look around.
+The furniture isn't dusty. It seems to have been in use
+recently.
+            }
+        }
+    }
+
+--------------------------------------------------------------------------------
+
+    {x_mead
+        {message
+            output={@
+The mead is tempting but reason wins over and you decide to
+merely inspect the mug.
+There is moisture over the surface of it, clearly the liquid
+within is still very cold.
+It wasn't poured long ago.
+            }
+        }
+    }
+
+    {x_parchment_piece
+        {message
+            output={@
+You are curious about the parchment, however when you examine
+it you realize it is nothing more than a small portion of a mundane
+equipment list.
+            }
+        }
+    }
+
+    {x_furniture
+        {message
+            output={@
+You examine the furniture. It isn't dusty. Even though everything appears
+to be abandoned, that must have occurred recently.
+            }
+        }
+    }
+
+--------------------------------------------------------------------------------
+
+    {navigation, tags=look
+        {message
+            output={@
+In the South wall is the door that exits the Inn.
+In the North East corner is a staircase leading up.
+In the North wall is a narrow unmarked wooden door.
+            }
+        }
+    }
+
+--------------------------------------------------------------------------------
+
+    {inject, logic=Injection/look.inj }
+
+
+    {input, syntax=[tplt_syntax]((ne_up))
+        {move, logic=old_oak_inn_upstairs, tags=[player], output=You ascend the stairs in the north east corner of the Inn }
+    }
+
+    {input, syntax=[tplt_syntax]((north))
+        {move, logic=old_oak_north, tags=[player], output=You enter the door in the north wall. }
+    }
+
+    {input, syntax=[tplt_syntax]((south))
+        {move, logic=kal_main, tags=[player], output=You exit the Old Oak Inn. }
+    }
+
+    {input, syntax=[tplt_syntax]((x_mead))
+        {action, logic=x_mead, tags=type }
+    }
+
+    {input, syntax=[tplt_syntax]((x_parchment))
+        {action, logic=x_parchment_piece, tags=type }
+    }
+
+    {input, syntax=[tplt_syntax]((x_furniture))
+        {action, logic=x_furniture, tags=type }
+    }
+}

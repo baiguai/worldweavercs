@@ -17,50 +17,76 @@ namespace WorldWeaver.Parsers
                 if (!MainClass.output.MatchMade && method.Equals("DoAdminLogin"))
                 {
                     DoAdminLogin(MainClass.userInput.GetInputParamSingle());
+                    return;
                 }
                 if (!MainClass.output.MatchMade && method.Equals("DoList"))
                 {
                     DoList();
+                    return;
                 }
                 if (!MainClass.output.MatchMade && method.Equals("DoMap"))
                 {
                     DoMap();
+                    return;
                 }
                 if (!MainClass.output.MatchMade && method.Equals("DoRoom"))
                 {
                     DoRoom();
+                    return;
                 }
                 if (!MainClass.output.MatchMade && method.Equals("DoMacroStart"))
                 {
                     DoMacroStart();
+                    return;
                 }
                 if (!MainClass.output.MatchMade && method.Equals("DoMacroStop"))
                 {
                     DoMacroStop();
+                    return;
                 }
                 if (!MainClass.output.MatchMade && method.Equals("DoDescMacro"))
                 {
                     DoDescMacro();
+                    return;
                 }
                 if (!MainClass.output.MatchMade && method.Equals("DoMacroList"))
                 {
                     DoMacroList();
+                    return;
                 }
                 if (!MainClass.output.MatchMade && method.Equals("DoDeleteMacro"))
                 {
                     DoDeleteMacro();
-                }
-                if (!MainClass.output.MatchMade && method.Equals("DoRunMacro"))
-                {
-                    DoRunMacro(false);
-                }
-                if (!MainClass.output.MatchMade && method.Equals("DoRunMacroTestMode"))
-                {
-                    DoRunMacro(true);
+                    return;
                 }
                 if (!MainClass.output.MatchMade && method.Equals("DoNoteSearch"))
                 {
                     DoNoteSearch();
+                    return;
+                }
+                if (!MainClass.output.MatchMade && method.Equals("DoRunMacro"))
+                {
+                    if (!MainClass.macro.IsRunning)
+                    {
+                        DoRunMacro(false);
+                    }
+                    else
+                    {
+                        DoRunMacro(MainClass.macro.DoTests);
+                    }
+                    return;
+                }
+                if (!MainClass.output.MatchMade && method.Equals("DoRunMacroTestMode"))
+                {
+                    if (!MainClass.macro.IsRunning)
+                    {
+                        DoRunMacro(true);
+                    }
+                    else
+                    {
+                        DoRunMacro(MainClass.macro.DoTests);
+                    }
+                    return;
                 }
             }
         }
@@ -286,15 +312,9 @@ namespace WorldWeaver.Parsers
 
             EnsureMacroDir(macroDir);
 
-            if (!testMode)
-            {
-                macroName = MainClass.userInput.Replace("_macro ", "");
-            }
-            else
-            {
-                macroName = MainClass.userInput.Replace("_macro! ", "");
-            }
-
+            // Handle both testing mode and non-testing mode
+            macroName = MainClass.userInput.Replace("_macro! ", "");
+            macroName = macroName.Replace("_macro ", "");
 
             if (!File.Exists($"{macroDir}/{macroName.FileSafe()}"))
             {
@@ -306,15 +326,7 @@ namespace WorldWeaver.Parsers
                 MainClass.testResults.Clear();
                 MainClass.macro.InitialMacroName = macroName;
                 MainClass.macro.IsRunning = true;
-            }
-
-            if (testMode)
-            {
-                MainClass.macro.DoTests = true;
-            }
-            else
-            {
-                MainClass.macro.DoTests = false;
+                MainClass.macro.DoTests = testMode;
             }
 
             var lines = File.ReadAllLines($"{macroDir}/{macroName}").ToList();
@@ -330,12 +342,11 @@ namespace WorldWeaver.Parsers
             if (macroName.Equals(MainClass.macro.InitialMacroName))
             {
                 MainClass.macro.IsRunning = false;
-            }
-
-            if (MainClass.testResults.Count > 0)
-            {
-                MainClass.output.OutputText = Tools.OutputProcessor.DisplayTestResults();
-                MainClass.output.MatchMade = true;
+                if (MainClass.testResults.Count > 0)
+                {
+                    MainClass.output.OutputText = Tools.OutputProcessor.DisplayTestResults();
+                    MainClass.output.MatchMade = true;
+                }
             }
         }
 

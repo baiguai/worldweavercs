@@ -1,0 +1,34 @@
+{room, key=npc-follow, name=NPC Follow Test
+    {enter_message
+        output={@
+You are in the NPC Follows room.
+        }
+    }
+
+    {look
+        {message
+            output={@
+You are in the NPC Follows room.
+            }
+        }
+    }
+
+    {navigation, tags=look|enter_message
+        {message
+            output={@
+You can go home, to the 'home room'.
+In the south wall you see a hallway.
+            }
+        }
+    }
+
+
+    {inject, logic=look.inj }
+    {inject, logic=home.inj }
+
+--------------------------------------------------------------------------------
+
+    {input, syntax=[tplt_syntax]((south))
+        {move, logic=hallway, tags=[player] }
+    }
+}

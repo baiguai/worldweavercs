@@ -1,0 +1,22 @@
+{global, key=global01, parent=root
+    {input, syntax=\b(title)\b
+        {action, logic=game_title, tags=key }
+    }
+
+    {input, syntax=\b(stats)\b, tags=!_test
+        {action, logic=[player]((stats)), tags=list, output=Stats: }
+
+        {logic, name=Global01_ArmedTest_ReturnsString
+            logic={@
+                ?[output] ~~ "Battle Ax"
+            }
+        }
+    }
+    {input, syntax=\b(inventory|inv)\b
+        {action, logic=[player]((inventory)), tags=list, output=Inventory: }
+    }
+
+    {input, syntax=\b(arm *)\b
+        {set, tags=arm }
+    }
+}
