@@ -1,0 +1,131 @@
+{room, key=convers, name=Conversation Room
+    {attrib, tags=topic, output=adventure }
+
+    {enter_message
+        output={@
+You are in a busy pub.
+        }
+    }
+
+    {look
+        {message
+            output={
+You are in a pub.\b
+
+<?[self]((topic)) = 'adventure'?>
+A woman approaches you.\b
+"Are you looking for adventure?"\b
+</?>
+
+<?[self]((topic)) = 'accepted'?>
+Yes! We're going to make a lot of money!!\b
+</?>
+
+<?[self]((topic)) = 'no'?>
+The woman sits at the bar drinking mead.\b
+</?>
+
+<?[self]((topic)) = 'accepted'?>
+The woman waits for you to join her on an adventure.\b
+</?>
+            }
+        }
+    }
+
+    {adv_no
+        {message
+            output={@
+"I'm very sorry to hear that."
+She parts and sits at the bar.
+            }
+        }
+    }
+
+    {still_no
+        {message
+            output={@
+The woman turns to you.
+"You're not interested, what do you want?"
+            }
+        }
+    }
+
+    {adv_yes, tags=!_test
+        {message
+            output={@
+"I'd hoped you would say yes.
+Are you interested in acquiring a vast amount of treasure?"
+            }
+        }
+
+        {logic
+            logic={@
+                ?[output] ~~ "hoped you would say yes"
+            }
+        }
+    }
+
+    {treas_yes, tags=!_test
+        {message
+            output={@
+"Let's make some money!"
+            }
+        }
+
+        {logic
+            logic={@
+                ?[output] ~~ "make some money"
+            }
+        }
+    }
+
+
+    {inject, logic=nav.inj }
+    {inject, logic=look.inj }
+    {inject, logic=home.inj }
+
+--------------------------------------------------------------------------------
+
+    {input, syntax=(?i)\b(no|nope|i\s*am\s*not)\b
+        {action, logic=adv_no, tags=type|room }
+        {set, logic=[self]((topic)), output=no }
+
+        {logic
+            logic={@
+                ?[self]((topic)) = 'adventure'
+            }
+        }
+    }
+
+    {input, syntax=(?i)\b(no|nope|i\s*am\s*not)\b
+        {action, logic=still_no, tags=type|room }
+
+        {logic
+            logic={@
+                ?[self]((topic)) = 'no'
+            }
+        }
+    }
+
+    {input, syntax=(?i)\b(yes|yep|i am)\b
+        {action, logic=adv_yes, tags=type|room }
+        {set, logic=[self]((topic)), output=accepted }
+
+        {logic
+            logic={@
+                ?[self]((topic)) = 'adventure'
+            }
+        }
+    }
+
+    {input, syntax=(?i)\b(yes|yep|i am)\b
+        {action, logic=treas_yes, tags=type|room }
+        {set, logic=[self]((topic)), output=good }
+
+        {logic
+            logic={@
+                ?[self]((topic)) = 'accepted'
+            }
+        }
+    }
+}

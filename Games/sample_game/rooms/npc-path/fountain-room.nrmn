@@ -1,0 +1,39 @@
+{room, key=fountain-room, name=Fountain Room
+    {enter_message
+        output={@
+You are in the fountain room.
+        }
+    }
+
+    {look
+        {message
+            output={@
+You are in the fountain room.
+            }
+        }
+    }
+
+    {navigation, tags=look|enter_message
+        {message
+            output={@
+You can go home, to the 'home room'.
+North of where you are leads back to the central room.
+South of where you are is another room.
+            }
+        }
+    }
+
+
+    {inject, logic=look.inj }
+    {inject, logic=home.inj }
+
+--------------------------------------------------------------------------------
+
+    {input, syntax=[tplt_syntax]((north))
+        {move, logic=npc-path, tags=[player] }
+    }
+
+    {input, syntax=[tplt_syntax]((south))
+        {move, logic=statue-room, tags=[player] }
+    }
+}

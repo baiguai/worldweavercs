@@ -1,0 +1,108 @@
+{room, key=old_oak_inn_upstairs, name=Upstairs
+    {attrib, tags=msg_203
+        output={@
+You try the door to room 203. It actually opens. You enter.
+        }
+    }
+    {attrib, tags=msg_205
+        output={@
+You try the door to room 205. It actually opens. You enter.
+        }
+    }
+
+    {enter_message
+        output={@
+You are on the second floor of the Old Oak Inn.
+A hall stretches out before you.
+On either side of the hall are three numbered doors - from 201-206.
+An ornate candelabra sits on a small table at the end of the hall and
+is the only source of light.
+
+A thin layer of fog has seeped into the hotel and has settled along the floor.
+        }
+    }
+
+    {look
+        {message
+            output={@
+You look around
+A hall stretches out before you.
+On either side of the hall are three numbered doors - from 201-206.
+
+A thin layer of fog has seeped into the hotel and has settled along the floor.
+            }
+        }
+    }
+
+
+    {enter_201
+        {message
+            output={@
+You try to enter room 201 but it is locked.
+            }
+        }
+    }
+    {enter_202
+        {message
+            output={@
+You try to enter room 202 but it is locked.
+            }
+        }
+    }
+    {enter_204
+        {message
+            output={@
+You try to enter room 204 but it is locked.
+            }
+        }
+    }
+    {enter_206
+        {message
+            output={@
+You try to enter room 206 but it is locked.
+            }
+        }
+    }
+
+--------------------------------------------------------------------------------
+
+    {navigation, tags=look
+        {message
+            output={@
+At the end of the hall you see a set of stairs that go down to the main floor.
+            }
+        }
+    }
+
+--------------------------------------------------------------------------------
+
+    {inject, logic=Injection/look.inj }
+
+    {input, syntax=[tplt_syntax]((ooi_in_201))
+        {action, logic=enter_201, tags=type }
+    }
+
+    {input, syntax=[tplt_syntax]((ooi_in_202))
+        {action, logic=enter_202, tags=type }
+    }
+
+    {input, syntax=[tplt_syntax]((ooi_in_203))
+        {move, logic=oak_inn_203, tags=[player], output=[self]((msg_203)) }
+    }
+
+    {input, syntax=[tplt_syntax]((ooi_in_204))
+        {action, logic=enter_204, tags=type }
+    }
+    
+    {input, syntax=[tplt_syntax]((ooi_in_205))
+        {move, logic=oak_inn_205, tags=[player], output=[self]((msg_205)) }
+    }
+
+    {input, syntax=[tplt_syntax]((ooi_in_206))
+        {action, logic=enter_206, tags=type }
+    }
+
+    {input, syntax=[tplt_syntax]((down_stairs))
+        {move, logic=old_oak_inn, tags=[player], output=You descend the stairs. }
+    }
+}

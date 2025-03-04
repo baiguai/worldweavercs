@@ -1,0 +1,14 @@
+﻿{game
+    name=Sample Game
+    parent=root
+
+    {attribute, output=admin, tags=adminpass }
+    {attribute, output=false, tags=game_started }
+
+
+    {key=die_message
+        output={@
+You have died.
+        }
+    }
+}

@@ -1,0 +1,43 @@
+{room, key=hallway, name=Hallway
+    {enter_message
+        output={@
+You step into the hallway.
+        }
+    }
+
+    {look
+        {message
+            output={@
+You are in a hallway.
+            }
+        }
+    }
+
+    {navigation, tags=look|enter_message
+        {message
+            output={@
+You can go home, to the 'home room'.
+The hallway leads north and south.
+            }
+        }
+    }
+
+
+    {inject, logic=look.inj }
+    {inject, logic=home.inj }
+
+--------------------------------------------------------------------------------
+
+    {input, syntax=[tplt_syntax]((north))
+        {move, logic=npc-follow, tags=[player]
+            output={@
+
+You exit the north end of the hallway.
+            }
+        }
+    }
+
+    {input, syntax=[tplt_syntax]((south))
+        {move, logic=smallroom, tags=[player], output=You exit the south end of the hall. }
+    }
+}

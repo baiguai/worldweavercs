@@ -1,0 +1,19 @@
+{room, key=fight, name=Fight Test Room
+    {enter_message
+        output={@
+Welcome to the fighting simulator.
+        }
+    }
+
+    {look
+        {message
+            output={@
+You are in a strange looking arena.
+            }
+        }
+    }
+
+    {inject, logic=nav.inj }
+    {inject, logic=look.inj }
+    {inject, logic=home.inj }
+}
