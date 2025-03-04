@@ -28,8 +28,8 @@ namespace WorldWeaver.Parsers.Elements
                 return;
             }
 
-            var lgcParser = new Parsers.Elements.Logic();
-            lgcParser.ParseLogic(currentElement);
+            // var lgcParser = new Parsers.Elements.Logic();
+            // lgcParser.ParseLogic(currentElement);
 
             if (!MainClass.output.FailedLogic)
             {
