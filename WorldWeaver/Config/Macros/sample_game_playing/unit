@@ -1,0 +1,27 @@
+_macro armingfail
+home room
+_macro arming
+inv
+home room
+_macro tests
+home room
+conversation room
+l
+yes
+yes
+home room
+_macro npcfollows
+home room
+output logic test 01
+open box
+l
+home room
+taking and putting
+take key
+put key in box
+x box
+home room
+traveling
+s
+l
+home room

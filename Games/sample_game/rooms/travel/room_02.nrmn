@@ -13,6 +13,12 @@ this is a room for testing traveling.
 you are in room 02.
             }
         }
+
+        {logic, name=TravelRoom02_LookTest, tags=!_test
+            logic={@
+                ?[output] ~~ "you are in room 02"
+            }
+        }
     }
 
     {navigation, tags=look|enter_message

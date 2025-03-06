@@ -3,10 +3,10 @@
         {action, logic=game_title, tags=key }
     }
 
-    {input, syntax=\b(stats)\b, tags=!_test
+    {input, syntax=\b(stats)\b
         {action, logic=[player]((stats)), tags=list, output=Stats: }
 
-        {logic, name=Global01_ArmedTest_ReturnsString
+        {logic, name=Global01_ArmedTest, tags=!_test
             logic={@
                 ?[output] ~~ "Battle Ax"
             }

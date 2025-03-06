@@ -26,14 +26,14 @@ You see a battle ax.
         }
     }
 
-    {examine_ax, tags=!_test
+    {examine_ax
         {message
             output={@
 You see a battle ax.
             }
         }
 
-        {logic, name=BattleAx01_LocationTest_OutputString
+        {logic, name=BattleAx01_LocationTest, tags=!_test
             logic={@
                 ?[self]parent = [player]
             }

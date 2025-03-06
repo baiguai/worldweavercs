@@ -10,20 +10,20 @@ _macro! <test name>
         }
     }
 
-    {look, tags=!_test
+    {look
         {message
             output={@
 You are in the tests room.
             }
         }
 
-        {logic, name=TestsRoom_OutputTest_ReturnsString
+        {logic, name=TestsRoom_OutputTest, tags=!_test
             logic={@
                 ?[output] ~~ "To use this test, you need to be in the home room"
             }
         }
 
-        {logic, name=TestsRoom_KeyLocation_ReturnsBoolean
+        {logic, name=TestsRoom_KeyLocation_Boolean, tags=!_test
             logic={@
                 ?(tests_key)parent = [room]key
             }

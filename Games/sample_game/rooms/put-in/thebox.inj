@@ -21,6 +21,12 @@ You see a box.
 You examine the box.
             }
         }
+
+        {logic, name=PutInTest_KeyInBox, tags=!_test
+            logic={@
+                ?[output] ~~ "You see a plain key"
+            }
+        }
     }
 
     {inject, logic=look.inj }

@@ -36,6 +36,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ContentWithTargetPath Include="Config\Macros\sample_game_playing\**">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <TargetPath>%(RecursiveDir)\Config\Macros\sample_game_playing\%(Filename)%(Extension)</TargetPath>
+    </ContentWithTargetPath>
+  </ItemGroup>
+
+  <ItemGroup>
     <ContentWithTargetPath Include="Data\**">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <TargetPath>%(RecursiveDir)\Data\%(Filename)%(Extension)</TargetPath>

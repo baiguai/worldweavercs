@@ -50,6 +50,12 @@ It is not open.
 </?>
                 }
             }
+
+            {logic, name=OutputLogicTest01_IsOpenOutput, tags=!_test
+                logic={@
+                    ?[output] ~~ "It is open"
+                }
+            }
         }
 
 --------------------------------------------------------------------------------

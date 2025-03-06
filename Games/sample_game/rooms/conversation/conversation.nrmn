@@ -50,7 +50,7 @@ The woman turns to you.
         }
     }
 
-    {adv_yes, tags=!_test
+    {adv_yes
         {message
             output={@
 "I'd hoped you would say yes.
@@ -58,21 +58,21 @@ Are you interested in acquiring a vast amount of treasure?"
             }
         }
 
-        {logic
+        {logic, name=ConversationRoom_AdventureYes, tags=!_test
             logic={@
                 ?[output] ~~ "hoped you would say yes"
             }
         }
     }
 
-    {treas_yes, tags=!_test
+    {treas_yes
         {message
             output={@
 "Let's make some money!"
             }
         }
 
-        {logic
+        {logic, name=ConversationRoom_TreasureYes, tags=!_test
             logic={@
                 ?[output] ~~ "make some money"
             }

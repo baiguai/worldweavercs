@@ -11,6 +11,12 @@ You step into the hallway.
 You are in a hallway.
             }
         }
+
+        {logic, name=NpcFollows_YouSeeAThief, tags=!_test
+            logic={@
+                ?[output] ~~ "You see a thief"
+            }
+        }
     }
 
     {navigation, tags=look|enter_message
