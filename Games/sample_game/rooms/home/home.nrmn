@@ -1,7 +1,24 @@
 {room, key=home, name=Testing Home Room
+
+    /*
+        Notes test!
+        You SHOULDN'T see the following enter_message.
+
+        {object, name=Notes Test
+            {enter_message
+                output={@
+If you see this... there's a problem.
+                }
+            }
+        }
+    */
+
+
+
     {enter_message
         output={@
 Welcome to the WorldWeaver Testing Game.
+{inject, logic=./instruct.inj }
         }
 
         {set, logic=[game]((game_started)), output=true }
@@ -11,6 +28,7 @@ Welcome to the WorldWeaver Testing Game.
         {message
             output={@
 You are in the testing room.
+{inject, logic=./instruct.inj }
             }
         }
     }
@@ -28,7 +46,8 @@ Go to Tests Room.
 Go to Output Logic Test 01.
 Go to Dev Note.
 Go to Conversation Room.
-Go to the Die room.
+Go to Die room.
+Go to Spawn Room
             }
         }
     }
@@ -66,22 +85,22 @@ Go to the Die room.
     }
 
     {input, syntax=(?i)output\slogic\stest\s0?1
-
         {move, logic=outputlogic_01, tags=[player], output=You have decided to test output logic. }
     }
 
     {input, syntax=(?i)dev\snote
-
         {move, logic=devnote, tags=[player], output=You have decided to test dev notes. }
     }
 
     {input, syntax=(?i)conversation\sroom
-
         {move, logic=convers, tags=[player], output=You have decided to test conversations. }
     }
 
     {input, syntax=(?i)die\sroom
-
         {move, logic=die_test, tags=[player], output=You have decided to test dying. }
+    }
+
+    {input, syntax=(?i)spawn\sroom
+        {move, logic=spawn_room, tags=[player], output=You have decided to test spawning. }
     }
 }

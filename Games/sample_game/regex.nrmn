@@ -45,6 +45,7 @@
     Enemies
         {attrib, tags=attack_skeleton, output=(?i)\b(?:attack\s+the\s+skeleton|attack\s+skeleton|!\s*the\s+skeleton|!\s*skeleton)\b }
         {attrib, tags=attack_rat, output=(?i)^(?:! the rat|! rat|attack the rat|attack rat)$ }
+        {attrib, tags=attack_beholder, output=(?i)^(?:! the beholder|! beholder|attack the beholder|attack beholder)$ }
         {attrib, tags=attack_thief, output=(?i)^(?:! the thief|! thief|attack the thief|attack theif)$ }
 
     Objects
@@ -61,4 +62,5 @@
 
     Fight
         {attrib, tags=rat, output=(?i)\b(?:a|the)?\s*rat\b }
+        {attrib, tags=beholder, output=(?i)\b(?:a|the)?\s*beholder\b }
 }

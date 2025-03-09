@@ -1,0 +1,104 @@
+{npc, key=beholder_spawn, name=Beholder, syntax=[tplt_syntax]((beholder)), tags=attackable
+    {attrib, output=[room], tags=parent }
+
+    {attrib, name=Life, output=[rand:15|30], tags=stats|life }
+    {attrib, name=Armor Rating, output=[rand:4|10], tags=stats|armor }
+    {attrib, name=Strength, output=[rand:8|18], tags=stats }
+    {attrib, name=Intelligence, output=[rand:8|18], tags=stats }
+    {attrib, name=Cunning, output=[rand:8|18], tags=stats }
+    {attrib, name=Gold, output=[rand:20|40], tags=stats }
+    {attrib, name=Armed Weapon, output=[self]((eyestalk)), tags=armed|stats|name }
+    {attrib, output=the beholder, tags=title }
+
+
+    ---- weapons ----
+    ----------------------------------------------------------------------------
+    {object, name=Eye stalk, tags=inventory|weapon
+        {attribute, name=Damage, logic=[rand:4|12], tags=damage }
+        {attribute, output=a claw, tags=title }
+    }
+
+
+    ---- FIGHTING MESSAGES ----
+    ----------------------------------------------------------------------------
+    {flee
+        output={@
+
+You run away from the beholder.
+        }
+    }
+
+    {hit
+        output={@
+
+You have been attacked by the beholder. It has caused your life to be reduced by [damage].
+        }
+    }
+
+    {miss
+        output={@
+
+The beholder attempts to attack you but fails.
+        }
+    }
+
+    {damage_message
+        output={@
+
+You have attacked the beholder. Its life has been reduced by [damage].
+        }
+    }
+
+    {miss_message
+        output={@
+
+You attack the beholder. But your attack failed.
+        }
+    }
+
+    {kill
+        {message
+            output={@
+
+You have killed the beholder.
+            }
+        }
+
+        {act
+            {set, logic=[player]((experience)), output=++ }
+        }
+    }
+    ---------------------------------------------------------------------------
+
+    {enter_message
+        {message
+            output={
+You see a large beholder with faintly glowing red eyes.\b
+            }
+        }
+
+        {attack
+            {attrib, output=[player], tags=target }
+        }
+    }
+
+    {look
+        {message
+            output={
+                You see a beholder.\b
+            }
+        }
+    }
+
+    {input, syntax=[tplt_syntax]((attack_beholder))
+        {attack
+            {attrib, output=[self], tags=target }
+        }
+    }
+
+    {input, syntax=[tplt_syntax]((flee_beholder))
+        {flee
+            {attrib, output=[self], tags=target }
+        }
+    }
+}
