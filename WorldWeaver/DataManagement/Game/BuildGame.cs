@@ -19,6 +19,7 @@ namespace WorldWeaver.DataManagement.Game
         public int depth = 0;
         public List<Classes.Element> elementsToInsert = new List<Classes.Element>();
         public int commitSize = 500;
+        public bool inComments = false;
 
         public bool CreateDatabase(string game_key)
         {
@@ -839,6 +840,23 @@ PRAGMA foreign_keys = on;
         {
             if (dataRow.Equals(""))
             {
+                return false;
+            }
+
+            if (dataRow.Trim().Equals("*/"))
+            {
+                inComments = false;
+                return false;
+            }
+
+            if (inComments)
+            {
+                return false;
+            }
+
+            if (dataRow.Trim().Equals("/*"))
+            {
+                inComments = true;
                 return false;
             }
 

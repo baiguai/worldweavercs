@@ -1,0 +1,41 @@
+{room, key=spawn_room, name=Spawn Room
+    {enter_message
+        output={@
+You are in the spawn testing room.
+You see a red button on the wall.
+        }
+    }
+
+    {look
+        {message
+            output={@
+You look around. There is a red button on the wall.
+            }
+        }
+    }
+
+    {inject, logic=nav.inj }
+    {inject, logic=look.inj }
+    {inject, logic=home.inj }
+
+--------------------------------------------------------------------------------
+    Since the button's sole job is to be pushed, it really
+    doesn't have to be a separate object.
+
+    {input, syntax=(?i)\bpush\s+(?:the\s+)?(?:red\s+)?button\b
+        {action, logic=beholder_spawn, tags=spawn, repeat=3, output=You have spawned a beholder. }
+    }
+
+
+    /*
+        Multi-line comment test. The following element should NOT show up in the database.
+
+        {object, key=multiline_comment_test, name=Comment Test
+            {enter_message
+                output={@
+The multi-line comment test has failed.
+                }
+            }
+        }
+    */
+}
