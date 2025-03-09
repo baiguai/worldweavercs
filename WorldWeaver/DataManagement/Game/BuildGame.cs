@@ -865,7 +865,7 @@ PRAGMA foreign_keys = on;
                 return false;
             }
 
-            if (dataRow.Length > 1 && dataRow.Substring(0, 2).Equals("//"))
+            if (dataRow.Trim().Length > 1 && dataRow.Trim().Substring(0, 2).Equals("//"))
             {
                 return false;
             }
