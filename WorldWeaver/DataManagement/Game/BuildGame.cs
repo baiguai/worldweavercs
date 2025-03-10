@@ -873,7 +873,7 @@ PRAGMA foreign_keys = on;
             return true;
         }
 
-        private bool AddElement(string connectionString, Classes.Element element)
+        public bool AddElement(string connectionString, Classes.Element element)
         {
             var success = false;
 
@@ -904,7 +904,7 @@ PRAGMA foreign_keys = on;
             return success;
         }
 
-        private bool SaveElements(string connectionString)
+        public bool SaveElements(string connectionString)
         {
             var success = false;
 

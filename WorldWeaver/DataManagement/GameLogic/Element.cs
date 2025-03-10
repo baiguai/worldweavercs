@@ -1098,6 +1098,7 @@ WHERE 1=1
 
         internal string SpawnTemplateElement(Classes.Element currentElement, string templateKey, string tags)
         {
+            string connectionString = Connection.GetConnection();
             DataManagement.Game.BuildGame gameDb = new DataManagement.Game.BuildGame();
             DataManagement.GameLogic.Element elemDb = new DataManagement.GameLogic.Element();
             var key = Guid.NewGuid().ToString();
@@ -1119,26 +1120,35 @@ WHERE 1=1
                 tmpltElement.Tags = tags;
             }
 
-            gameDb.SaveElement(tmpltElement);
+            gameDb.elementsToInsert.Clear();
+            gameDb.AddElement(connectionString, tmpltElement);
 
             foreach (var child in tmpltElement.Children)
             {
-                SpawnChildElement(tmpltElement, child);
+                SpawnChildElement(gameDb, connectionString, tmpltElement, child);
             }
+
+            gameDb.SaveElements(connectionString);
 
             return key;
         }
 
-        internal void SpawnChildElement(Classes.Element parentElement, Classes.Element childElement)
+        internal void SpawnChildElement(DataManagement.Game.BuildGame gameDb, string connectionString, Classes.Element parentElement, Classes.Element childElement)
         {
-            DataManagement.Game.BuildGame gameDb = new DataManagement.Game.BuildGame();
+            if (!childElement.ElementType.Equals("attribute", StringComparison.OrdinalIgnoreCase))
+            {
+                var elemDb = new DataManagement.GameLogic.Element();
+                childElement = elemDb.GetElementByKey(childElement.ElementKey);
+            }
+
             childElement.ParentKey = parentElement.ElementKey;
             childElement.ElementKey = Guid.NewGuid().ToString();
-            gameDb.SaveElement(childElement);
+
+            gameDb.AddElement(connectionString, childElement);
 
             foreach (var child in childElement.Children)
             {
-                SpawnChildElement(childElement, child);
+                SpawnChildElement(gameDb, connectionString, childElement, child);
             }
         }
 
