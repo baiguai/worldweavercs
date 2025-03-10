@@ -533,7 +533,7 @@ PRAGMA foreign_keys = on;
                                 element.ElementKey = Guid.NewGuid().ToString();
                             }
 
-                            success = LoadElement(connectionString, element);
+                            success = AddElement(connectionString, element);
                             MainClass.logger.WriteToLog($"Returning row: {currentRow}", Logger.LogTypes.BuildGame);
                             return currentRow;
                         }
@@ -668,7 +668,7 @@ PRAGMA foreign_keys = on;
                                 element.ElementKey = Guid.NewGuid().ToString();
                             }
 
-                            success = LoadElement(connectionString, element);
+                            success = AddElement(connectionString, element);
                             element = null;
                         }
                         break;
@@ -677,7 +677,7 @@ PRAGMA foreign_keys = on;
 
             if (element != null) // @place
             {
-                success = LoadElement(connectionString, element);
+                success = AddElement(connectionString, element);
             }
 
             SaveElements(connectionString);
@@ -873,14 +873,7 @@ PRAGMA foreign_keys = on;
             return true;
         }
 
-        private string PerformLogic(string logic)
-        {
-            var output = logic;
-
-            return output;
-        }
-
-        private bool LoadElement(string connectionString, Classes.Element element)
+        private bool AddElement(string connectionString, Classes.Element element)
         {
             var success = false;
 
