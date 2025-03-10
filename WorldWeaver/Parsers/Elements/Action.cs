@@ -402,7 +402,12 @@ namespace WorldWeaver.Parsers.Elements
             var spawn = new Parsers.Elements.Spawn();
             if (!currentElement.Logic.Equals(""))
             {
-                spawn.SpawnByTemplate(currentElement);
+                var newKey = spawn.SpawnByTemplate(currentElement);
+                if (!newKey.Equals(""))
+                {
+                    MainClass.output.OutputText = currentElement.Output;
+                    MainClass.output.MatchMade = true;
+                }
             }
             else
             { }
