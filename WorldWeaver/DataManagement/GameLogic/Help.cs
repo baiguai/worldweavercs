@@ -39,6 +39,7 @@ namespace WorldWeaver.DataManagement.GameLogic
             if (inputString.Trim().Equals(""))
             {
                 inputString = "helphome";
+                return SearchHelpTopics(connectionString, inputString);
             }
 
             inputString = inputString.Replace("*", "%");

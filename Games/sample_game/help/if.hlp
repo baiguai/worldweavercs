@@ -1,3 +1,20 @@
 title: IF
 tags: interactive fiction|if
-Interactive Fiction is a text-based style game.
+Interactive Fiction (IF) is a text-based style game - similar to the old skool 'choose your own adventure' books.
+Except with IF you can interact with the world around you. You can even fight enemies, arm yourself with weapons,
+pick up and put items inside other items or simply drop them.
+
+NAVIGATION
+Traveling is typically called out. For the most part you will be using compass navigation, however situations like
+stairs may use terms like: 'go up stairs' or 'go down stairs'.
+
+TAKING ITEMS
+If you want to pick up something, you can use: 'take (item)'.
+
+DROPPING ITEMS
+To drop an item use 'drop (item)'.
+To put an item into another item use 'put (item) in (another item)'.
+
+FIGHTING
+Fighting an enemy takes multiple rounds of game play. To make this less painful you can use the following syntax
+to attack an enemy: '! (enemy)'.
