@@ -10,6 +10,10 @@ namespace WorldWeaver.DataManagement.GameLogic
 {
     public class Element
     {
+        public List<Classes.Element> elementsToUpdate = new List<Classes.Element>();
+        public string previousFieldName = "";
+        public int commitSize = 50;
+
         public List<Classes.Element> GetElementsByType(string type)
         {
             string connectionString = Connection.GetConnection(MainClass.gameDb);
@@ -1023,40 +1027,13 @@ WHERE 1=1
         {
             var elems = GetRandOutputElements();
             string connectionString = Connection.GetConnection();
-            var batchSize = 500;
-            var curSize = 0;
-            var updateQuery = "";
-
-            var primContainers = AppSettingFunctions.GetRootArray("Config/PrimaryContainers.json");
 
             foreach (var elem in elems)
             {
                 elem.Output = elem.Output.RandomValue(elem);
-
-                updateQuery += $@"
-UPDATE
-element
-SET
-Output = '{elem.Output}'
-WHERE 1=1
-AND ElementKey = '{elem.ElementKey}'
-;
-                ";
-
-                curSize++;
-
-                if (curSize >= batchSize)
-                {
-                    curSize = 0;
-                    // updateQuery = "BEGIN " + updateQuery + " END;";
-                    ApplyRandOutputElements(connectionString, updateQuery);
-                    updateQuery = "";
-                }
+                AddUpdateElement(connectionString, elem, "Output");
             }
-
-            ApplyRandOutputElements(connectionString, updateQuery);
-
-            Tools.CacheManager.RefreshCache();
+            UpdateElements(connectionString, "Output");
         }
 
         internal void ApplyRandOutputElements(string connectionString, string sql)
@@ -1081,6 +1058,7 @@ AND ElementKey = '{elem.ElementKey}'
         internal void SetAttribReference()
         {
             var elems = GetAttribWithReference();
+            string connectionString = Connection.GetConnection();
 
             foreach (var elem in elems)
             {
@@ -1097,11 +1075,12 @@ AND ElementKey = '{elem.ElementKey}'
                         if (elemChild.Tags.TagsContain(elemAttr))
                         {
                             elem.Output = elemChild.Output;
-                            SetElementField(elem.ElementKey, "Output", elemChild.Output, true);
+                            AddUpdateElement(connectionString, elemChild, "Output");
                         }
                     }
                 }
             }
+            UpdateElements(connectionString, "Output");
         }
 
         internal void SetRandNameElements()
@@ -1109,36 +1088,12 @@ AND ElementKey = '{elem.ElementKey}'
             var elems = GetRandNameElements();
             string connectionString = Connection.GetConnection();
 
-            using (SqliteConnection connection = new SqliteConnection(connectionString))
+            foreach (var elem in elems)
             {
-                connection.Open();
-
-                foreach (var elem in elems)
-                {
-                    elem.Output = elem.Name.RandomSplitValue();
-
-                    var updateQuery = $@"
-UPDATE
-    element
-SET
-    Name = '{elem.Name}'
-WHERE 1=1
-    AND ElementKey = '{elem.ElementKey}'
-;
-                    ";
-
-                    using (SqliteCommand command = new SqliteCommand(updateQuery, connection))
-                    {
-                        command.ExecuteNonQuery();
-
-                        command.Dispose();
-                    }
-                }
-
-                connection.Close();
-                connection.Dispose();
-                Tools.CacheManager.RefreshCache();
+                elem.Name = elem.Name.RandomSplitValue();
+                AddUpdateElement(connectionString, elem, "Name");
             }
+            UpdateElements(connectionString, "Name");
         }
 
         internal string SpawnTemplateElement(Classes.Element currentElement, string templateKey, string tags)
@@ -1433,6 +1388,111 @@ WHERE
             }
 
             return srchOutput;
+        }
+
+
+
+        private bool UpdateElements(string connectionString, string fieldName)
+        {
+            if (elementsToUpdate == null || elementsToUpdate.Count < 1)
+            {
+                return true;
+            }
+
+            using (SqliteConnection connection = new SqliteConnection(connectionString))
+            {
+                connection.Open();
+                var caseItms = "";
+                var whereItms = "";
+                var newValue = "";
+
+                if (elementsToUpdate == null || elementsToUpdate.Count < 1)
+                {
+                    return true;
+                }
+
+                foreach (var e in elementsToUpdate)
+                {
+                    newValue = GetElementFieldValue(e, fieldName);
+                    caseItms += $"   WHEN ElementKey = '{e.ElementKey}' THEN '{newValue}'{Environment.NewLine}";
+                    if (!whereItms.Equals(""))
+                    {
+                        whereItms += ", ";
+                    }
+                    whereItms += $"'{e.ElementKey}'";
+
+                }
+
+                var createDbQuery = $@"
+UPDATE element
+SET {fieldName} =
+CASE
+    {caseItms}
+    ELSE {fieldName}
+END
+WHERE
+    ElementKey IN ({whereItms})
+;
+";
+
+                try
+                {
+                    using (SqliteCommand command = new SqliteCommand(createDbQuery, connection))
+                    {
+                        command.ExecuteNonQuery();
+                        command.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    Console.WriteLine(createDbQuery);
+                    throw;
+                }
+
+                elementsToUpdate.Clear();
+                connection.Close();
+                connection.Dispose();
+                Tools.CacheManager.RefreshCache();
+                return true;
+            }
+        }
+
+        private string GetElementFieldValue(Classes.Element e, string fieldName)
+        {
+            switch (fieldName)
+            {
+                case "Name":
+                    return e.Name;
+
+                case "Output":
+                    return e.Output;
+
+                default:
+                    return "";
+            }
+        }
+
+        private bool AddUpdateElement(string connectionString, Classes.Element element, string fieldName)
+        {
+            var success = false;
+
+            if (!fieldName.Equals(previousFieldName))
+            {
+                UpdateElements(connectionString, previousFieldName);
+            }
+
+            previousFieldName = fieldName;
+
+            if (elementsToUpdate.Count() > commitSize)
+            {
+                success = UpdateElements(connectionString, fieldName);
+            }
+            else
+            {
+                elementsToUpdate.Add(element);
+            }
+
+            return success;
         }
     }
 }
