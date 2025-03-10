@@ -25,17 +25,4 @@ You look around. There is a red button on the wall.
     {input, syntax=(?i)\bpush\s+(?:the\s+)?(?:red\s+)?button\b
         {action, logic=beholder_spawn, tags=spawn, repeat=3, output=You have spawned a beholder. }
     }
-
-
-    /*
-        Multi-line comment test. The following element should NOT show up in the database.
-
-        {object, key=multiline_comment_test, name=Comment Test
-            {enter_message
-                output={@
-The multi-line comment test has failed.
-                }
-            }
-        }
-    */
 }
