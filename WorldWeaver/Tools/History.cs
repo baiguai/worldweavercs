@@ -52,7 +52,16 @@ namespace WorldWeaver.Tools
             }
             catch (Exception)
             {
-                return "";
+                DataManagement.GameLogic.Element elemDb = new DataManagement.GameLogic.Element();
+                var attribs = elemDb.GetElementsByTag("!_error");
+                if (attribs == null || attribs.Count < 1)
+                {
+                    return "";
+                }
+                else
+                {
+                    return attribs.First().Output;
+                }
             }
 
             return histOutput;
