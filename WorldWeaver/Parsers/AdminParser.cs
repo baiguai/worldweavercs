@@ -1,7 +1,4 @@
-﻿using System;
-using System.Reflection;
-using WorldWeaver.Tools;
-using TextCopy;
+﻿using WorldWeaver.Tools;
 
 namespace WorldWeaver.Parsers
 {

@@ -340,8 +340,6 @@
 /home/baiguai/documents/development/csharp/worldweaver/WorldWeaver/bin/Debug/net8.0/Config/ActionLevelOrder.json
 /home/baiguai/documents/development/csharp/worldweaver/WorldWeaver/bin/Debug/net8.0/Config/ResetFailedTypes.json
 /home/baiguai/documents/development/csharp/worldweaver/WorldWeaver/bin/Debug/net8.0/Snippets/room.snp
-/home/baiguai/documents/development/csharp/worldweaver/WorldWeaver/bin/Debug/net8.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll
-/home/baiguai/documents/development/csharp/worldweaver/WorldWeaver/bin/Debug/net8.0/TextCopy.dll
 /home/baiguai/documents/development/csharp/worldweaver/WorldWeaver/bin/Debug/net8.0/Snippets/object.snp
 /home/baiguai/documents/development/csharp/worldweaver/WorldWeaver/bin/Debug/net8.0/DarkWorld/Help/dw-general.html
 /home/baiguai/documents/development/csharp/worldweaver/WorldWeaver/bin/Debug/net8.0/DarkWorld/dw-general.html_backup/Help/dw-general.20240809065028198.html
@@ -676,3 +674,9 @@
 /home/baiguai/documents/development/csharp/worldweaver/WorldWeaver/bin/Debug/net8.0/AdminHelp.html_backup/Help/Admin/AdminHelp.20250309085518438.html
 /home/baiguai/documents/development/csharp/worldweaver/WorldWeaver/bin/Debug/net8.0/Admin/AdminHelp.html_backup/Help/AdminHelp.20250309085852025.html
 /home/baiguai/documents/development/csharp/worldweaver/WorldWeaver/bin/Debug/net8.0/AdminHelp.html_backup/Help/Admin/AdminHelp.20250309085852025.html
+/home/baiguai/documents/development/csharp/worldweaver/WorldWeaver/bin/Debug/net8.0/Admin/AdminHelp.html_backup/Help/AdminHelp.20250310093048426.html
+/home/baiguai/documents/development/csharp/worldweaver/WorldWeaver/bin/Debug/net8.0/Admin/AdminHelp.html_backup/Help/AdminHelp.20250310093734098.html
+/home/baiguai/documents/development/csharp/worldweaver/WorldWeaver/bin/Debug/net8.0/Admin/AdminHelp.html_backup/Help/AdminHelp.20250310093823877.html
+/home/baiguai/documents/development/csharp/worldweaver/WorldWeaver/bin/Debug/net8.0/AdminHelp.html_backup/Help/Admin/AdminHelp.20250310093048426.html
+/home/baiguai/documents/development/csharp/worldweaver/WorldWeaver/bin/Debug/net8.0/AdminHelp.html_backup/Help/Admin/AdminHelp.20250310093734098.html
+/home/baiguai/documents/development/csharp/worldweaver/WorldWeaver/bin/Debug/net8.0/AdminHelp.html_backup/Help/Admin/AdminHelp.20250310093823877.html
