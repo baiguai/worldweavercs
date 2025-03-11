@@ -2,8 +2,9 @@
     name=Sample Game
     parent=root
 
-    {attribute, output=admin, tags=adminpass }
-    {attribute, output=false, tags=game_started }
+    {attrib, output=admin, tags=!_adminpass }
+    {attrib, output=look, tags=!_error }
+    {attrib, output=false, tags=game_started }
 
 
     {key=die_message

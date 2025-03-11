@@ -127,8 +127,8 @@ namespace WorldWeaver.Parsers
         {
             var elemDb = new DataManagement.GameLogic.Element();
 
-            var pwdElem = elemDb.GetElementChildByTag(GameCache.Game.ElementKey, "adminpass");
-            if (pwdElem.ElementKey.Equals(""))
+            var pwdElem = elemDb.GetElementChildByTag(GameCache.Game.ElementKey, "!_adminpass");
+            if (pwdElem == null || pwdElem.ElementKey.Equals(""))
             {
                 return;
             }
@@ -137,7 +137,7 @@ namespace WorldWeaver.Parsers
             {
                 MainClass.adminEnabled = true;
                 MainClass.output.MatchMade = true;
-                MainClass.output.OutputText = "Admin mode enabled. Use _list to view the possible admin commands. Or consult the Admin Help System.";
+                MainClass.output.OutputText = "Admin mode enabled. Use _adminls to view the possible admin commands. Or consult the Admin Help System.";
             }
         }
 

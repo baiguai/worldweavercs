@@ -31,7 +31,7 @@
             "during_game" : "true"
         },
         {
-            "pattern" : "^:h(\\s\\d+)?$",
+            "pattern" : "\\^(\\s*\\d*)?",
             "method" : "DoHistory",
             "during_game" : "true"
         },

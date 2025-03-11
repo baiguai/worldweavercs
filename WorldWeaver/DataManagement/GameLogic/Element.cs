@@ -563,10 +563,18 @@ ORDER BY
                 ParamValue = parent_key
             });
 
+            Classes.Element? tagElements = null;
 
-            var output = GetElements(connectionString, selectQuery, parms).Where(c => c.Tags.TagsContain(tag)).First();
+            try
+            {
+                tagElements = GetElements(connectionString, selectQuery, parms).Where(c => c.Tags.TagsContain(tag)).First();
+            }
+            catch (Exception)
+            {
+                return tagElements;
+            }
 
-            return output;
+            return tagElements;
         }
 
         public string GetElementField(string element_key, string element_field)

@@ -11,7 +11,6 @@ namespace WorldWeaver.Parsers
     {
         public bool playingGame = false;
         public string gameKey = "";
-        public CommandHistoryManager cmdHist = new CommandHistoryManager();
 
         public void ParseInput()
         {
@@ -106,18 +105,37 @@ namespace WorldWeaver.Parsers
                     {
                         DoTime();
                     }
+
+                    if (!MainClass.output.MatchMade && method.Equals("DoHistory"))
+                    {
+                        DoHistory();
+                    }
                 }
             }
             else
             {
                 if (DataManagement.GameLogic.Game.IsGameRunning())
                 {
-                    MainClass.userInput = cmdHist.HandleInput(MainClass.userInput);
                     DoGameInput();
                 }
             }
 
             return;
+        }
+
+        private void DoHistory()
+        {
+            if (MainClass.userInput.Trim().Equals("^"))
+            {
+                MainClass.output.OutputText = History.ListHistory();
+                MainClass.output.MatchMade = true;
+            }
+            else
+            {
+                MainClass.userInput = History.GetHistory(MainClass.userInput.Trim().Replace("^ ", ""));
+                DoGameInput();
+                return;
+            }
         }
 
         private void DoTime()
