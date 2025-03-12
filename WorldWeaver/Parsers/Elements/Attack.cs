@@ -66,8 +66,8 @@ namespace WorldWeaver.Parsers.Elements
             if (Cache.FightCache.Fight.PlayersTurn)
             {
                 MainClass.output.OutputText = "";
-                var playerWeapon = elemDb.GetElementByKey(Cache.PlayerCache.Player.AttributeByTag("armed").Output);
 
+                var playerWeapon = elemDb.GetElementByKey(Cache.PlayerCache.Player.AttributeByTag("armed").Output);
                 if (playerWeapon == null)
                 {
                     MainClass.output.OutputText = "You aren't armed with a weapon.";
@@ -144,6 +144,8 @@ namespace WorldWeaver.Parsers.Elements
                 MainClass.output.OutputText += Environment.NewLine;
                 Cache.FightCache.Fight.InitialRound = false;
 
+                ProcessAttackEvent(playerWeapon);
+
                 Cache.FightCache.Fight.PlayersTurn = false;
 
                 if (allDead)
@@ -166,53 +168,60 @@ namespace WorldWeaver.Parsers.Elements
                 }
 
                 var enemyWeapon = Cache.FightCache.Fight.Target.AttributeByTag("armed");
-                if (enemyWeapon != null)
+
+                if (enemyWeapon == null)
                 {
-                    var attackRoll = Tools.ValueTools.Randomize(1, 20);
-                    var playerArmor = Cache.PlayerCache.Player.AttributeByTag("armor");
+                    Cache.FightCache.Fight.PlayersTurn = true;
+                    Cache.FightCache.Fight.RoundHandled = true;
+                    return;
+                }
 
-                    MainClass.output.OutputText += $"{Environment.NewLine}Enemy attack roll: {attackRoll}{Environment.NewLine}Player's armor rating: {playerArmor.Output}{Environment.NewLine}";
+                var attackRoll = Tools.ValueTools.Randomize(1, 20);
+                var playerArmor = Cache.PlayerCache.Player.AttributeByTag("armor");
 
-                    if (Convert.ToInt32(playerArmor.Output) <= attackRoll)
+                MainClass.output.OutputText += $"{Environment.NewLine}Enemy attack roll: {attackRoll}{Environment.NewLine}Player's armor rating: {playerArmor.Output}{Environment.NewLine}";
+
+                if (Convert.ToInt32(playerArmor.Output) <= attackRoll)
+                {
+                    var gameLgc = new DataManagement.GameLogic.Element();
+                    var playerLife = Cache.PlayerCache.Player.AttributeByTag("life");
+                    var damageAttrib = enemyWeapon.AttributeByTag("damage");
+                    var damage = 0;
+                    var newLifeValue = 1;
+                    
+                    if (playerLife != null && damageAttrib != null)
                     {
-                        var gameLgc = new DataManagement.GameLogic.Element();
-                        var playerLife = Cache.PlayerCache.Player.AttributeByTag("life");
-                        var damageAttrib = enemyWeapon.AttributeByTag("damage");
-                        var damage = 0;
-                        var newLifeValue = 1;
-                        
-                        if (playerLife != null && damageAttrib != null)
-                        {
-                            damage = Convert.ToInt32(damageAttrib.Logic.RandomValue(damageAttrib));
-                            newLifeValue = Convert.ToInt32(playerLife.Output) - damage;
-                        }
-
-                        var damageOutput = Cache.FightCache.Fight.Target.ChildByType("hit");
-                        if (damageOutput != null)
-                        {
-                            var dmgMsg = ProcessDamageOutput(damageOutput.Output, damage);
-                            MainClass.output.OutputText += dmgMsg;
-                        }
-
-                        if (newLifeValue < 1)
-                        {
-                            var actn = new Parsers.Elements.Action();
-                            actn.DoDie();
-                            return;
-                        }
-
-                        gameLgc.SetElementField(playerLife.ElementKey, "Output", newLifeValue.ToString());
-
-                        MainClass.output.MatchMade = true;
+                        damage = Convert.ToInt32(damageAttrib.Logic.RandomValue(damageAttrib));
+                        newLifeValue = Convert.ToInt32(playerLife.Output) - damage;
                     }
-                    else
+
+                    var damageOutput = Cache.FightCache.Fight.Target.ChildByType("hit");
+                    if (damageOutput != null)
                     {
-                        var missElem = Cache.FightCache.Fight.Target.ChildByType("miss");
-                        if (missElem != null)
-                        {
-                            var missMsg = ProcessDamageOutput(missElem.Output, 0);
-                            MainClass.output.OutputText += Tools.OutputProcessor.ProcessOutputText(missMsg, missElem);
-                        }
+                        var dmgMsg = ProcessDamageOutput(damageOutput.Output, damage);
+                        MainClass.output.OutputText += dmgMsg;
+                    }
+
+                    if (newLifeValue < 1)
+                    {
+                        var actn = new Parsers.Elements.Action();
+                        actn.DoDie();
+                        return;
+                    }
+
+                    gameLgc.SetElementField(playerLife.ElementKey, "Output", newLifeValue.ToString());
+
+                    ProcessAttackEvent(enemyWeapon);
+
+                    MainClass.output.MatchMade = true;
+                }
+                else
+                {
+                    var missElem = Cache.FightCache.Fight.Target.ChildByType("miss");
+                    if (missElem != null)
+                    {
+                        var missMsg = ProcessDamageOutput(missElem.Output, 0);
+                        MainClass.output.OutputText += Tools.OutputProcessor.ProcessOutputText(missMsg, missElem);
                     }
                 }
 
@@ -222,6 +231,34 @@ namespace WorldWeaver.Parsers.Elements
             }
 
             return;
+        }
+
+        private void ProcessAttackEvent(Classes.Element weapon)
+        {
+            DataManagement.GameLogic.Element elemDb = new DataManagement.GameLogic.Element();
+            Parsers.Elements.Set setObj = new Parsers.Elements.Set();
+            Parsers.Elements.Message msgObj = new Parsers.Elements.Message();
+            if (weapon == null)
+            {
+                return;
+            }
+
+            var attackElems = weapon.ChildrenByTag("!_attack");
+
+            foreach (var elem in attackElems)
+            {
+                foreach (var child in elem.Children)
+                {
+                    if (child.ElementType.Equals("set", StringComparison.OrdinalIgnoreCase))
+                    {
+                        setObj.ParseSet(elem, child);
+                    }
+                    if (child.ElementType.Equals("message", StringComparison.OrdinalIgnoreCase))
+                    {
+                        msgObj.ParseMessage(elem, child, false, 0);
+                    }
+                }
+            }
         }
 
         private string ProcessDamageOutput(string damageOutput, int damage)

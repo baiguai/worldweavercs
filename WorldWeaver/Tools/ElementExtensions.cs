@@ -69,6 +69,21 @@ namespace WorldWeaver.Tools
             return selChild;
         }
 
+        public static List<Classes.Element> ChildrenByTag(this Classes.Element currentElement, string tag)
+        {
+            List<Classes.Element> selChildren = new List<Classes.Element>();
+
+            foreach (var child in currentElement.Children)
+            {
+                if (child.Tags.TagsContain(tag))
+                {
+                    selChildren.Add(child);
+                }
+            }
+
+            return selChildren;
+        }
+
         public static Classes.Element? ChildByType(this Classes.Element currentElement, string type)
         {
             Classes.Element? selChild = null;

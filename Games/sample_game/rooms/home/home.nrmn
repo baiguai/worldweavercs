@@ -46,8 +46,9 @@ Go to Tests Room.
 Go to Output Logic Test 01.
 Go to Dev Note.
 Go to Conversation Room.
-Go to Die room.
+Go to Die Room.
 Go to Spawn Room
+Go to Ammo Room
             }
         }
     }
@@ -102,5 +103,9 @@ Go to Spawn Room
 
     {input, syntax=(?i)spawn\sroom
         {move, logic=spawn_room, tags=[player], output=You have decided to test spawning. }
+    }
+
+    {input, syntax=(?i)ammo\sroom
+        {move, logic=ammo_room, tags=[player], output=You have decided to test ammo. }
     }
 }

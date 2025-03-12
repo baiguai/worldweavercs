@@ -67,18 +67,18 @@ namespace WorldWeaver.Parsers.Elements
             var elemDb = new DataManagement.GameLogic.Element();
             var weapon = elemDb.GetChildElementKeysBySyntax(Cache.PlayerCache.Player, weaponName, true);
 
-            var weaponElem = elemDb.GetElementByKey(weapon.First());
-
-            if (!weaponElem.Tags.TagsContain("weapon"))
-            {
-                weapon = null;
-            }
-
             if (weapon.Equals("") || weapon.Count != 1)
             {
                 MainClass.output.OutputText = "Could not locate the weapon you wish to arm.";
                 MainClass.output.MatchMade = true;
                 return;
+            }
+
+            var weaponElem = elemDb.GetElementByKey(weapon.First());
+
+            if (!weaponElem.Tags.TagsContain("weapon"))
+            {
+                weapon = null;
             }
 
             foreach (var child in Cache.PlayerCache.Player.Children)
