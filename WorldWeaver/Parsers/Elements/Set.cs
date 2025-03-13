@@ -328,7 +328,7 @@ namespace WorldWeaver.Parsers.Elements
                 try
                 {
                     var outInt = Convert.ToInt32(elem.Output);
-                    var res = outInt++;
+                    var res = outInt + 1;
                     return res.ToString();
                 }
                 catch (Exception)
@@ -341,7 +341,7 @@ namespace WorldWeaver.Parsers.Elements
                 try
                 {
                     var outInt = Convert.ToInt32(elem.Output);
-                    var res = outInt--;
+                    var res = outInt - 1;
                     return res.ToString();
                 }
                 catch (Exception)

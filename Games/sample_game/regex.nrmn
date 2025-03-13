@@ -67,4 +67,5 @@
         {attrib, tags=rat, output=(?i)\b(?:a|the)?\s*rat\b }
         {attrib, tags=beholder, output=(?i)\b(?:a|the)?\s*beholder\b }
         {attrib, tags=target, output=(?i)\b(?:a|the)?\s*target\b }
+        {attrib, tags=lazer_gun, output=(?i)\b(?:the\s+)?(?:lazer\s+)?gun\b }
 }

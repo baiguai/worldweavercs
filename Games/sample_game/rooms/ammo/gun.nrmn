@@ -1,4 +1,4 @@
-{object, name=Lazer Gun, parent=ammo_room, tags=weapon
+{object, key=lazer_gun_01, name=Lazer Gun, syntax=(?i)\b(?:the\s+)?(?:lazer\s+)?gun\b, parent=ammo_room, tags=weapon
     {attrib, tags=msg_take, output=You take the lazer gun. }
     {attrib, tags=msg_drop, output=You have dropped the lazer gun. }
     {attrib, tags=already_have, output=You already have the lazer gun. }
@@ -27,7 +27,7 @@ You see a lazer gun.
     }
 
     {attacked, tags=!_attack
-        {set, logic=[self]((ammo))-- }
+        {set, logic=[self]((ammo)), output=-- }
         {message
             output={@
                 Current ammo: <<[self]((ammo))>>.

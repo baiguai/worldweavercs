@@ -75,6 +75,12 @@ namespace WorldWeaver.Parsers.Elements
                     return;
                 }
 
+                ProcessAttackEvent(playerWeapon, "!_canattack");
+                if (MainClass.output.FailedLogic)
+                {
+                    return;
+                }
+
                 var attackRoll = Tools.ValueTools.Randomize(1, 20);
                 var enemyArmor = Cache.FightCache.Fight.Target.AttributeByTag("armor");
 
@@ -144,7 +150,7 @@ namespace WorldWeaver.Parsers.Elements
                 MainClass.output.OutputText += Environment.NewLine;
                 Cache.FightCache.Fight.InitialRound = false;
 
-                ProcessAttackEvent(playerWeapon);
+                ProcessAttackEvent(playerWeapon, "!_attack");
 
                 Cache.FightCache.Fight.PlayersTurn = false;
 
@@ -173,6 +179,12 @@ namespace WorldWeaver.Parsers.Elements
                 {
                     Cache.FightCache.Fight.PlayersTurn = true;
                     Cache.FightCache.Fight.RoundHandled = true;
+                    return;
+                }
+
+                ProcessAttackEvent(enemyWeapon, "!_canattack");
+                if (MainClass.output.FailedLogic)
+                {
                     return;
                 }
 
@@ -211,7 +223,7 @@ namespace WorldWeaver.Parsers.Elements
 
                     gameLgc.SetElementField(playerLife.ElementKey, "Output", newLifeValue.ToString());
 
-                    ProcessAttackEvent(enemyWeapon);
+                    ProcessAttackEvent(enemyWeapon, "!_attack");
 
                     MainClass.output.MatchMade = true;
                 }
@@ -233,9 +245,10 @@ namespace WorldWeaver.Parsers.Elements
             return;
         }
 
-        private void ProcessAttackEvent(Classes.Element weapon)
+        private void ProcessAttackEvent(Classes.Element weapon, string tag)
         {
             DataManagement.GameLogic.Element elemDb = new DataManagement.GameLogic.Element();
+            Parsers.Elements.Logic lgcObj = new Parsers.Elements.Logic();
             Parsers.Elements.Set setObj = new Parsers.Elements.Set();
             Parsers.Elements.Message msgObj = new Parsers.Elements.Message();
             if (weapon == null)
@@ -243,12 +256,16 @@ namespace WorldWeaver.Parsers.Elements
                 return;
             }
 
-            var attackElems = weapon.ChildrenByTag("!_attack");
+            var attackElems = weapon.ChildrenByTag(tag);
 
             foreach (var elem in attackElems)
             {
                 foreach (var child in elem.Children)
                 {
+                    if (child.ElementType.Equals("logic", StringComparison.OrdinalIgnoreCase))
+                    {
+                        lgcObj.ParseLogic(child);
+                    }
                     if (child.ElementType.Equals("set", StringComparison.OrdinalIgnoreCase))
                     {
                         setObj.ParseSet(elem, child);
