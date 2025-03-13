@@ -2,6 +2,7 @@
     {attrib, output=[room], tags=parent }
 
     {attrib, name=Life, output=[rand:15|30], tags=stats|life }
+    {attrib, name=AttackAdj, output=[rand:3|8], tags=attackadjust }
     {attrib, name=Armor Rating, output=[rand:4|10], tags=stats|armor }
     {attrib, name=Strength, output=[rand:8|18], tags=stats }
     {attrib, name=Intelligence, output=[rand:8|18], tags=stats }

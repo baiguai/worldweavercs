@@ -3,14 +3,14 @@
     {attrib, output=[rand:4|6], tags=money_dice }
 
     {attrib, output=[rand:<<[self]((stats_dice))>>|6], tags=life_dice }
-    {attrib, output=[rand:<<[self]((stats_dice))>>|6], tags=armor_dice }
+    {attrib, output=[rand:<<[self]((stats_dice))>>|4], tags=armor_dice }
     {attrib, output=[rand:<<[self]((stats_dice))>>|5], tags=strength_dice }
     {attrib, output=[rand:<<[self]((stats_dice))>>|5], tags=int_dice }
     {attrib, output=[rand:<<[self]((stats_dice))>>|5], tags=cunning_dice }
     {attrib, output=[rand:<<[self]((money_dice))>>|9], tags=gold_dice }
 
     {attrib, name=Life, output=[roll:(8)<<[self]((life_dice))>>d6], tags=stats|life }
-    {attrib, output=player((life)), tags=maxlife }
+    {attrib, output=[player]((life)), tags=maxlife }
     {attrib, name=Armor Rating, output=[roll:(6)<<[self]((armor_dice))>>d6+3], tags=stats|armor }
     {attrib, name=Strength, output=[roll:(6)<<[self]((strength_dice))>>d6], tags=stats }
     {attrib, name=Intelligence, output=[roll:(6)<<[self]((int_dice))>>d6], tags=stats }
@@ -20,8 +20,8 @@
 
     {attrib, name=Experience, key=experience, output=0, tags=experience|stats }
 
-    {attrib, key=heal_rounds, output=5 }
-    {attrib, key=cur_heal_round, output=0 }
+    {attrib, output=5, tags=heal_rounds }
+    {attrib, output=0, tags=cur_heal_round }
 
     {attrib, name=Quest, output=, tags=stats|quest }
 
@@ -34,7 +34,7 @@
 
     ---- weapons ----
     ----------------------------------------------------------------------------
-    {object, key=long-sword_01, name=Long Sword, syntax=\b(?:your\s+)?long\s+sword\b, tags=inventory|weapon, parent=player
+    {object, key=long-sword_01, name=Long Sword, syntax=\b(?:your\s+)?long\s+sword\b, tags=inventory|!_weapon, parent=player
         {attribute, name=Damage, logic=[rand:4|12], tags=damage }
         {attribute, output=a Long Sword, tags=title }
     }

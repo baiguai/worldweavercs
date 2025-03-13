@@ -168,6 +168,8 @@ namespace WorldWeaver.Parsers.Elements
                     MainClass.output.MatchMade = true;
                 }
                 var enemyLife = Cache.FightCache.Fight.Target.AttributeByTag("life");
+                var attackAdj = Cache.FightCache.Fight.Target.AttributeByTag("!_attackadjust");
+
                 if (enemyLife == null || Convert.ToInt32(enemyLife.Output) < 1)
                 {
                     return;
@@ -189,6 +191,16 @@ namespace WorldWeaver.Parsers.Elements
                 }
 
                 var attackRoll = Tools.ValueTools.Randomize(1, 20);
+
+                try
+                {
+                    var attackAdjInt = Convert.ToInt32(attackAdj.Output);
+                    attackRoll = attackRoll + attackAdjInt;
+                }
+                catch (Exception)
+                {
+                    // Don't make any adjustments
+                }
                 var playerArmor = Cache.PlayerCache.Player.AttributeByTag("armor");
 
                 MainClass.output.OutputText += $"{Environment.NewLine}Enemy attack roll: {attackRoll}{Environment.NewLine}Player's armor rating: {playerArmor.Output}{Environment.NewLine}";
