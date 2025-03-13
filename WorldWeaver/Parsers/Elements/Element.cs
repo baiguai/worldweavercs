@@ -76,7 +76,10 @@ namespace WorldWeaver.Parsers.Elements
                         continue;
                     }
 
-                    if (Cache.FightCache.Fight != null && !proc.Equals("attack", StringComparison.CurrentCultureIgnoreCase) && !proc.Equals("input", StringComparison.CurrentCultureIgnoreCase) && !proc.Equals("set", StringComparison.CurrentCultureIgnoreCase))
+                    if (Cache.FightCache.Fight != null &&
+                        !proc.Equals("attack", StringComparison.CurrentCultureIgnoreCase) &&
+                        !proc.Equals("input", StringComparison.CurrentCultureIgnoreCase) &&
+                        !proc.Equals("set", StringComparison.CurrentCultureIgnoreCase))
                     {
                         continue;
                     }

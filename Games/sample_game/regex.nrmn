@@ -43,6 +43,7 @@
         {attrib, tags=take_pack, output=(?i)\b(?:take|pick up)\s+(?:the\s+)?pack\b }
         {attrib, tags=take_gun, output=(?i)\b(?:take|pick up)\s+(?:the\s+)?(?:lazer\s+)?gun\b }
         {attrib, tags=drop_gun, output=(?i)\b(?:drop|put down)(?: the)? (?:lazer )?gun\b }
+        {attrib, tags=take_battery, output=(?i)\btake(?:\s+the)?(?:\s+lazer)?\s+gun\s+battery|\btake(?:\s+the)?(?:\s+lazer)?\s+battery\b }
 
     Enemies
         {attrib, tags=attack_skeleton, output=(?i)\b(?:attack\s+the\s+skeleton|attack\s+skeleton|!\s*the\s+skeleton|!\s*skeleton)\b }
