@@ -41,12 +41,15 @@
         {attrib, tags=take_ax, output=(?i)\b(?:take|pick up)(?: the)? (?:battle )?ax(?:e)? }
         {attrib, tags=drop_ax, output=(?i)\b(?:drop|put down)(?: the)? (?:battle )?ax(?:e)? }
         {attrib, tags=take_pack, output=(?i)\b(?:take|pick up)\s+(?:the\s+)?pack\b }
+        {attrib, tags=take_gun, output=(?i)\b(?:take|pick up)\s+(?:the\s+)?(?:lazer\s+)?gun\b }
+        {attrib, tags=drop_gun, output=(?i)\b(?:drop|put down)(?: the)? (?:lazer )?gun\b }
 
     Enemies
         {attrib, tags=attack_skeleton, output=(?i)\b(?:attack\s+the\s+skeleton|attack\s+skeleton|!\s*the\s+skeleton|!\s*skeleton)\b }
         {attrib, tags=attack_rat, output=(?i)^(?:! the rat|! rat|attack the rat|attack rat)$ }
         {attrib, tags=attack_beholder, output=(?i)^(?:! the beholder|! beholder|attack the beholder|attack beholder)$ }
         {attrib, tags=attack_thief, output=(?i)^(?:! the thief|! thief|attack the thief|attack theif)$ }
+        {attrib, tags=attack_target, output=(?i)^(?:! the target|! target)$ }
 
     Objects
         {attrib, tags=x_statue, output=(?i)\b(?:examine|x|look|l)(?: at| the)? statue\b }
@@ -63,4 +66,6 @@
     Fight
         {attrib, tags=rat, output=(?i)\b(?:a|the)?\s*rat\b }
         {attrib, tags=beholder, output=(?i)\b(?:a|the)?\s*beholder\b }
+        {attrib, tags=target, output=(?i)\b(?:a|the)?\s*target\b }
+        {attrib, tags=lazer_gun, output=(?i)\b(?:the\s+)?(?:lazer\s+)?gun\b }
 }

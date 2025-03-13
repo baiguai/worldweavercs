@@ -1,0 +1,40 @@
+{object, key=lazer_gun_01, name=Lazer Gun, syntax=(?i)\b(?:the\s+)?(?:lazer\s+)?gun\b, parent=ammo_room, tags=weapon
+    {attrib, tags=msg_take, output=You take the lazer gun. }
+    {attrib, tags=msg_drop, output=You have dropped the lazer gun. }
+    {attrib, tags=already_have, output=You already have the lazer gun. }
+    {attrib, tags=dont_have, output=You don't have a lazer gun. }
+    {attrib, tags=syn_take, output=<<[tplt_syntax]((take_gun))>> }
+    {attrib, tags=syn_drop, output=<<[tplt_syntax]((drop_gun))>> }
+
+    {attrib, tags=ammo, output=5 }
+
+    {enter_message
+        output={@
+<?[self]parent = [room]?>
+You see a lazer gun.
+</?>
+        }
+    }
+
+    {look
+        {message
+            output={@
+<?[self]parent = [room]?>
+You see a lazer gun.
+</?>
+            }
+        }
+    }
+
+    {attacked, tags=!_attack
+        {set, logic=[self]((ammo)), output=-- }
+        {message
+            output={@
+                Current ammo: <<[self]((ammo))>>.
+            }
+        }
+    }
+
+    {inject, logic=look.inj }
+    {inject, logic=take_logic.inj }
+}

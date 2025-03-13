@@ -1,0 +1,68 @@
+{npc, name=Destroyable Target, syntax=[tplt_syntax]((target)), parent=ammo_room, tags=attackable
+    {attrib, name=Life, output=[rand:15|30], tags=stats|life }
+    {attrib, name=Armor Rating, output=[rand:4|10], tags=stats|armor }
+    {attrib, output=the target, tags=title }
+
+
+    ---- FIGHTING MESSAGES ----
+    ----------------------------------------------------------------------------
+    {flee
+        output={@
+
+You leave the target alone.
+        }
+    }
+
+    {damage_message
+        output={@
+
+You have hit the target. Its intact state reduced by [damage].
+        }
+    }
+
+    {miss_message
+        output={@
+
+You missed the target.
+        }
+    }
+
+    {kill
+        {message
+            output={@
+
+You have destroyed the target.
+            }
+        }
+    }
+    ---------------------------------------------------------------------------
+
+    {enter_message
+        {message
+            output={@
+
+You see a circular target.
+            }
+        }
+    }
+
+    {look
+        {message
+            output={@
+                You see a target.
+            }
+        }
+    }
+
+    {input, syntax=[tplt_syntax]((attack_target))
+        {attack
+            {attrib, output=[self], tags=target }
+        }
+    }
+
+    {input, syntax=[tplt_syntax]((leave_target))
+        {flee
+            {attrib, output=[self], tags=target }
+        }
+    }
+}

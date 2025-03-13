@@ -1,0 +1,24 @@
+{room, key=ammo_room, name=Ammo Test Room
+    {enter_message
+        output={@
+You are in the ammo test room.
+You will want to pick up the gun you find and arm yourself with it using:
+arm <weapon name>.
+
+Then you can shoot at the target. When you run out of ammo, it should not shoot,
+until you pick up more ammo.
+        }
+    }
+
+    {look
+        {message
+            output={@
+You are in the ammo test room.
+            }
+        }
+    }
+
+    {inject, logic=nav.inj }
+    {inject, logic=look.inj }
+    {inject, logic=home.inj }
+}
