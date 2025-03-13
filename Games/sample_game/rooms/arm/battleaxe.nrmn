@@ -1,4 +1,4 @@
-{object, key=battleax_01, name=Battle Ax, syntax=(?i)\b(battle|the|your) ax(e)?\b, parent=armtest, tags=weapon
+{object, key=battleax_01, name=Battle Ax, syntax=(?i)\b(battle|the|your) ax(e)?\b, parent=armtest, tags=!_weapon
     {attrib, name=Damage, logic=[rand:4|12], tags=damage }
     {attrib, output=a battle ax, tags=title }
     {attrib, tags=msg_take, output=You take the ax. }

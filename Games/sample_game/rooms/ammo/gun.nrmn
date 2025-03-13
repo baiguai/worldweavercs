@@ -1,4 +1,4 @@
-{object, key=lazer_gun_01, name=Lazer Gun, syntax=(?i)\b(?:the\s+)?(?:lazer\s+)?gun\b, parent=ammo_room, tags=weapon
+{object, key=lazer_gun_01, name=Lazer Gun, syntax=(?i)\b(?:the\s+)?(?:lazer\s+)?gun\b, parent=ammo_room, tags=!_weapon
     {attrib, tags=msg_take, output=You take the lazer gun. }
     {attrib, tags=msg_drop, output=You have dropped the lazer gun. }
     {attrib, tags=already_have, output=You already have the lazer gun. }
@@ -22,6 +22,19 @@ You see a lazer gun.
 <?[self]parent = [room]?>
 You see a lazer gun.
 </?>
+            }
+        }
+    }
+
+    {attacking, tags=!_canattack
+        {logic
+            logic={@
+                ?[self]((ammo))>'0'
+            }
+        }
+        {message
+            output={@
+                You are out of ammo.
             }
         }
     }

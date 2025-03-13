@@ -76,7 +76,7 @@ namespace WorldWeaver.Parsers.Elements
 
             var weaponElem = elemDb.GetElementByKey(weapon.First());
 
-            if (!weaponElem.Tags.TagsContain("weapon"))
+            if (!weaponElem.Tags.TagsContain("!_weapon"))
             {
                 weapon = null;
             }
@@ -95,7 +95,7 @@ namespace WorldWeaver.Parsers.Elements
         public void SetDefaultArmed()
         {
             var elemDb = new DataManagement.GameLogic.Element();
-            var playerWeapon = Cache.PlayerCache.Player.ChildByTag("weapon");
+            var playerWeapon = Cache.PlayerCache.Player.ChildByTag("!_weapon");
 
             if (playerWeapon == null)
             {

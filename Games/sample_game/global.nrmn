@@ -19,4 +19,66 @@
     {input, syntax=\b(arm *)\b
         {set, tags=arm }
     }
+
+
+    // Player Healing Logic
+    // -------------------------------------------------------------------------
+    {action
+        {set, logic=[player]((cur_heal_round)), output=++ }
+    }
+
+    {action
+        {logic
+            logic={@
+                ?[player]((cur_heal_round))>=[player]((heal_rounds))
+                and
+                ?[player]((life))<player((maxlife))
+            }
+        }
+        {set, logic=[player]((life)), output=++ }
+    }
+
+    {action
+        {logic
+            logic={@
+                ?[player]((cur_heal_round))>[player]((heal_rounds))
+            }
+        }
+        {set, logic=[player]((cur_heal_round)), output=0 }
+    }
+    // -------------------------------------------------------------------------
+
+
+    // Time Actions
+    // -------------------------------------------------------------------------
+    {key=day_string
+        {action
+            {logic
+                logic={@
+                    ?[isday] = 'false'
+                }
+            }
+            {message
+                output={@
+It is night.
+
+                }
+            }
+        }
+
+        {action
+            {logic
+                logic={@
+                    ?[isday] = 'true'
+                }
+            }
+            {message
+                output={@
+It is day.
+
+                }
+            }
+        }
+    }
+    // -------------------------------------------------------------------------
 }
