@@ -3,7 +3,7 @@
     {attrib, output=[rand:4|6], tags=money_dice }
 
     {attrib, output=[rand:<<[self]((stats_dice))>>|6], tags=life_dice }
-    {attrib, output=[rand:<<[self]((stats_dice))>>|6], tags=armor_dice }
+    {attrib, output=[rand:<<[self]((stats_dice))>>|4], tags=armor_dice }
     {attrib, output=[rand:<<[self]((stats_dice))>>|5], tags=strength_dice }
     {attrib, output=[rand:<<[self]((stats_dice))>>|5], tags=int_dice }
     {attrib, output=[rand:<<[self]((stats_dice))>>|5], tags=cunning_dice }

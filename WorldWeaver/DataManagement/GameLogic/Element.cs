@@ -1078,12 +1078,17 @@ WHERE 1=1
 
                     var selElem = GetElementByKey(elemKey);
 
+                    if (selElem.ElementKey.Equals(""))
+                    {
+                        selElem = Tools.Elements.GetRelativeElement(elem, elemKey);
+                    }
+
                     foreach (var elemChild in selElem.Children)
                     {
                         if (elemChild.Tags.TagsContain(elemAttr))
                         {
                             elem.Output = elemChild.Output;
-                            AddUpdateElement(connectionString, elemChild, "Output");
+                            AddUpdateElement(connectionString, elem, "Output");
                         }
                     }
                 }

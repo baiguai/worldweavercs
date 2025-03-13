@@ -32,7 +32,7 @@
             logic={@
                 ?[player]((cur_heal_round))>=[player]((heal_rounds))
                 and
-                ?[player]((life))<player((maxlife))
+                ?[player]((life))<[player]((maxlife))
             }
         }
         {set, logic=[player]((life)), output=++ }
