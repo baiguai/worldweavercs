@@ -84,7 +84,11 @@ namespace WorldWeaver
                     if (Cache.FightCache.Fight.PlayersTurn)
                     {
                         Console.WriteLine($"Enemy Life: {enemyLife}");
-                        Console.WriteLine($"Player Life: {playerLife}");
+
+                        if (Tools.Elements.GetWeapon(Cache.FightCache.Fight.Target) != null)
+                        {
+                            Console.WriteLine($"Player Life: {playerLife}");
+                        }
                         Console.WriteLine("");
                     }
                     else
@@ -103,13 +107,21 @@ namespace WorldWeaver
                             playerLife = Tools.Elements.GetLife(Cache.PlayerCache.Player).ToString("N0");
                             enemyLife = Tools.Elements.GetLife(Cache.FightCache.Fight.Target).ToString("N0");
                             Console.WriteLine($"Enemy Life: {enemyLife}");
-                            Console.WriteLine($"Player Life: {playerLife}");
+
+                            if (Tools.Elements.GetWeapon(Cache.FightCache.Fight.Target) != null)
+                            {
+                                Console.WriteLine($"Player Life: {playerLife}");
+                            }
                             Console.WriteLine("");
                         }
                         else
                         {
                             Console.WriteLine($"Enemy Life: {enemyLife}");
-                            Console.WriteLine($"Player Life: {playerLife}");
+
+                            if (Tools.Elements.GetWeapon(Cache.FightCache.Fight.Target) != null)
+                            {
+                                Console.WriteLine($"Player Life: {playerLife}");
+                            }
                             Console.WriteLine("");
                             Cache.FightCache.Fight = null;
                         }
@@ -120,7 +132,11 @@ namespace WorldWeaver
                     if (Cache.FightCache.Fight.PlayerFleeing)
                     {
                         Console.WriteLine($"Enemy Life: {enemyLife}");
-                        Console.WriteLine($"Player Life: {playerLife}");
+
+                        if (Tools.Elements.GetWeapon(Cache.FightCache.Fight.Target) != null)
+                        {
+                            Console.WriteLine($"Player Life: {playerLife}");
+                        }
                         Console.WriteLine("");
                         Cache.FightCache.Fight = null;
                     }

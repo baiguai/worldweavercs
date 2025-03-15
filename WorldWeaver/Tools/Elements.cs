@@ -307,5 +307,22 @@ namespace WorldWeaver.Tools
         {
             return Tools.AppSettingFunctions.GetRootArray("Config/ResetFailedTypes.json");
         }
+
+        public static Classes.Element GetWeapon(Classes.Element parentElem)
+        {
+            var elemDb = new DataManagement.GameLogic.Element();
+
+            if (parentElem.Equals(Cache.PlayerCache.Player))
+            {
+                return elemDb.GetElementByKey(Cache.PlayerCache.Player.AttributeByTag("armed").Output);
+            }
+            if (Cache.FightCache.Fight != null &&
+                parentElem.Equals(Cache.FightCache.Fight.Target))
+            {
+                return Cache.FightCache.Fight.Target.AttributeByTag("armed");
+            }
+
+            return null;
+        }
     }
 }

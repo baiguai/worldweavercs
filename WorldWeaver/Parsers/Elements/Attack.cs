@@ -67,7 +67,7 @@ namespace WorldWeaver.Parsers.Elements
             {
                 MainClass.output.OutputText = "";
 
-                var playerWeapon = elemDb.GetElementByKey(Cache.PlayerCache.Player.AttributeByTag("armed").Output);
+                var playerWeapon = Tools.Elements.GetWeapon(Cache.PlayerCache.Player);
                 if (playerWeapon == null)
                 {
                     MainClass.output.OutputText = "You aren't armed with a weapon.";
@@ -175,7 +175,7 @@ namespace WorldWeaver.Parsers.Elements
                     return;
                 }
 
-                var enemyWeapon = Cache.FightCache.Fight.Target.AttributeByTag("armed");
+                var enemyWeapon = Tools.Elements.GetWeapon(Cache.FightCache.Fight.Target);
 
                 if (enemyWeapon == null)
                 {
