@@ -58,6 +58,7 @@
         {attrib, tags=syn_x-box, output=(?i)\b(?:examin(?:e)?|x|look(?:\s+inside|\s+in)?|inside|in)\s+(?:the\s+)?box\b }
         {attrib, tags=syn_x-key, output=(?i)\b(x|examine)\s+(the\s+)?key\b }
         {attrib, tags=syn_x-ax, output=(?i)\b(x|examine)\s+(?:the\s+)?(battle\s+ax|ax)\b }
+        {attrib, tags=syn_x-gun, output=(?i)\b(?:examine|x)\s+(?:the\s+)?lazer\s+gun|\b(?:examine|x)\s+(?:the\s+)?gun }
 
     Interactions
         {attrib, tags=pull_lever, output=(?i)\bpull(?:\s+the)?\s+lever\b }

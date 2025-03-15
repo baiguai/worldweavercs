@@ -21,8 +21,8 @@ You see a battery.
     }
 
     {take
-        {set, logic=(lazer_gun_01)((ammo)), output=+=5 }
         {move, logic=limbo, tags=[self], output=<<[self]((msg_take))>> }
+        {set, logic=(lazer_gun_01)((ammo)), output=+=5 }
     }
 
     {take_maxcheck
