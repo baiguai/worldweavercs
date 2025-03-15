@@ -88,6 +88,8 @@ namespace WorldWeaver.Parsers
 
                     var atkPars = new Parsers.Elements.Attack();
                     atkPars.ProcessFightRound();
+
+                    Cache.FightCache.Fight = null;
                     return;
                 }
                 else

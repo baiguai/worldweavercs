@@ -1,0 +1,49 @@
+{object, name=Lazer Gun Battery, syntax=(?i)\b(the\s*)?(lazer\s*)?(gun\s*)?battery\b, parent=ammo_room
+    {attrib, tags=msg_take, output=You take the battery and insert it into the lazer gun. }
+    {attrib, tags=no_gun, output=You aren't carrying a compatible lazer gun. }
+
+    {enter_message
+        output={@
+<?[self]parent = [room]?>
+You see a battery.
+</?>
+        }
+    }
+
+    {look
+        {message
+            output={@
+<?[self]parent = [room]?>
+You see a battery.
+</?>
+            }
+        }
+    }
+
+    {take
+        {move, logic=limbo, tags=[self], output=<<[self]((msg_take))>> }
+        {set, logic=(lazer_gun_01)((ammo)), output=+=5 }
+    }
+
+    {take_maxcheck
+        {set, logic=(lazer_gun_01)((ammo)), output=5 }
+        {logic
+            logic={@
+                ?(lazer_gun_01)((amm))>'5'
+            }
+        }
+    }
+
+
+--------------------------------------------------------------------------------
+
+    {input, syntax=[tplt_syntax]((take_battery))
+        {action, logic=take, tags=type|self }
+        {action, logic=take_maxcheck, tags=type|self }
+        {logic, output=[self]((no_gun))
+            logic={@
+                ?(lazer_gun_01)parent = [player]
+            }
+        }
+    }
+}

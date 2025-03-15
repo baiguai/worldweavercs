@@ -26,6 +26,15 @@ You see a lazer gun.
         }
     }
 
+    {examine_gun
+        {message
+            output={@
+You examine the lazer gun. It is sleek and chrome.
+The battery that is in it has <<[self]((ammo))>> shots left.
+            }
+        }
+    }
+
     {attacking, tags=!_canattack
         {logic
             logic={@
@@ -50,4 +59,9 @@ You see a lazer gun.
 
     {inject, logic=look.inj }
     {inject, logic=take_logic.inj }
+
+
+    {input, syntax=[tplt_syntax]((syn_x-gun))
+        {action, logic=examine_gun, tags=type|self }
+    }
 }

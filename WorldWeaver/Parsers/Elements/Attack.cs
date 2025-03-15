@@ -48,9 +48,9 @@ namespace WorldWeaver.Parsers.Elements
                 Cache.FightCache.Fight = new Classes.Fight();
                 Cache.FightCache.Fight.Enemies.AddRange(attackables);
                 MainClass.output.OutputText += $"{Environment.NewLine}{Environment.NewLine}{Environment.NewLine}!FIGHT!{Environment.NewLine}";
+                Cache.FightCache.Fight.PlayersTurn = playersTurn;
             }
 
-            Cache.FightCache.Fight.PlayersTurn = playersTurn;
             Cache.FightCache.Fight.Target = target;
 
             ProcessFightRound();
