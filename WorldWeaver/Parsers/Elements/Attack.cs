@@ -37,6 +37,11 @@ namespace WorldWeaver.Parsers.Elements
                 playersTurn = false;
             }
 
+            if (Cache.FightCache.Fight.PlayerFleeing)
+            {
+                // parse the fleeing message
+            }
+
             if (target.ElementKey.Equals(Cache.PlayerCache.Player.ElementKey))
             {
                 target = Tools.Elements.GetSelf(currentElement);

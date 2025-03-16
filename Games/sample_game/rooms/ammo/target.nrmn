@@ -60,7 +60,7 @@ You see a circular target.
         }
     }
 
-    {input, syntax=[tplt_syntax]((leave_target))
+    {input, syntax=[tplt_syntax]((flee))
         {flee
             {attrib, output=[self], tags=target }
         }
