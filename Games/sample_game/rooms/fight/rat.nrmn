@@ -20,9 +20,10 @@
     ---- FIGHTING MESSAGES ----
     ----------------------------------------------------------------------------
     {flee
-        output={@
-
+        {message
+            output={@
 You run away from the rat.
+            }
         }
     }
 

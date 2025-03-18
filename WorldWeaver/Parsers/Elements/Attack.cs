@@ -37,9 +37,21 @@ namespace WorldWeaver.Parsers.Elements
                 playersTurn = false;
             }
 
-            if (Cache.FightCache.Fight.PlayerFleeing)
+            if (Cache.FightCache.Fight != null && Cache.FightCache.Fight.PlayerFleeing)
             {
-                // parse the fleeing message
+                var fleeElem = target.GetChildren().Where(c => c.ElementType.Equals("flee", StringComparison.OrdinalIgnoreCase));
+                if (fleeElem != null)
+                {
+                    var flee = fleeElem.First();
+                    var msgElem = new Parsers.Elements.Message();
+
+                    foreach (var c in flee.Children.Where(m => m.ElementType.Equals("message", StringComparison.OrdinalIgnoreCase)))
+                    {
+                        msgElem.ParseMessage(flee, c, false, 0);
+                    }
+                }
+
+                return;
             }
 
             if (target.ElementKey.Equals(Cache.PlayerCache.Player.ElementKey))

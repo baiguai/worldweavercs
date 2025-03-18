@@ -7,9 +7,10 @@
     ---- FIGHTING MESSAGES ----
     ----------------------------------------------------------------------------
     {flee
-        output={@
-
+        {message
+            output={@
 You leave the target alone.
+            }
         }
     }
 
