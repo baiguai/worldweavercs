@@ -39,6 +39,7 @@ You are in the testing room.
 Go to Traveling.
 Go to Taking and Putting.
 Go to Fighting.
+Go to Fighting Multiple.
 Go to Weapon Arming.
 Go to Npc Follow.
 Go to Npc Path.
@@ -67,6 +68,10 @@ Go to Ammo Room
 
     {input, syntax=(?i)fighting
         {move, logic=fight, tags=[player], output=You have decided to test fighting. }
+    }
+
+    {input, syntax=(?i)fighting\smultiple
+        {move, logic=fight_multiple, tags=[player], output=You have decided to test fighting multiple enemies. }
     }
 
     {input, syntax=(?i)weapon\sarming

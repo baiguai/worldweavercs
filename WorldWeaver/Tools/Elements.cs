@@ -316,10 +316,9 @@ namespace WorldWeaver.Tools
             {
                 return elemDb.GetElementByKey(Cache.PlayerCache.Player.AttributeByTag("armed").Output);
             }
-            if (Cache.FightCache.Fight != null &&
-                parentElem.Equals(Cache.FightCache.Fight.Target))
+            if (Cache.FightCache.Fight != null)
             {
-                return Cache.FightCache.Fight.Target.AttributeByTag("armed");
+                return parentElem.AttributeByTag("armed");
             }
 
             return null;

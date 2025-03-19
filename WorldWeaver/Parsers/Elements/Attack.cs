@@ -14,7 +14,7 @@ namespace WorldWeaver.Parsers.Elements
             var newFight = false;
             var elemDb = new DataManagement.GameLogic.Element();
             var attackables = elemDb.GetRoomElementsByTag("attackable", Cache.RoomCache.Room.ElementKey);
-            var target = Tools.Elements.GetRelativeElement(currentElement, currentElement.AttributeByTag("target").Output);
+            Classes.Element target = null;
             var playersTurn = true;
             var playerWeapon = Cache.PlayerCache.Player.AttributeByTag("armed");
 
@@ -24,10 +24,6 @@ namespace WorldWeaver.Parsers.Elements
             }
 
             if (attackables.Count() < 1)
-            {
-                return;
-            }
-            if (target == null)
             {
                 return;
             }
@@ -59,6 +55,18 @@ namespace WorldWeaver.Parsers.Elements
                 target = Tools.Elements.GetSelf(currentElement);
                 playersTurn = false;
             }
+            else
+            {
+                target = Cache.FightCache.Fight.Enemies.Where(e => Convert.ToInt32(e.AttributeByTag("life").Output) > 0).First();
+                target = elemDb.GetElementByKey(target.ElementKey);
+            }
+
+            if (target == null)
+            {
+                return;
+            }
+
+            Cache.FightCache.Fight.Target = target;
 
             if (Cache.FightCache.Fight == null) 
             {
@@ -153,14 +161,17 @@ namespace WorldWeaver.Parsers.Elements
                 }
 
                 var allDead = true;
-                foreach (var enemy in Cache.FightCache.Fight.Enemies)
+                foreach (var enemy in Cache.FightCache.Fight.Enemies.Where(e => Convert.ToInt32(e.AttributeByTag("life").Output) > 0))
                 {
-                    var elife = Convert.ToInt32(enemy.AttributeByTag("life").Output);
-                    if (elife > 0)
-                    {
-                        allDead = false;
-                        break;
-                    }
+                    allDead = false;
+                    break;
+                }
+
+                if (allDead)
+                {
+                    Cache.FightCache.Fight = null;
+                    MainClass.output.MatchMade = true;
+                    MainClass.output.OutputText += Environment.NewLine + "You've vanquished your enemies.";
                 }
 
                 MainClass.output.MatchMade = true;
@@ -170,12 +181,6 @@ namespace WorldWeaver.Parsers.Elements
                 ProcessAttackEvent(playerWeapon, "!_attack");
 
                 Cache.FightCache.Fight.PlayersTurn = false;
-
-                if (allDead)
-                {
-                    Cache.FightCache.Fight = null;
-                    MainClass.output.OutputText += Environment.NewLine + "You've vanquished your enemies.";
-                }
             }
             else
             {
