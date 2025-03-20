@@ -1,9 +1,0 @@
-﻿{
-    "commands" : [
-        {
-            "pattern" : "(?i)^flee(?:\\s(?:the|from))?.*",
-            "method" : "DoFlee",
-            "during_game" : "true"
-        }
-    ]
-}

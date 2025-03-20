@@ -78,6 +78,7 @@ namespace WorldWeaver.Parsers.Elements
 
                     if (Cache.FightCache.Fight != null &&
                         !proc.Equals("attack", StringComparison.CurrentCultureIgnoreCase) &&
+                        !proc.Equals("flee", StringComparison.OrdinalIgnoreCase) &&
                         !proc.Equals("input", StringComparison.CurrentCultureIgnoreCase) &&
                         !proc.Equals("set", StringComparison.CurrentCultureIgnoreCase))
                     {
@@ -102,6 +103,37 @@ namespace WorldWeaver.Parsers.Elements
 
                             var attackParser = new Parsers.Elements.Attack();
                             attackParser.ParseAttack(currentElement, child);
+                            if (
+                                MainClass.output.MatchMade
+                                && !MainClass.output.OutputText.Equals("")
+                            )
+                            {
+                                handledAttack = true;
+                                return;
+                            }
+                            break;
+
+                        case "flee":
+                            if (MainClass.gameDb.Equals(""))
+                            {
+                                return;
+                            }
+                            if (Cache.FightCache.Fight == null)
+                            {
+                                return;
+                            }
+                            if (MainClass.macro.IsRecording || MainClass.macro.IsRunning)
+                            {
+                                continue;
+                            }
+                            if (handledAttack)
+                            {
+                                continue;
+                            }
+
+                            var fleeParser = new Parsers.Elements.Attack();
+                            Cache.FightCache.Fight.PlayerFleeing = true;
+                            fleeParser.ParseAttack(currentElement, child);
                             if (
                                 MainClass.output.MatchMade
                                 && !MainClass.output.OutputText.Equals("")

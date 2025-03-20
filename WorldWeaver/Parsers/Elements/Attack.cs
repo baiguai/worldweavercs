@@ -13,21 +13,11 @@ namespace WorldWeaver.Parsers.Elements
             var elemParser = new Elements.Element();
             var newFight = false;
             var elemDb = new DataManagement.GameLogic.Element();
-            var attackables = elemDb.GetRoomElementsByTag("attackable", Cache.RoomCache.Room.ElementKey);
-            var target = Tools.Elements.GetRelativeElement(currentElement, currentElement.AttributeByTag("target").Output);
+            Classes.Element target = new Classes.Element();
             var playersTurn = true;
             var playerWeapon = Cache.PlayerCache.Player.AttributeByTag("armed");
 
             if (MainClass.macro.IsRecording || MainClass.macro.IsRunning)
-            {
-                return;
-            }
-
-            if (attackables.Count() < 1)
-            {
-                return;
-            }
-            if (target == null)
             {
                 return;
             }
@@ -37,21 +27,56 @@ namespace WorldWeaver.Parsers.Elements
                 playersTurn = false;
             }
 
-            if (target.ElementKey.Equals(Cache.PlayerCache.Player.ElementKey))
+            if (currentElement.Children.Where(c => c.Tags.TagsContain("target")).Any() &&
+                currentElement.Children.Where(c => c.Tags.Contains("target")).First().Output.Equals("[player]"))
             {
-                target = Tools.Elements.GetSelf(currentElement);
                 playersTurn = false;
             }
 
             if (Cache.FightCache.Fight == null) 
             {
+                var attackables = elemDb.GetRoomElementsByTag("attackable", Cache.RoomCache.Room.ElementKey);
+
+                if (attackables.Count() < 1)
+                {
+                    return;
+                }
+
                 Cache.FightCache.Fight = new Classes.Fight();
                 Cache.FightCache.Fight.Enemies.AddRange(attackables);
                 MainClass.output.OutputText += $"{Environment.NewLine}{Environment.NewLine}{Environment.NewLine}!FIGHT!{Environment.NewLine}";
                 Cache.FightCache.Fight.PlayersTurn = playersTurn;
             }
 
-            Cache.FightCache.Fight.Target = target;
+            if (Cache.FightCache.Fight.PlayerFleeing)
+            {
+                var fleeElem = target.GetChildren().Where(c => c.ElementType.Equals("flee", StringComparison.OrdinalIgnoreCase));
+                if (fleeElem != null)
+                {
+                    var flee = fleeElem.First();
+                    var msgElem = new Parsers.Elements.Message();
+
+                    foreach (var c in flee.Children.Where(m => m.ElementType.Equals("message", StringComparison.OrdinalIgnoreCase)))
+                    {
+                        msgElem.ParseMessage(flee, c, false, 0);
+                    }
+                }
+
+                return;
+            }
+
+            if (Cache.FightCache.Fight.Target.ElementKey.Equals("") || Convert.ToInt32(Cache.FightCache.Fight.Target.AttributeByTag("life").Output) < 1)
+            {
+                target = Cache.FightCache.Fight.Enemies.Where(e => Convert.ToInt32(e.AttributeByTag("life").Output) > 0).First();
+
+                if (target == null)
+                {
+                    return;
+                }
+
+                target = elemDb.GetElementByKey(target.ElementKey);
+                Cache.FightCache.Fight.Target = target;
+            }
 
             ProcessFightRound();
 
@@ -67,7 +92,7 @@ namespace WorldWeaver.Parsers.Elements
             {
                 MainClass.output.OutputText = "";
 
-                var playerWeapon = elemDb.GetElementByKey(Cache.PlayerCache.Player.AttributeByTag("armed").Output);
+                var playerWeapon = Tools.Elements.GetWeapon(Cache.PlayerCache.Player);
                 if (playerWeapon == null)
                 {
                     MainClass.output.OutputText = "You aren't armed with a weapon.";
@@ -136,14 +161,17 @@ namespace WorldWeaver.Parsers.Elements
                 }
 
                 var allDead = true;
-                foreach (var enemy in Cache.FightCache.Fight.Enemies)
+                foreach (var enemy in Cache.FightCache.Fight.Enemies.Where(e => Convert.ToInt32(e.AttributeByTag("life").Output) > 0))
                 {
-                    var elife = Convert.ToInt32(enemy.AttributeByTag("life").Output);
-                    if (elife > 0)
-                    {
-                        allDead = false;
-                        break;
-                    }
+                    allDead = false;
+                    break;
+                }
+
+                if (allDead)
+                {
+                    Cache.FightCache.Fight = null;
+                    MainClass.output.MatchMade = true;
+                    MainClass.output.OutputText += Environment.NewLine + "You've vanquished your enemies.";
                 }
 
                 MainClass.output.MatchMade = true;
@@ -153,12 +181,6 @@ namespace WorldWeaver.Parsers.Elements
                 ProcessAttackEvent(playerWeapon, "!_attack");
 
                 Cache.FightCache.Fight.PlayersTurn = false;
-
-                if (allDead)
-                {
-                    Cache.FightCache.Fight = null;
-                    MainClass.output.OutputText += Environment.NewLine + "You've vanquished your enemies.";
-                }
             }
             else
             {
@@ -175,7 +197,7 @@ namespace WorldWeaver.Parsers.Elements
                     return;
                 }
 
-                var enemyWeapon = Cache.FightCache.Fight.Target.AttributeByTag("armed");
+                var enemyWeapon = Tools.Elements.GetWeapon(Cache.FightCache.Fight.Target);
 
                 if (enemyWeapon == null)
                 {

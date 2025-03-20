@@ -79,32 +79,16 @@ namespace WorldWeaver.Parsers
             if (Cache.FightCache.Fight != null &&
                 !MainClass.macro.IsRunning)
             {
-                var method = Tools.CommandFunctions.GetCommandMethod(MainClass.userInput, "FightParser");
-
-                if (method.Equals("DoFlee"))
+                if (Cache.FightCache.Fight.AllEnemiesDead)
                 {
-                    Cache.FightCache.Fight.PlayersTurn = false;
-                    Cache.FightCache.Fight.PlayerFleeing = true;
-
-                    var atkPars = new Parsers.Elements.Attack();
-                    atkPars.ProcessFightRound();
-
                     Cache.FightCache.Fight = null;
-                    return;
                 }
                 else
                 {
-                    if (Cache.FightCache.Fight.AllEnemiesDead)
+                    var attackables = elemDb.GetRoomElementsByTag("attackable", Cache.RoomCache.Room.ElementKey);
+                    foreach (var attackable in attackables)
                     {
-                        Cache.FightCache.Fight = null;
-                    }
-                    else
-                    {
-                        var attackables = elemDb.GetRoomElementsByTag("attackable", Cache.RoomCache.Room.ElementKey);
-                        foreach (var attackable in attackables)
-                        {
-                            attackable.ParseElement(false);
-                        }
+                        attackable.ParseElement(false);
                     }
                 }
             }

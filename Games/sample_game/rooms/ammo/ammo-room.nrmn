@@ -7,6 +7,11 @@ arm <weapon name>.
 
 Then you can shoot at the target. When you run out of ammo, it should not shoot,
 until you pick up more ammo.
+
+To pick up more ammo, you will need to flee the fight, then pick up the battery.
+To flee the fight, simply enter:
+
+flee
         }
     }
 

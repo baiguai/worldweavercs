@@ -38,7 +38,7 @@ You are in the testing room.
             output={@
 Go to Traveling.
 Go to Taking and Putting.
-Go to Fighting.
+Go to Fight.
 Go to Weapon Arming.
 Go to Npc Follow.
 Go to Npc Path.
@@ -65,8 +65,8 @@ Go to Ammo Room
         {move, logic=put_in_test_room, tags=[player], output=You have decided to test putting objects into other objects. }
     }
 
-    {input, syntax=(?i)fighting
-        {move, logic=fight, tags=[player], output=You have decided to test fighting. }
+    {input, syntax=(?i)fight
+        {move, logic=fight_multiple, tags=[player], output=You have decided to test fighting multiple enemies. }
     }
 
     {input, syntax=(?i)weapon\sarming

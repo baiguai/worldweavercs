@@ -7,22 +7,21 @@
     ---- FIGHTING MESSAGES ----
     ----------------------------------------------------------------------------
     {flee
-        output={@
-
+        {message
+            output={@
 You leave the target alone.
+            }
         }
     }
 
     {damage_message
         output={@
-
 You have hit the target. Its intact state reduced by [damage].
         }
     }
 
     {miss_message
         output={@
-
 You missed the target.
         }
     }
@@ -30,7 +29,6 @@ You missed the target.
     {kill
         {message
             output={@
-
 You have destroyed the target.
             }
         }
@@ -60,7 +58,7 @@ You see a circular target.
         }
     }
 
-    {input, syntax=[tplt_syntax]((leave_target))
+    {input, syntax=[tplt_syntax]((flee))
         {flee
             {attrib, output=[self], tags=target }
         }

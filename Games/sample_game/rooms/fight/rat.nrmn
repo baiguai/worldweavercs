@@ -20,9 +20,10 @@
     ---- FIGHTING MESSAGES ----
     ----------------------------------------------------------------------------
     {flee
-        output={@
-
+        {message
+            output={@
 You run away from the rat.
+            }
         }
     }
 
@@ -99,7 +100,7 @@ You see a large rat with faintly glowing red eyes.
         }
     }
 
-    {input, syntax=[tplt_syntax]((flee_rat))
+    {input, syntax=[tplt_syntax]((flee))
         {flee
             {attrib, output=[self], tags=target }
         }
