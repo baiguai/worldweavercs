@@ -1,14 +1,14 @@
-{room, key=fight, name=Fight Test Room
+{room, key=gold_room, name=Gold Test Room
     {enter_message
         output={@
-Welcome to the fighting simulator.
+You are in the gold test room.
         }
     }
 
     {look
         {message
             output={@
-You are in a strange looking arena.
+You are in the gold test room.
             }
         }
     }

@@ -36,6 +36,7 @@ You are in the testing room.
     {navigation, tags=look|enter_message
         {message
             output={@
+Go to Gold Room.
 Go to Traveling.
 Go to Taking and Putting.
 Go to Fight.
@@ -107,5 +108,9 @@ Go to Ammo Room
 
     {input, syntax=(?i)ammo\sroom
         {move, logic=ammo_room, tags=[player], output=You have decided to test ammo. }
+    }
+
+    {input, syntax=(?i)gold\sroom
+        {move, logic=gold_room, tags=[player], output=You have decided to test receiving money. }
     }
 }

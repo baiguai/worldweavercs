@@ -27,6 +27,12 @@ namespace WorldWeaver.DataManagement.GameLogic
         {
             List<Classes.Help> helpOutput = new List<Classes.Help>();
 
+            if (inputString.Trim().Equals("") || inputString.Equals("?"))
+            {
+                inputString = "helphome";
+                return SearchHelpTopics(connectionString, inputString);
+            }
+
             if (inputString.StartsWith("?"))
             {
                 inputString = inputString.Substring(1).Trim();
@@ -34,12 +40,6 @@ namespace WorldWeaver.DataManagement.GameLogic
             if (inputString.StartsWith("help", StringComparison.OrdinalIgnoreCase))
             {
                 inputString = inputString.Substring(4).Trim();
-            }
-
-            if (inputString.Trim().Equals(""))
-            {
-                inputString = "helphome";
-                return SearchHelpTopics(connectionString, inputString);
             }
 
             inputString = inputString.Replace("*", "%");
@@ -54,7 +54,7 @@ SELECT
 FROM
     helpsys
 WHERE 1=1
-    AND LOWER(Title) LIKE (@title)
+    AND LOWER(Title) LIKE  '%'||@title||'%'
 ORDER BY
     Title
 ;

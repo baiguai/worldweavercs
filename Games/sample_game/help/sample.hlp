@@ -1,0 +1,12 @@
+title: Sample Game Help
+tags: sample|sample game
+related: if
+This is a 'game' that is designed to test the features of WorldWeaver (WW).
+Each room tests a different piece of functionality that the game engine
+supports.
+
+---
+
+NOTE:
+If you test the fighting features, the player should regain some more life
+every 5 actions.

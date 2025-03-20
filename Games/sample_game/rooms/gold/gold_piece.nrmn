@@ -1,0 +1,33 @@
+{object, name=Gold Piece, syntax=(?i)\b(the\s*)?(gold\s*)?(coin\s*)\b, parent=gold_room
+    {attrib, tags=msg_take, output=You take the gold coin. }
+
+    {enter_message
+        output={@
+<?[self]parent = [room]?>
+You see a gold coin on the ground.
+</?>
+        }
+    }
+
+    {look
+        {message
+            output={@
+<?[self]parent = [room]?>
+You see a gold coin.
+</?>
+            }
+        }
+    }
+
+    {take
+        {move, logic=limbo, tags=[self], output=<<[self]((msg_take))>> }
+        {set, logic=[player]((gold)), output=+=1 }
+    }
+
+
+--------------------------------------------------------------------------------
+
+    {input, syntax=[tplt_syntax]((take_gold_coin))
+        {action, logic=take, tags=type|self }
+    }
+}
