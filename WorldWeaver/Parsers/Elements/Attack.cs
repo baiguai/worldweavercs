@@ -13,17 +13,11 @@ namespace WorldWeaver.Parsers.Elements
             var elemParser = new Elements.Element();
             var newFight = false;
             var elemDb = new DataManagement.GameLogic.Element();
-            var attackables = elemDb.GetRoomElementsByTag("attackable", Cache.RoomCache.Room.ElementKey);
-            Classes.Element target = null;
+            Classes.Element target = new Classes.Element();
             var playersTurn = true;
             var playerWeapon = Cache.PlayerCache.Player.AttributeByTag("armed");
 
             if (MainClass.macro.IsRecording || MainClass.macro.IsRunning)
-            {
-                return;
-            }
-
-            if (attackables.Count() < 1)
             {
                 return;
             }
@@ -33,7 +27,28 @@ namespace WorldWeaver.Parsers.Elements
                 playersTurn = false;
             }
 
-            if (Cache.FightCache.Fight != null && Cache.FightCache.Fight.PlayerFleeing)
+            if (currentElement.Children.Where(c => c.Tags.TagsContain("target")).Any() &&
+                currentElement.Children.Where(c => c.Tags.Contains("target")).First().Output.Equals("[player]"))
+            {
+                playersTurn = false;
+            }
+
+            if (Cache.FightCache.Fight == null) 
+            {
+                var attackables = elemDb.GetRoomElementsByTag("attackable", Cache.RoomCache.Room.ElementKey);
+
+                if (attackables.Count() < 1)
+                {
+                    return;
+                }
+
+                Cache.FightCache.Fight = new Classes.Fight();
+                Cache.FightCache.Fight.Enemies.AddRange(attackables);
+                MainClass.output.OutputText += $"{Environment.NewLine}{Environment.NewLine}{Environment.NewLine}!FIGHT!{Environment.NewLine}";
+                Cache.FightCache.Fight.PlayersTurn = playersTurn;
+            }
+
+            if (Cache.FightCache.Fight.PlayerFleeing)
             {
                 var fleeElem = target.GetChildren().Where(c => c.ElementType.Equals("flee", StringComparison.OrdinalIgnoreCase));
                 if (fleeElem != null)
@@ -50,33 +65,18 @@ namespace WorldWeaver.Parsers.Elements
                 return;
             }
 
-            if (target.ElementKey.Equals(Cache.PlayerCache.Player.ElementKey))
-            {
-                target = Tools.Elements.GetSelf(currentElement);
-                playersTurn = false;
-            }
-            else
+            if (Cache.FightCache.Fight.Target.ElementKey.Equals("") || Convert.ToInt32(Cache.FightCache.Fight.Target.AttributeByTag("life").Output) < 1)
             {
                 target = Cache.FightCache.Fight.Enemies.Where(e => Convert.ToInt32(e.AttributeByTag("life").Output) > 0).First();
+
+                if (target == null)
+                {
+                    return;
+                }
+
                 target = elemDb.GetElementByKey(target.ElementKey);
+                Cache.FightCache.Fight.Target = target;
             }
-
-            if (target == null)
-            {
-                return;
-            }
-
-            Cache.FightCache.Fight.Target = target;
-
-            if (Cache.FightCache.Fight == null) 
-            {
-                Cache.FightCache.Fight = new Classes.Fight();
-                Cache.FightCache.Fight.Enemies.AddRange(attackables);
-                MainClass.output.OutputText += $"{Environment.NewLine}{Environment.NewLine}{Environment.NewLine}!FIGHT!{Environment.NewLine}";
-                Cache.FightCache.Fight.PlayersTurn = playersTurn;
-            }
-
-            Cache.FightCache.Fight.Target = target;
 
             ProcessFightRound();
 

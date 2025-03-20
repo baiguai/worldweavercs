@@ -1,5 +1,5 @@
 {npc, name=Rat_mult_01, syntax=[tplt_syntax]((rat)), parent=fight_multiple, tags=attackable
-    {attrib, name=Life, output=[rand:15|30], tags=stats|life }
+    {attrib, name=Life, output=[rand:10|15], tags=stats|life }
     {attrib, name=Armor Rating, output=[rand:4|10], tags=stats|armor }
     {attrib, name=Strength, output=[rand:8|18], tags=stats }
     {attrib, name=Intelligence, output=[rand:8|18], tags=stats }
