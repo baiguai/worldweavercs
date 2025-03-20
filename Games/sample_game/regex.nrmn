@@ -72,5 +72,4 @@
         {attrib, tags=target, output=(?i)\b(?:a|the)?\s*target\b }
         {attrib, tags=lazer_gun, output=(?i)\b(?:the\s+)?(?:lazer\s+)?gun\b }
         {attrib, tags=flee, output=(?i)flee }
- }
 }
