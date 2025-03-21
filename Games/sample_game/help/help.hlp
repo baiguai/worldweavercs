@@ -4,3 +4,8 @@ related: if
 Welcome to the Sample Game help system.
 
 For information on general Interactive Fiction game play use: ? if
+For sample game help use: ? sample
+
+* ? if
+* ? sample
+* ? darkworld

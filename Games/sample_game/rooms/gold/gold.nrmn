@@ -1,0 +1,19 @@
+{room, key=gold_room, name=Gold Test Room
+    {enter_message
+        output={@
+You are in the gold test room.
+        }
+    }
+
+    {look
+        {message
+            output={@
+You are in the gold test room.
+            }
+        }
+    }
+
+    {inject, logic=nav.inj }
+    {inject, logic=look.inj }
+    {inject, logic=home.inj }
+}
