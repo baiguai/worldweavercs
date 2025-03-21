@@ -3,7 +3,8 @@ tags: sample|sample game
 related: if
 This is a 'game' that is designed to test the features of WorldWeaver (WW).
 Each room tests a different piece of functionality that the game engine
-supports.
+supports. To enter a testing room simply type in the room's name.
+(No need to say 'go to' etc, just enter its name).
 
 ---
 
