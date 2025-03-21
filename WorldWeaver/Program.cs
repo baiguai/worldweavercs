@@ -28,21 +28,33 @@ namespace WorldWeaver
 
         public static void Main(string[] args)
         {
+            var default_game = "";
+
+            default_game = Tools.AppSettingFunctions.GetConfigValue("default_game", "name");
+
             Console.SetWindowSize(Console.LargestWindowWidth, Console.LargestWindowHeight);
-            Listener(Tools.InitFunctions.GetInitMessage());
+            Listener(default_game, Tools.InitFunctions.GetInitMessage());
         }
 
-        private static void Listener(string initMsg)
+        private static void Listener(string default_game, string initMsg)
         {
-            if (initMsg.Equals(""))
-            {
-                Console.Write(GetCursor());
-            }
-            else
+            if (!initMsg.Equals("") && default_game.Equals(""))
             {
                 Console.Write(initMsg);
             }
-            userInput = Console.ReadLine();
+            else
+            {
+                Console.Write(GetCursor());
+            }
+
+            if (!default_game.Equals(""))
+            {
+                userInput = $"play {default_game}";
+            }
+            else
+            {
+                userInput = Console.ReadLine();
+            }
 
             if (macro.IsRecording && !userInput.Equals("_recordoff"))
             {
@@ -68,7 +80,7 @@ namespace WorldWeaver
                 HandleTheFight();
             }
 
-            Listener("");
+            Listener("", "");
         }
 
         public static void HandleTheFight()
