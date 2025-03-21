@@ -23,7 +23,7 @@ namespace WorldWeaver.Tools
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"Error retrieving AppSetting.  {ex.Message}");
+                    // Carry on if there's no setting item.
                 }
             }
 
