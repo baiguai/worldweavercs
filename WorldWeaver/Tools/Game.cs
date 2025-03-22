@@ -9,8 +9,8 @@ namespace WorldWeaver.Tools
             var arrTime = time.Split(':');
             var hour = Convert.ToInt32(arrTime[0].Trim());
 
-            if (hour > Convert.ToInt32(Tools.AppSettingFunctions.GetConfigValue("time", "day_end")) ||
-                hour < Convert.ToInt32(Tools.AppSettingFunctions.GetConfigValue("time", "day_start")))
+            if (hour >= Convert.ToInt32(Tools.AppSettingFunctions.GetConfigValue("time", "day_end")) ||
+                hour <= Convert.ToInt32(Tools.AppSettingFunctions.GetConfigValue("time", "day_start")))
             {
                 return false;
             }

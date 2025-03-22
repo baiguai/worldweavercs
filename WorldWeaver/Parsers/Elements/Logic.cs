@@ -138,9 +138,14 @@ namespace WorldWeaver.Parsers.Elements
                 rawVariable = rawVariable.Substring(1).Trim();
             }
 
+            if (rawVariable.Equals("[isday]"))
+            {
+                return Tools.Game.IsDay().ToString().ToLower();
+            }
+
             if (rawVariable.StartsWith("'"))
             {
-                return rawVariable.Replace("'", "");
+                return rawVariable.Replace("'", "").ToLower();
             }
 
             var varValues = Tools.LogicFunctions.GetLogicValue(currentElement, rawVariable);
