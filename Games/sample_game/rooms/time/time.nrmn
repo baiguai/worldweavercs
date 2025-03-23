@@ -1,0 +1,41 @@
+{room, key=time_room, name=Time Room
+    {enter_message
+        output={@
+This is a room for testing time-related features.
+Every time the user enters a command, time is incremented by the setting value set here:
+~/worldweaver/WorldWeaver/Config/AppSettings.json
+
+Once that is updated, be sure to recompile the .NET application, and when running that
+for the first time, do:
+_bg the game in question
+
+Then you can play it and test how time works in the WorldWeaver (WW) game engine.
+
+You are in a field.
+<?[isday] = 'true'?>
+The sun is shining brightly overhead.
+</?>
+<?[isday] = 'false'?>
+A pale full moon dimly lights the flat vast expanse.
+</?>
+        }
+    }
+
+    {look
+        {message
+            output={@
+You are in the 'time' room.
+<?[isday] = 'true'?>
+The sun is shining brightly overhead.
+</?>
+<?[isday] = 'false'?>
+A pale full moon dimly lights the flat vast expanse.
+</?>
+            }
+        }
+    }
+
+    {inject, logic=nav.inj }
+    {inject, logic=look.inj }
+    {inject, logic=home.inj }
+}

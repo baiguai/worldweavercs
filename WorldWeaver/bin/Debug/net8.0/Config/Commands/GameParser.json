@@ -26,7 +26,7 @@
             "during_game" : "true"
         },
         {
-            "pattern" : "\\b(time)\\b",
+            "pattern" : "(?i)^time$",
             "method" : "DoTime",
             "during_game" : "true"
         },

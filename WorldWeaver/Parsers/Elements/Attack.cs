@@ -13,7 +13,7 @@ namespace WorldWeaver.Parsers.Elements
             var elemParser = new Elements.Element();
             var newFight = false;
             var elemDb = new DataManagement.GameLogic.Element();
-            Classes.Element target = new Classes.Element();
+            Classes.Element target = Tools.Elements.GetSelf(parentElement);
             var playersTurn = true;
             var playerWeapon = Cache.PlayerCache.Player.AttributeByTag("armed");
 
@@ -184,11 +184,6 @@ namespace WorldWeaver.Parsers.Elements
             }
             else
             {
-                if (Cache.FightCache.Fight.PlayerFleeing)
-                {
-                    MainClass.output.OutputText = Tools.AppSettingFunctions.GetConfigValue("messages", "flee_message") + Environment.NewLine;
-                    MainClass.output.MatchMade = true;
-                }
                 var enemyLife = Cache.FightCache.Fight.Target.AttributeByTag("life");
                 var attackAdj = Cache.FightCache.Fight.Target.AttributeByTag("!_attackadjust");
 

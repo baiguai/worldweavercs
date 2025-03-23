@@ -11,3 +11,7 @@ supports. To enter a testing room simply type in the room's name.
 NOTE:
 If you test the fighting features, the player should regain some more life
 every 5 actions.
+
+NOTE:
+If you want to view the current time, use:
+time
