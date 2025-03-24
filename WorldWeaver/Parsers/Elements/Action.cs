@@ -73,6 +73,22 @@ namespace WorldWeaver.Parsers.Elements
             return;
         }
 
+        private void ParseLogicActions(Classes.Element currentElement)
+        {
+            switch (currentElement.Logic.ToLower())
+            {
+                case "[die]":
+                    DoDie();
+                    return;
+
+                    case "[reset_mission_days]":
+                    Tools.Game.ResetMissionDays();
+                    return;
+            }
+
+            return;
+        }
+
         private void ParseTags_Type(Classes.Element currentElement, string type, string tags)
         {
             var level = GetTypeLevel(tags);
@@ -411,19 +427,6 @@ namespace WorldWeaver.Parsers.Elements
             }
             else
             { }
-        }
-
-
-        private void ParseLogicActions(Classes.Element currentElement)
-        {
-            switch (currentElement.Logic.ToLower())
-            {
-                case "[die]":
-                    DoDie();
-                    return;
-            }
-
-            return;
         }
 
         public void DoDie()

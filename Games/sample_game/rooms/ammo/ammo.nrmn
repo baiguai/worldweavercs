@@ -38,8 +38,8 @@ You see a battery.
 --------------------------------------------------------------------------------
 
     {input, syntax=[tplt_syntax]((take_battery))
-        {action, logic=take, tags=type|self }
-        {action, logic=take_maxcheck, tags=type|self }
+        {act, logic=take, tags=type|self }
+        {act, logic=take_maxcheck, tags=type|self }
         {logic, output=[self]((no_gun))
             logic={@
                 ?(lazer_gun_01)parent = [player]
