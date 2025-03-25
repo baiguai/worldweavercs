@@ -44,6 +44,6 @@ You see a battle ax.
     {inject, logic=take_logic.inj }
 
     {input, syntax=[tplt_syntax]((syn_x-ax))
-        {action, logic=examine_ax, tags=type|room }
+        {act, logic=examine_ax, tags=type|room }
     }
 }

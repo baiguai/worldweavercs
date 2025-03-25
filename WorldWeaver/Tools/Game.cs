@@ -47,6 +47,7 @@ namespace WorldWeaver.Tools
             var hour = Convert.ToInt32(arrTime[0].Trim());
             var min = Convert.ToInt32(arrTime[1].Trim());
             var incr = Convert.ToInt32(Tools.AppSettingFunctions.GetConfigValue("time", "turn_minutes"));
+            var addDay = false;
 
             min += incr;
             if (min > 59)
@@ -55,12 +56,25 @@ namespace WorldWeaver.Tools
                 hour++;
                 if (hour > 23)
                 {
+                    addDay = true;
                     hour = 0;
                 }
             }
 
             gameData.UpdateGameState("TimeHour", hour);
             gameData.UpdateGameState("TimeMinute", min);
+
+            if (addDay)
+            {
+                gameData.UpdateGameState("TotalDays", Tools.Game.TotalDays() + 1);
+                gameData.UpdateGameState("MissionDays", Tools.Game.MissionDays() + 1);
+            }
+        }
+
+        public static void ResetMissionDays()
+        {
+            var gameData = new DataManagement.GameLogic.Game();
+            gameData.UpdateGameState("MissionDays", 0);
         }
 
         internal static void RemoveInProgressGame()

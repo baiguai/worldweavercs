@@ -87,7 +87,7 @@ Are you interested in acquiring a vast amount of treasure?"
 --------------------------------------------------------------------------------
 
     {input, syntax=(?i)\b(no|nope|i\s*am\s*not)\b
-        {action, logic=adv_no, tags=type|room }
+        {act, logic=adv_no, tags=type|room }
         {set, logic=[self]((topic)), output=no }
 
         {logic
@@ -98,7 +98,7 @@ Are you interested in acquiring a vast amount of treasure?"
     }
 
     {input, syntax=(?i)\b(no|nope|i\s*am\s*not)\b
-        {action, logic=still_no, tags=type|room }
+        {act, logic=still_no, tags=type|room }
 
         {logic
             logic={@
@@ -108,7 +108,7 @@ Are you interested in acquiring a vast amount of treasure?"
     }
 
     {input, syntax=(?i)\b(yes|yep|i am)\b
-        {action, logic=adv_yes, tags=type|room }
+        {act, logic=adv_yes, tags=type|room }
         {set, logic=[self]((topic)), output=accepted }
 
         {logic
@@ -119,7 +119,7 @@ Are you interested in acquiring a vast amount of treasure?"
     }
 
     {input, syntax=(?i)\b(yes|yep|i am)\b
-        {action, logic=treas_yes, tags=type|room }
+        {act, logic=treas_yes, tags=type|room }
         {set, logic=[self]((topic)), output=good }
 
         {logic

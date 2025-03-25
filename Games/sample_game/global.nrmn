@@ -1,10 +1,10 @@
 {global, key=global01, parent=root
     {input, syntax=\b(title)\b
-        {action, logic=game_title, tags=key }
+        {act, logic=game_title, tags=key }
     }
 
     {input, syntax=\b(stats)\b
-        {action, logic=[player]((stats)), tags=list, output=Stats: }
+        {act, logic=[player]((stats)), tags=list, output=Stats: }
 
         {logic, name=Global01_ArmedTest, tags=!_test
             logic={@
@@ -13,7 +13,7 @@
         }
     }
     {input, syntax=\b(inventory|inv)\b
-        {action, logic=[player]((inventory)), tags=list, output=Inventory: }
+        {act, logic=[player]((inventory)), tags=list, output=Inventory: }
     }
 
     {input, syntax=\b(arm *)\b
@@ -23,11 +23,11 @@
 
     // Player Healing Logic
     // -------------------------------------------------------------------------
-    {action
+    {act
         {set, logic=[player]((cur_heal_round)), output=++ }
     }
 
-    {action
+    {act
         {logic
             logic={@
                 ?[player]((cur_heal_round))>=[player]((heal_rounds))
@@ -38,7 +38,7 @@
         {set, logic=[player]((life)), output=++ }
     }
 
-    {action
+    {act
         {logic
             logic={@
                 ?[player]((cur_heal_round))>[player]((heal_rounds))
@@ -52,7 +52,7 @@
     // Time Actions
     // -------------------------------------------------------------------------
     {key=day_string
-        {action
+        {act
             {logic
                 logic={@
                     ?[isday] = 'false'
@@ -66,7 +66,7 @@ It is night.
             }
         }
 
-        {action
+        {act
             {logic
                 logic={@
                     ?[isday] = 'true'

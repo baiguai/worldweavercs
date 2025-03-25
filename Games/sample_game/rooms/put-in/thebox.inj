@@ -32,7 +32,7 @@ You examine the box.
     {inject, logic=look.inj }
 
     {input, syntax=[tplt_syntax]((syn_x-box))
-        {action, logic=examine_box, tags=type|room }
-        {action, logic=describe, tags=type|children }
+        {act, logic=examine_box, tags=type|room }
+        {act, logic=describe, tags=type|children }
     }
 }

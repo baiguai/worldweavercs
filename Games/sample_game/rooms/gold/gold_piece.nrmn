@@ -28,6 +28,6 @@ You see a gold coin.
 --------------------------------------------------------------------------------
 
     {input, syntax=[tplt_syntax]((take_gold_coin))
-        {action, logic=take, tags=type|self }
+        {act, logic=take, tags=type|self }
     }
 }

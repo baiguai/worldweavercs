@@ -23,6 +23,6 @@ You look around. There is a red button on the wall.
     doesn't have to be a separate object.
 
     {input, syntax=(?i)\bpush\s+(?:the\s+)?(?:red\s+)?button\b
-        {action, logic=beholder_spawn, tags=spawn, repeat=3, output=You have spawned a beholder. }
+        {act, logic=beholder_spawn, tags=spawn, repeat=3, output=You have spawned a beholder. }
     }
 }
