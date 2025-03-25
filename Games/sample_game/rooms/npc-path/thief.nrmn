@@ -72,7 +72,7 @@ The thief leaves.
                 ?(thief_02_travel)active = 'true'
             }
         }
-        {action, logic=[self]((moved)), output=true }
+        {act, logic=[self]((moved)), output=true }
     }
 
 

@@ -62,6 +62,6 @@ The battery that is in it has <<[self]((ammo))>> shots left.
 
 
     {input, syntax=[tplt_syntax]((syn_x-gun))
-        {action, logic=examine_gun, tags=type|self }
+        {act, logic=examine_gun, tags=type|self }
     }
 }

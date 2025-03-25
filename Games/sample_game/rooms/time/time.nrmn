@@ -7,7 +7,7 @@ Every time the user enters a command, time is incremented by the setting value s
 
 Once that is updated, be sure to recompile the .NET application, and when running that
 for the first time, do:
-_bg the game in question
+_bg <the game in question>
 
 Then you can play it and test how time works in the WorldWeaver (WW) game engine.
 
@@ -21,6 +21,10 @@ The sun is shining brightly overhead.
 <?[isday] = 'false'?>
 A pale full moon dimly lights the flat vast expanse.
 </?>
+
+You have been on this mission for <<[missiondays]>> days.
+
+You see a red button that will reset the mission days.
         }
     }
 
@@ -34,6 +38,10 @@ The sun is shining brightly overhead.
 <?[isday] = 'false'?>
 A pale full moon dimly lights the flat vast expanse.
 </?>
+
+You have been on this mission for <<[missiondays]>> days.
+
+You see a red button that will reset the mission days.
             }
         }
     }
@@ -41,4 +49,18 @@ A pale full moon dimly lights the flat vast expanse.
     {inject, logic=nav.inj }
     {inject, logic=look.inj }
     {inject, logic=home.inj }
+
+--------------------------------------------------------------------------------
+    Since the button's sole job is to be pushed, it really
+    doesn't have to be a separate object.
+
+    {input, syntax=(?i)\bpush\s+(?:the\s+)?(?:red\s+)?button\b
+        {act, logic=[reset_mission_days]
+            {message
+                output={@
+You have reset the mission days.
+                }
+            }
+        }
+    }
 }

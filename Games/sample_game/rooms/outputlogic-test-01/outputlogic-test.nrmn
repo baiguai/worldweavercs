@@ -62,7 +62,7 @@ It is not open.
 
         {input, syntax=[tplt_syntax]((open_box))
             {set, logic=[self]((isopen)), output=true }
-            {action, logic=open, tags=type|room }
+            {act, logic=open, tags=type|room }
         }
     }
 

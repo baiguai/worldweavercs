@@ -47,6 +47,6 @@ You see a key.
     {inject, logic=put_in.inj }
 
     {input, syntax=[tplt_syntax]((syn_x-key))
-        {action, logic=examine_key, tags=type|room }
+        {act, logic=examine_key, tags=type|room }
     }
 }
