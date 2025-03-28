@@ -336,9 +336,6 @@ set player name <<NAME>>
         {
             var histComm = "";
 
-
-
-
             if (!DataManagement.GameLogic.Game.IsGameRunning())
             {
                 MainClass.output.MatchMade = false;
