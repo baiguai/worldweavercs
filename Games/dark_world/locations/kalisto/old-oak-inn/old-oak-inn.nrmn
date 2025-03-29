@@ -2,6 +2,19 @@
     {enter_message
         output={@
 You are in the Old Oak Inn.
+Shockingly it is COMPLETELY empty. There are tables arrayed throughout the Inn,
+and the bar runs along the southern wall, however you are the only person in the place.
         }
     }
+
+    {look
+        {message
+            output={@
+You look around. Tables and chairs are arrayed throughout. The bar runs along the south wall.
+There is no one there except you.
+            }
+        }
+    }
+
+    {inject, logic=look.inj }
 }

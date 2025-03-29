@@ -1,0 +1,84 @@
+{global, key=global01, parent=root
+    {input, syntax=\b(title)\b
+        {act, logic=game_title, tags=key }
+    }
+
+    {input, syntax=\b(stats)\b
+        {act, logic=[player]((stats)), tags=list, output=Stats: }
+
+        {logic, name=Global01_ArmedTest, tags=!_test
+            logic={@
+                ?[output] ~~ "Battle Ax"
+            }
+        }
+    }
+    {input, syntax=\b(inventory|inv)\b
+        {act, logic=[player]((inventory)), tags=list, output=Inventory: }
+    }
+
+    {input, syntax=\b(arm *)\b
+        {set, tags=arm }
+    }
+
+
+    // Player Healing Logic
+    // -------------------------------------------------------------------------
+    {act
+        {set, logic=[player]((cur_heal_round)), output=++ }
+    }
+
+    {act
+        {logic
+            logic={@
+                ?[player]((cur_heal_round))>=[player]((heal_rounds))
+                and
+                ?[player]((life))<[player]((maxlife))
+            }
+        }
+        {set, logic=[player]((life)), output=++ }
+    }
+
+    {act
+        {logic
+            logic={@
+                ?[player]((cur_heal_round))>[player]((heal_rounds))
+            }
+        }
+        {set, logic=[player]((cur_heal_round)), output=0 }
+    }
+    // -------------------------------------------------------------------------
+
+
+    // Time Actions
+    // -------------------------------------------------------------------------
+    {key=day_string
+        {act
+            {logic
+                logic={@
+                    ?[isday] = 'false'
+                }
+            }
+            {message
+                output={@
+It is night.
+
+                }
+            }
+        }
+
+        {act
+            {logic
+                logic={@
+                    ?[isday] = 'true'
+                }
+            }
+            {message
+                output={@
+It is day.
+
+                }
+            }
+        }
+    }
+    // -------------------------------------------------------------------------
+}
