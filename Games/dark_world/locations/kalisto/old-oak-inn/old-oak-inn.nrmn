@@ -32,6 +32,14 @@ You examine the chairs...
         }
     }
 
+    {examine_bar
+        {message
+            output={@
+You examine the bar...
+            }
+        }
+    }
+
 
     {inject, logic=look.inj }
 
@@ -41,5 +49,9 @@ You examine the chairs...
 
     {input, syntax=[tplt_syntax]((x_chairs))
         {action, logic=examine_chairs, tags=type|room }
+    }
+
+    {input, syntax=[tplt_syntax]((x_bar))
+        {action, logic=examine_bar, tags=type|room }
     }
 }

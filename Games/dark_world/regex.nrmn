@@ -17,6 +17,7 @@
         {attrib, tags=west, output=(?i)^(go\s+)?west|^w$ }
 
     Examinations
+        {attrib, tags=x_bar, output=(?i)\b(?:examine|x)\s+(?:the\s+)?bar\b }
         {attrib, tags=x_bed, output=(?i)\b(?:examine|x)\s+(?:the\s+)?bed\b }
         {attrib, tags=u_bed, output=(?i)\blook\s+under\s+(the\s+)?bed\b }
         {attrib, tags=x_chest, output=(?i)^(x|examine)(?:\s+the)?\s+chest$ }
