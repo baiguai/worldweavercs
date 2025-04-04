@@ -16,5 +16,30 @@ There is no one there except you.
         }
     }
 
+    {examine_tables
+        {message
+            output={@
+You examine the tables...
+            }
+        }
+    }
+
+    {examine_chairs
+        {message
+            output={@
+You examine the chairs...
+            }
+        }
+    }
+
+
     {inject, logic=look.inj }
+
+    {input, syntax=[tplt_syntax]((x_tables))
+        {action, logic=examine_tables, tags=type|room }
+    }
+
+    {input, syntax=[tplt_syntax]((x_chairs))
+        {action, logic=examine_chairs, tags=type|room }
+    }
 }

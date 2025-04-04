@@ -19,13 +19,15 @@
     Examinations
         {attrib, tags=x_bed, output=(?i)\b(?:examine|x)\s+(?:the\s+)?bed\b }
         {attrib, tags=u_bed, output=(?i)\blook\s+under\s+(the\s+)?bed\b }
+        {attrib, tags=x_chest, output=(?i)^(x|examine)(?:\s+the)?\s+chest$ }
         {attrib, tags=x_furniture, output=(?i)\b(x|examine|look at)\s+(?:the\s+)?furniture\b }
         {attrib, tags=x_mead, output=(?i)\b(?:take|drink|examine|x)\s+(?:the\s+)?mead\b }
+        {attrib, tags=x_note, output=(?i)\b(?:look|in|examine|x)\s+(?:the\s+)?note\b }
         {attrib, tags=x_pack, output=(?i)\b(?:look|in|examine|x)\s+(?:the\s+)?pack\b }
         {attrib, tags=x_parchment, output=(?i)\b(?:take|examine|x)\s+(?:the\s+)?parchment\b }
         {attrib, tags=x_pouch, output=(?i)\b(?:look|in|examine|x)\s+(?:the\s+)?pouch\b }
-        {attrib, tags=x_note, output=(?i)\b(?:look|in|examine|x)\s+(?:the\s+)?note\b }
-        {attrib, tags=x_chest, output=(?i)^(x|examine)(?:\s+the)?\s+chest$ }
+        {attrib, tags=x_tables, output=(?i)\b(?:examine|x)\s+(?:the\s+)?tables\b }
+        {attrib, tags=x_chairs, output=(?i)\b(?:examine|x)\s+(?:the\s+)?chairs\b }
         {attrib, tags=x_tap, output=(?i)\b(x|examine)\s+(the\s+)?tapestries\b }
 
     Opening Objects
