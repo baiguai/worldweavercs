@@ -19,12 +19,31 @@ There is no one there except you.
     {examine_tables
         {message
             output={@
-You examine the tables...
+You examine the tables.
+For the most part they are empty. A few of them have unfinished drinks
+sitting on them. It appears that the patrons just kind of left the tavern...
+In a hurry.
+            }
+        }
+    }
+
+    {examine_under_tables
+        {message
+            output={@
+You look under the tables.
             }
         }
     }
 
     {examine_chairs
+        {message
+            output={@
+You examine the chairs...
+            }
+        }
+    }
+
+    {examine_under_chairs
         {message
             output={@
 You examine the chairs...
@@ -40,18 +59,38 @@ You examine the bar...
         }
     }
 
+    {examine_under_bar
+        {message
+            output={@
+You examine the bar...
+            }
+        }
+    }
 
-    {inject, logic=look.inj }
+
+    {inject, logic=injection/look.inj }
 
     {input, syntax=[tplt_syntax]((x_tables))
         {action, logic=examine_tables, tags=type|room }
+    }
+
+    {input, syntax=[tplt_syntax]((x_under_tables))
+        {action, logic=examine_under_tables, tags=type|room }
     }
 
     {input, syntax=[tplt_syntax]((x_chairs))
         {action, logic=examine_chairs, tags=type|room }
     }
 
+    {input, syntax=[tplt_syntax]((x_under_chairs))
+        {action, logic=examine_under_tables, tags=type|room }
+    }
+
     {input, syntax=[tplt_syntax]((x_bar))
         {action, logic=examine_bar, tags=type|room }
+    }
+
+    {input, syntax=[tplt_syntax]((x_under_bar))
+        {action, logic=examine_under_tables, tags=type|room }
     }
 }

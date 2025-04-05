@@ -18,8 +18,11 @@
 
     Examinations
         {attrib, tags=x_bar, output=(?i)\b(?:examine|x)\s+(?:the\s+)?bar\b }
+        {attrib, tags=x_under_bar, output=(?i)\b(?:look|examine|x)?\s*under(?:\s+the)?\s+bar\b }
         {attrib, tags=x_bed, output=(?i)\b(?:examine|x)\s+(?:the\s+)?bed\b }
         {attrib, tags=u_bed, output=(?i)\blook\s+under\s+(the\s+)?bed\b }
+        {attrib, tags=x_chairs, output=(?i)\b(?:examine|x)\s+(?:the\s+)?chairs\b }
+        {attrib, tags=x_under_chairs, output=(?i)\b(?:look|examine|x)?\s*under(?:\s+the)?\s+chairs\b }
         {attrib, tags=x_chest, output=(?i)^(x|examine)(?:\s+the)?\s+chest$ }
         {attrib, tags=x_furniture, output=(?i)\b(x|examine|look at)\s+(?:the\s+)?furniture\b }
         {attrib, tags=x_mead, output=(?i)\b(?:take|drink|examine|x)\s+(?:the\s+)?mead\b }
@@ -27,8 +30,9 @@
         {attrib, tags=x_pack, output=(?i)\b(?:look|in|examine|x)\s+(?:the\s+)?pack\b }
         {attrib, tags=x_parchment, output=(?i)\b(?:take|examine|x)\s+(?:the\s+)?parchment\b }
         {attrib, tags=x_pouch, output=(?i)\b(?:look|in|examine|x)\s+(?:the\s+)?pouch\b }
+        {attrib, tags=x_tap, output=(?i)\b(x|examine)\s+(the\s+)?tapestries\b }
         {attrib, tags=x_tables, output=(?i)\b(?:examine|x)\s+(?:the\s+)?tables\b }
-        {attrib, tags=x_chairs, output=(?i)\b(?:examine|x)\s+(?:the\s+)?chairs\b }
+        {attrib, tags=x_under_tables, output=(?i)\b(?:look|examine|x)?\s*under(?:\s+the)?\s+tables\b }
         {attrib, tags=x_tap, output=(?i)\b(x|examine)\s+(the\s+)?tapestries\b }
 
     Opening Objects
@@ -42,6 +46,8 @@
         {attrib, tags=take_key, output=(?i)\b(?:take|pick up)\s+(?:the\s+)?key\b }
         {attrib, tags=drop_key, output=(?i)\b(?:drop|put down)\s+(?:the\s+)?key\b }
         {attrib, tags=put_key_in, output=(?i)\b(?:put|insert)\s+(?:the\s+)?key\s+(?:in|into)\b }
+        {attrib, tags=take_note, output=(?i)\b(?:take|pick up)\s+(?:the\s+)?note\b }
+        {attrib, tags=drop_note, output=(?i)\b(?:drop|put down)\s+(?:the\s+)?note\b }
         {attrib, tags=take_ax, output=(?i)\b(?:take|pick up)(?: the)? (?:battle )?ax(?:e)? }
         {attrib, tags=drop_ax, output=(?i)\b(?:drop|put down)(?: the)? (?:battle )?ax(?:e)? }
         {attrib, tags=take_pack, output=(?i)\b(?:take|pick up)\s+(?:the\s+)?pack\b }

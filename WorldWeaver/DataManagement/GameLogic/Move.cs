@@ -44,10 +44,14 @@ namespace WorldWeaver.DataManagement.GameLogic
 
                 success = elemDb.SetElementParentKey(newElem.ElementKey, newParentKey);
 
-                if (dropping)
+                if (dropping && newElem.Tags.TagsContain("!_weapon"))
                 {
-                    var setCls = new Parsers.Elements.Set();
-                    setCls.SetDefaultArmed();
+                    var playerWeapon = Cache.PlayerCache.Player.AttributeByTag("armed");
+                    if (playerWeapon.ElementKey.Equals(newElem.ElementKey))
+                    {
+                        var setCls = new Parsers.Elements.Set();
+                        setCls.SetDefaultArmed();
+                    }
                 }
 
                 var moveOutput = Tools.OutputProcessor.ProcessOutputText(currentElement.Output, currentElement);

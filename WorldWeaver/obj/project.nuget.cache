@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "PY/yeHGEbK4=",
+  "dgSpecHash": "M0lAyfwYfn8=",
   "success": true,
   "projectFilePath": "/home/baiguai/documents/development/csharp/worldweaver/WorldWeaver/WorldWeaver.csproj",
   "expectedPackageFiles": [
@@ -11,10 +11,7 @@
     "/home/baiguai/.nuget/packages/sqlitepclraw.core/2.1.6/sqlitepclraw.core.2.1.6.nupkg.sha512",
     "/home/baiguai/.nuget/packages/sqlitepclraw.lib.e_sqlite3/2.1.6/sqlitepclraw.lib.e_sqlite3.2.1.6.nupkg.sha512",
     "/home/baiguai/.nuget/packages/sqlitepclraw.provider.e_sqlite3/2.1.6/sqlitepclraw.provider.e_sqlite3.2.1.6.nupkg.sha512",
-    "/home/baiguai/.nuget/packages/system.memory/4.5.3/system.memory.4.5.3.nupkg.sha512",
-    "/home/baiguai/.nuget/packages/microsoft.netcore.app.runtime.osx-arm64/8.0.14/microsoft.netcore.app.runtime.osx-arm64.8.0.14.nupkg.sha512",
-    "/home/baiguai/.nuget/packages/microsoft.aspnetcore.app.runtime.osx-arm64/8.0.14/microsoft.aspnetcore.app.runtime.osx-arm64.8.0.14.nupkg.sha512",
-    "/home/baiguai/.nuget/packages/microsoft.netcore.app.host.osx-arm64/8.0.14/microsoft.netcore.app.host.osx-arm64.8.0.14.nupkg.sha512"
+    "/home/baiguai/.nuget/packages/system.memory/4.5.3/system.memory.4.5.3.nupkg.sha512"
   ],
   "logs": []
 }

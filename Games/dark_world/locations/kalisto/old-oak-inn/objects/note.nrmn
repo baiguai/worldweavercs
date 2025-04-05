@@ -1,0 +1,46 @@
+{object, name=Strange Note, parent=old-oak-inn, sort=999
+    {attrib, tags=msg_take, output=You take the note. }
+    {attrib, tags=msg_drop, output=You have dropped the note. }
+    {attrib, tags=already_have, output=You already have the note. }
+    {attrib, tags=dont_have, output=You don't have a note. }
+    {attrib, tags=syn_take, output=<<[tplt_syntax]((take_note))>> }
+    {attrib, tags=syn_drop, output=<<[tplt_syntax]((drop_note))>> }
+
+    {look
+        {message
+            output={@
+<?[self]parent = [room]?>
+<?[self]((moved)) = 'true'?>
+You see a note.
+</?>
+</?>
+            }
+        }
+    }
+
+    {examine_under_tables
+        {message
+            output={@
+<?[self]((moved)) = 'false'?>
+You see a note.
+</?>
+            }
+        }
+    }
+
+    {examine_note
+        {message
+            output={@
+You examine the note...
+            }
+        }
+    }
+
+
+    {inject, logic=injection/look.inj }
+    {inject, logic=injection/take.inj }
+
+    {input, syntax=[tplt_syntax]((x_note))
+        {act, logic=examine_note, tags=type|room }
+    }
+}

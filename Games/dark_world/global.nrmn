@@ -16,7 +16,7 @@
         {act, logic=[player]((inventory)), tags=list, output=Inventory: }
     }
 
-    {input, syntax=\b(arm *)\b
+    {input, syntax=(?i)^arm\s
         {set, tags=arm }
     }
 
