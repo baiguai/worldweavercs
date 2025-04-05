@@ -21,15 +21,39 @@ git clone https://github.com/baiguai/worldweavercs.git
 cd worldweavercs
 ```
 
+> Note:\
+You want to be one level up from the WorldWeaver directory when calling GIT commands, but\
+within it when doing dotnet run or build etc.\
+This is due to the game files and other artifacts that are outside the code base.
+
 #### Install Dependencies
 ```sh
 dotnet restore ./WorldWeaver
 ```
 
+---
+
 #### Build the Project
-```sh
-dotnet build ./WorldWeaver
+CD into the WorldWeaver directory.
+
+* For Windows:
 ```
+dotnet publish -c Release -r win-x64 --self-contained true
+```
+* For Linux:
+```
+dotnet publish -c Release -r linux-x64 --self-contained true
+```
+* For Mac:
+### Mac 64
+```
+dotnet publish -c Release -r osx-x64 --self-contained true
+```
+### Apple Silicon (M1/M2/M3 ARM-based)
+```
+dotnet publish -c Release -r osx-arm64 --self-contained true
+```
+
 
 #### Run the Engine
 ```sh
