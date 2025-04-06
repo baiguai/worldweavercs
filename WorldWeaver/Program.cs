@@ -73,7 +73,7 @@ namespace WorldWeaver
                 }
 
                 Console.Clear();
-                Console.WriteLine(output.OutputText.OutputFormat());
+                Console.WriteLine(output.OutputText);
                 Console.WriteLine($"{Environment.NewLine}{Environment.NewLine}");
                 output.ExitFlow = false;
 

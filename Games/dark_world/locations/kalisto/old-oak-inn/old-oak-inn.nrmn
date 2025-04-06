@@ -29,8 +29,11 @@ In a hurry.
 
     {examine_under_tables
         {message
-            output={@
-You look under the tables.
+            output={
+You look under the tables.\b
+<?(kal_note)((moved)) = 'true'?>
+You don't see anything.
+</?>
             }
         }
     }
@@ -38,7 +41,8 @@ You look under the tables.
     {examine_chairs
         {message
             output={@
-You examine the chairs...
+You examine the chairs. Some of them have bits of clothing draped over them,
+coats or cloaks and the like.
             }
         }
     }
@@ -46,7 +50,8 @@ You examine the chairs...
     {examine_under_chairs
         {message
             output={@
-You examine the chairs...
+You examine the chairs.
+You don't see anything.
             }
         }
     }
@@ -54,7 +59,8 @@ You examine the chairs...
     {examine_bar
         {message
             output={@
-You examine the bar...
+You examine the bar.
+It is barren, except for one jack still full of mead.
             }
         }
     }
@@ -62,7 +68,8 @@ You examine the bar...
     {examine_under_bar
         {message
             output={@
-You examine the bar...
+You examine the bar.
+You don't see anything.
             }
         }
     }
@@ -83,7 +90,7 @@ You examine the bar...
     }
 
     {input, syntax=[tplt_syntax]((x_under_chairs))
-        {action, logic=examine_under_tables, tags=type|room }
+        {action, logic=examine_under_chairs, tags=type|room }
     }
 
     {input, syntax=[tplt_syntax]((x_bar))
@@ -91,6 +98,6 @@ You examine the bar...
     }
 
     {input, syntax=[tplt_syntax]((x_under_bar))
-        {action, logic=examine_under_tables, tags=type|room }
+        {action, logic=examine_under_bar, tags=type|room }
     }
 }

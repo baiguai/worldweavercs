@@ -47,7 +47,7 @@ namespace WorldWeaver.DataManagement.GameLogic
                 if (dropping && newElem.Tags.TagsContain("!_weapon"))
                 {
                     var playerWeapon = Cache.PlayerCache.Player.AttributeByTag("armed");
-                    if (playerWeapon.ElementKey.Equals(newElem.ElementKey))
+                    if (playerWeapon.Output.Equals(newElem.ElementKey))
                     {
                         var setCls = new Parsers.Elements.Set();
                         setCls.SetDefaultArmed();

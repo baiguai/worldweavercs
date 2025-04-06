@@ -1,4 +1,4 @@
-{object, name=Strange Note, parent=old-oak-inn, sort=999
+{object, key=kal_note, name=Strange Note, parent=old-oak-inn, sort=999
     {attrib, tags=msg_take, output=You take the note. }
     {attrib, tags=msg_drop, output=You have dropped the note. }
     {attrib, tags=already_have, output=You already have the note. }
@@ -32,6 +32,17 @@ You see a note.
         {message
             output={@
 You examine the note...
+
+---
+We're being overrun by armies of the dead.
+I've gathered a small party and are doing our research at the
+Library of Agnoth, just north of Kalisto.
+I think we'll find answers there.
+
+We will report to you once we've uncovered any information.
+
+- Stithous
+---
             }
         }
     }

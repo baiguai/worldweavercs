@@ -107,8 +107,6 @@ namespace WorldWeaver.Parsers.Elements
                 if (child.Tags.TagsContain("armed"))
                 {
                     elemDb.SetElementField(child.ElementKey, "output", playerWeapon.ElementKey, true);
-                    MainClass.output.OutputText = $"You are now armed with the {playerWeapon.Name}.";
-                    MainClass.output.MatchMade = true;
                 }
             }
         }
