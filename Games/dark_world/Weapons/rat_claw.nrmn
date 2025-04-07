@@ -1,4 +1,0 @@
-{object, key=rat_claw_01, name=Rat Claw, tags=inventory, parent=kal_temple_rat_01
-    {attribute, name=Damage, logic=[rand:4|12], tags=damage }
-    {attribute, output=a claw, tags=title }
-}

@@ -693,10 +693,11 @@ PRAGMA foreign_keys = on;
 
             for (var ix = startRow; ix < lines.Count; ix++)
             {
-                var line = lines[ix].Trim();
+                var line = lines[ix];
 
                 if (ix == startRow)
                 {
+                    line = line.Trim();
                     line = line.Replace($"{fieldName}=", "", StringComparison.OrdinalIgnoreCase);
                     if (!line.StartsWith("{"))
                     {
@@ -713,7 +714,7 @@ PRAGMA foreign_keys = on;
                     }
                 }
 
-                if (line.Equals("}"))
+                if (line.Trim().Equals("}"))
                 {
                     currentRow = ix++;
                     break;

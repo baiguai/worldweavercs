@@ -1,0 +1,14 @@
+title: Getting Started
+tags: getting started|start
+Getting started with DarkWorld.
+
+If you are new to interactive fiction (IF) games here are some items to bear in mind:
+
+* Looking around
+    You can look around using 'look' or even the shortened version: 'l'.
+* Examining items around you
+    You can attempt to examine anything you see using: 'examine <item>' or 'x <item>'
+* Special examinations
+    You can also attempt to look in, on, under items using: 'look under <item>', 'x under <item>', 'look on <item>', 'x on <item>', etc.
+* Fighting
+    When you want to attack an enemy, or any object you see, use the following: '! <item>'

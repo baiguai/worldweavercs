@@ -1,0 +1,136 @@
+{room, key=old-oak-inn, name=Old Oak Inn
+    {attrib, tags=can-go-down, output=false }
+
+    {enter_message
+        output={@
+You are in the Old Oak Inn.
+Shockingly it is COMPLETELY empty. There are tables arrayed throughout the Inn,
+and the bar runs along the southern wall, however you are the only person in the place.
+        }
+    }
+
+    {look
+        {message
+            output={@
+You look around. Tables and chairs are arrayed throughout. The bar runs along the south wall.
+There is no one there except you.
+            }
+        }
+    }
+
+    {examine_tables
+        {message
+            output={@
+You examine the tables.
+For the most part they are empty. A few of them have unfinished drinks
+sitting on them. It appears that the patrons just kind of left the tavern...
+In a hurry.
+            }
+        }
+    }
+
+    {examine_under_tables
+        {message
+            output={
+You look under the tables.\b
+<?(kal_note)((moved)) = 'true'?>
+You don't see anything.
+</?>
+            }
+        }
+    }
+
+    {examine_chairs
+        {message
+            output={@
+You examine the chairs. Some of them have bits of clothing draped over them,
+coats or cloaks and the like.
+            }
+        }
+    }
+
+    {examine_under_chairs
+        {message
+            output={@
+You examine the chairs.
+You don't see anything.
+            }
+        }
+    }
+
+    {examine_bar
+        {message
+            output={@
+You examine the bar.
+It is barren, except for one jack still full of mead.
+
+You notice, in the shadows, west of the end of the bar, there is a
+narrow staircase leading down.
+            }
+        }
+
+        {set, logic=[self]((can-go-down)), output=true }
+    }
+
+    {examine_under_bar
+        {message
+            output={@
+You examine the bar.
+You don't see anything.
+            }
+        }
+    }
+
+
+    {navigation, tags=look|enter
+        {message
+            output={@
+* In the northeast corner you see a staircase going up.
+            }
+        }
+    }
+
+
+    {inject, logic=injection/look.inj }
+
+    {input, syntax=[tplt_syntax]((x_tables))
+        {action, logic=examine_tables, tags=type|room }
+    }
+
+    {input, syntax=[tplt_syntax]((x_under_tables))
+        {action, logic=examine_under_tables, tags=type|room }
+    }
+
+    {input, syntax=[tplt_syntax]((x_chairs))
+        {action, logic=examine_chairs, tags=type|room }
+    }
+
+    {input, syntax=[tplt_syntax]((x_under_chairs))
+        {action, logic=examine_under_chairs, tags=type|room }
+    }
+
+    {input, syntax=[tplt_syntax]((x_bar))
+        {action, logic=examine_bar, tags=type|room }
+    }
+
+    {input, syntax=[tplt_syntax]((x_under_bar))
+        {action, logic=examine_under_bar, tags=type|room }
+    }
+
+
+    {input, syntax=[tplt_syntax]((ne_up))
+        {move, logic=old-oak-inn_upstairs, tags=[player], output=You ascend the stairs. }
+    }
+    {input, syntax=[tplt_syntax]((w_down))
+        {move, logic=old-oak-inn_downstairs, tags=[player], output=You descend the stairs. }
+
+        {logic
+            output={@
+I'm not sure where you are trying to go.
+            }
+            logic={@
+                ?[self]((can-go-down)) = 'true'
+            }
+        }
+    }
+}

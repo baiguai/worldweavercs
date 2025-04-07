@@ -1,49 +1,50 @@
 {global, key=global01, parent=root
     {input, syntax=\b(title)\b
-        {action, logic=game_title, tags=key }
+        {act, logic=game_title, tags=key }
     }
 
     {input, syntax=\b(stats)\b
-        {action, logic=[player]((stats)), tags=list, output=Stats: }
-    }
-    {input, syntax=\b(inventory|inv)\b
-        {action, logic=[player]((inventory)), tags=list, output=Inventory: }
-    }
+        {act, logic=[player]((stats)), tags=list, output=Stats: }
 
-    {input, syntax=\b(arm *)\b
-        {set, logic=[player]((player_armed)), output=[syntax](key) tags=arm|[player] }
-        {message
-            output={@
-You are now armed with the [player_armed_weapon].
+        {logic, name=Global01_ArmedTest, tags=!_test
+            logic={@
+                ?[output] ~~ "Battle Ax"
             }
         }
+    }
+    {input, syntax=\b(inventory|inv)\b
+        {act, logic=[player]((inventory)), tags=list, output=Inventory: }
+    }
+
+    {input, syntax=(?i)^arm\s
+        {set, tags=arm }
     }
 
 
     // Player Healing Logic
     // -------------------------------------------------------------------------
-    {action
-        {set, logic=cur_heal_round(output), output=++ }
+    {act
+        {set, logic=[player]((cur_heal_round)), output=++ }
     }
 
-    {action
+    {act
         {logic
             logic={@
-                ?cur_heal_round(output)>=heal_rounds(output)
+                ?[player]((cur_heal_round))>=[player]((heal_rounds))
                 and
-                ?player((life))<player((maxlife))
+                ?[player]((life))<[player]((maxlife))
             }
         }
-        {set, logic=player((life)), output=++ }
+        {set, logic=[player]((life)), output=++ }
     }
 
-    {action
+    {act
         {logic
             logic={@
-                ?cur_heal_round(output)>heal_rounds(output)
+                ?[player]((cur_heal_round))>[player]((heal_rounds))
             }
         }
-        {set, logic=cur_heal_round(output), output=0 }
+        {set, logic=[player]((cur_heal_round)), output=0 }
     }
     // -------------------------------------------------------------------------
 
@@ -51,7 +52,7 @@ You are now armed with the [player_armed_weapon].
     // Time Actions
     // -------------------------------------------------------------------------
     {key=day_string
-        {action
+        {act
             {logic
                 logic={@
                     ?[isday] = 'false'
@@ -65,7 +66,7 @@ It is night.
             }
         }
 
-        {action
+        {act
             {logic
                 logic={@
                     ?[isday] = 'true'
