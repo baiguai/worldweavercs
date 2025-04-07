@@ -7,6 +7,9 @@
         {attrib, tags=leave, output=(?i)\bleave\b(?:\s+(?:the|this)?\s*(?:room|area|place))? }
         {attrib, tags=left, output=(?i)\b(?:go\s+)?left\b }
         {attrib, tags=ne_up, output=(?i)\b(?:go\s+)?(?:northeast|ne|up(?:\s+stairs)?)\b }
+        {attrib, tags=e_down, output=(?i)\b(?:go\s+)?(?:east|e|down(?:\s+stairs)?)\b }
+        {attrib, tags=w_down, output=(?i)\b(?:go\s+)?(?:west|w|down(?:\s+stairs)?)\b }
+        {attrib, tags=w_up, output=(?i)\b(?:go\s+)?(?:west|w|up(?:\s+stairs)?)\b }
         {attrib, tags=s_down, output=(?i)\b(?:s|south|go south|down|go down|go down stairs|go down the stairs)\b }
 
     Compass Directions
@@ -38,6 +41,12 @@
     Opening Objects
         {attrib, tags=open_chest, output=(?i)open(?: the)? chest }
         {attrib, tags=open_box, output=(?i)open(?: the)? box }
+        {attrib, tags=open_door_1, output=(?i)\b(?:open\s+)?(?:the\s+)?door\s+(?:number\s+)?(?:one|1)\b }
+        {attrib, tags=open_door_2, output=(?i)\b(?:open\s+)?(?:the\s+)?door\s+(?:number\s+)?(?:two|2)\b }
+        {attrib, tags=open_door_3, output=(?i)\b(?:open\s+)?(?:the\s+)?door\s+(?:number\s+)?(?:three|3)\b }
+        {attrib, tags=open_door_4, output=(?i)\b(?:open\s+)?(?:the\s+)?door\s+(?:number\s+)?(?:four|4)\b }
+        {attrib, tags=open_door_5, output=(?i)\b(?:open\s+)?(?:the\s+)?door\s+(?:number\s+)?(?:five|5)\b }
+        {attrib, tags=open_door_6, output=(?i)\b(?:open\s+)?(?:the\s+)?door\s+(?:number\s+)?(?:six|6)\b }
 
     Taking Dropping and Putting
         {attrib, tags=take_gold_coin, output=(?i)\btake\s+(?:the\s+)?(?:gold\s+)?coin\b }

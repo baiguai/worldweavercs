@@ -46,6 +46,11 @@ namespace WorldWeaver.Parsers.Elements
                             {
                                 MainClass.output.OutputText = ParseRelativeElementByTag(currentElement, currentElement.Output);
                             }
+
+                            if (MainClass.output.OutputText.Equals(""))
+                            {
+                                MainClass.output.OutputText = currentElement.Output;
+                            }
                         }
                     }
                     else

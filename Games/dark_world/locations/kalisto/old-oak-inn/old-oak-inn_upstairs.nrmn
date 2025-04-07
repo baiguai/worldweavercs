@@ -1,0 +1,78 @@
+{room, key=old-oak-inn_upstairs, name=Old Oak Inn - Upstairs
+    {enter_message
+        output={@
+You are upstairs.
+
+A hall extends west before you.
+There are three doors on either side.
+They are all closed.
+        }
+    }
+
+    {look
+        {message
+            output={@
+You see a hall extending west before you.
+            }
+        }
+    }
+
+    {inject, logic=injection/look.inj }
+
+
+    {navigation, tags=look|enter
+        {message
+            output={@
+* In the east end of the hall is a staircase going down.
+            }
+        }
+    }
+
+
+    {input, syntax=[tplt_syntax]((open_door_1))
+        {message
+            output={@
+The door is locked.
+            }
+        }
+    }
+    {input, syntax=[tplt_syntax]((open_door_2))
+        {message
+            output={@
+The door is locked.
+            }
+        }
+    }
+    {input, syntax=[tplt_syntax]((open_door_3))
+        {message
+            output={@
+The door is locked.
+            }
+        }
+    }
+    {input, syntax=[tplt_syntax]((open_door_4))
+        {message
+            output={@
+The door is locked.
+            }
+        }
+    }
+    {input, syntax=[tplt_syntax]((open_door_5))
+        {message
+            output={@
+The door is locked.
+            }
+        }
+    }
+    {input, syntax=[tplt_syntax]((open_door_6))
+        {message
+            output={@
+The door is locked.
+            }
+        }
+    }
+
+    {input, syntax=[tplt_syntax]((e_down))
+        {move, logic=old-oak-inn, tags=[player], output=You go down the stairs. }
+    }
+}

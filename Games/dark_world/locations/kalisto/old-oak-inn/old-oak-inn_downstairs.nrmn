@@ -1,0 +1,31 @@
+{room, key=old-oak-inn_downstairs, name=Old Oak Inn - Downstairs
+    {enter_message
+        output={@
+You are in a cellar below the Old Oak Inn.
+        }
+    }
+
+    {look
+        {message
+            output={@
+You look around. The cellar is dark, cold, and damp.
+            }
+        }
+    }
+
+    {inject, logic=injection/look.inj }
+
+
+    {navigation, tags=look|enter
+        {message
+            output={@
+* In the west end of the cellar is a staircase going up.
+            }
+        }
+    }
+
+
+    {input, syntax=[tplt_syntax]((w_up))
+        {move, logic=old-oak-inn, tags=[player], output=You go up the stairs. }
+    }
+}

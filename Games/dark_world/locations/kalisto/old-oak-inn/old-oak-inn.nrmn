@@ -1,4 +1,6 @@
 {room, key=old-oak-inn, name=Old Oak Inn
+    {attrib, tags=can-go-down, output=false }
+
     {enter_message
         output={@
 You are in the Old Oak Inn.
@@ -61,8 +63,13 @@ You don't see anything.
             output={@
 You examine the bar.
 It is barren, except for one jack still full of mead.
+
+You notice, in the shadows, west of the end of the bar, there is a
+narrow staircase leading down.
             }
         }
+
+        {set, logic=[self]((can-go-down)), output=true }
     }
 
     {examine_under_bar
@@ -70,6 +77,15 @@ It is barren, except for one jack still full of mead.
             output={@
 You examine the bar.
 You don't see anything.
+            }
+        }
+    }
+
+
+    {navigation, tags=look|enter
+        {message
+            output={@
+* In the northeast corner you see a staircase going up.
             }
         }
     }
@@ -99,5 +115,22 @@ You don't see anything.
 
     {input, syntax=[tplt_syntax]((x_under_bar))
         {action, logic=examine_under_bar, tags=type|room }
+    }
+
+
+    {input, syntax=[tplt_syntax]((ne_up))
+        {move, logic=old-oak-inn_upstairs, tags=[player], output=You ascend the stairs. }
+    }
+    {input, syntax=[tplt_syntax]((w_down))
+        {move, logic=old-oak-inn_downstairs, tags=[player], output=You descend the stairs. }
+
+        {logic
+            output={@
+I'm not sure where you are trying to go.
+            }
+            logic={@
+                ?[self]((can-go-down)) = 'true'
+            }
+        }
     }
 }
