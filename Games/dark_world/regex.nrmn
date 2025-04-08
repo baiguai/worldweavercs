@@ -33,6 +33,7 @@
         {attrib, tags=x_pack, output=(?i)\b(?:look|in|examine|x)\s+(?:the\s+)?pack\b }
         {attrib, tags=x_parchment, output=(?i)\b(?:take|examine|x)\s+(?:the\s+)?parchment\b }
         {attrib, tags=x_pouch, output=(?i)\b(?:look|in|examine|x)\s+(?:the\s+)?pouch\b }
+        {attrib, tags=x_shelves, output=(?i)\b(?:examine|x)\s+(?:the\s+)?shelves\b }
         {attrib, tags=x_tap, output=(?i)\b(x|examine)\s+(the\s+)?tapestries\b }
         {attrib, tags=x_tables, output=(?i)\b(?:examine|x)\s+(?:the\s+)?tables\b }
         {attrib, tags=x_under_tables, output=(?i)\b(?:look|examine|x)?\s*under(?:\s+the)?\s+tables\b }
