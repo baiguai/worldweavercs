@@ -17,12 +17,7 @@ namespace WorldWeaver.Parsers.Elements
 
             if (!setPerformed)
             {
-                setPerformed = SetElementChildValueByTag(
-                    currentElement,
-                    currentElement.Tags,
-                    currentElement.Logic,
-                    currentElement.Output
-                );
+                setPerformed = SetElementChildValueByTag(currentElement);
             }
             SetElementValue(
                 currentElement,
@@ -148,24 +143,21 @@ namespace WorldWeaver.Parsers.Elements
             return true;
         }
 
-        private bool SetElementChildValueByTag(
-            Classes.Element currentElement,
-            string tags,
-            string logic,
-            string output
-        )
+        private bool SetElementChildValueByTag(Classes.Element currentElement)
         {
-            if (!logic.Contains("((") || !logic.Contains("))"))
+            var logic = "";
+
+            if (!currentElement.Logic.Contains("((") || !currentElement.Logic.Contains("))"))
             {
                 return false;
             }
 
-            if (logic.EndsWith("))"))
+            if (currentElement.Logic.EndsWith("))"))
             {
                 logic = logic += "output";
             }
 
-            var arr = logic.Split("))");
+            var arr = currentElement.Logic.Split("))");
             if (arr.Length != 2)
             {
                 return false;
@@ -182,7 +174,7 @@ namespace WorldWeaver.Parsers.Elements
             var key = arr[0].Trim().Replace("(", "").Replace(")", "");
 
             var elemDb = new DataManagement.GameLogic.Element();
-            var elem = elemDb.GetElementByKey(key);
+            var elem = elemDb.GetElementByKey(currentElement.ElementKey);
             if (elem.ElementKey.Equals(""))
             {
                 return false;
@@ -200,7 +192,7 @@ namespace WorldWeaver.Parsers.Elements
                     elemDb.SetElementField(
                         child.ElementKey,
                         prop,
-                        ProcessOutput(output.Trim(), child.ElementKey)
+                        ProcessOutput(currentElement.Output.Trim(), child.ElementKey)
                     );
                 }
             }

@@ -9,6 +9,15 @@ You are in a cellar below the Old Oak Inn.
         {message
             output={@
 You look around. The cellar is dark, cold, and damp.
+The walls are lined with shelves filled with stacks of dishes and other supplies used by the tavern.
+            }
+        }
+    }
+
+    {examine_shelves
+        {message
+            output={@
+You examine the shelves.
             }
         }
     }
@@ -27,5 +36,9 @@ You look around. The cellar is dark, cold, and damp.
 
     {input, syntax=[tplt_syntax]((w_up))
         {move, logic=old-oak-inn, tags=[player], output=You go up the stairs. }
+    }
+
+    {input, syntax=[tplt_syntax]((x_shelves))
+        {action, logic=examine_shelves, tags=type|room }
     }
 }

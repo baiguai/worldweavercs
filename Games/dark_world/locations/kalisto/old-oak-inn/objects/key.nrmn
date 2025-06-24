@@ -1,0 +1,13 @@
+{object, key=kal_room_4_key, name=Room 4 Key
+    {examine_shelves
+        {message
+            output={@
+                <?[self]((moved)) = 'false'?>
+You see a key with a '4' written on it.
+                </?>
+            }
+        }
+    }
+
+    {inject, logic=injection/take.inj }
+}
